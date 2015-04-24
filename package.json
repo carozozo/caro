@@ -1,0 +1,13 @@
+{
+    "name": "Caro",
+    "version": "0.0.1",
+    "description": "This is web frame-work base on Express.js",
+    "author": {
+        "name": "Caro.Huang",
+        "email": "carozozo@yahoo.com.tw"
+    },
+    "dependencies": {
+        "express": "~4.12.3",
+        "validator": "3.39.0"
+    }
+}
