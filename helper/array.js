@@ -11,25 +11,40 @@ module.exports = (function () {
      * duplicate: bool (default: true) - if content duplicate-value
      * EX.
      * caro.extendArr( [1, 2], [2, 4] ); => [1, 2, 4]
-     * @param arr1
-     * @param arr2
-     * @param [opt]
      * @returns {*}
      */
-    self.extendArr = function (arr1, arr2, opt) {
-        if(!caro.isArr(arr1) || !caro.isArr(arr2)) return null;
+    self.extendArr = function () {
+        var firstArr = null;
+        var otherArr = [];
+        caro.eachObj(arguments, function (i, arg) {
+            if (caro.isArr(arg)) {
+                if (!firstArr)
+                    firstArr = arg;
+                else
+                    otherArr.push(arg);
+            }
+            if (caro.isObj(arg)) {
+                opt = arg;
+            }
+        });
+        var opt = null;
         var duplicate = false;
+        var extend = function (arr) {
+            caro.eachObj(arr, function (i, eachVal) {
+                if (!duplicate) {
+                    self.pushNoDup(firstArr, eachVal);
+                    return;
+                }
+                firstArr.push(eachVal);
+            });
+        };
         if (opt) {
             duplicate = opt.duplicate !== false;
         }
-        caro.eachObj(arr2, function (i, eachVal) {
-            if (!duplicate) {
-                self.pushNoDup(arr1, eachVal);
-                return;
-            }
-            arr1.push(eachVal);
+        caro.eachObj(otherArr, function (i, eachArr) {
+            extend(eachArr);
         });
-        return arr1;
+        return firstArr;
     };
     /**
      * clone arr
@@ -51,7 +66,7 @@ module.exports = (function () {
      * @returns {Array}
      */
     self.sortByObjKey = function (arr, key, sort) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         sort = (sort !== false);
         arr.sort(function (a, b) {
             var order1 = a[key] || 0;
@@ -66,7 +81,7 @@ module.exports = (function () {
      * sum the value in arr (number)
      */
     self.sumOfArr = function (arr) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         var sum = 0;
         caro.eachObj(arr, function (i, val) {
             if (caro.isNum(val)) {
@@ -82,7 +97,7 @@ module.exports = (function () {
      * @returns {*}
      */
     self.removeByIndex = function (arr, i) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         if (i > -1) {
             arr.splice(i, 1);
         }
@@ -95,7 +110,7 @@ module.exports = (function () {
      * @returns {*}
      */
     self.removeByArrVal = function (arr, val) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         var index = arr.indexOf(val);
         return self.removeByIndex(arr, index);
     };
@@ -104,7 +119,7 @@ module.exports = (function () {
      * @returns {Array}
      */
     self.removeDup = function (arr) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         var aUnique = [];
         caro.eachObj(arr, function (i, el) {
             (aUnique.indexOf(el) < 0) && aUnique.push(el);
@@ -118,7 +133,7 @@ module.exports = (function () {
      * @returns {*}
      */
     self.pushNoDup = function (arr, val) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         (arr.indexOf(val) < 0) && arr.push(val);
         return arr;
     };
@@ -129,7 +144,7 @@ module.exports = (function () {
      * @returns {*}
      */
     self.pushNoEmpty = function (arr, val) {
-        if(!caro.isArr(arr)) return arr;
+        if (!caro.isArr(arr)) return arr;
         if (caro.isEmptyVal(val)) {
             return arr;
         }
@@ -142,7 +157,7 @@ module.exports = (function () {
      * @returns {boolean}
      */
     self.hasEmptyInArr = function (arr) {
-        if(!caro.isArr(arr)) return true;
+        if (!caro.isArr(arr)) return true;
         var hasEmpty = false;
         arr = caro.coverToArr(arr);
         caro.eachObj(arr, function (i, val) {
