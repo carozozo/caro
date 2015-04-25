@@ -131,18 +131,42 @@ module.exports = (function () {
         return str;
     };
     /**
+     * check if charts has in head of string
+     * @param str
+     * @param str2
+     * @returns {*}
+     */
+    self.hasHead = function (str, str2) {
+        if (!caro.isStr(str)) return false;
+        if (!caro.isStr(str2)) return false;
+        var index = str.indexOf(str2);
+        return index === 0;
+    };
+    /**
      * add the head to string if not exist
      * @param str
      * @param addStr
      * @returns {*}
      */
     self.addHead = function (str, addStr) {
-        if (!caro.isStr(str)) return str;
-        var index = str.indexOf(addStr);
-        if (index !== 0) {
+        if (!self.hasHead(str, addStr)) {
             str = addStr + str;
         }
         return str;
+    };
+    /**
+     * check if charts has in tail of string
+     * @param str
+     * @param str2
+     * @returns {*}
+     */
+    self.hasTail = function (str, str2) {
+        if (!caro.isStr(str)) return false;
+        if (!caro.isStr(str2)) return false;
+        var index = str.lastIndexOf(str2);
+        var strLength = str.length;
+        var strLength2 = str2.length;
+        return strLength > strLength2 && index === strLength - strLength2;
     };
     /**
      * add the tail to string if not exist
@@ -151,11 +175,7 @@ module.exports = (function () {
      * @returns {*}
      */
     self.addTail = function (str, addStr) {
-        if (!caro.isStr(str)) return str;
-        var index = str.lastIndexOf(addStr);
-        var strLength = str.length;
-        var addLength = addStr.length;
-        if (strLength < addLength || index !== strLength - addLength) {
+        if (!self.hasTail(str, addStr)) {
             str += addStr;
         }
         return str;
