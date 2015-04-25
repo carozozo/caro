@@ -2,7 +2,7 @@
  * The helper of common string functions
  * @author Caro.Huang
  */
-caroh.string= (function () {
+module.exports = (function () {
     var self = {};
     // https://github.com/chriso/validator
     var validator = require('validator');
@@ -12,23 +12,23 @@ caroh.string= (function () {
         var end = null;
         var force = true;
         if (opt) {
-            start = !carol.helper.isEmptyVal(opt.start) ? opt.start : start;
+            start = !caro.isEmptyVal(opt.start) ? opt.start : start;
             end = opt.end || end;
             force = opt.force !== false;
         }
-        if (!carol.helper.isStr(str)) {
+        if (!caro.isStr(str)) {
             if (!force) {
                 return str;
             }
             str = '';
         }
         type = (aType.indexOf(type) > -1) ? type : aType[0];
-        if (carol.helper.isEmptyVal(start)) {
+        if (caro.isEmptyVal(start)) {
             return str[type]();
         }
         var ret = [];
-        start = carol.helper.coverToInt(start);
-        end = carol.helper.coverToInt(end);
+        start = caro.coverToInt(start);
+        end = caro.coverToInt(end);
         ret.push(str.slice(0, start));
         if (end) {
             ret.push((str.slice(start, end))[type]());
@@ -73,7 +73,7 @@ caroh.string= (function () {
         chars = chars.join('');
         // cover to array if string
         exclude = self.splitStr(exclude, ',');
-        tl.object.eachObj(exclude, function (i, excludeStr) {
+        caro.eachObj(exclude, function (i, excludeStr) {
             chars = self.replaceAll(chars, excludeStr, '');
         });
         for (var i = 0; i < len; i++)
@@ -112,12 +112,12 @@ caroh.string= (function () {
      * @returns {boolean}
      */
     self.isEngLetter = function (str) {
-        if (!carol.helper.isStr(str)) return false;
+        if (!caro.isStr(str)) return false;
         str = str.replace(/[a-zA-Z]/g, '');
         return str === '';
     };
     self.isEngNum = function (str) {
-        if (!carol.helper.isStr(str)) return false;
+        if (!caro.isStr(str)) return false;
         str = str.replace(/[a-zA-Z]/g, '');
         return self.isInt(str);
     };
@@ -137,7 +137,7 @@ caroh.string= (function () {
      * @returns {*}
      */
     self.addHead = function (str, addStr) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         var index = str.indexOf(addStr);
         if (index !== 0) {
             str = addStr + str;
@@ -151,7 +151,7 @@ caroh.string= (function () {
      * @returns {*}
      */
     self.addTail = function (str, addStr) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         var index = str.lastIndexOf(addStr);
         var strLength = str.length;
         var addLength = addStr.length;
@@ -166,7 +166,7 @@ caroh.string= (function () {
      * @returns {*|string}
      */
     self.wrapToBr = function (str) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         return str.replace(/\n/g, '<br />');
     };
     /**
@@ -175,7 +175,7 @@ caroh.string= (function () {
      * @returns {*|string}
      */
     self.brToWrap = function (str) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         var regex = /<br\s*[\/]?>/gi;
         return str.replace(regex, "\n");
     };
@@ -189,7 +189,7 @@ caroh.string= (function () {
      * @returns {*}
      */
     self.splitByWrap = function (str, opt) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         var acceptEmpty = false;
         if (opt) {
             acceptEmpty = opt.acceptEmpty === true;
@@ -217,7 +217,7 @@ caroh.string= (function () {
      * @returns {*|string}
      */
     self.escapeRegExp = function (str) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     };
     /**
@@ -228,7 +228,7 @@ caroh.string= (function () {
      * @returns {*|string}
      */
     self.replaceAll = function (str, find, replace) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         find = self.escapeRegExp(find);
         var regex = new RegExp(find, "g");
         return str.replace(regex, replace);
@@ -253,8 +253,8 @@ caroh.string= (function () {
      */
     self.formatMoney = function (str, arg1, arg2) {
         var ret = [];
-        var isObj = carol.helper.isObj;
-        var isStr = carol.helper.isStr;
+        var isObj = caro.isObj;
+        var isStr = caro.isStr;
         var option = isObj(arg1) ? arg1 : (isObj(arg2) ? arg2 : undefined);
         var type = isStr(arg1) ? arg1 : (isStr(arg2) ? arg2 : '');
         var float = 2;
@@ -294,11 +294,11 @@ caroh.string= (function () {
      * @returns {string}
      */
     self.insertBlankBefUpper = function (str) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         var indexCount = 0;
         var aStr = str.split('');
-        var aStrClone = tl.array.cloneArr(aStr);
-        tl.object.eachObj(aStrClone, function (i, char) {
+        var aStrClone = caro.cloneArr(aStr);
+        caro.eachObj(aStrClone, function (i, char) {
             var isUpper = self.isUpperCase(char);
             if (indexCount > 0 && isUpper) {
                 // add ' ' before upper-char
@@ -314,7 +314,7 @@ caroh.string= (function () {
         return changeCase(str, 'upperCase', opt);
     };
     self.upperFirst = function (str) {
-        if (!carol.helper.isStr(str)) return str;
+        if (!caro.isStr(str)) return str;
         return self.upperStr(str, {
             start: 0,
             end: 1
@@ -328,7 +328,7 @@ caroh.string= (function () {
         if (opt) {
             force = opt.force !== false;
         }
-        if (!carol.helper.isStr(str)) {
+        if (!caro.isStr(str)) {
             if (!force) {
                 return str;
             }
@@ -337,20 +337,20 @@ caroh.string= (function () {
         return str.trim();
     };
     self.splitStr = function (str, splitter, opt) {
-        if (carol.helper.isArr(str)) {
+        if (caro.isArr(str)) {
             return str;
         }
         var force = true;
         if (opt) {
             force = opt.force !== false;
         }
-        if (!carol.helper.isStr(str)) {
+        if (!caro.isStr(str)) {
             if (!force) {
                 return str;
             }
             str = '';
         }
-        splitter = carol.helper.isStr(splitter) ? splitter : '';
+        splitter = caro.isStr(splitter) ? splitter : '';
         return str.split(splitter);
     };
 
@@ -362,7 +362,7 @@ caroh.string= (function () {
      * ex.
      * url='http://localhost/api/xx';
      * oArgs={ a: '1', b: 200, c: null, d: ''};
-     * tl.string.serializeUrl(url, oArgs);
+     * caro.serializeUrl(url, oArgs);
      * return 'http://localhost/api/xx?a=1&b=200&c=&d='
      *
      * @param url
@@ -377,7 +377,7 @@ caroh.string= (function () {
         if (opt) {
             coverEmpty = opt.coverEmpty === true;
         }
-        tl.object.eachObj(oArgs, function (key, val) {
+        caro.eachObj(oArgs, function (key, val) {
             if (!val && val !== 0 && val !== '0') {
                 if (!coverEmpty) {
                     return;
@@ -401,7 +401,7 @@ caroh.string= (function () {
      * @returns {*|string}
      */
     self.encodeUrl = function (str) {
-        if (carol.helper.isStr(str)) {
+        if (caro.isStr(str)) {
             return self.replaceAll(str, '+', encodeURIComponent('+'));
         }
         return str;

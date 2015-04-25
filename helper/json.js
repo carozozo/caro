@@ -2,14 +2,14 @@
  * The helper of common JSON functions
  * @author Caro.Huang
  */
-caroh.json = (function () {
+module.exports = (function () {
     var self = {};
 
     self.parseJson = function (str) {
         try {
             return JSON.parse(str);
         } catch (e) {
-            tl.console.logErr('tl.json.parseJson', e);
+            caro.logErr('caro.parseJson', e);
         }
         return str;
     };
@@ -21,13 +21,11 @@ caroh.json = (function () {
      * @returns {*}
      */
     self.safeStringify = function (obj, replace, space) {
-        if (tl.helper.isStr(obj)) return obj;
-        // https://www.npmjs.org/package/json-stringify-safe
-        var stringify = require('json-stringify-safe');
+        if (caro.isStr(obj)) return obj;
         try {
-            return stringify(obj, replace, space);
+            return JSON.stringify(obj, replace, space);
         } catch (e) {
-            tl.console.logErr('tl.json.safeStringify', e);
+            caro.logErr('caro.safeStringify', e);
         }
         return '';
     };
