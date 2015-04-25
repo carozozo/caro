@@ -2,7 +2,7 @@
  * The helper of common fns
  * @author Caro.Huang
  */
-caroh.helper = (function () {
+module.exports = (function () {
     var self = {};
 
     self.isBool = function (arg) {
@@ -34,7 +34,7 @@ caroh.helper = (function () {
      */
     self.isEmptyVal = function (val) {
         if (self.isObj(val)) {
-            return tl.object.getObjLength(val) < 1;
+            return caro.getObjLength(val) < 1;
         }
         if (self.isArr(val)) {
             return val.length < 1;
@@ -57,7 +57,7 @@ caroh.helper = (function () {
     self.executeIfFn = function () {
         var fn = null;
         var otherArgs = [];
-        tl.object.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             if (self.isFn(arg)) {
                 fn = arg;
                 return;
@@ -77,7 +77,7 @@ caroh.helper = (function () {
         return arr.join(' ');
     };
     self.coverToArr = function (arg) {
-        if (caro.lHelper.isArr(arg)) {
+        if (caro.isArr(arg)) {
             return arg;
         }
         return [arg];
@@ -114,7 +114,7 @@ caroh.helper = (function () {
         if (opt) {
             force = opt.force !== false;
         }
-        if (tl.string.isJson(arg)) {
+        if (caro.isJson(arg)) {
             return JSON.parse(arg);
         }
         if (force) {
@@ -143,7 +143,7 @@ caroh.helper = (function () {
             // validate will be false if arr not match the assign-format
             var obj = {};
             var aKey = [];
-            tl.object.eachObj(arr, function (i, arg) {
+            caro.eachObj(arr, function (i, arg) {
                 if (i === 0) {
                     if (self.isObj(arg)) {
                         obj = arg;
@@ -192,9 +192,9 @@ caroh.helper = (function () {
         }
         var obj2 = objAndKeys.obj;
         var aKey2 = objAndKeys.aKey;
-        tl.object.eachObj(aKey1, function (i, key1) {
+        caro.eachObj(aKey1, function (i, key1) {
             var key2 = aKey2[i];
-            if (!tl.object.keyInObj(obj1, key1) || !tl.object.keyInObj(obj2, key2)) {
+            if (!caro.keyInObj(obj1, key1) || !caro.keyInObj(obj2, key2)) {
                 validate = false;
                 return false;
             }
@@ -220,9 +220,9 @@ caroh.helper = (function () {
      */
     self.encodeStartOfDayFull = function (date) {
         if (date) {
-            date = tl.dateTime.startOf(date, 'day');
-            date = tl.dateTime.formatFull(date);
-            date = tl.string.encodeUrl(date);
+            date = caro.startOf(date, 'day');
+            date = caro.formatFull(date);
+            date = caro.encodeUrl(date);
         }
         return date;
     };
@@ -237,9 +237,9 @@ caroh.helper = (function () {
      */
     self.encodeEndOfDayFull = function (date) {
         if (date) {
-            date = tl.dateTime.endOf(date, 'day');
-            date = tl.dateTime.formatFull(date);
-            date = tl.string.encodeUrl(date);
+            date = caro.endOf(date, 'day');
+            date = caro.formatFull(date);
+            date = caro.encodeUrl(date);
         }
         return date;
     };

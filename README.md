@@ -1,2 +1,2 @@
 # Caro.js
-This is web frame-work base on Express.js
+This is common-libraries written by Caro

@@ -2,7 +2,7 @@
  * The helper of common array functions
  * @author Caro.Huang
  */
-caroh.array = (function () {
+module.exports = (function () {
     var self = {};
 
     self.extendArr = function (arr1, arr2, opt) {
@@ -10,7 +10,7 @@ caroh.array = (function () {
         if (opt) {
             noDuplicate = opt.noDuplicate !== false;
         }
-        tl.object.eachObj(arr2, function (i, eachVal) {
+        caro.eachObj(arr2, function (i, eachVal) {
             if (noDuplicate) {
                 self.pushNoDup(arr1, eachVal);
                 return;
@@ -45,8 +45,8 @@ caroh.array = (function () {
      */
     self.sumOfArr = function (arr) {
         var sum = 0;
-        tl.object.eachObj(arr, function (i, val) {
-            if (tl.helper.isNum(val)) {
+        caro.eachObj(arr, function (i, val) {
+            if (caro.isNum(val)) {
                 sum += val;
             }
         });
@@ -80,7 +80,7 @@ caroh.array = (function () {
      */
     self.removeDup = function (arr) {
         var aUnique = [];
-        tl.object.eachObj(arr, function (i, el) {
+        caro.eachObj(arr, function (i, el) {
             (aUnique.indexOf(el) < 0) && aUnique.push(el);
         });
         return aUnique;
@@ -96,7 +96,7 @@ caroh.array = (function () {
         return arr;
     };
     self.pushNoEmpty = function (arr, val) {
-        if (tl.helper.isEmptyVal(val)) {
+        if (caro.isEmptyVal(val)) {
             return arr;
         }
         arr.push(val);
@@ -109,9 +109,9 @@ caroh.array = (function () {
      */
     self.hasEmptyInArr = function (arr) {
         var hasEmpty = false;
-        arr = tl.helper.coverToArr(arr);
-        tl.object.eachObj(arr, function (i, val) {
-            if (tl.helper.isEmptyVal(val)) {
+        arr = caro.coverToArr(arr);
+        caro.eachObj(arr, function (i, val) {
+            if (caro.isEmptyVal(val)) {
                 hasEmpty = true;
                 return false;
             }

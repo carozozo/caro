@@ -1,37 +1,21 @@
-global.caro = {
-    each: function (obj, cb) {
-        for (var i in obj) {
-            if (obj.hasOwnProperty(i)) {
-                if (cb && cb(i, obj[i]) === false) {
-                    break;
-                }
+global.caro = {};
+var nPath = require('path');
+var nFs = require('fs');
+var eachObj = function (obj, cb) {
+    for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+            if (cb && cb(i, obj[i]) === false) {
+                break;
             }
         }
     }
 };
-global.carol = {};
-global.caroh = {};
-var app = require('express')();
-var nOs = require('os');
-var nPath = require('path');
-var nFs = require('fs');
-var nEvents = require('events');
-var aServerIp = (function () {
-    var addresses = [];
-    var interfaces = nOs.networkInterfaces();
-    for (var name in interfaces) {
-        if (!interfaces.hasOwnProperty(name)) {
-            return null;
-        }
-        var eachInterface = interfaces[name];
-        eachInterface.forEach(function (entry) {
-            if (entry.family == 'IPv4' && !entry.internal) {
-                addresses.push(entry.address)
-            }
-        });
-    }
-    return addresses;
-})();
+var extendObj = function (obj1, obj2) {
+    eachObj(obj2, function (key, val) {
+        obj1[key] = val;
+    });
+    return obj1;
+};
 var getFiles = function (path, cb) {
     if (typeof path !== 'string' || !path) return;
     path = nPath.join(__dirname, path);
@@ -52,28 +36,12 @@ var getFiles = function (path, cb) {
         });
     }
 };
-
 (function requireSystem() {
-    getFiles('./system/lib/', function (fullPath) {
-        require(fullPath);
-    });
-    getFiles('./system/helper/', function (fullPath) {
-        require(fullPath);
-    });
-})();
-(function requireConfig() {
-    var config = require('./config/config.js');
-    var configMap = config.configMap || null;
-    if (!configMap) {
-        return;
-    }
-    caro.each(aServerIp, function (i, serverIp) {
-        caro.each(configMap, function (ip, configFileName) {
-            if (serverIp != ip) {
-                return;
-            }
-            var config2 = require('./config/' + configFileName);
-            config = carol.object.extendObj(config, config2);
+    var arr = ['core', './lib/', './helper'];
+    eachObj(arr, function (i, path) {
+        getFiles(path, function (fullPath) {
+            caro = extendObj(caro, require(fullPath));
         });
     });
 })();
+module.exports = caro;

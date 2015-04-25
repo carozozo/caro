@@ -2,7 +2,7 @@
  * The helper of common object functions
  * @author Caro.Huang
  */
-caroh.object = (function () {
+module.exports = (function () {
     var self = {};
     /**
      * change obj string-value by key, will change-all if aKey is empty
@@ -19,7 +19,7 @@ caroh.object = (function () {
      */
     var changeStrValByObjKey = function (obj, type, aKey, opt) {
         var aType = ['upper', 'lower', 'upperFirst'];
-        if (!carol.helper.isObj(obj) || aType.indexOf(type) < 0) {
+        if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
             return obj;
         }
         var objRet = obj;
@@ -31,7 +31,7 @@ caroh.object = (function () {
             objRet = self.cloneObj(obj);
         }
         aKey = aKey || self.getKeysInObj(objRet);
-        aKey = tl.string.splitStr(aKey, ',');
+        aKey = caro.splitStr(aKey, ',');
         self.eachObj(aKey, function (i, key) {
             if (!self.keyInObj(objRet, key)) {
                 return;
@@ -39,13 +39,13 @@ caroh.object = (function () {
             var val = objRet[key];
             switch (type) {
                 case 'upper':
-                    objRet[key] = tl.string.upperStr(val);
+                    objRet[key] = caro.upperStr(val);
                     break;
                 case 'lower':
-                    objRet[key] = tl.string.lowerStr(val);
+                    objRet[key] = caro.lowerStr(val);
                     break;
                 case 'upperFirst':
-                    objRet[key] = tl.string.upperFirst(val);
+                    objRet[key] = caro.upperFirst(val);
                     break;
             }
         });
@@ -108,7 +108,7 @@ caroh.object = (function () {
      * @returns {{}}
      */
     self.extractByObjKey = function (obj, keys) {
-        keys = tl.string.splitStr(keys, ',');
+        keys = caro.splitStr(keys, ',');
         var obj2 = {};
         self.eachObj(keys, function (i, key) {
             obj2[key] = obj[key];
@@ -134,7 +134,7 @@ caroh.object = (function () {
         if (opt) {
             useClone = opt.useClone === true;
         }
-        keys = tl.string.splitStr(keys, ',');
+        keys = caro.splitStr(keys, ',');
         self.eachObj(keys, function (i, key) {
             if (!useClone) {
                 obj2[key] = obj1[key];
@@ -248,8 +248,8 @@ caroh.object = (function () {
             oClone = self.cloneObj(obj);
         }
         var coverObjVal = function (o) {
-            tl.object.eachObj(o, function (key, val) {
-                if (carol.helper.isObj(val) && deep) {
+            caro.eachObj(o, function (key, val) {
+                if (caro.isObj(val) && deep) {
                     coverObjVal(val);
                     return;
                 }
@@ -272,10 +272,10 @@ caroh.object = (function () {
             objRet = self.cloneObj(obj);
         }
         self.eachObj(objRet, function (key, val) {
-            if (carol.helper.isObj(val)) {
+            if (caro.isObj(val)) {
                 objRet[key] = self.trimObjVal(val, opt);
             }
-            if (carol.helper.isStr(val)) {
+            if (caro.isStr(val)) {
                 objRet[key] = val.trim();
             }
         });
@@ -295,7 +295,7 @@ caroh.object = (function () {
      */
     self.keyInObj = function (obj, aKey) {
         var pass = true;
-        aKey = carol.helper.coverToArr(aKey);
+        aKey = caro.coverToArr(aKey);
         self.eachObj(aKey, function (i, key) {
             if (!obj.hasOwnProperty(key)) {
                 pass = false;
@@ -319,7 +319,7 @@ caroh.object = (function () {
      */
     self.getKeysInObj = function (obj, levelLimit) {
         var arr = [];
-        if (!carol.helper.isObj(obj)) {
+        if (!caro.isObj(obj)) {
             return arr;
         }
         var levelCount = 0;
@@ -330,7 +330,7 @@ caroh.object = (function () {
                     return;
                 }
                 arr.push(key);
-                if (carol.helper.isObj(val)) {
+                if (caro.isObj(val)) {
                     getKey(val);
                 }
             });
@@ -343,9 +343,9 @@ caroh.object = (function () {
     };
     self.joinInObj = function (obj, aKey, symble) {
         var arr = [];
-        aKey = carol.helper.coverToArr(aKey);
+        aKey = caro.coverToArr(aKey);
         self.eachObj(aKey, function (i, key) {
-            tl.array.pushNoEmpty(arr, obj[key]);
+            caro.pushNoEmpty(arr, obj[key]);
         });
         return arr.join(symble);
     };
