@@ -32,7 +32,7 @@ module.exports = (function () {
         var extend = function (arr) {
             caro.eachObj(arr, function (i, eachVal) {
                 if (!duplicate) {
-                    self.pushNoDup(firstArr, eachVal);
+                    caro.pushNoDup(firstArr, eachVal);
                     return;
                 }
                 firstArr.push(eachVal);
@@ -112,7 +112,7 @@ module.exports = (function () {
     self.removeByArrVal = function (arr, val) {
         if (!caro.isArr(arr)) return arr;
         var index = arr.indexOf(val);
-        return self.removeByIndex(arr, index);
+        return caro.removeByIndex(arr, index);
     };
     /**
      * remove duplicate value in arr
