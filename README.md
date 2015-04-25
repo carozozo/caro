@@ -12,17 +12,18 @@ var validator = require('caro');
 caro.isArr(['caro']); // true
 ```
 
-### console 類
+## CORE -
+### console
 - **log(msg, variable)** - 輸出有顏色的 console 訊息
 - **log2(msg, variable)** - 輸出有顏色的 console 訊息
 - **log3(msg, variable)** - 輸出有顏色的 console 訊息
-
-### log 類
+### log
 - **readLog(logPath)** - 讀取 .log 檔
 - **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
 - **updateLog(logPath, data, opt)** - 如入資料至 .log 檔
 
-### array 類
+## HELPER -
+### array
 - **extendArr(arr1, arr2, opt)** - 合併2個陣列
 - **cloneArr(arr)** - 複製陣列
 - **sortByObjKey(arr,key,sort)** - 如果陣列中的值是物件，則可指定物件的 key 值排序
