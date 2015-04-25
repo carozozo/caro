@@ -19,13 +19,13 @@ module.exports = (function () {
     };
     self.isObj = function (arg) {
         // Note: array and null is object in js
-        return typeof(arg) === 'object' && arg !== null && !self.isArr(arg);
+        return typeof(arg) === 'object' && arg !== null && !caro.isArr(arg);
     };
     self.isArr = function (arg) {
         return Array.isArray(arg);
     };
     self.isBasicVal = function (arg) {
-        return self.isBool(arg) || self.isStr(arg) || self.isNum(arg);
+        return caro.isBool(arg) || caro.isStr(arg) || caro.isNum(arg);
     };
     /**
      * check if value is empty ({}/[]/undefined/null/'')
@@ -33,16 +33,16 @@ module.exports = (function () {
      * @returns {boolean}
      */
     self.isEmptyVal = function (val) {
-        if (self.isObj(val)) {
+        if (caro.isObj(val)) {
             return caro.getObjLength(val) < 1;
         }
-        if (self.isArr(val)) {
+        if (caro.isArr(val)) {
             return val.length < 1;
         }
         return !val && val !== 0;
     };
     self.isTrue = function (arg) {
-        if (self.isStr(arg))  arg = arg.toLowerCase();
+        if (caro.isStr(arg))  arg = arg.toLowerCase();
         return arg === true || arg === 'true' || arg == 1;
     };
     self.isFalse = function (arg) {
@@ -60,7 +60,7 @@ module.exports = (function () {
         var fn = null;
         var otherArgs = [];
         caro.eachObj(arguments, function (i, arg) {
-            if (self.isFn(arg)) {
+            if (caro.isFn(arg)) {
                 fn = arg;
                 return;
             }
@@ -93,10 +93,14 @@ module.exports = (function () {
         if (opt) {
             force = opt.force !== false;
         }
-        if (self.isStr(arg)) {
+        if (caro.isStr(arg)) {
             return arg;
         }
-        if (arg && self.isFn(arg.toString)) {
+        if (caro.isObj(arg)) {
+            caro.coverFnToStrInObj(arg);
+            return caro.safeStringify(arg, null, 2);
+        }
+        if (arg && caro.isFn(arg.toString)) {
             return arg.toString();
         }
         if (force) return '';
@@ -114,7 +118,7 @@ module.exports = (function () {
         if (opt) {
             force = opt.force !== false;
         }
-        if (self.isEmptyVal(int) && !force) {
+        if (caro.isEmptyVal(int) && !force) {
             return arg;
         }
         int = int || 0;
@@ -132,7 +136,7 @@ module.exports = (function () {
         if (opt) {
             force = opt.force !== false;
         }
-        if (self.isEmptyVal(int) && !force) {
+        if (caro.isEmptyVal(int) && !force) {
             return arg;
         }
         int = int || 0;
@@ -146,7 +150,7 @@ module.exports = (function () {
      */
     self.coverToObj = function (arg, opt) {
         var force = true;
-        if (self.isObj(arg)) return arg;
+        if (caro.isObj(arg)) return arg;
         if (opt) {
             force = opt.force !== false;
         }

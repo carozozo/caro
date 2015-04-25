@@ -72,9 +72,9 @@ module.exports = (function () {
             chars.push('0123456789');
         chars = chars.join('');
         // cover to array if string
-        exclude = self.splitStr(exclude, ',');
+        exclude = caro.splitStr(exclude, ',');
         caro.eachObj(exclude, function (i, excludeStr) {
-            chars = self.replaceAll(chars, excludeStr, '');
+            chars = caro.replaceAll(chars, excludeStr, '');
         });
         for (var i = 0; i < len; i++)
             text += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -119,7 +119,7 @@ module.exports = (function () {
     self.isEngNum = function (str) {
         if (!caro.isStr(str)) return false;
         str = str.replace(/[a-zA-Z]/g, '');
-        return self.isInt(str);
+        return caro.isInt(str);
     };
     /**
      * check str if "true"/"false" and covert to boolean, no change otherwise
@@ -229,7 +229,7 @@ module.exports = (function () {
      */
     self.replaceAll = function (str, find, replace) {
         if (!caro.isStr(str)) return str;
-        find = self.escapeRegExp(find);
+        find = caro.escapeRegExp(find);
         var regex = new RegExp(find, "g");
         return str.replace(regex, replace);
     };
@@ -299,7 +299,7 @@ module.exports = (function () {
         var aStr = str.split('');
         var aStrClone = caro.cloneArr(aStr);
         caro.eachObj(aStrClone, function (i, char) {
-            var isUpper = self.isUpperCase(char);
+            var isUpper = caro.isUpperCase(char);
             if (indexCount > 0 && isUpper) {
                 // add ' ' before upper-char
                 aStr.splice(indexCount, 0, ' ');
@@ -315,7 +315,7 @@ module.exports = (function () {
     };
     self.upperFirst = function (str) {
         if (!caro.isStr(str)) return str;
-        return self.upperStr(str, {
+        return caro.upperStr(str, {
             start: 0,
             end: 1
         })
@@ -402,7 +402,7 @@ module.exports = (function () {
      */
     self.encodeUrl = function (str) {
         if (caro.isStr(str)) {
-            return self.replaceAll(str, '+', encodeURIComponent('+'));
+            return caro.replaceAll(str, '+', encodeURIComponent('+'));
         }
         return str;
     };

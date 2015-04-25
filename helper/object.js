@@ -28,12 +28,12 @@ module.exports = (function () {
             useClone = opt.useClone === true;
         }
         if (useClone) {
-            objRet = self.cloneObj(obj);
+            objRet = caro.cloneObj(obj);
         }
-        aKey = aKey || self.getKeysInObj(objRet);
+        aKey = aKey || caro.getKeysInObj(objRet);
         aKey = caro.splitStr(aKey, ',');
-        self.eachObj(aKey, function (i, key) {
-            if (!self.keyInObj(objRet, key)) {
+        caro.eachObj(aKey, function (i, key) {
+            if (!caro.keyInObj(objRet, key)) {
                 return;
             }
             var val = objRet[key];
@@ -52,6 +52,20 @@ module.exports = (function () {
         return objRet;
     };
 
+    /**
+     * like jQuery.each function
+     * @param obj
+     * @param cb
+     */
+    self.eachObj = function (obj, cb) {
+        for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                if (cb && cb(i, obj[i]) === false) {
+                    break;
+                }
+            }
+        }
+    };
     self.getObjLength = function (obj) {
         return Object.keys(obj).length;
     };
@@ -64,9 +78,9 @@ module.exports = (function () {
      */
     self.extendObj = function (obj1, obj2, deep) {
         deep = deep !== false;
-        self.eachObj(obj2, function (key, val) {
+        caro.eachObj(obj2, function (key, val) {
             if (deep) {
-                obj1[key] = self.cloneObj(val, deep);
+                obj1[key] = caro.cloneObj(val, deep);
                 return;
             }
             obj1[key] = val;
@@ -110,7 +124,7 @@ module.exports = (function () {
     self.extractByObjKey = function (obj, keys) {
         keys = caro.splitStr(keys, ',');
         var obj2 = {};
-        self.eachObj(keys, function (i, key) {
+        caro.eachObj(keys, function (i, key) {
             obj2[key] = obj[key];
             delete obj[key];
         });
@@ -135,12 +149,12 @@ module.exports = (function () {
             useClone = opt.useClone === true;
         }
         keys = caro.splitStr(keys, ',');
-        self.eachObj(keys, function (i, key) {
+        caro.eachObj(keys, function (i, key) {
             if (!useClone) {
                 obj2[key] = obj1[key];
                 return;
             }
-            obj2[key] = self.cloneObj(obj1[key]);
+            obj2[key] = caro.cloneObj(obj1[key]);
         });
         return obj2;
     };
@@ -173,7 +187,7 @@ module.exports = (function () {
             useClone = opt.useClone === true;
         }
         if (useClone) {
-            objRet = self.cloneObj(obj);
+            objRet = caro.cloneObj(obj);
         }
         if (objRet.hasOwnProperty(oldKey)) {
             objRet[newKey] = objRet[oldKey];
@@ -202,10 +216,10 @@ module.exports = (function () {
      * @returns {*}
      */
     self.replaceObjKeys = function (obj, aKeyMap, opt) {
-        self.eachObj(aKeyMap, function (i, keyMap) {
+        caro.eachObj(aKeyMap, function (i, keyMap) {
             var oldKey = keyMap[0];
             var newKey = keyMap[1];
-            obj = self.replaceObjKey(obj, oldKey, newKey, opt);
+            obj = caro.replaceObjKey(obj, oldKey, newKey, opt);
         });
         return obj;
     };
@@ -245,7 +259,7 @@ module.exports = (function () {
             clone = opt.clone === true;
         }
         if (clone) {
-            oClone = self.cloneObj(obj);
+            oClone = caro.cloneObj(obj);
         }
         var coverObjVal = function (o) {
             caro.eachObj(o, function (key, val) {
@@ -269,11 +283,11 @@ module.exports = (function () {
             useClone = opt.useClone === true;
         }
         if (useClone) {
-            objRet = self.cloneObj(obj);
+            objRet = caro.cloneObj(obj);
         }
-        self.eachObj(objRet, function (key, val) {
+        caro.eachObj(objRet, function (key, val) {
             if (caro.isObj(val)) {
-                objRet[key] = self.trimObjVal(val, opt);
+                objRet[key] = caro.trimObjVal(val, opt);
             }
             if (caro.isStr(val)) {
                 objRet[key] = val.trim();
@@ -296,7 +310,7 @@ module.exports = (function () {
     self.keyInObj = function (obj, aKey) {
         var pass = true;
         aKey = caro.coverToArr(aKey);
-        self.eachObj(aKey, function (i, key) {
+        caro.eachObj(aKey, function (i, key) {
             if (!obj.hasOwnProperty(key)) {
                 pass = false;
                 return false;
@@ -325,7 +339,7 @@ module.exports = (function () {
         var levelCount = 0;
         var getKey = function (obj) {
             levelCount++;
-            self.eachObj(obj, function (key, val) {
+            caro.eachObj(obj, function (key, val) {
                 if (levelLimit > 0 && levelCount > levelLimit) {
                     return;
                 }
@@ -344,24 +358,27 @@ module.exports = (function () {
     self.joinInObj = function (obj, aKey, symble) {
         var arr = [];
         aKey = caro.coverToArr(aKey);
-        self.eachObj(aKey, function (i, key) {
+        caro.eachObj(aKey, function (i, key) {
             caro.pushNoEmpty(arr, obj[key]);
         });
         return arr.join(symble);
     };
     /**
-     * like jQuery.each function
      * @param obj
-     * @param cb
      */
-    self.eachObj = function (obj, cb) {
-        for (var i in obj) {
-            if (obj.hasOwnProperty(i)) {
-                if (cb && cb(i, obj[i]) === false) {
-                    break;
-                }
+    self.coverFnToStrInObj = function (obj) {
+        caro.eachObj(obj, function (key, val) {
+            if (caro.isObj(val)) {
+                caro.coverFnToStrInObj(val);
+                return;
             }
-        }
+            if (caro.isFn(val)) {
+                var fnStr = val.toString();
+                fnStr = caro.replaceAll(fnStr, '\r', '');
+                fnStr = caro.replaceAll(fnStr, '\n', '');
+                obj[key] = fnStr;
+            }
+        });
     };
     return self;
 })();

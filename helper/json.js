@@ -5,6 +5,11 @@
 module.exports = (function () {
     var self = {};
 
+    /**
+     * cover JSON to obj
+     * @param str
+     * @returns {*}
+     */
     self.parseJson = function (str) {
         try {
             return JSON.parse(str);
@@ -14,7 +19,7 @@ module.exports = (function () {
         return str;
     };
     /**
-     * safe cover Json obj to string
+     * cover obj to JSON
      * @param obj
      * @param [replace]
      * @param [space]
