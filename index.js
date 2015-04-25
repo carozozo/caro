@@ -38,7 +38,7 @@ var getFiles = function (path, cb) {
     }
 };
 (function requireSystem() {
-    var arr = ['core', './lib/', './helper'];
+    var arr = ['./lib/', './helper'];
     eachObj(arr, function (i, path) {
         getFiles(path, function (fullPath) {
             caro = extendObj(caro, require(fullPath));
