@@ -1,7 +1,7 @@
 # Caro.js
 通用函式 by caro
 
-## 安裝
+## 安裝及使用##
 
 ```bash
 $ npm install caro
@@ -12,18 +12,9 @@ var validator = require('caro');
 caro.isArr(['caro']); // true
 ```
 
-## CORE - ##
-### console ###
-- **log(msg, variable)** - 輸出有顏色的 console 訊息
-- **log2(msg, variable)** - 輸出有顏色的 console 訊息
-- **log3(msg, variable)** - 輸出有顏色的 console 訊息
+***
 
-### log ###
-- **readLog(logPath)** - 讀取 .log 檔
-- **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
-- **updateLog(logPath, data, [opt])** - 如入資料至 .log 檔
-
-## HELPER - ##
+## HELPER 類別- ##
 ### array ###
 - **extendArr(arr1, [ arr2, arr3...], [opt])** - 合併2個陣列
 - **cloneArr(arr)** - 複製陣列
@@ -53,3 +44,16 @@ caro.isArr(['caro']); // true
 - **coverToInt((arg, opt)** - 將變數轉為 integer
 - **coverToNum((arg, opt)** - 將變數轉為 number
 - **coverToObj((arg, opt)** - 將變數轉為 object
+
+***
+
+## LIBRARY 類別- ##
+### console ###
+- **log(msg, variable)** - 輸出有顏色的 console 訊息
+- **log2(msg, variable)** - 輸出有顏色的 console 訊息
+- **log3(msg, variable)** - 輸出有顏色的 console 訊息
+
+### log ###
+- **readLog(logPath)** - 讀取 .log 檔
+- **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
+- **updateLog(logPath, data, [opt])** - 如入資料至 .log 檔
