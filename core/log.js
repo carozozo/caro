@@ -22,7 +22,7 @@ module.exports  = (function () {
             }
             return caro.readFile(logPath);
         } catch (e) {
-            caro.logErr('caro.readLog', e);
+           console.error('caro.readLog', e);
             return null;
         }
     };
@@ -39,26 +39,27 @@ module.exports  = (function () {
         try {
             var size = caro.getFileSizeInMegabytes(logPath);
             if (size > 1) {
-                caro.logErr('caro.writeLog', logPath + ' size ' + size + ' is more thane 1 mb');
+               console.error('caro.writeLog', logPath + ' size ' + size + ' is more thane 1 mb');
                 return;
             }
             data = caro.safeStringify(data, null, 2);
             caro.writeFile(logPath, data);
         } catch (e) {
-            caro.logErr('caro.writeLog', e);
+           console.error('caro.writeLog', e);
         }
     };
     /**
      * update log data
      * OPT
-     * ifWrap: str (default: true) - add wrap with add-data
+     * ifWrap: bool (default: true) - add wrap with add-data
+     * prepend: bool (default: false) - add data in front of origin-data
      *
      * @param logPath
      * @param data
      * @param [opt]
      */
     self.updateLog = function (logPath, data, opt) {
-        var originData = caro.readLog(logPath);
+        var originData = self.readLog(logPath);
         var wrap = '\r\n';
         var ifWrap = true;
         var prepend = false;

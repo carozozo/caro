@@ -1,4 +1,5 @@
 global.caro = {};
+global.__rootPath = __dirname;
 var nPath = require('path');
 var nFs = require('fs');
 var eachObj = function (obj, cb) {
@@ -44,4 +45,11 @@ var getFiles = function (path, cb) {
         });
     });
 })();
+(function requireTest() {
+    var path = './test.js';
+    if (nFs.existsSync(path)) {
+        require(path);
+    }
+})();
+
 module.exports = caro;

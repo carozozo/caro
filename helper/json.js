@@ -9,7 +9,7 @@ module.exports = (function () {
         try {
             return JSON.parse(str);
         } catch (e) {
-            caro.logErr('caro.parseJson', e);
+           console.error('caro.parseJson', e);
         }
         return str;
     };
@@ -25,7 +25,7 @@ module.exports = (function () {
         try {
             return JSON.stringify(obj, replace, space);
         } catch (e) {
-            caro.logErr('caro.safeStringify', e);
+           console.error('caro.safeStringify', e);
         }
         return '';
     };
