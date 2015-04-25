@@ -42,10 +42,12 @@ module.exports = (function () {
         return !val && val !== 0;
     };
     self.isTrue = function (arg) {
+        if (self.isStr(arg))  arg = arg.toLowerCase();
         return arg === true || arg === 'true' || arg == 1;
     };
-    self.notFalse = function (arg) {
-        return arg !== false || arg !== 'false' || arg !== 0;
+    self.isFalse = function (arg) {
+        if (self.isStr(arg))  arg = arg.toLowerCase();
+        return arg === false || arg === 'false' || arg == 0;
     };
     /**
      * execute if first-argument is function
@@ -69,19 +71,23 @@ module.exports = (function () {
         }
         return fn;
     };
-    self.composePhoneNum = function (countryCode, areaCode, phoneNumber) {
-        countryCode = self.isStr(countryCode) ? '+' + countryCode : '';
-        areaCode = self.isStr(areaCode) ? areaCode : '';
-        phoneNumber = self.isStr(phoneNumber) ? phoneNumber : '';
-        var arr = [countryCode, areaCode, phoneNumber];
-        return arr.join(' ');
-    };
+    /**
+     * cover to arr
+     * @param arg
+     * @returns {*}
+     */
     self.coverToArr = function (arg) {
         if (caro.isArr(arg)) {
             return arg;
         }
         return [arg];
     };
+    /**
+     * cover to str, will return '' if opt.force not false
+     * @param arg
+     * @param [opt]
+     * @returns {*}
+     */
     self.coverToStr = function (arg, opt) {
         var force = true;
         if (opt) {
@@ -96,6 +102,12 @@ module.exports = (function () {
         if (force) return '';
         return arg;
     };
+    /**
+     * cover to int, will return 0 if opt.force not false
+     * @param arg
+     * @param [opt]
+     * @returns {*}
+     */
     self.coverToInt = function (arg, opt) {
         var force = true;
         var int = parseInt(arg);
@@ -108,6 +120,30 @@ module.exports = (function () {
         int = int || 0;
         return int;
     };
+    /**
+     * cover to num,, will return 0 if opt.force not false
+     * @param arg
+     * @param [opt]
+     * @returns {*}
+     */
+    self.coverToNum = function (arg, opt) {
+        var force = true;
+        var int = parseFloat(arg);
+        if (opt) {
+            force = opt.force !== false;
+        }
+        if (self.isEmptyVal(int) && !force) {
+            return arg;
+        }
+        int = int || 0;
+        return int;
+    };
+    /**
+     * cover to obj, will return 0 if opt.force not false
+     * @param arg
+     * @param opt
+     * @returns {*}
+     */
     self.coverToObj = function (arg, opt) {
         var force = true;
         if (self.isObj(arg)) return arg;
@@ -121,127 +157,6 @@ module.exports = (function () {
             return {};
         }
         return arg;
-    };
-    /**
-     * check if has same value with assigned-key in obj
-     * EX
-     * obj1 = {a: 1, b: 2};
-     * obj2 = {a: 'a', b: 1, c: 3, d: 4};
-     * hasSameValInObj([obj1, 'a'], [obj2, 'b']) => compare obj1[a] === obj2[b] => true
-     * hasSameValInObj([obj1, 'a'], [obj2, 'b', 'c']) => compare obj1[a] === obj2[b] => true
-     * hasSameValInObj(obj1, obj2, 'a'); => compare obj1[a] === obj2[a] => false
-     * hasSameValInObj(obj1, obj2, 'd'); => compare obj1[d] === obj2[d] => false
-     * @param arr1
-     * @param arr2
-     * @param [key]
-     * @returns {boolean}
-     */
-    self.hasSameValInObj = function (arr1, arr2, key) {
-        var validate = true;
-        var getObjAndKeys = function (arr) {
-            // arr assign-format should like [obj,key1,key2...]
-            // validate will be false if arr not match the assign-format
-            var obj = {};
-            var aKey = [];
-            caro.eachObj(arr, function (i, arg) {
-                if (i === 0) {
-                    if (self.isObj(arg)) {
-                        obj = arg;
-                        return true;
-                    }
-                    validate = false;
-                    return validate;
-                }
-                if (self.isStr(arg)) {
-                    aKey.push(arg);
-                    return true;
-                }
-                validate = false;
-                return validate;
-            });
-            return {
-                obj: obj,
-                aKey: aKey
-            };
-        };
-        // ex. arr1 = [{a: 1, b: 2}, 'a'], arr1 = [{a: 1, b: 1, c: 3, d: 4}, 'b']
-        // => compare arr1[a] === arr2[b]
-        validate = self.isArr(arr1) && self.isArr(arr2) && arr1.length <= arr2.length;
-        if (!validate) {
-            // ex. arr1 = {a: 1, b: 2}, arr2 = {a: 1, b: 1, c: 3, d: 4}, key = 'a'
-            // compare arr1[a] === arr2[a]
-            validate = self.isObj(arr1) && self.isObj(arr2) && self.isStr(key);
-            if (!validate) {
-                return validate;
-            }
-            // cover arguments to assign-format
-            arr1 = [arr1, key];
-            arr2 = [arr2, key];
-        }
-        var objAndKeys = getObjAndKeys(arr1);
-        if (!validate) {
-            // arr1 not match the assign-format
-            return validate;
-        }
-        var obj1 = objAndKeys.obj;
-        var aKey1 = objAndKeys.aKey;
-        objAndKeys = getObjAndKeys(arr2);
-        if (!validate) {
-            // arr2 not match the assign-format
-            return validate;
-        }
-        var obj2 = objAndKeys.obj;
-        var aKey2 = objAndKeys.aKey;
-        caro.eachObj(aKey1, function (i, key1) {
-            var key2 = aKey2[i];
-            if (!caro.keyInObj(obj1, key1) || !caro.keyInObj(obj2, key2)) {
-                validate = false;
-                return false;
-            }
-            var val1 = obj1[key1];
-            var val2 = obj2[key2];
-            if (val1 !== val2) {
-                validate = false;
-                return false;
-            }
-            return true;
-        });
-        return validate;
-    };
-
-    /**
-     * convenience formatting to full-string of start-of-day
-     * EX.
-     * 2013-01-01 23:00:00 => 2013-01-01 00:00:00
-     * 2013-01-01 00:00:00 => 2013-01-01T00:00:00.000+0800
-     * 2013-01-01T00:00:00.000+0800 => 2013-01-01T00:00:00.000%2B0800
-     * @param date
-     * @returns {*}
-     */
-    self.encodeStartOfDayFull = function (date) {
-        if (date) {
-            date = caro.startOf(date, 'day');
-            date = caro.formatFull(date);
-            date = caro.encodeUrl(date);
-        }
-        return date;
-    };
-    /**
-     * convenience formatting to full-string of end-of-day
-     * EX.
-     * 2013-01-01 01:00:00 => 2013-01-01 23:59:59
-     * 2013-01-01 23:59:59 => 2013-01-01T23:59:59.999+0800
-     * 2013-01-01T23:59:59.999+0800 => 2013-01-01T23:59:59.999%2B0800
-     * @param date
-     * @returns {*}
-     */
-    self.encodeEndOfDayFull = function (date) {
-        if (date) {
-            date = caro.endOf(date, 'day');
-            date = caro.formatFull(date);
-            date = caro.encodeUrl(date);
-        }
-        return date;
     };
     return self;
 })();
