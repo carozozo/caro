@@ -59,6 +59,7 @@ module.exports = (function () {
     self.executeIfFn = function () {
         var fn = null;
         var otherArgs = [];
+        var ret;
         caro.eachObj(arguments, function (i, arg) {
             if (caro.isFn(arg)) {
                 fn = arg;
@@ -67,9 +68,9 @@ module.exports = (function () {
             otherArgs.push(arg);
         });
         if (fn) {
-            fn = fn.apply(fn, otherArgs);
+            ret = fn.apply(fn, otherArgs);
         }
-        return fn;
+        return ret;
     };
     /**
      * cover to arr
@@ -97,10 +98,17 @@ module.exports = (function () {
             return arg;
         }
         if (caro.isObj(arg)) {
-            caro.coverFnToStrInObj(arg);
-            return caro.safeStringify(arg, null, 2);
+            // cover fn to str first, and not replace \r\n
+            caro.coverFnToStrInObj(arg, {
+                replaceWrap: false
+            });
+            // after cover to json, replace \\r\\n to wrap
+            arg = caro.coverToJson(arg);
+            arg = caro.replaceAll(arg, '\\r', '\r');
+            arg = caro.replaceAll(arg, '\\n', '\n');
+            return arg;
         }
-        if (arg && caro.isFn(arg.toString)) {
+        if (arg!==undefined && caro.isFn(arg.toString)) {
             return arg.toString();
         }
         if (force) return '';
@@ -143,7 +151,7 @@ module.exports = (function () {
         return int;
     };
     /**
-     * cover to obj, will return 0 if opt.force not false
+     * cover to obj, will return {} if opt.force not false
      * @param arg
      * @param opt
      * @returns {*}
@@ -161,6 +169,35 @@ module.exports = (function () {
             return {};
         }
         return arg;
+    };
+    /**
+     * OPT
+     * force: bool (default: true) - if force-cover
+     * replace: fn (default: null) - the replace-fn in each element
+     * space: int (default:2) - the space for easy-read
+     * @param arg
+     * @param [opt]
+     * @returns {*}
+     */
+    self.coverToJson = function (arg, opt) {
+        var force = true;
+        var replace = null;
+        var space = 4;
+        var json = '';
+        if (opt) {
+            force = opt.force !== false;
+            replace = opt.replace || replace;
+            space = opt.space !== undefined ? opt.space : space;
+        }
+        if (space) {
+            json = JSON.stringify(arg, replace, space);
+        } else {
+            json = JSON.stringify(arg, replace);
+        }
+        if (caro.isJson(json) || !force) {
+            return json;
+        }
+        return '';
     };
     return self;
 })();
