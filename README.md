@@ -62,6 +62,25 @@ caro.isArr(['caro']); // true
 - **getKeysInObj(obj [, levelLimit])** - 取得 obj 中的 key
 - **coverFnToStrInObj(obj [, opt])** - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)
 
+### string ###
+- **random(len [, opt])** - 產生隨機字串
+- **toBool(str)** - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false
+- **addHead(str, addStr)** - 在字串的開頭加上新字串(不重覆)
+- **addTail(str, addStr)** - 在字串的尾巴加上新字串(不重覆)
+- **wrapToBr(str, addStr)** - 將字串中的換行符號轉為 '\<br /\>'
+- **brToWrap(str, addStr)** - 將字串中的 '\<br /\>' 轉為換行符號
+- **splitByWrap(str)** - 將字串以換行符號切割為陣列
+- **escapeRegExp(str)** - 將字串中的特定符號轉為跳脫字元
+- **replaceAll(str, find, replace)** - 取代符合的字串
+- **formatMoney(str [, type] [, opt])** - 轉換為錢幣格式
+- **insertBlankBefUpper(str)** - 在大寫的字母前面加上空白
+- **upperStr(str [, opt])** - 將字串轉為大寫
+- **upperFirst(str)** - 將第一個字母轉為大寫
+- **lowerStr(str [, opt])** - 將字串轉為小寫
+- **trimStr(str [, force])** - 移除字串前後空白
+- **splitStr(str [, splitter] [, force])** - 移除字串前後空白
+- **serializeUrl(str [, oArgs] [, coverEmpty=false])** - 將變數物件代入 URL
+
 ***
 
 ## LIBRARY 類別- ##

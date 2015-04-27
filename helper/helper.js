@@ -1,63 +1,107 @@
 /**
  * The helper of common fns
+ * @namespace caro
  * @author Caro.Huang
  */
 module.exports = (function () {
+    "use strict";
     var self = {};
 
+    /**
+     * @param arg
+     * @returns {boolean}
+     */
     self.isBool = function (arg) {
-        return typeof(arg) === 'boolean';
+        return typeof arg === 'boolean';
     };
+    /**
+     * @param arg
+     * @returns {boolean}
+     */
     self.isStr = function (arg) {
-        return typeof(arg) === 'string';
+        return typeof arg === 'string';
     };
+    /**
+     * @param arg
+     * @returns {boolean}
+     */
     self.isNum = function (arg) {
         return typeof(arg) === 'number';
     };
+    /**
+     * @param arg
+     * @returns {boolean}
+     */
     self.isFn = function (arg) {
         return typeof(arg) === 'function';
     };
+    /**
+     * @param arg
+     * @returns {boolean}
+     */
     self.isObj = function (arg) {
         // Note: array and null is object in js
         return typeof(arg) === 'object' && arg !== null && !caro.isArr(arg);
     };
+    /**
+     * @param arg
+     * @returns {*}
+     */
     self.isArr = function (arg) {
         return Array.isArray(arg);
     };
+    /**
+     * check if arg is bool | str | num
+     * @param arg
+     * @returns {boolean}
+     */
     self.isBasicVal = function (arg) {
         return caro.isBool(arg) || caro.isStr(arg) || caro.isNum(arg);
     };
     /**
      * check if value is empty ({}/[]/undefined/null/'')
-     * @param val
+     * @param arg
      * @returns {boolean}
      */
-    self.isEmptyVal = function (val) {
-        if (caro.isObj(val)) {
-            return caro.getObjLength(val) < 1;
+    self.isEmptyVal = function (arg) {
+        if (caro.isObj(arg)) {
+            return caro.getObjLength(arg) < 1;
         }
-        if (caro.isArr(val)) {
-            return val.length < 1;
+        if (caro.isArr(arg)) {
+            return arg.length < 1;
         }
-        return !val && val !== 0;
+        return !arg && arg !== 0;
     };
+    /**
+     * check if value is true | 'true' | 1
+     * @param arg
+     * @returns {boolean}
+     */
     self.isTrue = function (arg) {
-        if (caro.isStr(arg))  arg = arg.toLowerCase();
-        return arg === true || arg === 'true' || arg == 1;
+        if (caro.isStr(arg)) {
+            arg = arg.toLowerCase();
+        }
+        return arg === true || arg === 'true' || arg === 1;
     };
+    /**
+     * check if value is false | 'false' | 0
+     * @param arg
+     * @returns {boolean}
+     */
     self.isFalse = function (arg) {
-        if (self.isStr(arg))  arg = arg.toLowerCase();
-        return arg === false || arg === 'false' || arg == 0;
+        if (self.isStr(arg)) {
+            arg = arg.toLowerCase();
+        }
+        return arg === false || arg === 'false' || arg === 0;
     };
     /**
      * execute if first-argument is function
-     * ex.
-     * executeIfFn(fn,arg1,arg2,...)
-     * will return value as fn(arg1,arg2,...)
+     * @param {function} fn
+     * @param {...*} args function-arguments
      * @returns {*}
      */
-    self.executeIfFn = function () {
-        var fn = null;
+    self.executeIfFn = function (fn, args) {
+        fn = null;
         var otherArgs = [];
         var ret;
         caro.eachObj(arguments, function (i, arg) {
@@ -86,7 +130,8 @@ module.exports = (function () {
     /**
      * cover to str, will return '' if opt.force not false
      * @param arg
-     * @param [opt]
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if return str
      * @returns {*}
      */
     self.coverToStr = function (arg, opt) {
@@ -108,16 +153,19 @@ module.exports = (function () {
             arg = caro.replaceAll(arg, '\\n', '\n');
             return arg;
         }
-        if (arg!==undefined && caro.isFn(arg.toString)) {
+        if (arg !== undefined && caro.isFn(arg.toString)) {
             return arg.toString();
         }
-        if (force) return '';
+        if (force) {
+            return '';
+        }
         return arg;
     };
     /**
      * cover to int, will return 0 if opt.force not false
      * @param arg
-     * @param [opt]
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if return int
      * @returns {*}
      */
     self.coverToInt = function (arg, opt) {
@@ -135,7 +183,8 @@ module.exports = (function () {
     /**
      * cover to num,, will return 0 if opt.force not false
      * @param arg
-     * @param [opt]
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true]  if return num
      * @returns {*}
      */
     self.coverToNum = function (arg, opt) {
@@ -153,16 +202,19 @@ module.exports = (function () {
     /**
      * cover to obj, will return {} if opt.force not false
      * @param arg
-     * @param opt
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if return object
      * @returns {*}
      */
     self.coverToObj = function (arg, opt) {
         var force = true;
-        if (caro.isObj(arg)) return arg;
+        if (caro.isObj(arg)) {
+            return arg;
+        }
         if (opt) {
             force = opt.force !== false;
         }
-        if (caro.isJson(arg)) {
+        if (caro.isJSON(arg)) {
             return JSON.parse(arg);
         }
         if (force) {
@@ -171,12 +223,11 @@ module.exports = (function () {
         return arg;
     };
     /**
-     * OPT
-     * force: bool (default: true) - if force-cover
-     * replace: fn (default: null) - the replace-fn in each element
-     * space: int (default:2) - the space for easy-read
      * @param arg
-     * @param [opt]
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if force cover to JSON
+     * @param {function=null} [opt.replace] the replace-function in each element
+     * @param {space=4} [opt.space] the space for easy-reading after cover to JSON
      * @returns {*}
      */
     self.coverToJson = function (arg, opt) {
@@ -194,7 +245,7 @@ module.exports = (function () {
         } else {
             json = JSON.stringify(arg, replace);
         }
-        if (caro.isJson(json) || !force) {
+        if (caro.isJSON(json) || !force) {
             return json;
         }
         return '';
