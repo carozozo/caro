@@ -93,6 +93,6 @@ caro.isArr(['caro']); // true
 ### log ###
 - **readLog(logPath)** - 讀取 .log 檔
 - **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
-- **updateLog(logPath, data, [opt])** - 如入資料至 .log 檔
-- **updateLogWithDayFileName(logPath, data, [opt])** - 產生/更新有今天日期名稱的 .log 檔
-- **traceLog( data, [opt])** - 產生/更新 trace.log 檔
+- **updateLog(logPath, data [,opt])** - 加入資料至 .log 檔
+- **updateLogWithDayFileName(logPath, data [,opt])** - 產生/更新有今天日期名稱的 .log 檔
+- **traceLog( data [,opt])** - 產生/更新 trace.log 檔

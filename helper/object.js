@@ -58,6 +58,9 @@ module.exports = (function () {
     self.eachObj = function (obj, cb) {
         for (var i in obj) {
             if (obj.hasOwnProperty(i)) {
+                if (caro.isNumeric(i)) {
+                    i = parseInt(i);
+                }
                 if (cb && cb(i, obj[i]) === false) {
                     break;
                 }
