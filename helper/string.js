@@ -152,37 +152,8 @@ module.exports = (function () {
      */
     self.splitByWrap = function (str) {
         if (!caro.isStr(str)) return str;
-        var wrap = '\r\n';
-        var wrap2 = '\r';
-        var wrap3 = '\n';
-        var ret = [];
-        var count = 0;
-        var hasWrap = function (str) {
-            return str.indexOf(wrap) > -1 || str.indexOf(wrap2) > -1 || str.indexOf(wrap3) > -1;
-        };
-        var fn = function (str) {
-            var arr = [];
-            switch (count) {
-                case 0:
-                    arr = str.split(wrap);
-                    break;
-                case 1:
-                    arr = str.split(wrap2);
-                    break;
-                case 2:
-                    arr = str.split(wrap3);
-                    break;
-            }
-            count++;
-            caro.eachObj(arr, function (i, subStr) {
-                if (!hasWrap(subStr)) {
-                    ret.push(subStr);
-                    return;
-                }
-                fn(subStr);
-            });
-        };
-        fn(str);
+        var aWrap = ['\r\n', '\r', '\n'];
+        ret = caro.splitStr(str, aWrap);
         return ret;
     };
     /**
@@ -331,7 +302,7 @@ module.exports = (function () {
     };
     /**
      * @param {string} str
-     * @param {string} splitter
+     * @param {string|string[]} splitter
      * @param {boolean} [force=true] if force cover to str
      * @returns {*}
      */
@@ -339,15 +310,34 @@ module.exports = (function () {
         if (caro.isArr(str)) {
             return str;
         }
+        if (splitter === undefined) {
+            return [];
+        }
+        splitter = caro.coverToArr(splitter);
         force = force !== false;
         if (!caro.isStr(str)) {
             if (!force) {
                 return str;
             }
-            str = '';
+            return [];
         }
-        splitter = caro.isStr(splitter) ? splitter : '';
-        return str.split(splitter);
+        // get mainSplit first
+        // e.g. splitter=['a','ab','c']; => mainSplit='c'
+        var mainSplit = splitter[0];
+        caro.eachObj(splitter, function (j, eachSplit2) {
+            if (mainSplit.length >= eachSplit2.length) {
+                mainSplit = eachSplit2;
+            }
+        });
+        if (!mainSplit) {
+            return str;
+        }
+        // replace all splitter to mainSplitter
+        // e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
+        caro.eachObj(splitter, function (i, eachSplit) {
+            str = caro.replaceAll(str, eachSplit, mainSplit);
+        });
+        return str.split(mainSplit);
     };
     /**
      * serialize obj-arguments to url
