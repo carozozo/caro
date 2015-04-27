@@ -1,5 +1,6 @@
 /**
  * The helper of common object functions
+ * @namespace caro
  * @author Caro.Huang
  */
 module.exports = (function () {
@@ -7,16 +8,14 @@ module.exports = (function () {
     /**
      * change obj string-value by key, will change-all if aKey is empty
      * support-type: upper/lower/upperFirst
-     * aKey can be separated-str/arr
-     * OPT
-     * clone: if use cloned obj for not replacing original obj
-     * @param obj
-     * @param type
-     * @param [aKey]
-     * @param [opt]
+     * @param {object} obj
+     * @param {string} type=upper|lower|upperFirst support-type
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
      * @returns {*}
      */
-    var changeStrValByObjKey = function (obj, type, aKey, opt) {
+    var changeStrValByObjKey = function (obj, type, keys, opt) {
         var aType = ['upper', 'lower', 'upperFirst'];
         if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
             return obj;
@@ -29,9 +28,9 @@ module.exports = (function () {
         if (clone) {
             objRet = caro.cloneObj(obj);
         }
-        aKey = aKey || caro.getKeysInObj(objRet);
-        aKey = caro.splitStr(aKey, ',');
-        caro.eachObj(aKey, function (i, key) {
+        keys = keys || caro.getKeysInObj(objRet);
+        keys = caro.splitStr(keys, ',');
+        caro.eachObj(keys, function (i, key) {
             if (!caro.keysInObj(objRet, key)) {
                 return;
             }
@@ -53,8 +52,8 @@ module.exports = (function () {
 
     /**
      * like jQuery.each function
-     * @param obj
-     * @param cb
+     * @param {object} obj
+     * @param {function} cb callback-fn for each key & val
      */
     self.eachObj = function (obj, cb) {
         for (var i in obj) {
@@ -66,7 +65,7 @@ module.exports = (function () {
         }
     };
     /**
-     * @param obj
+     * @param {object} obj
      * @returns {Number}
      */
     self.getObjLength = function (obj) {
@@ -74,9 +73,9 @@ module.exports = (function () {
     };
     /**
      * extend obj similar jQuery.extend
-     * @param obj1
-     * @param obj2
-     * @param [deep]
+     * @param {object} obj1
+     * @param {object} obj2
+     * @param {boolean} [deep=true]
      * @returns {*}
      */
     self.extendObj = function (obj1, obj2, deep) {
@@ -91,10 +90,10 @@ module.exports = (function () {
         return obj1;
     };
     /**
-     * clone obj, if deep !== false, will clone all under obj
+     * clone obj, will clone all under obj when deep !== false
+     * @param {object} obj
+     * @param {boolean} [deep=true]
      * @returns {*}
-     * @param obj
-     * @param [deep]
      */
     self.cloneObj = function (obj, deep) {
         deep = deep !== false;
@@ -116,26 +115,24 @@ module.exports = (function () {
     };
     /**
      * copy obj-value by key
-     * EX.
-     * obj = { a:{}, b:'b', c:{ cc:'' } }
-     * obj2 = extractByObjKey(obj, 'a,c') or extractByObjKey(obj, ['a', 'c'])
-     * => obj = { b:'b' } , obj2 = { a:{}, c:{ cc:'' } }
-     * @param keys
-     * @param [opt]
+     * @param {object} obj
+     * @param {string[]|string} keys the element that want to copy by keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=true] if clone for not replacing original
+     * @param {boolean} [opt.keep=true] if keep original element
      * @returns {{}}
-     * @param obj
      */
     self.copyByObjKey = function (obj, keys, opt) {
-        var deep = true;
+        var clone = true;
         var keep = true;
         var obj2 = {};
         keys = caro.splitStr(keys, ',');
         if (opt) {
-            deep = opt.deep !== false;
+            clone = opt.clone !== false;
             keep = opt.keep !== false;
         }
         caro.eachObj(keys, function (i, key) {
-            if (deep)
+            if (clone)
                 obj2[key] = caro.cloneObj(obj[key]);
             else
                 obj2[key] = obj[key];
@@ -146,22 +143,13 @@ module.exports = (function () {
     };
     /**
      * replace key in object
-     * OPT
-     * clone: if use cloned-obj for not replacing original obj
-     * EX
-     * var obj1 = {a:1, b:2};
-     * var obj2 = replaceObjKey(a, function (key) {
-     *   if (key == 'b') { return 'bb' }
-     *   return false;
-     * },{clone:true});
-     * => obj1 = {a:1, b:2};
-     * => obj2 = {c:1, bb:2};
-     * @param obj
-     * @param replaceFn
-     * @param [opt]
+     * @param {object} obj
+     * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
      * @returns {*}
      */
-    self.replaceObjKey = function (obj, replaceFn, opt) {
+    self.replaceObjKey = function (obj, cb, opt) {
         var objRet = obj;
         var clone = false;
         if (opt) {
@@ -171,7 +159,7 @@ module.exports = (function () {
             objRet = caro.cloneObj(obj);
         }
         caro.eachObj(objRet, function (key, val) {
-            var newKey = caro.executeIfFn(replaceFn, key);
+            var newKey = caro.executeIfFn(cb, key);
             if (newKey) {
                 objRet[newKey] = val;
                 delete objRet[key];
@@ -180,19 +168,14 @@ module.exports = (function () {
         return objRet;
     };
     /**
-     * OPT
-     * deep: bool (default: true) - if cover for loop
-     * clone: bool (default: false) - if clone-object(will not change origin-object)
-     *
-     * EX
-     * obj= { a: undefined, b: 'bb'}
-     * replaceObjVal(obj, function(val){return 1;})
-     * => obj= { a: 1, b: 1}
-     * @param obj
-     * @param replaceFn
-     * @param [opt]
+     * @param {object} obj
+     * @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
+     * @param {object} [opt]
+     * @param {boolean} [opt.deep=false] if deep-replace when element is obj
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
      */
-    self.replaceObjVal = function (obj, replaceFn, opt) {
+    self.replaceObjVal = function (obj, cb, opt) {
         var oClone = obj;
         var deep = false;
         var clone = false;
@@ -202,7 +185,7 @@ module.exports = (function () {
                     coverObjVal(val);
                     return;
                 }
-                var newVal = caro.executeIfFn(replaceFn, val);
+                var newVal = caro.executeIfFn(cb, val);
                 if (newVal !== undefined) {
                     o[key] = newVal;
                 }
@@ -219,51 +202,58 @@ module.exports = (function () {
         return oClone;
     };
     /**
-     * @param obj
-     * @param aKey
-     * @param opt
+     * @param {object} obj
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
      * @returns {*}
      */
-    self.upperCaseByObjKey = function (obj, aKey, opt) {
-        changeStrValByObjKey(obj, 'upper', aKey, opt);
+    self.upperCaseByObjKey = function (obj, keys, opt) {
+        changeStrValByObjKey(obj, 'upper', keys, opt);
         return obj;
     };
     /**
-     * @param obj
-     * @param aKey
-     * @param opt
+     * @param {object} obj
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
      * @returns {*}
      */
-    self.lowerCaseByObjKey = function (obj, aKey, opt) {
-        changeStrValByObjKey(obj, 'lower', aKey, opt);
+    self.lowerCaseByObjKey = function (obj, keys, opt) {
+        changeStrValByObjKey(obj, 'lower', keys, opt);
         return obj;
     };
     /**
-     * @param obj
-     * @param aKey
-     * @param opt
+     * @param {object} obj
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
      * @returns {*}
      */
-    self.upperFirstByObjKey = function (obj, aKey, opt) {
-        changeStrValByObjKey(obj, 'upperFirst', aKey, opt);
+    self.upperFirstByObjKey = function (obj, keys, opt) {
+        changeStrValByObjKey(obj, 'upperFirst', keys, opt);
         return obj;
     };
     /**
-     * @param obj
-     * @param opt
+     * @param {object} obj
+     * @param {object} [opt]
+     * @param {boolean} [opt.deep=true] if deep-replace when element is obj
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
      * @returns {*}
      */
     self.trimObjVal = function (obj, opt) {
+        var deep = true;
         var clone = false;
         var objRet = obj;
         if (opt) {
+            deep = opt.deep !== false;
             clone = opt.clone === true;
         }
         if (clone) {
             objRet = caro.cloneObj(obj);
         }
         caro.eachObj(objRet, function (key, val) {
-            if (caro.isObj(val)) {
+            if (caro.isObj(val) && deep) {
                 objRet[key] = caro.trimObjVal(val, opt);
             }
             if (caro.isStr(val)) {
@@ -273,15 +263,9 @@ module.exports = (function () {
         return objRet;
     };
     /**
-     * check if key exists in obj
-     * EX
-     * a= { key1: 1, key2: 2};
-     * keysInObj(a, 'key1') => true
-     * keysInObj(a, ['key1','key2']) => true
-     * keysInObj(a, ['key1','key3']) => false
-     *
-     * @param obj
-     * @param keys
+     * check if key exists in obj, will return false when key not exist,no matter that other-keys are
+     * @param {object} obj
+     * @param {string[]|string} keys the keys that want to validate
      * @returns {boolean}
      */
     self.keysInObj = function (obj, keys) {
@@ -294,20 +278,12 @@ module.exports = (function () {
             }
             return true;
         });
-        console.log('pass=', pass);
         return pass;
     };
     /**
      * get keys in obj, and get all if levelLimit = 0
-     * levelLimit default by 1
-     * EX.
-     * obj={a:'1', b:'2', c:'3', obj1:{ aa:'4',bb:'5'}}
-     * getKeysInObj(obj);
-     * =>['a','b','c','obj1']
-     * getKeysInObj(obj, 0);
-     * =>['a','b','c','obj1','aa','bb']
-     * @param obj
-     * @param [levelLimit]
+     * @param {object} obj
+     * @param {number} [levelLimit=1] the level of obj you want to get keys
      * @returns {Array}
      */
     self.getKeysInObj = function (obj, levelLimit) {
@@ -335,10 +311,9 @@ module.exports = (function () {
         return arr;
     };
     /**
-     * OPT
-     * replaceWrap: bool (default: true) - if replace \r\n
-     * @param obj
-     * @param [opt]
+     * @param {object} obj
+     * @param {object} [opt]
+     * @param {boolean} [opt.replaceWrap=true] if replace \r\n
      */
     self.coverFnToStrInObj = function (obj, opt) {
         var replaceWrap = true;
