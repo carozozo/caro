@@ -153,7 +153,7 @@ module.exports = (function () {
             arg = caro.replaceAll(arg, '\\n', '\n');
             return arg;
         }
-        if (arg !== undefined && caro.isFn(arg.toString)) {
+        if (arg !== undefined && caro.keysInObj(arg,'toString') && caro.isFn(arg.toString)) {
             return arg.toString();
         }
         if (force) {

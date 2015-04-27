@@ -269,6 +269,9 @@ module.exports = (function () {
      * @returns {boolean}
      */
     self.keysInObj = function (obj, keys) {
+        if (!caro.isObj(obj)) {
+            return false;
+        }
         var pass = true;
         keys = caro.splitStr(keys, ',');
         caro.eachObj(keys, function (i, key) {
