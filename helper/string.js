@@ -4,7 +4,7 @@
  * @author Caro.Huang
  */
 module.exports = (function () {
-    // https://github.com/chriso/validator
+    // https://www.npmjs.com/package/validator
     var self = require('validator');
     var changeCase = function (str, type, opt) {
         var ret = [];
@@ -352,13 +352,14 @@ module.exports = (function () {
     /**
      * serialize obj-arguments to url
      * @param {string} url
-     * @param {object[]} oArgs the argument you want to cover (e.g. {a:1,b:2})
+     * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
      * @param {boolean} [coverEmpty=false] if cover when value is empty
      * @returns {*}
      */
     self.serializeUrl = function (url, oArgs, coverEmpty) {
         var count = 0;
         var aArgs = ['?'];
+        url = caro.coverToStr(url);
         oArgs = caro.coverToObj(oArgs);
         coverEmpty = coverEmpty === true;
         caro.eachObj(oArgs, function (key, val) {

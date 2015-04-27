@@ -63,6 +63,7 @@ caro.isArr(['caro']); // true
 - **coverFnToStrInObj(obj [, opt])** - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)
 
 ### string ###
+- [validator](https://www.npmjs.com/package/validator) - 驗證字串
 - **random(len [, opt])** - 產生隨機字串
 - **toBool(str)** - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false
 - **addHead(str, addStr)** - 在字串的開頭加上新字串(不重覆)
@@ -93,3 +94,5 @@ caro.isArr(['caro']); // true
 - **readLog(logPath)** - 讀取 .log 檔
 - **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
 - **updateLog(logPath, data, [opt])** - 如入資料至 .log 檔
+- **updateLogWithDayFileName(logPath, data, [opt])** - 產生/更新有今天日期名稱的 .log 檔
+- **traceLog( data, [opt])** - 產生/更新 trace.log 檔
