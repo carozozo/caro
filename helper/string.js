@@ -1,12 +1,13 @@
 /**
  * The helper of common string functions
+ * @namespace caro
  * @author Caro.Huang
  */
 module.exports = (function () {
-    var self = {};
-    // https://github.com/chriso/validator
-    var validator = require('validator');
+    // https://www.npmjs.com/package/validator
+    var self = require('validator');
     var changeCase = function (str, type, opt) {
+        var ret = [];
         var aType = ['toUpperCase', 'toLowerCase'];
         var start = null;
         var end = null;
@@ -23,10 +24,6 @@ module.exports = (function () {
             str = '';
         }
         type = (aType.indexOf(type) > -1) ? type : aType[0];
-        if (caro.isEmptyVal(start)) {
-            return str[type]();
-        }
-        var ret = [];
         start = caro.coverToInt(start);
         end = caro.coverToInt(end);
         ret.push(str.slice(0, start));
@@ -41,94 +38,60 @@ module.exports = (function () {
 
     /**
      * create random string
-     * OPT
-     * ifEn: bool (default: true) - if include lower-case English
-     * ifUpCase: bool (default: true) - if include upper-case English
-     * ifNum: bool (default: true) - if include number
-     * exclude: arr/str (default: []) - the charts that excluded
-     *
-     * @param len
-     * @param [opt]
+     * @param {number} len the length of random
+     * @param {object} [opt]
+     * @param {boolean} [opt.lower=true] if include lowercase
+     * @param {boolean} [opt.upper=true] if include uppercase
+     * @param {boolean} [opt.num=true]
+     * @param {string} [opt.exclude=[]] the charts that excluded
      * @returns {string}
      */
     self.random = function (len, opt) {
         var text = '';
         var chars = [];
-        var ifEn = true;
-        var ifUpCase = true;
-        var ifNum = true;
+        var lower = true;
+        var upper = true;
+        var num = true;
         var exclude = [];
+        len = (parseInt(len)) ? parseInt(len) : 1;
         if (opt) {
-            ifEn = opt.ifEn !== false;
-            ifUpCase = opt.ifUpCase !== false;
-            ifNum = opt.ifNum !== false;
+            lower = opt.lower !== false;
+            upper = opt.upper !== false;
+            num = opt.num !== false;
             exclude = opt.exclude || exclude;
         }
-        if (ifEn)
+        if (lower)
             chars.push('abcdefghijklmnopqrstuvwxyz');
-        if (ifUpCase)
+        if (upper)
             chars.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        if (ifNum)
+        if (num)
             chars.push('0123456789');
         chars = chars.join('');
         // cover to array if string
-        exclude = self.splitStr(exclude, ',');
+        exclude = caro.splitStr(exclude, ',');
         caro.eachObj(exclude, function (i, excludeStr) {
-            chars = self.replaceAll(chars, excludeStr, '');
+            chars = caro.replaceAll(String(chars), excludeStr, '');
         });
         for (var i = 0; i < len; i++)
             text += chars.charAt(Math.floor(Math.random() * chars.length));
         return text;
     };
-    self.isNumeric = function (str) {
-        return validator.isNumeric(str);
-    };
-    self.isInt = function (str) {
-        return validator.isInt(str);
-    };
-    self.isEmail = function (str) {
-        return validator.isEmail(str);
-    };
-    self.isUpperCase = function (str) {
-        return validator.isUppercase(str);
-    };
-    self.isLowercase = function (str) {
-        return validator.isLowercase(str);
-    };
     /**
-     * check the string if Json type
-     * @param str
-     * @returns {boolean}
-     */
-    self.isJson = function (str) {
-        return validator.isJSON(str);
-    };
-    /**
-     * check if all chart is eng-letter
-     * EX.
-     * isEngLetter('abc') => true
-     * isEngLetter('aa123') => false
-     * @param str
-     * @returns {boolean}
-     */
-    self.isEngLetter = function (str) {
-        if (!caro.isStr(str)) return false;
-        str = str.replace(/[a-zA-Z]/g, '');
-        return str === '';
-    };
-    self.isEngNum = function (str) {
-        if (!caro.isStr(str)) return false;
-        str = str.replace(/[a-zA-Z]/g, '');
-        return self.isInt(str);
-    };
-    /**
-     * check str if "true"/"false" and covert to boolean, no change otherwise
-     * @param str
+     * check str if ("true" | not-empty) / ("false" | empty) and covert to boolean
+     * @param {string} str
      * @returns {boolean}
      */
     self.toBool = function (str) {
-        str = (str == 'true') ? true : ((str == 'false') ? false : str);
-        return str;
+        if (!caro.isStr(str)) {
+            return false;
+        }
+        if (!str) {
+            // return false when str is empty
+            return false;
+        }
+        str = str.toLowerCase();
+        // return false when str='false', otherwise return true
+        return  (str != 'false');
     };
     /**
      * check if charts has in head of string
@@ -144,8 +107,8 @@ module.exports = (function () {
     };
     /**
      * add the head to string if not exist
-     * @param str
-     * @param addStr
+     * @param {string} str
+     * @param {string} addStr
      * @returns {*}
      */
     self.addHead = function (str, addStr) {
@@ -170,8 +133,8 @@ module.exports = (function () {
     };
     /**
      * add the tail to string if not exist
-     * @param str
-     * @param addStr
+     * @param {string} str
+     * @param {string} addStr
      * @returns {*}
      */
     self.addTail = function (str, addStr) {
@@ -181,17 +144,20 @@ module.exports = (function () {
         return str;
     };
     /**
-     * replace the \n(from client) to <br/>
-     * @param str
+     * replace \r\n | \r | \n to <br/>
+     * @param {string} str
      * @returns {*|string}
      */
     self.wrapToBr = function (str) {
         if (!caro.isStr(str)) return str;
-        return str.replace(/\n/g, '<br />');
+        str = str.replace(/\r\n/g, '<br />');
+        str = str.replace(/\n/g, '<br />');
+        str = str.replace(/\r/g, '<br />');
+        return str;
     };
     /**
      * replace the <br/> to \n
-     * @param str
+     * @param {string} str
      * @returns {*|string}
      */
     self.brToWrap = function (str) {
@@ -200,40 +166,18 @@ module.exports = (function () {
         return str.replace(regex, "\n");
     };
     /**
-     * split to array by '\n' '\r' '\r\n'
-     * OPT
-     * acceptEmpty: bool (default: false) - if still return array when str is empty
-     *
-     * @param str
-     * @param [opt]
+     * split to array by '\r\n' | '\n' | '\r'
+     * @param {string} str
      * @returns {*}
      */
-    self.splitByWrap = function (str, opt) {
+    self.splitByWrap = function (str) {
         if (!caro.isStr(str)) return str;
-        var acceptEmpty = false;
-        if (opt) {
-            acceptEmpty = opt.acceptEmpty === true;
-        }
-        if (!acceptEmpty && !str) {
-            return null;
-        }
-        var wrap = '\n';
-        if (str.indexOf(wrap) > -1) {
-            return str.split(wrap);
-        }
-        wrap = '\r';
-        if (str.indexOf(wrap) > -1) {
-            return str.split(wrap);
-        }
-        wrap = '\r\n';
-        if (str.indexOf(wrap) > -1) {
-            return str.split(wrap);
-        }
-        return [str];
+        var aWrap = ['\r\n', '\r', '\n'];
+        return caro.splitStr(str, aWrap);
     };
     /**
      * escape RegExp
-     * @param str
+     * @param {string} str
      * @returns {*|string}
      */
     self.escapeRegExp = function (str) {
@@ -242,75 +186,72 @@ module.exports = (function () {
     };
     /**
      * replace all find in str
-     * @param str
-     * @param find
-     * @param replace
+     * @param {string} str
+     * @param {string} find
+     * @param {string} replace
      * @returns {*|string}
      */
     self.replaceAll = function (str, find, replace) {
-        if (!caro.isStr(str)) return str;
-        find = self.escapeRegExp(find);
+        if (!caro.isStr(str) || !caro.isStr(find) || !caro.isStr(replace)) return str;
+        find = caro.escapeRegExp(find);
         var regex = new RegExp(find, "g");
         return str.replace(regex, replace);
     };
     /**
-     * format not money type like 1,000.00
-     * OPT
-     * float: int (default: 2) - float length
-     * decimal: str (default: '.') - decimal-symbol
-     * separated: str (default: ',') - separated-symbol
-     * prefix: str (default: '') - prefix-symbol
-     * currency: str (default: '') - currency code
-     *
-     * Customized-OPT
-     * 'int': integer-money
-     * 'sInt': integer-money with prefix [$]
-     *
-     * @param str
-     * @param [arg1]
-     * @param arg2
+     * format str to money type like 1,000.00
+     * @param {string|number} str
+     * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+     * @param {object} [opt]
+     * @param {number} [opt.float=2]
+     * @param [opt.decimal=.]
+     * @param [opt.separated=,]
+     * @param [opt.prefix]
      * @returns {string}
      */
-    self.formatMoney = function (str, arg1, arg2) {
+    self.formatMoney = function (str, type, opt) {
         var ret = [];
         var isObj = caro.isObj;
         var isStr = caro.isStr;
-        var option = isObj(arg1) ? arg1 : (isObj(arg2) ? arg2 : undefined);
-        var type = isStr(arg1) ? arg1 : (isStr(arg2) ? arg2 : '');
         var float = 2;
         var decimal = '.';
         var separated = ',';
         var prefix = '';
-        var currency = '';
-        if (isObj(option)) {
-            float = (float = Math.abs(option.float)) > -1 ? float : 2;
-            decimal = isStr(option.decimal) ? option.decimal : decimal;
-            separated = isStr(option.separated) ? option.separated : separated;
-            prefix = isStr(option.prefix) ? option.prefix : prefix;
-            currency = isStr(option.currency) ? option.currency : currency;
-        }
+        caro.eachObj(arguments, function (i, arg) {
+            if (i === '0') {
+                return;
+            }
+            if (isObj(arg)) {
+                opt = arg;
+            }
+            if (isStr(arg)) {
+                type = arg;
+            }
+        });
         if (type === 'sInt') {
             float = 0;
             prefix = '$';
         }
         else if (type === 'int') {
             float = 0;
+        } else if (isObj(opt)) {
+            float = (float = Math.abs(opt.float)) > -1 ? float : 2;
+            decimal = isStr(opt.decimal) ? opt.decimal : decimal;
+            separated = isStr(opt.separated) ? opt.separated : separated;
+            prefix = isStr(opt.prefix) ? opt.prefix : prefix;
         }
         var s = str < 0 ? '-' : '';
         var iStr = parseInt(Math.abs(str || 0).toFixed(float)).toString();
         var sepLength = (iStr.length > 3 ) ? (iStr.length % 3) : 0;
-        var retStr = s + (sepLength ? iStr.substr(0, sepLength) + separated : '')
-            + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated)
-            + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
-
-        currency && ret.push(currency);
-        prefix && ret.push(prefix);
+        var retStr = s + (sepLength ? iStr.substr(0, sepLength) + separated : '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
+        if (prefix) {
+            ret.push(prefix);
+        }
         ret.push(retStr);
         return ret.join(' ');
     };
     /**
-     * ex: ThisIsWord -> This Is Word
-     * @param str
+     * e.g. ThisIsWord -> This Is Word
+     * @param {string} str
      * @returns {string}
      */
     self.insertBlankBefUpper = function (str) {
@@ -319,7 +260,7 @@ module.exports = (function () {
         var aStr = str.split('');
         var aStrClone = caro.cloneArr(aStr);
         caro.eachObj(aStrClone, function (i, char) {
-            var isUpper = self.isUpperCase(char);
+            var isUpper = caro.isUpperCase(char);
             if (indexCount > 0 && isUpper) {
                 // add ' ' before upper-char
                 aStr.splice(indexCount, 0, ' ');
@@ -330,24 +271,46 @@ module.exports = (function () {
         });
         return aStr.join('');
     };
+    /**
+     * @param {string} str
+     * @param {object} [opt]
+     * @param {number} [opt.start] the start-index you want to uppercase
+     * @param {number} [opt.end] the end-index you want to uppercase
+     * @param {boolean} [opt.force] if force cover to str
+     * @returns {}
+     */
     self.upperStr = function (str, opt) {
         return changeCase(str, 'upperCase', opt);
     };
+    /**
+     * @param {string} str
+     * @returns {}
+     */
     self.upperFirst = function (str) {
         if (!caro.isStr(str)) return str;
-        return self.upperStr(str, {
+        return caro.upperStr(str, {
             start: 0,
             end: 1
-        })
+        });
     };
+    /**
+     * @param {string} str
+     * @param {object} [opt]
+     * @param {number} [opt.start] the start-index you want to lowercase
+     * @param {number} [opt.end] the end-index you want to lowercase
+     * @param {boolean} [opt.force] if force cover to str
+     * @returns {}
+     */
     self.lowerStr = function (str, opt) {
         return changeCase(str, 'toLowerCase', opt);
     };
-    self.trimStr = function (str, opt) {
-        var force = true;
-        if (opt) {
-            force = opt.force !== false;
-        }
+    /**
+     * @param {string} str
+     * @param {boolean} [force=true] if force cover to str
+     * @returns {}
+     */
+    self.trimStr = function (str, force) {
+        force = force !== false;
         if (!caro.isStr(str)) {
             if (!force) {
                 return str;
@@ -356,49 +319,60 @@ module.exports = (function () {
         }
         return str.trim();
     };
-    self.splitStr = function (str, splitter, opt) {
+    /**
+     * @param {string} str
+     * @param {string|string[]} splitter
+     * @param {boolean} [force=true] if force cover to str
+     * @returns {*}
+     */
+    self.splitStr = function (str, splitter, force) {
         if (caro.isArr(str)) {
             return str;
         }
-        var force = true;
-        if (opt) {
-            force = opt.force !== false;
+        if (splitter === undefined) {
+            return [];
         }
+        splitter = caro.coverToArr(splitter);
+        force = force !== false;
         if (!caro.isStr(str)) {
             if (!force) {
                 return str;
             }
-            str = '';
+            return [];
         }
-        splitter = caro.isStr(splitter) ? splitter : '';
-        return str.split(splitter);
+        // get mainSplit first
+        // e.g. splitter=['a','ab','c']; => mainSplit='c'
+        var mainSplit = splitter[0];
+        caro.eachObj(splitter, function (j, eachSplit2) {
+            if (mainSplit.length >= eachSplit2.length) {
+                mainSplit = eachSplit2;
+            }
+        });
+        if (!mainSplit) {
+            return str;
+        }
+        // replace all splitter to mainSplitter
+        // e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
+        caro.eachObj(splitter, function (i, eachSplit) {
+            str = caro.replaceAll(str, eachSplit, mainSplit);
+        });
+        return str.split(mainSplit);
     };
-
     /**
      * serialize obj-arguments to url
-     * OPT
-     * coverEmpty: if cover when value is empty
-     *
-     * ex.
-     * url='http://localhost/api/xx';
-     * oArgs={ a: '1', b: 200, c: null, d: ''};
-     * caro.serializeUrl(url, oArgs);
-     * return 'http://localhost/api/xx?a=1&b=200&c=&d='
-     *
-     * @param url
-     * @param oArgs
-     * @param [opt]
+     * @param {string} url
+     * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
+     * @param {boolean} [coverEmpty=false] if cover when value is empty
      * @returns {*}
      */
-    self.serializeUrl = function (url, oArgs, opt) {
-        var coverEmpty = false;
+    self.serializeUrl = function (url, oArgs, coverEmpty) {
         var count = 0;
         var aArgs = ['?'];
-        if (opt) {
-            coverEmpty = opt.coverEmpty === true;
-        }
+        url = caro.coverToStr(url);
+        oArgs = caro.coverToObj(oArgs);
+        coverEmpty = coverEmpty === true;
         caro.eachObj(oArgs, function (key, val) {
-            if (!val && val !== 0 && val !== '0') {
+            if (caro.isEmptyVal(val)) {
                 if (!coverEmpty) {
                     return;
                 }
@@ -414,17 +388,6 @@ module.exports = (function () {
         });
         url += aArgs.join('');
         return url;
-    };
-    /**
-     * format symbol to support java
-     * @param str
-     * @returns {*|string}
-     */
-    self.encodeUrl = function (str) {
-        if (caro.isStr(str)) {
-            return self.replaceAll(str, '+', encodeURIComponent('+'));
-        }
-        return str;
     };
     return self;
 })();
