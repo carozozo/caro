@@ -91,13 +91,6 @@ caro.isArr(['caro']); // true
 - **log2(msg, variable)** - 輸出有顏色的 console 訊息
 - **log3(msg, variable)** - 輸出有顏色的 console 訊息
 
-### log ###
-- **readLog(logPath)** - 讀取 .log 檔
-- **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
-- **updateLog(logPath, data [,opt])** - 加入資料至 .log 檔
-- **updateLogWithDayFileName(logPath, data [,opt])** - 產生/更新有今天日期名稱的 .log 檔
-- **traceLog( data [,opt])** - 產生/更新 trace.log 檔
-
 ### dateTime ###
 - 由[moment](https://www.npmjs.com/package/moment)延伸
 - **setDefaultLocale(locale)** - 預設國家語系(en)
@@ -115,3 +108,13 @@ caro.isArr(['caro']); // true
 - **isBetweenDateTime(dateTime, dateTime1, dateTime2 [ , unit])** - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間
 - **isValidDateTime(dateTime)** - 檢查日期格式是否正確
 - **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat])** - 取得日期間的差
+
+### log ###
+待整理
+
+### log ###
+- **readLog(logPath)** - 讀取 .log 檔
+- **writeLog(logPath, data)** - 寫入 .log 檔，如檔案已存在則覆寫
+- **updateLog(logPath, data [,opt])** - 加入資料至 .log 檔
+- **updateLogWithDayFileName(logPath, data [,opt])** - 產生/更新有今天日期名稱的 .log 檔
+- **traceLog( data [,opt])** - 產生/更新 trace.log 檔
