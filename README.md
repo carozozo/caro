@@ -63,7 +63,7 @@ caro.isArr(['caro']); // true
 - **coverFnToStrInObj(obj [, opt])** - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)
 
 ### string ###
-- [validator](https://www.npmjs.com/package/validator) - 驗證字串
+- 由[validator](https://www.npmjs.com/package/validator)延伸 - 驗證字串
 - **random(len [, opt])** - 產生隨機字串
 - **toBool(str)** - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false
 - **addHead(str, addStr)** - 在字串的開頭加上新字串(不重覆)
@@ -86,6 +86,7 @@ caro.isArr(['caro']); // true
 
 ## LIBRARY 類別- ##
 ### console ###
+- 由[color](https://www.npmjs.com/package/colors)延伸
 - **log(msg, variable)** - 輸出有顏色的 console 訊息
 - **log2(msg, variable)** - 輸出有顏色的 console 訊息
 - **log3(msg, variable)** - 輸出有顏色的 console 訊息
@@ -96,3 +97,21 @@ caro.isArr(['caro']); // true
 - **updateLog(logPath, data [,opt])** - 加入資料至 .log 檔
 - **updateLogWithDayFileName(logPath, data [,opt])** - 產生/更新有今天日期名稱的 .log 檔
 - **traceLog( data [,opt])** - 產生/更新 trace.log 檔
+
+### dateTime ###
+- 由[moment](https://www.npmjs.com/package/moment)延伸
+- **setDefaultLocale(locale)** - 預設國家語系(en)
+- **addDateTimeFormatType(shorthandFormat, formatType [, locale])** - 自定時間格式
+- **formatDateTime(dateTime, shorthandFormat | formatType [, locale])** - 時間格式化
+- **formatNow(formatType [, locale])** - 取得現在的時間並格式化
+- **addDateTime(dateTime, amount, unit [, formatType])** - 增加時間
+- **subtractDateTime(dateTime, amount, unit [, formatType])** - 減少時間
+- **startOfDateTime(dateTime, unit [, formatType])** - 取得指定時間單位的開始
+- **endOfDateTime(dateTime, unit [, formatType])** - 取得指定時間單位的結束
+- **getUtc(dateTime [, formatType])** - 取得指定時間單位的 UTC 時間
+- **isBeforeDateTime(dateTime, targetDateTime [ , unit])** - 比對「指定的時間」是否在「目標時間」之前
+- **isAfterDateTime(dateTime, targetDateTime [ , unit])** - 比對「指定的時間」是否在「目標時間」之後
+- **isSameDateTime(dateTime, targetDateTime [ , unit])** - 比對「指定的時間」和「目標時間」是否相同
+- **isBetweenDateTime(dateTime, dateTime1, dateTime2 [ , unit])** - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間
+- **isValidDateTime(dateTime)** - 檢查日期格式是否正確
+- **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat])** - 取得日期間的差
