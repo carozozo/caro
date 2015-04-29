@@ -6,33 +6,38 @@
 module.exports = (function () {
     var self = {};
 
-    //noinspection JSClosureCompilerSyntax
+    /**
+     * clone arr
+     * @param arr {[]}
+     * @returns {Array}
+     */
+    self.cloneArr = function (arr) {
+        return arr.slice(0);
+    };
     /**
      * extend arr
-     * @param  {[]} arr the arr that want to extend
-     * @param {...[]} arr2
-     * @param {object} [opt]
+     * @param  {...[]} arr the arr that want to extend
      * @param {boolean} [opt.duplicate] if extend duplicate-val
      * @returns {Array}
      */
-    self.extendArr = function (arr, arr2, opt) {
-        var firstArr = [];
+    self.extendArr = function (arr) {
+        var firstArr = null;
         var otherArr = [];
+        var opt = null;
         var duplicate = false;
         var extend = function (arr) {
             caro.eachObj(arr, function (i, eachVal) {
                 if (!duplicate) {
-                    caro.pushNoDup(firstArr, eachVal);
+                    firstArr = caro.pushNoDup(firstArr, eachVal);
                     return;
                 }
                 firstArr.push(eachVal);
             });
         };
-        opt = null;
         caro.eachObj(arguments, function (i, arg) {
             if (caro.isArr(arg)) {
                 if (!firstArr) {
-                    firstArr = arg;
+                    firstArr = caro.cloneArr(arg);
                 } else {
                     otherArr.push(arg);
                 }
@@ -48,14 +53,6 @@ module.exports = (function () {
             extend(eachArr);
         });
         return firstArr;
-    };
-    /**
-     * clone arr
-     * @param arr {[]}
-     * @returns {Array|string|*|Buffer|Blob}
-     */
-    self.cloneArr = function (arr) {
-        return arr.slice(0);
     };
     /**
      * sort arr by key if value is obj
@@ -152,7 +149,7 @@ module.exports = (function () {
             return arr;
         }
         caro.eachObj(arguments, function (i, val) {
-            if (i !== '0') {
+            if (i !== 0) {
                 if (arr.indexOf(val) > -1) {
                     return true;
                 }
