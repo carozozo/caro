@@ -117,6 +117,17 @@ module.exports = (function () {
         return ret;
     };
     /**
+     * get function name
+     * @param {function} fn
+     * @returns {string|*|String}
+     */
+    self.getFnName = function (fn) {
+        var ret = fn.toString();
+        ret = ret.substr('function '.length);
+        ret = ret.substr(0, ret.indexOf('('));
+        return ret;
+    };
+    /**
      * cover to arr
      * @param arg
      * @returns {*}
@@ -135,25 +146,40 @@ module.exports = (function () {
      * @returns {*}
      */
     self.coverToStr = function (arg, opt) {
+        if (caro.isStr(arg)) {
+            return arg;
+        }
         var force = true;
         if (opt) {
             force = opt.force !== false;
         }
-        if (caro.isStr(arg)) {
-            return arg;
+        if (arg === undefined) {
+            if (force) {
+                return 'undefined';
+            }
+            return '';
+        }
+        if (arg === null) {
+            if (force) {
+                return 'null';
+            }
+            return '';
         }
         if (caro.isObj(arg)) {
-            // cover fn to str first, and not replace \r\n
-            caro.coverFnToStrInObj(arg, {
-                replaceWrap: false
-            });
-            // after cover to json, replace \\r\\n to wrap
-            arg = caro.coverToJson(arg);
-            arg = caro.replaceAll(arg, '\\r', '\r');
-            arg = caro.replaceAll(arg, '\\n', '\n');
-            return arg;
+            if (force) {
+                // cover fn to str first, and not replace \r\n
+                caro.coverFnToStrInObj(arg, {
+                    replaceWrap: false
+                });
+                // after cover to json, replace \\r\\n to wrap
+                arg = caro.coverToJson(arg);
+                arg = caro.replaceAll(arg, '\\r', '\r');
+                arg = caro.replaceAll(arg, '\\n', '\n');
+                return arg;
+            }
+            return '';
         }
-        if (arg !== undefined && caro.keysInObj(arg,'toString') && caro.isFn(arg.toString)) {
+        if (caro.isFn(arg.toString)) {
             return arg.toString();
         }
         if (force) {
