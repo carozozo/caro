@@ -16,8 +16,8 @@ caro.isArr(['caro']); // true
 
 ## HELPER 類別- ##
 ### array ###
-- **extendArr(arr1 [, arr2, arr3...] [, opt])** - 合併2個陣列
 - **cloneArr(arr)** - 複製陣列
+- **extendArr(arr1 [, arr2, arr3...] [, opt])** - 合併2個陣列
 - **sortByObjKey(arr, key [, sort])** - 如果陣列中的值是物件，則可指定物件的 key 值排序
 - **sumOfArr(arr)** - 加總陣列中的數字
 - **removeByIndex(arr, i)** - 依 index 移除陣列中的元素
@@ -39,6 +39,7 @@ caro.isArr(['caro']); // true
 - **isFalse(arg)** - 判斷是否為 false 或 'false' 或 0
 - **isEmptyVal(arg)** - 判斷是否為空值
 - **executeIfFn(fn [, arg0, arg1...])** - 如果是 function 的話則執行
+- **getFnName(fn)** - 取得 function 名稱
 - **coverToArr(arg)** - 將變數轉為 array
 - **coverToStr(arg [, opt])** - 將變數轉為 string
 - **coverToInt(arg [, opt])** - 將變數轉為 integer
@@ -118,3 +119,10 @@ caro.isArr(['caro']); // true
 - **updateLog(logPath, data [,opt])** - 加入資料至 .log 檔
 - **updateLogWithDayFileName(logPath, data [,opt])** - 產生/更新有今天日期名稱的 .log 檔
 - **traceLog( data [,opt])** - 產生/更新 trace.log 檔
+
+### path ###
+- **setAbsolutePath(path)** - 定義絕對路徑
+- **getAbsolutePath(path)** - 取得絕對路徑
+- **isFullPath(path)** - 確認是否為絕對路徑
+- **normalizePath(path [, path2, path3...])** - 正規化路徑
+- **normalizeFullPath(path [, path2, path3...])** - 轉為絕對路徑
