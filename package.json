@@ -1,11 +1,12 @@
 {
     "name": "Caro",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "This is common-libraries written by Caro",
     "author": {
         "name": "Caro.Huang",
         "email": "carozozo@yahoo.com.tw"
     },
+    "main": "caro.js",
     "license": "MIT",
     "dependencies": {
         "validator": "~3.39.0",

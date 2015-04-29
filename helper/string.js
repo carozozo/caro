@@ -153,8 +153,7 @@ module.exports = (function () {
     self.splitByWrap = function (str) {
         if (!caro.isStr(str)) return str;
         var aWrap = ['\r\n', '\r', '\n'];
-        ret = caro.splitStr(str, aWrap);
-        return ret;
+        return caro.splitStr(str, aWrap);
     };
     /**
      * escape RegExp
