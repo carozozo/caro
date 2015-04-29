@@ -1,4 +1,9 @@
+/**
+ * the fist-run file in node.js
+ * @author Caro.Huang
+ */
 global.caro = {};
+global.__rootPath = __dirname;
 var nPath = require('path');
 var nFs = require('fs');
 var eachObj = function (obj, cb) {
@@ -17,7 +22,9 @@ var extendObj = function (obj1, obj2) {
     return obj1;
 };
 var getFiles = function (path, cb) {
-    if (typeof path !== 'string' || !path) return;
+    if (typeof path !== 'string' || !path) {
+        return;
+    }
     path = nPath.join(__dirname, path);
     if (!nFs.existsSync(path)) {
         console.error('require path not exists: ', path);
@@ -27,21 +34,32 @@ var getFiles = function (path, cb) {
         nFs.readdirSync(path).forEach(function (fileName) {
             var fullPath = nPath.resolve(path + "/" + fileName);
             var stat = nFs.lstatSync(fullPath);
-            if (stat === undefined) return;
+            if (stat === undefined) {
+                return;
+            }
             var extendName = nPath.extname(fileName);
             if (extendName !== '.js') {
                 return;
             }
-            cb && cb(fullPath);
+            if (cb) {
+                cb(fullPath);
+            }
         });
     }
 };
 (function requireSystem() {
-    var arr = ['core', './lib/', './helper'];
+    var arr = ['./lib/', './helper'];
     eachObj(arr, function (i, path) {
         getFiles(path, function (fullPath) {
-            caro = extendObj(caro, require(fullPath));
+            global.caro = extendObj(caro, require(fullPath));
         });
     });
 })();
+(function requireTest() {
+    var path = './test.js';
+    if (nFs.existsSync(path)) {
+        require(path);
+    }
+})();
+
 module.exports = caro;

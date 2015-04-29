@@ -1,12 +1,17 @@
 {
     "name": "caro",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "This is common-libraries written by Caro",
     "author": {
         "name": "Caro.Huang",
         "email": "carozozo@yahoo.com.tw"
     },
-    "main":"index.js",
+    "main": "caro.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/carozozo/caro"
+    },
+    "license": "MIT",
     "dependencies": {
         "validator": "~3.39.0",
         "moment": "~2.10.2",
