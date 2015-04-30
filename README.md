@@ -121,8 +121,11 @@ caro.isArr(['caro']); // true
 - **traceLog( data [,opt])** - 產生/更新 trace.log 檔
 
 ### path ###
-- **setAbsolutePath(path)** - 定義絕對路徑
-- **getAbsolutePath(path)** - 取得絕對路徑
+- **setAbsolutePath(path)** - 定義絕對路徑根目錄
+- **getAbsolutePath(path)** - 取得絕對路徑根目錄
 - **isFullPath(path)** - 確認是否為絕對路徑
+- **getDirPath(path)** - 取得所在的資料夾路徑
+- **getFileName(path [, getFull])** - 取得檔案名稱
+- **getExtendName(path [, withDot])** - 取得附檔名
 - **normalizePath(path [, path2, path3...])** - 正規化路徑
-- **normalizeFullPath(path [, path2, path3...])** - 轉為絕對路徑
+- **coverToFullPath(path [, path2, path3...])** - 轉為絕對路徑

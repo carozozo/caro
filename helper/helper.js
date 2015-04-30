@@ -1,5 +1,5 @@
 /**
- * The helper of common fns
+ * The helper of common function
  * @namespace caro
  * @author Caro.Huang
  */
@@ -49,6 +49,12 @@ module.exports = (function () {
      */
     self.isArr = function (arg) {
         return Array.isArray(arg);
+    };
+    /**
+     * @param arg
+     */
+    self.isBuf = function (arg) {
+        Buffer.isBuffer(arg);
     };
     /**
      * check if arg is bool | str | num
