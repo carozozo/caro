@@ -3,20 +3,22 @@
  * @namespace caro
  * @author Caro.Huang
  */
-module.exports = (function () {
+(function (fn) {
+    caro.setCaro(fn);
+})(function (self) {
     // https://www.npmjs.com/package/moment
-    var self = require('moment');
+    var nMoment = require('moment');
     var defLocale = 'en';
     // save the custom format-type, e.g { en:{date:'MM/DD/YYYY'}, zh-tw :{date:'YYYY-MM-DD'} }
     var oShorthandFormat = {};
     var getDateTimeObj = function (dateTime) {
         if (dateTime)
-            return self(dateTime);
+            return nMoment(dateTime);
         // get now-time
-        return self();
+        return nMoment();
     };
     var coverLocale = function (locale) {
-        locale = caro.coverToStr(locale);
+        locale = caro.coverToStr(locale, false);
         return locale || defLocale;
     };
     var coverFormatType = function (shorthandFormat, locale) {
@@ -59,13 +61,13 @@ module.exports = (function () {
     self.formatDateTime = function (dateTime, formatType, locale) {
         locale = coverLocale(locale);
         if (locale) {
-            self.locale(locale);
+            nMoment.locale(locale);
         }
         formatType = coverFormatType(formatType, locale);
         var oDateTime = getDateTimeObj(dateTime);
         var returnVal = oDateTime.format(formatType);
         // reset locale to en
-        self.locale(defLocale);
+        nMoment.locale(defLocale);
         return returnVal;
     };
     /**
@@ -231,5 +233,4 @@ module.exports = (function () {
         var oDateTime2 = getDateTimeObj(dateTime2);
         return oDateTime1.diff(oDateTime2, unit, withFloat);
     };
-    return self;
-})();
+});

@@ -2,12 +2,17 @@
  * the fist-run file in node.js
  * @author Caro.Huang
  */
-var caro = {};
-(function (fn) {
+var isNodeJs = function () {
+    return typeof global !== 'undefined' && typeof module !== 'undefined' && exports !== 'undefined';
+};
+var caro = {
+    setCaro: function (fn) {
+        fn(caro);
+    }
+};
+if (isNodeJs()) {
     global.caro = caro;
     global.__rootPath = __dirname;
-    module.exports = fn(caro);
-})(function (self) {
     var nPath = require('path');
     var nFs = require('fs');
     var eachObj = function (obj, cb) {
@@ -18,12 +23,6 @@ var caro = {};
                 }
             }
         }
-    };
-    var extendObj = function (obj1, obj2) {
-        eachObj(obj2, function (key, val) {
-            obj1[key] = val;
-        });
-        return obj1;
     };
     var getFiles = function (path, cb) {
         if (typeof path !== 'string' || !path) {
@@ -52,10 +51,10 @@ var caro = {};
         }
     };
     (function requireSystem() {
-        var arr = ['./lib/', './helper'];
+        var arr = ['./lib','./libForNode'];
         eachObj(arr, function (i, path) {
             getFiles(path, function (fullPath) {
-                self = extendObj(self, require(fullPath));
+                require(fullPath);
             });
         });
     })();
@@ -65,4 +64,5 @@ var caro = {};
             require(path);
         }
     })();
-});
+    module.exports = caro;
+}
