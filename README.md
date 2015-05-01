@@ -14,7 +14,6 @@ caro.isArr(['caro']); // true
 
 ***
 
-## HELPER 類別- ##
 ### array ###
 - **cloneArr(arr)** - 複製陣列
 - **extendArr(arr1 [, arr2, arr3...] [, opt])** - 合併2個陣列
@@ -85,7 +84,6 @@ caro.isArr(['caro']); // true
 
 ***
 
-## LIBRARY 類別- ##
 ### console ###
 - 由[color](https://www.npmjs.com/package/colors)延伸
 - **log(msg, variable)** - 輸出有顏色的 console 訊息
@@ -110,8 +108,24 @@ caro.isArr(['caro']); // true
 - **isValidDateTime(dateTime)** - 檢查日期格式是否正確
 - **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat])** - 取得日期間的差
 
-### files ###
-待整理
+### fileSystem ###
+- **readFileCaro(path [, encoding] [, flag])** - 讀取檔案內容
+- **writeFileCaro(path, data [, encoding] [, flag])** - 寫入檔案內容
+- **deleteFile(path,  [, path2, path3...])** - 刪除檔案
+- **isEmptyDir(path,  [, path2, path3...])** - 判斷是否為空資料夾
+- **readDirCb(path,  [, opt] [, cb])** - 取得資料夾內容
+- **createDir(path)** - 新增資料夾
+- **deleteDir(path [,force])** - 刪除資料夾
+- **fsExists(path [, path2, path3...])** - 判斷檔案是否存在
+- **isFsDir(path [, path2, path3...])** - 判斷是否為資料夾
+- **isFsFile(path [, path2, path3...])** - 判斷是否為檔案
+- **isFsSymlink(path [, path2, path3...])** - 判斷是否為 symbolic link
+- **getFileType(path)** - 取得檔案類型
+- **deleteFs(path [, path2, path3...] [, force])** - 刪除檔案及資料夾
+- **renameFs(path , newPath  [, force])** - 檔案移動/更名
+- **getFsStat(path , newPath  [, type])** - 取得檔案資訊
+- **getFsSize(path[, fixed] [, unit])** - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB...)
+- **humanFeSize(bytes [, fixed] [, si])** - 將檔案大小轉為易讀格式
 
 ### log ###
 - **readLog(logPath)** - 讀取 .log 檔
