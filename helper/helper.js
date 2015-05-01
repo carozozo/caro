@@ -6,34 +6,43 @@
 module.exports = (function () {
     "use strict";
     var self = {};
+    var checkType = function (args, type) {
+        var pass = true;
+        caro.eachObj(args, function (i, arg) {
+            if (typeof arg !== type) {
+                pass = false;
+            }
+        });
+        return pass;
+    };
 
     /**
      * @param arg
      * @returns {boolean}
      */
     self.isBool = function (arg) {
-        return typeof arg === 'boolean';
+        return checkType(arguments, 'boolean');
     };
     /**
      * @param arg
      * @returns {boolean}
      */
     self.isStr = function (arg) {
-        return typeof arg === 'string';
+        return checkType(arguments, 'string');
     };
     /**
      * @param arg
      * @returns {boolean}
      */
     self.isNum = function (arg) {
-        return typeof(arg) === 'number';
+        return checkType(arguments, 'number');
     };
     /**
      * @param arg
      * @returns {boolean}
      */
     self.isFn = function (arg) {
-        return typeof(arg) === 'function';
+        return checkType(arguments, 'function');
     };
     /**
      * @param arg
@@ -41,7 +50,7 @@ module.exports = (function () {
      */
     self.isObj = function (arg) {
         // Note: array and null is object in js
-        return typeof(arg) === 'object' && arg !== null && !caro.isArr(arg);
+        return checkType(arguments, 'object') && arg !== null && !caro.isArr(arg);
     };
     /**
      * @param arg
@@ -54,7 +63,7 @@ module.exports = (function () {
      * @param arg
      */
     self.isBuf = function (arg) {
-        Buffer.isBuffer(arg);
+        return Buffer.isBuffer(arg);
     };
     /**
      * check if arg is bool | str | num
