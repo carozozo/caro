@@ -3,8 +3,9 @@
  * @namespace caro
  * @author Caro.Huang
  */
-module.exports = (function () {
-    var self = {};
+(function (fn) {
+    caro.setCaro(fn);
+})(function (self) {
     var normalizeLogPath = function (logPath) {
         logPath = caro.normalizePath(logPath);
         return caro.addTail(logPath, '.log');
@@ -61,7 +62,7 @@ module.exports = (function () {
      * @param [opt]
      */
     self.updateLog = function (logPath, data, opt) {
-        var originData = self.readLog(logPath);
+        var originData = caro.readLog(logPath);
         var wrap = '\r\n';
         var ifWrap = true;
         var prepend = false;
@@ -85,12 +86,12 @@ module.exports = (function () {
         else {
             data = originData + data;
         }
-        self.writeLog(logPath, data);
+        caro.writeLog(logPath, data);
     };
     self.updateLogWithDayFileName = function (logPath, data, opt) {
         var today = caro.formatNow('YYYYMMDD');
         logPath = caro.addTail(logPath, '_' + today);
-        self.updateLog(logPath, data, opt);
+        caro.updateLog(logPath, data, opt);
     };
     /**
      * convenient-logger to [trace.log]
@@ -99,7 +100,6 @@ module.exports = (function () {
      */
     self.traceLog = function (data, opt) {
         var logPath = 'trace';
-        self.updateLog(logPath, data, opt);
+        caro.updateLog(logPath, data, opt);
     };
-    return self;
-})();
+});

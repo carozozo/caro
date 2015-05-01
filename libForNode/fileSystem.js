@@ -4,10 +4,9 @@
  * @author Caro.Huang
  */
 (function (fn) {
-    module.exports = fn(global.caro);
+    caro.setCaro(fn);
 })(function (self) {
     var nFs = require('fs');
-    var nPath = require('path');
     var fileSizeUnits1 = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     var fileSizeUnits2 = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
     var getFileSize = function (path) {
@@ -68,7 +67,7 @@
      */
     self.deleteFile = function (path) {
         var pass = true;
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             try {
                 nFs.unlinkSync(arg);
             } catch (e) {
@@ -85,7 +84,7 @@
      */
     self.isEmptyDir = function (path) {
         var pass = true;
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             if (caro.isFsDir(arg)) {
                 var count = 0;
                 caro.readDirCb(arg, function () {
@@ -205,7 +204,8 @@
      */
     self.createDir = function (path) {
         path = caro.normalizePath(path);
-        var aPath = caro.splitStr(path, nPath.sep);
+        // [\\] for windows, [/] for linux
+        var aPath = caro.splitStr(path, ['\\', '/']);
         var subPath = '';
         try {
             caro.eachObj(aPath, function (i, eachDir) {
@@ -227,7 +227,7 @@
      * @returns {boolean}
      */
     self.deleteDir = function (path, force) {
-        if (!self.isFsDir(path)) {
+        if (!caro.isFsDir(path)) {
             return false;
         }
         path = caro.normalizePath(path);
@@ -237,7 +237,7 @@
             getFile = getFile !== false;
             caro.readDirCb(rootPath, function (oFilInfo) {
                 var filePath = oFilInfo.filePath;
-                if (self.isFsDir(filePath)) {
+                if (caro.isFsDir(filePath)) {
                     if (force) {
                         deleteUnderDir(filePath);
                         try {
@@ -248,7 +248,7 @@
                     }
                     return;
                 }
-                if (!self.deleteFile(filePath)) {
+                if (!caro.deleteFile(filePath)) {
                     pass = false;
                 }
             }, {
@@ -256,7 +256,7 @@
             });
         };
         deleteUnderDir(path, false);
-        if (self.isEmptyDir(path)) {
+        if (caro.isEmptyDir(path)) {
             nFs.rmdirSync(path);
         }
         return pass;
@@ -269,7 +269,7 @@
      */
     self.fsExists = function (path) {
         var pass = true;
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             try {
                 if (!nFs.existsSync(arg)) {
                     pass = false;
@@ -290,9 +290,9 @@
      */
     self.isFsDir = function (path) {
         var pass = true;
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             try {
-                var stat = self.getFsStat(arg);
+                var stat = caro.getFsStat(arg);
                 pass = stat.isDirectory();
             } catch (e) {
                 pass = false;
@@ -308,9 +308,9 @@
      */
     self.isFsFile = function (path) {
         var pass = true;
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             try {
-                var stat = self.getFsStat(arg);
+                var stat = caro.getFsStat(arg);
                 pass = stat.isFile();
             } catch (e) {
                 pass = false;
@@ -327,9 +327,9 @@
      */
     self.isFsSymlink = function (path) {
         var pass = true;
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             try {
-                var stat = self.getFsStat(arg);
+                var stat = caro.getFsStat(arg);
                 pass = stat.isSymbolicLink();
             } catch (e) {
                 pass = false;
@@ -345,13 +345,13 @@
      */
     self.getFileType = function (path) {
         var ret = '';
-        if (self.isFsDir(path)) {
+        if (caro.isFsDir(path)) {
             ret = 'dir';
         }
-        if (self.isFsFile(path)) {
+        if (caro.isFsFile(path)) {
             ret = 'file';
         }
-        if (self.isFsSymlink(path)) {
+        if (caro.isFsSymlink(path)) {
             ret = 'link';
         }
         return ret;
@@ -366,23 +366,23 @@
         var pass = true;
         var aPath = [];
         caro.eachObj(arguments, function (i, arg) {
-            if (self.isBool(arg)) {
+            if (caro.isBool(arg)) {
                 force = arg;
                 return;
             }
-            if (self.isStr(arg)) {
+            if (caro.isStr(arg)) {
                 aPath.push(arg);
             }
         });
         try {
             caro.eachObj(aPath, function (i, path) {
                 if (caro.isFsDir(path)) {
-                    if (!self.deleteDir(path, force)) {
+                    if (!caro.deleteDir(path, force)) {
                         pass = false;
                     }
                     return;
                 }
-                if (!self.deleteFile(path)) {
+                if (!caro.deleteFile(path)) {
                     pass = false;
                 }
             });
@@ -468,14 +468,14 @@
         if (bytes === null) {
             return bytes;
         }
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             if (i <= 0) {
                 return;
             }
-            if (self.isNum(arg)) {
+            if (caro.isNum(arg)) {
                 fixed = parseInt(arg);
             }
-            if (self.isStr(arg)) {
+            if (caro.isStr(arg)) {
                 unit = arg;
             }
         });
@@ -510,14 +510,14 @@
         if (bytes === null) {
             return bytes;
         }
-        self.eachObj(arguments, function (i, arg) {
+        caro.eachObj(arguments, function (i, arg) {
             if (i <= 0) {
                 return;
             }
-            if (self.isNum(arg)) {
+            if (caro.isNum(arg)) {
                 fixed = parseInt(arg);
             }
-            if (self.isBool(arg)) {
+            if (caro.isBool(arg)) {
                 si = arg;
             }
         });
@@ -533,5 +533,4 @@
         } while (bytes >= thresh);
         return bytes.toFixed(fixed) + ' ' + aUnit[u];
     };
-    return self;
 });

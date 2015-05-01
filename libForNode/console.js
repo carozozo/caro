@@ -3,10 +3,11 @@
  * @namespace caro
  * @author Caro.Huang
  */
-module.exports = (function () {
+(function (fn) {
+    caro.setCaro(fn);
+})(function (self) {
     // https://www.npmjs.org/package/colors
     require('colors');
-    var self = {};
     var combineMsg = function (msg, variable) {
         msg = caro.coverToStr(msg);
         variable = caro.coverToStr(variable);
@@ -62,5 +63,4 @@ module.exports = (function () {
         console.log(msg.red);
         this.isOdd = true;
     };
-    return self;
-})();
+});

@@ -14,6 +14,8 @@ caro.isArr(['caro']); // true
 
 ***
 
+### For js & Node.js ##
+
 ### array ###
 - **cloneArr(arr)** - 複製陣列
 - **extendArr(arr1 [, arr2, arr3...] [, opt])** - 合併2個陣列
@@ -40,7 +42,7 @@ caro.isArr(['caro']); // true
 - **executeIfFn(fn [, arg0, arg1...])** - 如果是 function 的話則執行
 - **getFnName(fn)** - 取得 function 名稱
 - **coverToArr(arg)** - 將變數轉為 array
-- **coverToStr(arg [, opt])** - 將變數轉為 string
+- **coverToStr(arg [, force])** - 將變數轉為 string
 - **coverToInt(arg [, opt])** - 將變數轉為 integer
 - **coverToNum(arg [, opt])** - 將變數轉為 number
 - **coverToObj(arg [, opt])** - 將變數轉為 object
@@ -62,8 +64,17 @@ caro.isArr(['caro']); // true
 - **getKeysInObj(obj [, levelLimit])** - 取得 obj 中的 key
 - **coverFnToStrInObj(obj [, opt])** - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)
 
+### path ###
+- **setAbsolutePath(path)** - 定義絕對路徑根目錄
+- **getAbsolutePath(path)** - 取得絕對路徑根目錄
+- **isFullPath(path)** - 確認是否為絕對路徑
+- **getDirPath(path)** - 取得所在的資料夾路徑
+- **getFileName(path [, getFull])** - 取得檔案名稱
+- **getExtendName(path [, withDot])** - 取得附檔名
+- **normalizePath(path [, path2, path3...])** - 正規化路徑
+- **coverToFullPath(path [, path2, path3...])** - 轉為絕對路徑
+
 ### string ###
-- 由[validator](https://www.npmjs.com/package/validator)延伸 - 驗證字串
 - **random(len [, opt])** - 產生隨機字串
 - **toBool(str)** - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false
 - **addHead(str, addStr)** - 在字串的開頭加上新字串(不重覆)
@@ -83,6 +94,8 @@ caro.isArr(['caro']); // true
 - **serializeUrl(str [, oArgs] [, coverEmpty=false])** - 將變數物件代入 URL
 
 ***
+
+### For Node.js only ###
 
 ### console ###
 - 由[color](https://www.npmjs.com/package/colors)延伸
@@ -122,7 +135,7 @@ caro.isArr(['caro']); // true
 - **isFsSymlink(path [, path2, path3...])** - 判斷是否為 symbolic link
 - **getFileType(path)** - 取得檔案類型
 - **deleteFs(path [, path2, path3...] [, force])** - 刪除檔案及資料夾
-- **renameFs(path , newPath  [, force])** - 檔案移動/更名
+- **renameFs(path , newPath  [, force])** - 檔案移動更名
 - **getFsStat(path , newPath  [, type])** - 取得檔案資訊
 - **getFsSize(path[, fixed] [, unit])** - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB...)
 - **humanFeSize(bytes [, fixed] [, si])** - 將檔案大小轉為易讀格式
@@ -133,13 +146,3 @@ caro.isArr(['caro']); // true
 - **updateLog(logPath, data [,opt])** - 加入資料至 .log 檔
 - **updateLogWithDayFileName(logPath, data [,opt])** - 產生/更新有今天日期名稱的 .log 檔
 - **traceLog( data [,opt])** - 產生/更新 trace.log 檔
-
-### path ###
-- **setAbsolutePath(path)** - 定義絕對路徑根目錄
-- **getAbsolutePath(path)** - 取得絕對路徑根目錄
-- **isFullPath(path)** - 確認是否為絕對路徑
-- **getDirPath(path)** - 取得所在的資料夾路徑
-- **getFileName(path [, getFull])** - 取得檔案名稱
-- **getExtendName(path [, withDot])** - 取得附檔名
-- **normalizePath(path [, path2, path3...])** - 正規化路徑
-- **coverToFullPath(path [, path2, path3...])** - 轉為絕對路徑
