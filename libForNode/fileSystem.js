@@ -1,11 +1,12 @@
 /**
- * The helper of common file functions
- * @namespace caro
+ * FileSystem
  * @author Caro.Huang
  */
-(function (fn) {
-    caro.setCaro(fn);
-})(function (self) {
+(function () {
+    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+        return;
+    }
+    var self = caro;
     var nFs = require('fs');
     var fileSizeUnits1 = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     var fileSizeUnits2 = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
@@ -116,7 +117,7 @@
      */
     self.readDirCb = function (path, opt, cb) {
         if (!caro.isFsDir(path)) {
-            return [];
+            return;
         }
         var countLevel = 0;
         caro.eachObj(arguments, function (i, arg) {
@@ -195,7 +196,7 @@
                 }
             });
         };
-        return readDir(path, countLevel);
+        readDir(path, countLevel);
     };
     /**
      * create dir recursively, will create folder if path not exists
@@ -533,4 +534,4 @@
         } while (bytes >= thresh);
         return bytes.toFixed(fixed) + ' ' + aUnit[u];
     };
-});
+})();

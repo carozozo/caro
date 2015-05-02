@@ -1,11 +1,12 @@
 /**
- * The helper of date-time functions base on node.moment
- * @namespace caro
+ * DateTime
  * @author Caro.Huang
  */
-(function (fn) {
-    caro.setCaro(fn);
-})(function (self) {
+(function () {
+    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+        return;
+    }
+    var self = caro;
     // https://www.npmjs.com/package/moment
     var nMoment = require('moment');
     var defLocale = 'en';
@@ -233,4 +234,4 @@
         var oDateTime2 = getDateTimeObj(dateTime2);
         return oDateTime1.diff(oDateTime2, unit, withFloat);
     };
-});
+})();

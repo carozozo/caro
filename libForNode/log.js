@@ -1,11 +1,12 @@
 /**
- * The operator with log file
- * @namespace caro
+ * Log
  * @author Caro.Huang
  */
-(function (fn) {
-    caro.setCaro(fn);
-})(function (self) {
+(function () {
+    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+        return;
+    }
+    var self = caro;
     var normalizeLogPath = function (logPath) {
         logPath = caro.normalizePath(logPath);
         return caro.addTail(logPath, '.log');
@@ -102,4 +103,4 @@
         var logPath = 'trace';
         caro.updateLog(logPath, data, opt);
     };
-});
+})();

@@ -1,7 +1,7 @@
 {
     "name": "caro",
-    "version": "0.1.0",
-    "description": "This is common-libraries written by Caro",
+    "version": "0.2.0",
+    "description": "通用函式 by caro",
     "author": {
         "name": "Caro.Huang",
         "email": "carozozo@yahoo.com.tw"
@@ -13,7 +13,6 @@
     },
     "license": "MIT",
     "dependencies": {
-        "validator": "~3.39.0",
         "moment": "~2.10.2",
         "colors": "~1.0.3"
     }
