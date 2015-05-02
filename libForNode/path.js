@@ -1,14 +1,14 @@
 /**
- * The helper of path functions
- * @namespace caro
- * @namespace  __rootPath
+ * Path
  * @author Caro.Huang
  */
-(function (fn) {
-    caro.setCaro(fn);
-})(function (self) {
+(function () {
+    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+        return;
+    }
+    var self = caro;
     var nPath = require('path');
-    var absolutePath = __rootPath || __dirname;
+    var absolutePath = (typeof (__dirname) !== 'undefined') ? __dirname : '';
     /**
      * set absolute root path
      * @param path
@@ -97,5 +97,4 @@
         }
         return path;
     };
-});
-
+})();

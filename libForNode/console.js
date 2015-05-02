@@ -1,11 +1,12 @@
 /**
- * The operator with console for easy reading
- * @namespace caro
+ * Console
  * @author Caro.Huang
  */
-(function (fn) {
-    caro.setCaro(fn);
-})(function (self) {
+(function () {
+    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+        return;
+    }
+    var self = caro;
     // https://www.npmjs.org/package/colors
     require('colors');
     var combineMsg = function (msg, variable) {
@@ -63,4 +64,4 @@
         console.log(msg.red);
         this.isOdd = true;
     };
-});
+})();
