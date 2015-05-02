@@ -1,8 +1,18 @@
 # Caro.js
-通用函式 by caro
+JavaScript / Node.js 通用函式 by caro
 
 ## 安裝及使用
 
+### In Html
+```html
+<script src="/js/caro.js"></script>
+```
+
+```javascript
+caro.isArr(['caro']); // true
+```
+
+### In Node.js
 ```bash
 $ npm install caro
 ```
@@ -13,14 +23,11 @@ caro.isArr(['caro']); // true
 ```
 ## 索引
 
-***
+##### (★ 只適用於 Node.js | ☆ 部份適用於 Node.js)
 
-**[Array](#array)** | **[Helper](#helper)** | **[Object](#object)** | **[String](#string)**  
-**[Console](#console)** | **[DateTime](#dateTime)** | **[FileSystem](#fileSystem)** | **[Log](#log)** | **[Path](#path)**
-
-## For js & Node.js
-
-***
+**[Array](#array)** | **★[Console](#console)** | **★[DateTime](#datetime)** | **[FileSystem](#filesystem)**
+| **[Helper](#helper)** | **★[Log](#log)** | **[Object](#object)** | **[Path](#path)** | **[String](#string)**
+| **☆[TypeCheck](#typecheck)**
 
 ### Array
 - **cloneArr(arr) - 複製陣列**
@@ -110,24 +117,6 @@ caro.isArr(['caro']); // true
  ```
 
 ### Helper
-- **isBool(arg) - 判斷是否為 boolean**
-```javascript
-```
-- **isStr(arg) - 判斷是否為 string**
-```javascript
-```
-- **isNum(arg) - 判斷是否為 number**
-```javascript
-```
-- **isFn(arg) - 判斷是否為 function**
-```javascript
-```
-- **isObj(arg) - 判斷是否為 object**
-```javascript
-```
-- **isArr(arg) - 判斷是否為 array**
-```javascript
-```
 - **isBasicVal(arg) - 判斷是否為 boolean 或 string 或 number**
 ```javascript
 ```
@@ -262,11 +251,8 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 
-## For Node.js only
+### ★Console
 
-***
-
-### Console
 - 由[color](https://www.npmjs.com/package/colors)延伸
 - **log(msg, variable) - 輸出有顏色的 console 訊息**
 ```javascript
@@ -278,7 +264,7 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 
-### DateTime
+### ★DateTime
 - 由[moment](https://www.npmjs.com/package/moment)延伸
 - **setDefaultLocale(locale) - 預設國家語系(en)**
 ```javascript
@@ -326,7 +312,7 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 
-### FileSystem
+### ★FileSystem
 - **readFileCaro(path [, encoding] [, flag]) - 讀取檔案內容**
 ```javascript
 ```
@@ -379,7 +365,7 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 
-### Log
+### ★Log
 - **readLog(logPath) - 讀取 .log 檔**
 ```javascript
 ```
@@ -396,7 +382,7 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 
-### Path
+### ★Path (For Node.js only)
 - **setAbsolutePath(path) - 定義絕對路徑根目錄**
 ```javascript
 ```
@@ -420,4 +406,97 @@ caro.isArr(['caro']); // true
 ```
 - **coverToFullPath(path [, path2, path3...]) - 轉為絕對路徑**
 ```javascript
+```
+
+### ☆TypeCheck
+- **isBool(arg...) - 判斷是否為 boolean，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = false;
+    var arg2 = 'false';
+    var ret = caro.isBool(arg);
+    var ret2 = caro.isBool(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isStr(arg...) - 判斷是否為 string，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = 'false';
+    var arg2 = true;
+    var ret = caro.isStr(arg);
+    var ret2 = caro.isStr(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isFn(arg...) - 判斷是否為 function，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = function () {
+    };
+    var arg2 = 1.3;
+    var ret = caro.isFn(arg);
+    var ret2 = caro.isFn(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isNum(arg...) - 判斷是否為 number，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = 1;
+    var arg2 = '1';
+    var ret = caro.isNum(arg);
+    var ret2 = caro.isNum(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isInt(arg...) - 判斷是否為 integer，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = 1;
+    var arg2 = 1.3;
+    var ret = caro.isInt(arg);
+    var ret2 = caro.isInt(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isArr(arg...) - 判斷是否為 array，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = [];
+    var arg2 = {};
+    var ret = caro.isArr(arg);
+    var ret2 = caro.isArr(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isNull(arg...) - 判斷是否為 null，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = null;
+    var arg2 = {};
+    var ret = caro.isNull(arg);
+    var ret2 = caro.isNull(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = {};
+    var arg2 = null;
+    var ret = caro.isObj(arg);
+    var ret2 = caro.isObj(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = /^foo(bar)?$/i;
+    var arg2 = '/[a-z]/g';
+    var ret = caro.isRegExp(arg);
+    var ret2 = caro.isRegExp(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
+```
+- **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = new Buffer(1);
+    var arg2 = '';
+    var ret = caro.isObj(arg);
+    var ret2 = caro.isObj(arg, arg2);
+    console.log(ret); // true
+    console.log(ret2); // false
 ```

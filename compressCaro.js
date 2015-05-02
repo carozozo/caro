@@ -5,7 +5,7 @@
         'if (typeof module !== \'undefined\' && typeof exports !==\'undefined\') { ',
         ' module.exports = caro;',
         '}'];
-    var aDir = ['./lib', './libForNode'];
+    var aDir = ['./lib'];
     var outputPath = './caro.js';
     var eachObj = function (obj, cb) {
         for (var i in obj) {
