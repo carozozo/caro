@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     var nFs = require('fs');
     var aData = ['var caro = {};',
         'if (typeof module !== \'undefined\' && typeof exports !==\'undefined\') { ',
@@ -30,7 +31,9 @@
                 if (stat === undefined) {
                     return;
                 }
-                if (cb) cb(path);
+                if (cb) {
+                    cb(path);
+                }
             });
         }
     };
