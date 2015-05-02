@@ -4,6 +4,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
 }
 /**
  * Array
+ * @namespace caro
  * @author Caro.Huang
  */
 (function () {
@@ -260,1042 +261,6 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             return true;
         });
         return hasEmpty;
-    };
-})();
-/**
- * Helper
- * @namespace caro
- * @author Caro.Huang
- */
-(function () {
-    var self = caro;
-    var checkType = function (args, type) {
-        var pass = true;
-        caro.eachObj(args, function (i, arg) {
-            if (typeof arg !== type) {
-                pass = false;
-            }
-        });
-        return pass;
-    };
-
-    /**
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isBool = function (arg) {
-        return checkType(arguments, 'boolean');
-    };
-    /**
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isStr = function (arg) {
-        return checkType(arguments, 'string');
-    };
-    /**
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isNum = function (arg) {
-        return checkType(arguments, 'number');
-    };
-    /**
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isFn = function (arg) {
-        return checkType(arguments, 'function');
-    };
-    /**
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isObj = function (arg) {
-        // Note: array and null is object in js
-        return checkType(arguments, 'object') && arg !== null && !caro.isArr(arg);
-    };
-    /**
-     * @param arg
-     * @returns {*}
-     */
-    self.isArr = function (arg) {
-        return Array.isArray(arg);
-    };
-    /**
-     * @param arg
-     * @returns {Boolean}
-     */
-    self.isBuf = function (arg) {
-        return Buffer.isBuffer(arg);
-    };
-    /**
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isRegExp = function (arg) {
-        return arg instanceof RegExp;
-    };
-    /**
-     * check if arg is bool | str | num
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isBasicVal = function (arg) {
-        return caro.isBool(arg) || caro.isStr(arg) || caro.isNum(arg);
-    };
-    /**
-     * check if value is empty ({}/[]/undefined/null/'')
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isEmptyVal = function (arg) {
-        if (caro.isObj(arg)) {
-            return caro.getObjLength(arg) < 1;
-        }
-        if (caro.isArr(arg)) {
-            return arg.length < 1;
-        }
-        return !arg && arg !== 0;
-    };
-    /**
-     * check if value is true | 'true' | 1
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isTrue = function (arg) {
-        if (caro.isStr(arg)) {
-            arg = arg.toLowerCase();
-        }
-        return arg === true || arg === 'true' || arg === 1;
-    };
-    /**
-     * check if value is false | 'false' | 0
-     * @param arg
-     * @returns {boolean}
-     */
-    self.isFalse = function (arg) {
-        if (caro.isStr(arg)) {
-            arg = arg.toLowerCase();
-        }
-        return arg === false || arg === 'false' || arg === 0;
-    };
-    /**
-     * execute if first-argument is function
-     * @param {function} fn
-     * @param {...*} args function-arguments
-     * @returns {*}
-     */
-    self.executeIfFn = function (fn, args) {
-        var otherArgs = [];
-        var ret;
-        caro.eachObj(arguments, function (i, arg) {
-            if (caro.isFn(arg)) {
-                fn = arg;
-                return;
-            }
-            otherArgs.push(arg);
-        });
-        if (fn) {
-            ret = fn.apply(fn, otherArgs);
-        }
-        return ret;
-    };
-    /**
-     * get function name
-     * @param {function} fn
-     * @returns {string|*|String}
-     */
-    self.getFnName = function (fn) {
-        var ret = fn.toString();
-        ret = ret.substr('function '.length);
-        ret = ret.substr(0, ret.indexOf('('));
-        return ret;
-    };
-    /**
-     * cover to arr
-     * @param arg
-     * @returns {*}
-     */
-    self.coverToArr = function (arg) {
-        if (caro.isArr(arg)) {
-            return arg;
-        }
-        return [arg];
-    };
-    /**
-     * cover to str, will return '' if opt.force not false
-     * @param arg
-     * @param {boolean} [force=true] if return str
-     * @returns {*}
-     */
-    self.coverToStr = function (arg, force) {
-        if (caro.isStr(arg)) {
-            return arg;
-        }
-        force = force !== false;
-        if (arg === undefined) {
-            if (force) {
-                return 'undefined';
-            }
-            return '';
-        }
-        if (arg === null) {
-            if (force) {
-                return 'null';
-            }
-            return '';
-        }
-        if (caro.isObj(arg)) {
-            if (force) {
-                // cover fn to str first, and not replace \r\n
-                caro.coverFnToStrInObj(arg, {
-                    replaceWrap: false
-                });
-                // after cover to json, replace \\r\\n to wrap
-                arg = caro.coverToJson(arg);
-                arg = caro.replaceAll(arg, '\\r', '\r');
-                arg = caro.replaceAll(arg, '\\n', '\n');
-                return arg;
-            }
-            return '';
-        }
-        if (caro.isFn(arg.toString)) {
-            return arg.toString();
-        }
-        if (force) {
-            return '';
-        }
-        return arg;
-    };
-    /**
-     * cover to int, will return 0 if opt.force not false
-     * @param arg
-     * @param {object} [opt]
-     * @param {boolean} [opt.force=true] if return int
-     * @returns {*}
-     */
-    self.coverToInt = function (arg, opt) {
-        var force = true;
-        var int = parseInt(arg);
-        if (opt) {
-            force = opt.force !== false;
-        }
-        if (caro.isEmptyVal(int) && !force) {
-            return arg;
-        }
-        int = int || 0;
-        return int;
-    };
-    /**
-     * cover to num,, will return 0 if opt.force not false
-     * @param arg
-     * @param {object} [opt]
-     * @param {boolean} [opt.force=true]  if return num
-     * @returns {*}
-     */
-    self.coverToNum = function (arg, opt) {
-        var force = true;
-        var int = parseFloat(arg);
-        if (opt) {
-            force = opt.force !== false;
-        }
-        if (caro.isEmptyVal(int) && !force) {
-            return arg;
-        }
-        int = int || 0;
-        return int;
-    };
-    /**
-     * cover to obj, will return {} if opt.force not false
-     * @param arg
-     * @param {object} [opt]
-     * @param {boolean} [opt.force=true] if return object
-     * @returns {*}
-     */
-    self.coverToObj = function (arg, opt) {
-        var force = true;
-        if (caro.isObj(arg)) {
-            return arg;
-        }
-        if (opt) {
-            force = opt.force !== false;
-        }
-        if (caro.isJSON(arg)) {
-            return JSON.parse(arg);
-        }
-        if (force) {
-            return {};
-        }
-        return arg;
-    };
-    /**
-     * @param arg
-     * @param {object} [opt]
-     * @param {boolean} [opt.force=true] if force cover to JSON
-     * @param {function=null} [opt.replace] the replace-function in each element
-     * @param {space=4} [opt.space] the space for easy-reading after cover to JSON
-     * @returns {*}
-     */
-    self.coverToJson = function (arg, opt) {
-        var force = true;
-        var replace = null;
-        var space = 4;
-        var json = '';
-        if (opt) {
-            force = opt.force !== false;
-            replace = opt.replace || replace;
-            space = opt.space !== undefined ? opt.space : space;
-        }
-        if (space) {
-            json = JSON.stringify(arg, replace, space);
-        } else {
-            json = JSON.stringify(arg, replace);
-        }
-        if (caro.isJSON(json) || !force) {
-            return json;
-        }
-        return '';
-    };
-})();
-/**
- * Object
- * @author Caro.Huang
- */
-(function () {
-    var self = caro;
-    /**
-     * change obj string-value by key, will change-all if aKey is empty
-     * support-type: upper/lower/upperFirst
-     * @param {object} obj
-     * @param {string} type=upper|lower|upperFirst support-type
-     * @param {string[]|[]} [keys] the assign-keys
-     * @param {object} [opt]
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    var changeStrValByObjKey = function (obj, type, keys, opt) {
-        var aType = ['upper', 'lower', 'upperFirst'];
-        if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
-            return obj;
-        }
-        var objRet = obj;
-        var clone = false;
-        if (opt) {
-            clone = opt.clone === true;
-        }
-        if (clone) {
-            objRet = caro.cloneObj(obj);
-        }
-        keys = keys || caro.getKeysInObj(objRet);
-        keys = caro.splitStr(keys, ',');
-        caro.eachObj(keys, function (i, key) {
-            if (!caro.keysInObj(objRet, key)) {
-                return;
-            }
-            var val = objRet[key];
-            switch (type) {
-                case 'upper':
-                    objRet[key] = caro.upperStr(val);
-                    break;
-                case 'lower':
-                    objRet[key] = caro.lowerStr(val);
-                    break;
-                case 'upperFirst':
-                    objRet[key] = caro.upperFirst(val);
-                    break;
-            }
-        });
-        return objRet;
-    };
-
-    /**
-     * like jQuery.each function
-     * @param {object} obj
-     * @param {function} cb callback-fn for each key & val
-     */
-    self.eachObj = function (obj, cb) {
-        for (var i in obj) {
-            if (obj.hasOwnProperty(i)) {
-                if (parseInt(i) == i) {
-                    i = parseInt(i);
-                }
-                if (cb && cb(i, obj[i]) === false) {
-                    break;
-                }
-            }
-        }
-    };
-    /**
-     * @param {object} obj
-     * @returns {Number}
-     */
-    self.getObjLength = function (obj) {
-        return Object.keys(obj).length;
-    };
-    /**
-     * extend obj similar jQuery.extend
-     * @param {object} obj1
-     * @param {object} obj2
-     * @param {boolean} [deep=true]
-     * @returns {*}
-     */
-    self.extendObj = function (obj1, obj2, deep) {
-        deep = deep !== false;
-        caro.eachObj(obj2, function (key, val) {
-            if (deep) {
-                obj1[key] = caro.cloneObj(val, deep);
-                return;
-            }
-            obj1[key] = val;
-        });
-        return obj1;
-    };
-    /**
-     * clone obj, will clone all under obj when deep !== false
-     * @param {object} obj
-     * @param {boolean} [deep=true]
-     * @returns {*}
-     */
-    self.cloneObj = function (obj, deep) {
-        deep = deep !== false;
-        var clone = function (obj) {
-            if (!caro.isObj(obj)) {
-                return obj;
-            }
-            var copy = obj.constructor();
-            caro.eachObj(obj, function (key, val) {
-                if (deep) {
-                    copy[key] = clone(val);
-                    return;
-                }
-                copy[key] = val;
-            });
-            return copy;
-        };
-        return clone(obj);
-    };
-    /**
-     * copy obj-value by key
-     * @param {object} obj
-     * @param {string[]|string} keys the element that want to copy by keys
-     * @param {object} [opt]
-     * @param {boolean} [opt.clone=true] if clone for not replacing original
-     * @param {boolean} [opt.keep=true] if keep original element
-     * @returns {{}}
-     */
-    self.copyByObjKey = function (obj, keys, opt) {
-        var clone = true;
-        var keep = true;
-        var obj2 = {};
-        keys = caro.splitStr(keys, ',');
-        if (opt) {
-            clone = opt.clone !== false;
-            keep = opt.keep !== false;
-        }
-        caro.eachObj(keys, function (i, key) {
-            if (clone)
-                obj2[key] = caro.cloneObj(obj[key]);
-            else
-                obj2[key] = obj[key];
-            if (!keep)
-                delete obj[key];
-        });
-        return obj2;
-    };
-    /**
-     * replace key in object
-     * @param {object} obj
-     * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
-     * @param {object} [opt]
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    self.replaceObjKey = function (obj, cb, opt) {
-        var objRet = obj;
-        var clone = false;
-        if (opt) {
-            clone = opt.clone === true;
-        }
-        if (clone) {
-            objRet = caro.cloneObj(obj);
-        }
-        caro.eachObj(objRet, function (key, val) {
-            var newKey = caro.executeIfFn(cb, key);
-            if (newKey) {
-                objRet[newKey] = val;
-                delete objRet[key];
-            }
-        });
-        return objRet;
-    };
-    /**
-     * @param {object} obj
-     * @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
-     * @param {object} [opt]
-     * @param {boolean} [opt.deep=false] if deep-replace when element is obj
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    self.replaceObjVal = function (obj, cb, opt) {
-        var oClone = obj;
-        var deep = false;
-        var clone = false;
-        var coverObjVal = function (o) {
-            caro.eachObj(o, function (key, val) {
-                if (caro.isObj(val) && deep) {
-                    coverObjVal(val);
-                    return;
-                }
-                var newVal = caro.executeIfFn(cb, val);
-                if (newVal !== undefined) {
-                    o[key] = newVal;
-                }
-            });
-        };
-        if (opt) {
-            deep = opt.deep !== false;
-            clone = opt.clone === true;
-        }
-        if (clone) {
-            oClone = caro.cloneObj(obj);
-        }
-        coverObjVal(oClone);
-        return oClone;
-    };
-    /**
-     * @param {object} obj
-     * @param {string[]|[]} [keys] the assign-keys
-     * @param {object} [opt]
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    self.upperCaseByObjKey = function (obj, keys, opt) {
-        changeStrValByObjKey(obj, 'upper', keys, opt);
-        return obj;
-    };
-    /**
-     * @param {object} obj
-     * @param {string[]|[]} [keys] the assign-keys
-     * @param {object} [opt]
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    self.lowerCaseByObjKey = function (obj, keys, opt) {
-        changeStrValByObjKey(obj, 'lower', keys, opt);
-        return obj;
-    };
-    /**
-     * @param {object} obj
-     * @param {string[]|[]} [keys] the assign-keys
-     * @param {object} [opt]
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    self.upperFirstByObjKey = function (obj, keys, opt) {
-        changeStrValByObjKey(obj, 'upperFirst', keys, opt);
-        return obj;
-    };
-    /**
-     * @param {object} obj
-     * @param {object} [opt]
-     * @param {boolean} [opt.deep=true] if deep-replace when element is obj
-     * @param {boolean} [opt.clone=false] if clone for not replacing original
-     * @returns {*}
-     */
-    self.trimObjVal = function (obj, opt) {
-        var deep = true;
-        var clone = false;
-        var objRet = obj;
-        if (opt) {
-            deep = opt.deep !== false;
-            clone = opt.clone === true;
-        }
-        if (clone) {
-            objRet = caro.cloneObj(obj);
-        }
-        caro.eachObj(objRet, function (key, val) {
-            if (caro.isObj(val) && deep) {
-                objRet[key] = caro.trimObjVal(val, opt);
-            }
-            if (caro.isStr(val)) {
-                objRet[key] = val.trim();
-            }
-        });
-        return objRet;
-    };
-    /**
-     * check if key exists in obj, will return false when key not exist,no matter that other-keys are
-     * @param {object} obj
-     * @param {string[]|string} keys the keys that want to validate
-     * @returns {boolean}
-     */
-    self.keysInObj = function (obj, keys) {
-        if (!caro.isObj(obj)) {
-            return false;
-        }
-        var pass = true;
-        keys = caro.splitStr(keys, ',');
-        caro.eachObj(keys, function (i, key) {
-            if (!obj.hasOwnProperty(key)) {
-                pass = false;
-                return false;
-            }
-            return true;
-        });
-        return pass;
-    };
-    /**
-     * get keys in obj, and get all if levelLimit = 0
-     * @param {object} obj
-     * @param {number} [levelLimit=1] the level of obj you want to get keys
-     * @returns {Array}
-     */
-    self.getKeysInObj = function (obj, levelLimit) {
-        var arr = [];
-        if (!caro.isObj(obj)) {
-            return arr;
-        }
-        var levelCount = 0;
-        var getKey = function (obj) {
-            levelCount++;
-            caro.eachObj(obj, function (key, val) {
-                if (levelLimit > 0 && levelCount > levelLimit) {
-                    return;
-                }
-                arr.push(key);
-                if (caro.isObj(val)) {
-                    getKey(val);
-                }
-            });
-            levelCount--;
-        };
-        obj = obj || {};
-        levelLimit = (caro.coverToInt(levelLimit) > -1) ? levelLimit : 1;
-        getKey(obj);
-        return arr;
-    };
-    /**
-     * @param {object} obj
-     * @param {object} [opt]
-     * @param {boolean} [opt.replaceWrap=true] if replace \r\n
-     */
-    self.coverFnToStrInObj = function (obj, opt) {
-        var replaceWrap = true;
-        if (opt) {
-            replaceWrap = opt.replaceWrap !== false;
-        }
-        caro.eachObj(obj, function (key, val) {
-            if (caro.isObj(val)) {
-                caro.coverFnToStrInObj(val);
-                return;
-            }
-            if (caro.isFn(val)) {
-                var fnStr = val.toString();
-                if (replaceWrap) {
-                    fnStr = caro.replaceAll(fnStr, '\r', '');
-                    fnStr = caro.replaceAll(fnStr, '\n', '');
-                }
-                obj[key] = fnStr;
-            }
-        });
-        return obj;
-    };
-})();
-/**
- * String
- * @author Caro.Huang
- */
-(function () {
-    var self = caro;
-    var changeCase = function (str, type, opt) {
-        var ret = [];
-        var aType = ['toUpperCase', 'toLowerCase'];
-        var start = null;
-        var end = null;
-        var force = true;
-        if (opt) {
-            start = !caro.isEmptyVal(opt.start) ? opt.start : start;
-            end = opt.end || end;
-            force = opt.force !== false;
-        }
-        if (!caro.isStr(str)) {
-            if (!force) {
-                return str;
-            }
-            str = '';
-        }
-        type = (aType.indexOf(type) > -1) ? type : aType[0];
-        start = caro.coverToInt(start);
-        end = caro.coverToInt(end);
-        ret.push(str.slice(0, start));
-        if (end) {
-            ret.push((str.slice(start, end))[type]());
-            ret.push(str.slice(end));
-        } else {
-            ret.push((str.slice(start))[type]());
-        }
-        return ret.join('');
-    };
-
-    self.isUpper = function (str) {
-        str = caro.coverToStr(str, true);
-        var upp = str.toUpperCase();
-        return upp === str;
-    };
-    /**
-     * create random string
-     * @param {number} len the length of random
-     * @param {object} [opt]
-     * @param {boolean} [opt.lower=true] if include lowercase
-     * @param {boolean} [opt.upper=true] if include uppercase
-     * @param {boolean} [opt.num=true]
-     * @param {string} [opt.exclude=[]] the charts that excluded
-     * @returns {string}
-     */
-    self.random = function (len, opt) {
-        var text = '';
-        var chars = [];
-        var lower = true;
-        var upper = true;
-        var num = true;
-        var exclude = [];
-        len = (parseInt(len)) ? parseInt(len) : 1;
-        if (opt) {
-            lower = opt.lower !== false;
-            upper = opt.upper !== false;
-            num = opt.num !== false;
-            exclude = opt.exclude || exclude;
-        }
-        if (lower)
-            chars.push('abcdefghijklmnopqrstuvwxyz');
-        if (upper)
-            chars.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        if (num)
-            chars.push('0123456789');
-        chars = chars.join('');
-        // cover to array if string
-        exclude = caro.splitStr(exclude, ',');
-        caro.eachObj(exclude, function (i, excludeStr) {
-            chars = caro.replaceAll(String(chars), excludeStr, '');
-        });
-        for (var i = 0; i < len; i++)
-            text += chars.charAt(Math.floor(Math.random() * chars.length));
-        return text;
-    };
-    /**
-     * check str if ("true" | not-empty) / ("false" | empty) and covert to boolean
-     * @param {string} str
-     * @returns {boolean}
-     */
-    self.toBool = function (str) {
-        if (!caro.isStr(str)) {
-            return false;
-        }
-        if (!str) {
-            // return false when str is empty
-            return false;
-        }
-        str = str.toLowerCase();
-        // return false when str='false', otherwise return true
-        return  (str != 'false');
-    };
-    /**
-     * check if charts has in head of string
-     * @param str
-     * @param str2
-     * @returns {*}
-     */
-    self.hasHead = function (str, str2) {
-        if (!caro.isStr(str)) return false;
-        if (!caro.isStr(str2)) return false;
-        var index = str.indexOf(str2);
-        return index === 0;
-    };
-    /**
-     * add the head to string if not exist
-     * @param {string} str
-     * @param {string} addStr
-     * @returns {*}
-     */
-    self.addHead = function (str, addStr) {
-        if (!caro.hasHead(str, addStr)) {
-            str = addStr + str;
-        }
-        return str;
-    };
-    /**
-     * check if charts has in tail of string
-     * @param str
-     * @param str2
-     * @returns {*}
-     */
-    self.hasTail = function (str, str2) {
-        if (!caro.isStr(str)) return false;
-        if (!caro.isStr(str2)) return false;
-        var index = str.lastIndexOf(str2);
-        var strLength = str.length;
-        var strLength2 = str2.length;
-        return strLength > strLength2 && index === strLength - strLength2;
-    };
-    /**
-     * add the tail to string if not exist
-     * @param {string} str
-     * @param {string} addStr
-     * @returns {*}
-     */
-    self.addTail = function (str, addStr) {
-        if (!caro.hasTail(str, addStr)) {
-            str += addStr;
-        }
-        return str;
-    };
-    /**
-     * replace \r\n | \r | \n to <br/>
-     * @param {string} str
-     * @returns {*|string}
-     */
-    self.wrapToBr = function (str) {
-        if (!caro.isStr(str)) return str;
-        str = str.replace(/\r\n/g, '<br />');
-        str = str.replace(/\n/g, '<br />');
-        str = str.replace(/\r/g, '<br />');
-        return str;
-    };
-    /**
-     * replace the <br/> to \n
-     * @param {string} str
-     * @returns {*|string}
-     */
-    self.brToWrap = function (str) {
-        if (!caro.isStr(str)) return str;
-        var regex = /<br\s*[\/]?>/gi;
-        return str.replace(regex, "\n");
-    };
-    /**
-     * split to array by '\r\n' | '\n' | '\r'
-     * @param {string} str
-     * @returns {*}
-     */
-    self.splitByWrap = function (str) {
-        if (!caro.isStr(str)) return str;
-        var aWrap = ['\r\n', '\r', '\n'];
-        return caro.splitStr(str, aWrap);
-    };
-    /**
-     * escape RegExp
-     * @param {string} str
-     * @returns {*|string}
-     */
-    self.escapeRegExp = function (str) {
-        if (!caro.isStr(str)) return str;
-        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-    };
-    /**
-     * TODO
-     * replace all find in str
-     * @param {string} str
-     * @param {string} find
-     * @param {string} replace
-     * @returns {*|string}
-     */
-    self.replaceAll = function (str, find, replace) {
-        if (!caro.isStr(str) || !caro.isStr(find) || !caro.isStr(replace)) return str;
-        find = caro.escapeRegExp(find);
-        var regex = new RegExp(find, "g");
-        return str.replace(regex, replace);
-    };
-    /**
-     * format str to money type like 1,000.00
-     * @param {string|number} str
-     * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
-     * @param {object} [opt]
-     * @param {number} [opt.float=2]
-     * @param [opt.decimal=.]
-     * @param [opt.separated=,]
-     * @param [opt.prefix]
-     * @returns {string}
-     */
-    self.formatMoney = function (str, type, opt) {
-        var ret = [];
-        var isObj = caro.isObj;
-        var isStr = caro.isStr;
-        var float = 2;
-        var decimal = '.';
-        var separated = ',';
-        var prefix = '';
-        caro.eachObj(arguments, function (i, arg) {
-            if (i === '0') {
-                return;
-            }
-            if (isObj(arg)) {
-                opt = arg;
-            }
-            if (isStr(arg)) {
-                type = arg;
-            }
-        });
-        if (type === 'sInt') {
-            float = 0;
-            prefix = '$';
-        }
-        else if (type === 'int') {
-            float = 0;
-        } else if (isObj(opt)) {
-            float = (float = Math.abs(opt.float)) > -1 ? float : 2;
-            decimal = isStr(opt.decimal) ? opt.decimal : decimal;
-            separated = isStr(opt.separated) ? opt.separated : separated;
-            prefix = isStr(opt.prefix) ? opt.prefix : prefix;
-        }
-        var s = str < 0 ? '-' : '';
-        var iStr = parseInt(Math.abs(str || 0).toFixed(float)).toString();
-        var sepLength = (iStr.length > 3 ) ? (iStr.length % 3) : 0;
-        var retStr = s + (sepLength ? iStr.substr(0, sepLength) + separated : '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
-        if (prefix) {
-            ret.push(prefix);
-        }
-        ret.push(retStr);
-        return ret.join(' ');
-    };
-    /**
-     * e.g. ThisIsWord -> This Is Word
-     * @param {string} str
-     * @returns {string}
-     */
-    self.insertBlankBefUpper = function (str) {
-        if (!caro.isStr(str)) return str;
-        var indexCount = 0;
-        var aStr = str.split('');
-        var aStrClone = caro.cloneArr(aStr);
-        caro.eachObj(aStrClone, function (i, char) {
-            var isUpper = caro.isUpper(char);
-            if (indexCount > 0 && isUpper) {
-                // add ' ' before upper-char
-                aStr.splice(indexCount, 0, ' ');
-                // aStr length + 1 after add ' ', so indexCount++;
-                indexCount++;
-            }
-            indexCount++;
-        });
-        return aStr.join('');
-    };
-    /**
-     * @param {string} str
-     * @param {object} [opt]
-     * @param {number} [opt.start] the start-index you want to uppercase
-     * @param {number} [opt.end] the end-index you want to uppercase
-     * @param {boolean} [opt.force] if force cover to str
-     * @returns {}
-     */
-    self.upperStr = function (str, opt) {
-        return changeCase(str, 'upperCase', opt);
-    };
-    /**
-     * @param {string} str
-     * @returns {}
-     */
-    self.upperFirst = function (str) {
-        if (!caro.isStr(str)) return str;
-        return caro.upperStr(str, {
-            start: 0,
-            end: 1
-        });
-    };
-    /**
-     * @param {string} str
-     * @param {object} [opt]
-     * @param {number} [opt.start] the start-index you want to lowercase
-     * @param {number} [opt.end] the end-index you want to lowercase
-     * @param {boolean} [opt.force] if force cover to str
-     * @returns {}
-     */
-    self.lowerStr = function (str, opt) {
-        return changeCase(str, 'toLowerCase', opt);
-    };
-    /**
-     * @param {string} str
-     * @param {boolean} [force=true] if force cover to str
-     * @returns {}
-     */
-    self.trimStr = function (str, force) {
-        force = force !== false;
-        if (!caro.isStr(str)) {
-            if (!force) {
-                return str;
-            }
-            str = '';
-        }
-        return str.trim();
-    };
-    /**
-     * @param {string} str
-     * @param {string|string[]} splitter
-     * @param {boolean} [force=true] if force cover to str
-     * @returns {*}
-     */
-    self.splitStr = function (str, splitter, force) {
-        if (caro.isArr(str)) {
-            return str;
-        }
-        if (splitter === undefined) {
-            return [];
-        }
-        splitter = caro.coverToArr(splitter);
-        force = force !== false;
-        if (!caro.isStr(str)) {
-            if (!force) {
-                return str;
-            }
-            return [];
-        }
-        // get mainSplit first
-        // e.g. splitter=['a','ab','c']; => mainSplit='c'
-        var mainSplit = splitter[0];
-        caro.eachObj(splitter, function (j, eachSplit2) {
-            if (mainSplit.length >= eachSplit2.length) {
-                mainSplit = eachSplit2;
-            }
-        });
-        if (!mainSplit) {
-            return str;
-        }
-        // replace all splitter to mainSplitter
-        // e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
-        caro.eachObj(splitter, function (i, eachSplit) {
-            str = caro.replaceAll(str, eachSplit, mainSplit);
-        });
-        return str.split(mainSplit);
-    };
-    /**
-     * serialize obj-arguments to url
-     * @param {string} url
-     * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
-     * @param {boolean} [coverEmpty=false] if cover when value is empty
-     * @returns {*}
-     */
-    self.serializeUrl = function (url, oArgs, coverEmpty) {
-        var count = 0;
-        var aArgs = ['?'];
-        url = caro.coverToStr(url);
-        oArgs = caro.coverToObj(oArgs);
-        coverEmpty = coverEmpty === true;
-        caro.eachObj(oArgs, function (key, val) {
-            if (caro.isEmptyVal(val)) {
-                if (!coverEmpty) {
-                    return;
-                }
-                val = '';
-            }
-            if (count > 0) {
-                aArgs.push('&');
-            }
-            aArgs.push(key);
-            aArgs.push('=');
-            aArgs.push(val);
-            count++;
-        });
-        url += aArgs.join('');
-        return url;
     };
 })();
 /**
@@ -2140,6 +1105,265 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     };
 })();
 /**
+ * Helper
+ * @namespace caro
+ * @author Caro.Huang
+ */
+(function () {
+    'use strict';
+    var self = caro;
+
+    /**
+     * check if arg is bool | str | num
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isBasicVal = function (arg) {
+        return caro.checkIfPassCb(arguments, function (arg) {
+            // return false if arg is not bool | str | num
+            return !(!caro.isBool(arg) && !caro.isStr(arg) && !caro.isNum(arg));
+        });
+    };
+    /**
+     * check if value is empty ( {} | [] | null | '' | undefined )
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isEmptyVal = function (arg) {
+        return caro.checkIfPassCb(arguments, function (arg) {
+            if (caro.isObj(arg)) {
+                return caro.getObjLength(arg) < 1;
+            }
+            if (caro.isArr(arg)) {
+                return arg.length < 1;
+            }
+            return !arg && arg !== 0 && arg !== false;
+        });
+    };
+    /**
+     * check if value is true | 'true' | 1
+     * @param arg
+     * @returns {boolean}
+     */
+    self.isTrue = function (arg) {
+        if (caro.isStr(arg)) {
+            arg = arg.toLowerCase();
+        }
+        return arg === true || arg === 'true' || arg === 1;
+    };
+    /**
+     * check if value is false | 'false' | 0
+     * @param arg
+     * @returns {boolean}
+     */
+    self.isFalse = function (arg) {
+        if (caro.isStr(arg)) {
+            arg = arg.toLowerCase();
+        }
+        return arg === false || arg === 'false' || arg === 0;
+    };
+    /**
+     * check all argument in arr by check-function, get false if check-function return false
+     * @param {[]} arr
+     * @param {function} checkFn
+     * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
+     * @returns {boolean}
+     */
+    self.checkIfPassCb = function (arr, checkFn, needAllPass) {
+        needAllPass = needAllPass !== false;
+        if (!Array.isArray(arr) && typeof arr !== 'object' || arr === null || !caro.isFn(checkFn)) {
+            return false;
+        }
+        caro.eachObj(arr, function (i, arg) {
+            var result = caro.executeIfFn(checkFn, arg);
+            // need all pass, but result is false || no-need all pass, and result is true
+            if ((needAllPass && result === false) || (!needAllPass && result === true)) {
+                needAllPass = !needAllPass;
+                return false;
+            }
+            return true;
+        });
+        return needAllPass;
+    };
+    /**
+     * execute if first-argument is function
+     * @param {function} fn
+     * @param {...*} args function-arguments
+     * @returns {*}
+     */
+    self.executeIfFn = function (fn, args) {
+        var otherArgs = [];
+        var ret;
+        caro.eachObj(arguments, function (i, arg) {
+            if (caro.isFn(arg)) {
+                fn = arg;
+                return;
+            }
+            otherArgs.push(arg);
+        });
+        if (fn) {
+            ret = fn.apply(fn, otherArgs);
+        }
+        return ret;
+    };
+    /**
+     * get function name
+     * @param {function} fn
+     * @returns {string|*|String}
+     */
+    self.getFnName = function (fn) {
+        var ret = fn.toString();
+        ret = ret.substr('function '.length);
+        ret = ret.substr(0, ret.indexOf('('));
+        return ret;
+    };
+    /**
+     * cover to arr
+     * @param arg
+     * @returns {*}
+     */
+    self.coverToArr = function (arg) {
+        if (caro.isArr(arg)) {
+            return arg;
+        }
+        return [arg];
+    };
+    /**
+     * cover to str, will return '' if opt.force not false
+     * @param arg
+     * @param {boolean} [force=true] if return str
+     * @returns {*}
+     */
+    self.coverToStr = function (arg, force) {
+        if (caro.isStr(arg)) {
+            return arg;
+        }
+        force = force !== false;
+        if (arg === undefined) {
+            if (force) {
+                return 'undefined';
+            }
+            return '';
+        }
+        if (arg === null) {
+            if (force) {
+                return 'null';
+            }
+            return '';
+        }
+        if (caro.isObj(arg)) {
+            if (force) {
+                // cover fn to str first, and not replace \r\n
+                caro.coverFnToStrInObj(arg, {
+                    replaceWrap: false
+                });
+                // after cover to json, replace \\r\\n to wrap
+                arg = caro.coverToJson(arg);
+                arg = caro.replaceAll(arg, '\\r', '\r');
+                arg = caro.replaceAll(arg, '\\n', '\n');
+                return arg;
+            }
+            return '';
+        }
+        if (caro.isFn(arg.toString)) {
+            return arg.toString();
+        }
+        if (force) {
+            return '';
+        }
+        return arg;
+    };
+    /**
+     * cover to int, will return 0 if opt.force not false
+     * @param arg
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if return int
+     * @returns {*}
+     */
+    self.coverToInt = function (arg, opt) {
+        var force = true;
+        var int = parseInt(arg);
+        if (opt) {
+            force = opt.force !== false;
+        }
+        if (caro.isEmptyVal(int) && !force) {
+            return arg;
+        }
+        int = int || 0;
+        return int;
+    };
+    /**
+     * cover to num,, will return 0 if opt.force not false
+     * @param arg
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true]  if return num
+     * @returns {*}
+     */
+    self.coverToNum = function (arg, opt) {
+        var force = true;
+        var int = parseFloat(arg);
+        if (opt) {
+            force = opt.force !== false;
+        }
+        if (caro.isEmptyVal(int) && !force) {
+            return arg;
+        }
+        int = int || 0;
+        return int;
+    };
+    /**
+     * cover to obj, will return {} if opt.force not false
+     * @param arg
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if return object
+     * @returns {*}
+     */
+    self.coverToObj = function (arg, opt) {
+        var force = true;
+        if (caro.isObj(arg)) {
+            return arg;
+        }
+        if (opt) {
+            force = opt.force !== false;
+        }
+        if (caro.isJSON(arg)) {
+            return JSON.parse(arg);
+        }
+        if (force) {
+            return {};
+        }
+        return arg;
+    };
+    /**
+     * @param arg
+     * @param {object} [opt]
+     * @param {boolean} [opt.force=true] if force cover to JSON
+     * @param {function=null} [opt.replace] the replace-function in each element
+     * @param {space=4} [opt.space] the space for easy-reading after cover to JSON
+     * @returns {*}
+     */
+    self.coverToJson = function (arg, opt) {
+        var force = true;
+        var replace = null;
+        var space = 4;
+        var json = '';
+        if (opt) {
+            force = opt.force !== false;
+            replace = opt.replace || replace;
+            space = opt.space !== undefined ? opt.space : space;
+        }
+        if (space) {
+            json = JSON.stringify(arg, replace, space);
+        } else {
+            json = JSON.stringify(arg, replace);
+        }
+        if (caro.isJSON(json) || !force) {
+            return json;
+        }
+        return '';
+    };
+})();
+/**
  * Log
  * @author Caro.Huang
  */
@@ -2246,6 +1470,350 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     };
 })();
 /**
+ * Object
+ * @author Caro.Huang
+ */
+(function () {
+    var self = caro;
+    /**
+     * change obj string-value by key, will change-all if aKey is empty
+     * support-type: upper/lower/upperFirst
+     * @param {object} obj
+     * @param {string} type=upper|lower|upperFirst support-type
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    var changeStrValByObjKey = function (obj, type, keys, opt) {
+        var aType = ['upper', 'lower', 'upperFirst'];
+        if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
+            return obj;
+        }
+        var objRet = obj;
+        var clone = false;
+        if (opt) {
+            clone = opt.clone === true;
+        }
+        if (clone) {
+            objRet = caro.cloneObj(obj);
+        }
+        keys = keys || caro.getKeysInObj(objRet);
+        keys = caro.splitStr(keys, ',');
+        caro.eachObj(keys, function (i, key) {
+            if (!caro.keysInObj(objRet, key)) {
+                return;
+            }
+            var val = objRet[key];
+            switch (type) {
+                case 'upper':
+                    objRet[key] = caro.upperStr(val);
+                    break;
+                case 'lower':
+                    objRet[key] = caro.lowerStr(val);
+                    break;
+                case 'upperFirst':
+                    objRet[key] = caro.upperFirst(val);
+                    break;
+            }
+        });
+        return objRet;
+    };
+
+    /**
+     * like jQuery.each function
+     * @param {object} obj
+     * @param {function} cb callback-fn for each key & val
+     */
+    self.eachObj = function (obj, cb) {
+        for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                if (parseInt(i) == i) {
+                    i = parseInt(i);
+                }
+                if (cb && cb(i, obj[i]) === false) {
+                    break;
+                }
+            }
+        }
+    };
+    /**
+     * @param {object} obj
+     * @returns {Number}
+     */
+    self.getObjLength = function (obj) {
+        return Object.keys(obj).length;
+    };
+    /**
+     * extend obj similar jQuery.extend
+     * @param {object} obj1
+     * @param {object} obj2
+     * @param {boolean} [deep=true]
+     * @returns {*}
+     */
+    self.extendObj = function (obj1, obj2, deep) {
+        deep = deep !== false;
+        caro.eachObj(obj2, function (key, val) {
+            if (deep) {
+                obj1[key] = caro.cloneObj(val, deep);
+                return;
+            }
+            obj1[key] = val;
+        });
+        return obj1;
+    };
+    /**
+     * clone obj, will clone all under obj when deep !== false
+     * @param {object} obj
+     * @param {boolean} [deep=true]
+     * @returns {*}
+     */
+    self.cloneObj = function (obj, deep) {
+        deep = deep !== false;
+        var clone = function (obj) {
+            if (!caro.isObj(obj)) {
+                return obj;
+            }
+            var copy = obj.constructor();
+            caro.eachObj(obj, function (key, val) {
+                if (deep) {
+                    copy[key] = clone(val);
+                    return;
+                }
+                copy[key] = val;
+            });
+            return copy;
+        };
+        return clone(obj);
+    };
+    /**
+     * copy obj-value by key
+     * @param {object} obj
+     * @param {string[]|string} keys the element that want to copy by keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=true] if clone for not replacing original
+     * @param {boolean} [opt.keep=true] if keep original element
+     * @returns {{}}
+     */
+    self.copyByObjKey = function (obj, keys, opt) {
+        var clone = true;
+        var keep = true;
+        var obj2 = {};
+        keys = caro.splitStr(keys, ',');
+        if (opt) {
+            clone = opt.clone !== false;
+            keep = opt.keep !== false;
+        }
+        caro.eachObj(keys, function (i, key) {
+            if (clone)
+                obj2[key] = caro.cloneObj(obj[key]);
+            else
+                obj2[key] = obj[key];
+            if (!keep)
+                delete obj[key];
+        });
+        return obj2;
+    };
+    /**
+     * replace key in object
+     * @param {object} obj
+     * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    self.replaceObjKey = function (obj, cb, opt) {
+        var objRet = obj;
+        var clone = false;
+        if (opt) {
+            clone = opt.clone === true;
+        }
+        if (clone) {
+            objRet = caro.cloneObj(obj);
+        }
+        caro.eachObj(objRet, function (key, val) {
+            var newKey = caro.executeIfFn(cb, key);
+            if (newKey) {
+                objRet[newKey] = val;
+                delete objRet[key];
+            }
+        });
+        return objRet;
+    };
+    /**
+     * @param {object} obj
+     * @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
+     * @param {object} [opt]
+     * @param {boolean} [opt.deep=false] if deep-replace when element is obj
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    self.replaceObjVal = function (obj, cb, opt) {
+        var oClone = obj;
+        var deep = false;
+        var clone = false;
+        var coverObjVal = function (o) {
+            caro.eachObj(o, function (key, val) {
+                if (caro.isObj(val) && deep) {
+                    coverObjVal(val);
+                    return;
+                }
+                var newVal = caro.executeIfFn(cb, val);
+                if (newVal !== undefined) {
+                    o[key] = newVal;
+                }
+            });
+        };
+        if (opt) {
+            deep = opt.deep !== false;
+            clone = opt.clone === true;
+        }
+        if (clone) {
+            oClone = caro.cloneObj(obj);
+        }
+        coverObjVal(oClone);
+        return oClone;
+    };
+    /**
+     * @param {object} obj
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    self.upperCaseByObjKey = function (obj, keys, opt) {
+        changeStrValByObjKey(obj, 'upper', keys, opt);
+        return obj;
+    };
+    /**
+     * @param {object} obj
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    self.lowerCaseByObjKey = function (obj, keys, opt) {
+        changeStrValByObjKey(obj, 'lower', keys, opt);
+        return obj;
+    };
+    /**
+     * @param {object} obj
+     * @param {string[]|[]} [keys] the assign-keys
+     * @param {object} [opt]
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    self.upperFirstByObjKey = function (obj, keys, opt) {
+        changeStrValByObjKey(obj, 'upperFirst', keys, opt);
+        return obj;
+    };
+    /**
+     * @param {object} obj
+     * @param {object} [opt]
+     * @param {boolean} [opt.deep=true] if deep-replace when element is obj
+     * @param {boolean} [opt.clone=false] if clone for not replacing original
+     * @returns {*}
+     */
+    self.trimObjVal = function (obj, opt) {
+        var deep = true;
+        var clone = false;
+        var objRet = obj;
+        if (opt) {
+            deep = opt.deep !== false;
+            clone = opt.clone === true;
+        }
+        if (clone) {
+            objRet = caro.cloneObj(obj);
+        }
+        caro.eachObj(objRet, function (key, val) {
+            if (caro.isObj(val) && deep) {
+                objRet[key] = caro.trimObjVal(val, opt);
+            }
+            if (caro.isStr(val)) {
+                objRet[key] = val.trim();
+            }
+        });
+        return objRet;
+    };
+    /**
+     * check if key exists in obj, will return false when key not exist,no matter that other-keys are
+     * @param {object} obj
+     * @param {string[]|string} keys the keys that want to validate
+     * @returns {boolean}
+     */
+    self.keysInObj = function (obj, keys) {
+        if (!caro.isObj(obj)) {
+            return false;
+        }
+        var pass = true;
+        keys = caro.splitStr(keys, ',');
+        caro.eachObj(keys, function (i, key) {
+            if (!obj.hasOwnProperty(key)) {
+                pass = false;
+                return false;
+            }
+            return true;
+        });
+        return pass;
+    };
+    /**
+     * get keys in obj, and get all if levelLimit = 0
+     * @param {object} obj
+     * @param {number} [levelLimit=1] the level of obj you want to get keys
+     * @returns {Array}
+     */
+    self.getKeysInObj = function (obj, levelLimit) {
+        var arr = [];
+        if (!caro.isObj(obj)) {
+            return arr;
+        }
+        var levelCount = 0;
+        var getKey = function (obj) {
+            levelCount++;
+            caro.eachObj(obj, function (key, val) {
+                if (levelLimit > 0 && levelCount > levelLimit) {
+                    return;
+                }
+                arr.push(key);
+                if (caro.isObj(val)) {
+                    getKey(val);
+                }
+            });
+            levelCount--;
+        };
+        obj = obj || {};
+        levelLimit = (caro.coverToInt(levelLimit) > -1) ? levelLimit : 1;
+        getKey(obj);
+        return arr;
+    };
+    /**
+     * @param {object} obj
+     * @param {object} [opt]
+     * @param {boolean} [opt.replaceWrap=true] if replace \r\n
+     */
+    self.coverFnToStrInObj = function (obj, opt) {
+        var replaceWrap = true;
+        if (opt) {
+            replaceWrap = opt.replaceWrap !== false;
+        }
+        caro.eachObj(obj, function (key, val) {
+            if (caro.isObj(val)) {
+                caro.coverFnToStrInObj(val);
+                return;
+            }
+            if (caro.isFn(val)) {
+                var fnStr = val.toString();
+                if (replaceWrap) {
+                    fnStr = caro.replaceAll(fnStr, '\r', '');
+                    fnStr = caro.replaceAll(fnStr, '\n', '');
+                }
+                obj[key] = fnStr;
+            }
+        });
+        return obj;
+    };
+})();
+/**
  * Path
  * @author Caro.Huang
  */
@@ -2343,5 +1911,516 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             path = nPath.join(absolutePath, path);
         }
         return path;
+    };
+})();
+/**
+ * String
+ * @author Caro.Huang
+ */
+(function () {
+    var self = caro;
+    var changeCase = function (str, type, opt) {
+        var ret = [];
+        var aType = ['toUpperCase', 'toLowerCase'];
+        var start = null;
+        var end = null;
+        var force = true;
+        if (opt) {
+            start = !caro.isEmptyVal(opt.start) ? opt.start : start;
+            end = opt.end || end;
+            force = opt.force !== false;
+        }
+        if (!caro.isStr(str)) {
+            if (!force) {
+                return str;
+            }
+            str = '';
+        }
+        type = (aType.indexOf(type) > -1) ? type : aType[0];
+        start = caro.coverToInt(start);
+        end = caro.coverToInt(end);
+        ret.push(str.slice(0, start));
+        if (end) {
+            ret.push((str.slice(start, end))[type]());
+            ret.push(str.slice(end));
+        } else {
+            ret.push((str.slice(start))[type]());
+        }
+        return ret.join('');
+    };
+
+    self.isUpper = function (str) {
+        str = caro.coverToStr(str, true);
+        var upp = str.toUpperCase();
+        return upp === str;
+    };
+    /**
+     * create random string
+     * @param {number} len the length of random
+     * @param {object} [opt]
+     * @param {boolean} [opt.lower=true] if include lowercase
+     * @param {boolean} [opt.upper=true] if include uppercase
+     * @param {boolean} [opt.num=true]
+     * @param {string} [opt.exclude=[]] the charts that excluded
+     * @returns {string}
+     */
+    self.random = function (len, opt) {
+        var text = '';
+        var chars = [];
+        var lower = true;
+        var upper = true;
+        var num = true;
+        var exclude = [];
+        len = (parseInt(len)) ? parseInt(len) : 1;
+        if (opt) {
+            lower = opt.lower !== false;
+            upper = opt.upper !== false;
+            num = opt.num !== false;
+            exclude = opt.exclude || exclude;
+        }
+        if (lower)
+            chars.push('abcdefghijklmnopqrstuvwxyz');
+        if (upper)
+            chars.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        if (num)
+            chars.push('0123456789');
+        chars = chars.join('');
+        // cover to array if string
+        exclude = caro.splitStr(exclude, ',');
+        caro.eachObj(exclude, function (i, excludeStr) {
+            chars = caro.replaceAll(String(chars), excludeStr, '');
+        });
+        for (var i = 0; i < len; i++)
+            text += chars.charAt(Math.floor(Math.random() * chars.length));
+        return text;
+    };
+    /**
+     * check str if ("true" | not-empty) / ("false" | empty) and covert to boolean
+     * @param {string} str
+     * @returns {boolean}
+     */
+    self.toBool = function (str) {
+        if (!caro.isStr(str)) {
+            return false;
+        }
+        if (!str) {
+            // return false when str is empty
+            return false;
+        }
+        str = str.toLowerCase();
+        // return false when str='false', otherwise return true
+        return  (str != 'false');
+    };
+    /**
+     * check if charts has in head of string
+     * @param str
+     * @param str2
+     * @returns {*}
+     */
+    self.hasHead = function (str, str2) {
+        if (!caro.isStr(str)) return false;
+        if (!caro.isStr(str2)) return false;
+        var index = str.indexOf(str2);
+        return index === 0;
+    };
+    /**
+     * add the head to string if not exist
+     * @param {string} str
+     * @param {string} addStr
+     * @returns {*}
+     */
+    self.addHead = function (str, addStr) {
+        if (!caro.hasHead(str, addStr)) {
+            str = addStr + str;
+        }
+        return str;
+    };
+    /**
+     * check if charts has in tail of string
+     * @param str
+     * @param str2
+     * @returns {*}
+     */
+    self.hasTail = function (str, str2) {
+        if (!caro.isStr(str)) return false;
+        if (!caro.isStr(str2)) return false;
+        var index = str.lastIndexOf(str2);
+        var strLength = str.length;
+        var strLength2 = str2.length;
+        return strLength > strLength2 && index === strLength - strLength2;
+    };
+    /**
+     * add the tail to string if not exist
+     * @param {string} str
+     * @param {string} addStr
+     * @returns {*}
+     */
+    self.addTail = function (str, addStr) {
+        if (!caro.hasTail(str, addStr)) {
+            str += addStr;
+        }
+        return str;
+    };
+    /**
+     * replace \r\n | \r | \n to <br/>
+     * @param {string} str
+     * @returns {*|string}
+     */
+    self.wrapToBr = function (str) {
+        if (!caro.isStr(str)) return str;
+        str = str.replace(/\r\n/g, '<br />');
+        str = str.replace(/\n/g, '<br />');
+        str = str.replace(/\r/g, '<br />');
+        return str;
+    };
+    /**
+     * replace the <br/> to \n
+     * @param {string} str
+     * @returns {*|string}
+     */
+    self.brToWrap = function (str) {
+        if (!caro.isStr(str)) return str;
+        var regex = /<br\s*[\/]?>/gi;
+        return str.replace(regex, "\n");
+    };
+    /**
+     * split to array by '\r\n' | '\n' | '\r'
+     * @param {string} str
+     * @returns {*}
+     */
+    self.splitByWrap = function (str) {
+        if (!caro.isStr(str)) return str;
+        var aWrap = ['\r\n', '\r', '\n'];
+        return caro.splitStr(str, aWrap);
+    };
+    /**
+     * escape RegExp
+     * @param {string} str
+     * @returns {*|string}
+     */
+    self.escapeRegExp = function (str) {
+        if (!caro.isStr(str)) return str;
+        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    };
+    /**
+     * TODO
+     * replace all find in str
+     * @param {string} str
+     * @param {string} find
+     * @param {string} replace
+     * @returns {*|string}
+     */
+    self.replaceAll = function (str, find, replace) {
+        if (!caro.isStr(str) || !caro.isStr(find) || !caro.isStr(replace)) return str;
+        find = caro.escapeRegExp(find);
+        var regex = new RegExp(find, "g");
+        return str.replace(regex, replace);
+    };
+    /**
+     * format str to money type like 1,000.00
+     * @param {string|number} str
+     * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+     * @param {object} [opt]
+     * @param {number} [opt.float=2]
+     * @param [opt.decimal=.]
+     * @param [opt.separated=,]
+     * @param [opt.prefix]
+     * @returns {string}
+     */
+    self.formatMoney = function (str, type, opt) {
+        var ret = [];
+        var isObj = caro.isObj;
+        var isStr = caro.isStr;
+        var float = 2;
+        var decimal = '.';
+        var separated = ',';
+        var prefix = '';
+        caro.eachObj(arguments, function (i, arg) {
+            if (i === '0') {
+                return;
+            }
+            if (isObj(arg)) {
+                opt = arg;
+            }
+            if (isStr(arg)) {
+                type = arg;
+            }
+        });
+        if (type === 'sInt') {
+            float = 0;
+            prefix = '$';
+        }
+        else if (type === 'int') {
+            float = 0;
+        } else if (isObj(opt)) {
+            float = (float = Math.abs(opt.float)) > -1 ? float : 2;
+            decimal = isStr(opt.decimal) ? opt.decimal : decimal;
+            separated = isStr(opt.separated) ? opt.separated : separated;
+            prefix = isStr(opt.prefix) ? opt.prefix : prefix;
+        }
+        var s = str < 0 ? '-' : '';
+        var iStr = parseInt(Math.abs(str || 0).toFixed(float)).toString();
+        var sepLength = (iStr.length > 3 ) ? (iStr.length % 3) : 0;
+        var retStr = s + (sepLength ? iStr.substr(0, sepLength) + separated : '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
+        if (prefix) {
+            ret.push(prefix);
+        }
+        ret.push(retStr);
+        return ret.join(' ');
+    };
+    /**
+     * e.g. ThisIsWord -> This Is Word
+     * @param {string} str
+     * @returns {string}
+     */
+    self.insertBlankBefUpper = function (str) {
+        if (!caro.isStr(str)) return str;
+        var indexCount = 0;
+        var aStr = str.split('');
+        var aStrClone = caro.cloneArr(aStr);
+        caro.eachObj(aStrClone, function (i, char) {
+            var isUpper = caro.isUpper(char);
+            if (indexCount > 0 && isUpper) {
+                // add ' ' before upper-char
+                aStr.splice(indexCount, 0, ' ');
+                // aStr length + 1 after add ' ', so indexCount++;
+                indexCount++;
+            }
+            indexCount++;
+        });
+        return aStr.join('');
+    };
+    /**
+     * @param {string} str
+     * @param {object} [opt]
+     * @param {number} [opt.start] the start-index you want to uppercase
+     * @param {number} [opt.end] the end-index you want to uppercase
+     * @param {boolean} [opt.force] if force cover to str
+     * @returns {}
+     */
+    self.upperStr = function (str, opt) {
+        return changeCase(str, 'upperCase', opt);
+    };
+    /**
+     * @param {string} str
+     * @returns {}
+     */
+    self.upperFirst = function (str) {
+        if (!caro.isStr(str)) return str;
+        return caro.upperStr(str, {
+            start: 0,
+            end: 1
+        });
+    };
+    /**
+     * @param {string} str
+     * @param {object} [opt]
+     * @param {number} [opt.start] the start-index you want to lowercase
+     * @param {number} [opt.end] the end-index you want to lowercase
+     * @param {boolean} [opt.force] if force cover to str
+     * @returns {}
+     */
+    self.lowerStr = function (str, opt) {
+        return changeCase(str, 'toLowerCase', opt);
+    };
+    /**
+     * @param {string} str
+     * @param {boolean} [force=true] if force cover to str
+     * @returns {}
+     */
+    self.trimStr = function (str, force) {
+        force = force !== false;
+        if (!caro.isStr(str)) {
+            if (!force) {
+                return str;
+            }
+            str = '';
+        }
+        return str.trim();
+    };
+    /**
+     * @param {string} str
+     * @param {string|string[]} splitter
+     * @param {boolean} [force=true] if force cover to str
+     * @returns {*}
+     */
+    self.splitStr = function (str, splitter, force) {
+        if (caro.isArr(str)) {
+            return str;
+        }
+        if (splitter === undefined) {
+            return [];
+        }
+        splitter = caro.coverToArr(splitter);
+        force = force !== false;
+        if (!caro.isStr(str)) {
+            if (!force) {
+                return str;
+            }
+            return [];
+        }
+        // get mainSplit first
+        // e.g. splitter=['a','ab','c']; => mainSplit='c'
+        var mainSplit = splitter[0];
+        caro.eachObj(splitter, function (j, eachSplit2) {
+            if (mainSplit.length >= eachSplit2.length) {
+                mainSplit = eachSplit2;
+            }
+        });
+        if (!mainSplit) {
+            return str;
+        }
+        // replace all splitter to mainSplitter
+        // e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
+        caro.eachObj(splitter, function (i, eachSplit) {
+            str = caro.replaceAll(str, eachSplit, mainSplit);
+        });
+        return str.split(mainSplit);
+    };
+    /**
+     * serialize obj-arguments to url
+     * @param {string} url
+     * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
+     * @param {boolean} [coverEmpty=false] if cover when value is empty
+     * @returns {*}
+     */
+    self.serializeUrl = function (url, oArgs, coverEmpty) {
+        var count = 0;
+        var aArgs = ['?'];
+        url = caro.coverToStr(url);
+        oArgs = caro.coverToObj(oArgs);
+        coverEmpty = coverEmpty === true;
+        caro.eachObj(oArgs, function (key, val) {
+            if (caro.isEmptyVal(val)) {
+                if (!coverEmpty) {
+                    return;
+                }
+                val = '';
+            }
+            if (count > 0) {
+                aArgs.push('&');
+            }
+            aArgs.push(key);
+            aArgs.push('=');
+            aArgs.push(val);
+            count++;
+        });
+        url += aArgs.join('');
+        return url;
+    };
+})();
+/**
+ * TypeCheck
+ * @namespace caro
+ * @author Caro.Huang
+ */
+(function () {
+    'use strict';
+    var self = caro;
+    var checkType = function (args, type) {
+        var pass = true;
+        caro.eachObj(args, function (i, arg) {
+            if (typeof arg !== type) {
+                pass = false;
+            }
+        });
+        return pass;
+    };
+
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isBool = function (arg) {
+        return checkType(arguments, 'boolean');
+    };
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isStr = function (arg) {
+        return checkType(arguments, 'string');
+    };
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isFn = function (arg) {
+        return checkType(arguments, 'function');
+    };
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isNum = function (arg) {
+        return checkType(arguments, 'number');
+    };
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isInt = function (arg) {
+        if (!checkType.apply(null, arguments)) {
+            return false;
+        }
+        return caro.checkIfPassCb(arguments, function (val) {
+            var int = parseInt(val);
+            return int === val;
+        });
+    };
+    /**
+     * @param {...} arg
+     * @returns {*}
+     */
+    self.isArr = function (arg) {
+        return caro.checkIfPassCb(arguments, function (val) {
+            return Array.isArray(val);
+        });
+    };
+    /**
+     * @param {...} arg
+     * @returns {*}
+     */
+    self.isNull = function (arg) {
+        return caro.checkIfPassCb(arguments, function (val) {
+            return val === null;
+        });
+    };
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isObj = function (arg) {
+        return caro.checkIfPassCb(arguments, function (val) {
+            // Note: array and null is object in js
+            return checkType(arguments, 'object') && !caro.isNull(val) && !caro.isArr(val);
+        });
+    };
+    /**
+     * @param {...} arg
+     * @returns {boolean}
+     */
+    self.isRegExp = function (arg) {
+        return caro.checkIfPassCb(arguments, function (val) {
+            return val instanceof RegExp;
+        });
+    };
+    /* -------------------- Node.js only -------------------- */
+    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+        return;
+    }
+    /**
+     * @param {...} arg
+     * @returns {Boolean}
+     */
+    self.isBuf = function (arg) {
+        return caro.checkIfPassCb(arguments, function (val) {
+            // Buffer is only working on node.js
+            try {
+                return Buffer.isBuffer(val);
+            } catch (e) {
+                return false;
+            }
+        });
     };
 })();
