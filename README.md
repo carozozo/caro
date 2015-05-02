@@ -11,22 +11,97 @@ $ npm install caro
 var validator = require('caro');
 caro.isArr(['caro']); // true
 ```
-
+[Array](#array)
 ***
 
 ### For js & Node.js ##
 
-### array ###
-- **cloneArr(arr)** - 複製陣列
-- **extendArr(arr1 [, arr2, arr3...] [, opt])** - 合併2個陣列
-- **sortByObjKey(arr, key [, sort])** - 如果陣列中的值是物件，則可指定物件的 key 值排序
-- **sumOfArr(arr)** - 加總陣列中的數字
-- **removeByIndex(arr, i)** - 依 index 移除陣列中的元素
-- **removeByArrVal(arr, val)** - 依 value 移除陣列中的元素
-- **removeDup(arr)** - 移除陣列中重覆的值
-- **pushNoDup(arr, val)** - 不重覆 push 值至陣列
-- **pushNoEmpty(arr, val)** - 如果值不為空值，才會 push 至陣列
-- **hasEmptyInArr(arr)** - 判斷陣列中是否有空值
+### Array ###
+**cloneArr(arr)** - 複製陣列
+```javascript
+    var arr = [1, 2, 3];
+    var ret = caro.cloneArr(arr);
+    var ret2 = caro.cloneArr('123');
+    arr[0] = 4;
+    console.log(arr); // [ 4, 2, 3 ]
+    console.log(ret); // [ 1, 2, 3 ] 不會跟著 arr 改變
+    console.log(ret2); // []
+```
+**extendArr(arr... [duplicate])** - 合併陣列
+```javascript
+    var arr = [1, 2, 3];
+    var arr2 = [2, 3, 4];
+    var arr3 = [3, 4, 5];
+    var ret = caro.extendArr(arr, arr2);
+    var ret2 = caro.extendArr(arr, arr2, arr3, false);
+    console.log(ret); // [ 1, 2, 3, 2, 3, 4 ]
+    console.log(ret2); // [ 1, 2, 3, 4, 5 ]
+```
+**sortByObjKey(arr, key [sort])** - 如果陣列中的值是物件，則可指定物件的 key 值排序
+```javascript
+    var obj = {index: 0, name: 'caro'};
+    var obj2 = {index: 1, name: 'huang'};
+    var obj3 = {index: 2, name: 'zozo'};
+    var arr = [obj, obj3, obj2];
+    var ret = caro.sortByObjKey(arr, 'index');
+    var ret2 = caro.sortByObjKey(arr, 'index', false);
+    // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
+    console.log(ret);
+    // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
+    console.log(ret2);
+```
+**sumOfArr(arr [force])** - 加總陣列中的數字
+```javascript
+    var arr = [1, 2, '5', null, {}];
+    var ret = caro.sumOfArr(arr);
+    var ret2 = caro.sumOfArr(arr, true);
+    console.log(ret); // 3
+    console.log(ret2); // 11
+```
+**removeByIndex(arr, index...)** - 依 index 移除陣列中的元素
+```javascript
+    var arr = [1, 2, 3, 4];
+    var arr2 = [1, 2 , 3, 4, 5];
+    var ret = caro.removeByIndex(arr, 0, 2);
+    var ret2 = caro.removeByIndex(arr2, true, 0);
+    console.log(ret); // [ 2, 4 ]
+    console.log(ret2); // [ 2, 3, 4, 5 ]
+```
+**removeByArrVal(arr, val...)** - 依 value 移除陣列中的元素
+```javascript
+     var arr = [1, undefined, 3, undefined, null, 4];
+     var ret = caro.removeByArrVal(arr, undefined, null);
+     console.log(ret); // [ 1, 3, 4 ]
+```
+**removeDup(arr)** - 移除陣列中重覆的值
+ ```javascript
+    var arr = [1, 5, {}, 5, undefined, null, {}, null];
+     var ret = caro.removeDup(arr);
+     console.log(ret); // [ 1, 5, {}, undefined, null, {} ]
+ ```
+**pushNoDup(arr, val...)** - 不重覆 push 值至陣列
+ ```javascript
+    var arr = [1, 2, 3];
+    var ret = caro.pushNoDup(arr, 1, 3, {}, {}, 3);
+    console.log(ret); // [ 1, 2, 3, {}, {} ]
+ ```
+**pushNoEmpty(arr, val...)** - 如果值不為空值，才會 push 至陣列
+ ```javascript
+    var arr = [1, 2, 3];
+    var ret = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []);
+    console.log(ret); // [ 1, 2, 3, 1, 'caro', 0 ]
+ ```
+**hasEmptyInArr(arr...)** - 判斷陣列中是否有空值
+ ```javascript
+    var arr = [1, 2, 3];
+    var arr2 = [1, 2, ''];
+    var ret = caro.hasEmptyInArr(arr);
+    var ret2 = caro.hasEmptyInArr(arr2);
+    var ret3 = caro.hasEmptyInArr(arr, 'caro');
+    console.log(ret); // false
+    console.log(ret2); // true
+    console.log(ret3); // true
+ ```
 
 ### helper ###
 - **isBool(arg)** - 判斷是否為 boolean
