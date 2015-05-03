@@ -161,7 +161,7 @@ caro.isArr(['caro']); // true
 - **getObjLength(obj) - 取得 obj 長度(element 數量)**
 ```javascript
 ```
-- **extendObj(obj1, obj2 [, deep]) - 將 obj2 合併至 obj1
+- **extendObj(obj1, obj2 [, deep]) - 將 obj2 合併至 obj1**
 ```javascript
 ```
 - **cloneObj(obj [, deep]) - 複製 obj**
