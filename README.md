@@ -33,22 +33,22 @@ caro.isArr(['caro']); // true
 - **cloneArr(arr) - 複製陣列**
 ```javascript
     var arr = [1, 2, 3];
-    var ret = caro.cloneArr(arr);
-    var ret2 = caro.cloneArr('123');
+    var r = caro.cloneArr(arr);
+    var r2 = caro.cloneArr('123');
     arr[0] = 4;
     console.log(arr); // [ 4, 2, 3 ]
-    console.log(ret); // [ 1, 2, 3 ] 不會跟著 arr 改變
-    console.log(ret2); // []
+    console.log(r); // [ 1, 2, 3 ] 不會跟著 arr 改變
+    console.log(r2); // []
 ```
 - **extendArr(arr... [duplicate]) - 合併陣列**
 ```javascript
     var arr = [1, 2, 3];
     var arr2 = [2, 3, 4];
     var arr3 = [3, 4, 5];
-    var ret = caro.extendArr(arr, arr2);
-    var ret2 = caro.extendArr(arr, arr2, arr3, false);
-    console.log(ret); // [ 1, 2, 3, 2, 3, 4 ]
-    console.log(ret2); // [ 1, 2, 3, 4, 5 ]
+    var r = caro.extendArr(arr, arr2);
+    var r2 = caro.extendArr(arr, arr2, arr3, false);
+    console.log(r); // [ 1, 2, 3, 2, 3, 4 ]
+    console.log(r2); // [ 1, 2, 3, 4, 5 ]
 ```
 - **sortByObjKey(arr, key [sort]) - 如果陣列中的值是物件，則可指定物件的 key 值排序**
 ```javascript
@@ -56,102 +56,204 @@ caro.isArr(['caro']); // true
     var obj2 = {index: 1, name: 'huang'};
     var obj3 = {index: 2, name: 'zozo'};
     var arr = [obj, obj3, obj2];
-    var ret = caro.sortByObjKey(arr, 'index');
-    var ret2 = caro.sortByObjKey(arr, 'index', false);
+    var r = caro.sortByObjKey(arr, 'index');
+    var r2 = caro.sortByObjKey(arr, 'index', false);
     // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
-    console.log(ret);
+    console.log(r);
     // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
-    console.log(ret2);
+    console.log(r2);
 ```
 - **sumOfArr(arr [force]) - 加總陣列中的數字**
 ```javascript
     var arr = [1, 2, '5', null, {}];
-    var ret = caro.sumOfArr(arr);
-    var ret2 = caro.sumOfArr(arr, true);
-    console.log(ret); // 3
-    console.log(ret2); // 11
+    var r = caro.sumOfArr(arr);
+    var r2 = caro.sumOfArr(arr, true);
+    console.log(r); // 3
+    console.log(r2); // 11
 ```
 - **removeByIndex(arr, index...) - 依 index 移除陣列中的元素**
 ```javascript
     var arr = [1, 2, 3, 4];
     var arr2 = [1, 2 , 3, 4, 5];
-    var ret = caro.removeByIndex(arr, 0, 2);
-    var ret2 = caro.removeByIndex(arr2, true, 0);
-    console.log(ret); // [ 2, 4 ]
-    console.log(ret2); // [ 2, 3, 4, 5 ]
+    var r = caro.removeByIndex(arr, 0, 2);
+    var r2 = caro.removeByIndex(arr2, true, 0);
+    console.log(r); // [ 2, 4 ]
+    console.log(r2); // [ 2, 3, 4, 5 ]
 ```
 - **removeByArrVal(arr, val...) - 依 value 移除陣列中的元素**
 ```javascript
      var arr = [1, undefined, 3, undefined, null, 4];
-     var ret = caro.removeByArrVal(arr, undefined, null);
-     console.log(ret); // [ 1, 3, 4 ]
+     var r = caro.removeByArrVal(arr, undefined, null);
+     console.log(r); // [ 1, 3, 4 ]
 ```
 - **removeDup(arr) - 移除陣列中重覆的值**
  ```javascript
     var arr = [1, 5, {}, 5, undefined, null, {}, null];
-     var ret = caro.removeDup(arr);
-     console.log(ret); // [ 1, 5, {}, undefined, null, {} ]
+     var r = caro.removeDup(arr);
+     console.log(r); // [ 1, 5, {}, undefined, null, {} ]
  ```
 - **pushNoDup(arr, val...) - 不重覆 push 值至陣列**
  ```javascript
     var arr = [1, 2, 3];
-    var ret = caro.pushNoDup(arr, 1, 3, {}, {}, 3);
-    console.log(ret); // [ 1, 2, 3, {}, {} ]
+    var r = caro.pushNoDup(arr, 1, 3, {}, {}, 3);
+    console.log(r); // [ 1, 2, 3, {}, {} ]
  ```
 - **pushNoEmpty(arr, val...) - 如果值不為空值，才會 push 至陣列**
  ```javascript
     var arr = [1, 2, 3];
-    var ret = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []);
-    console.log(ret); // [ 1, 2, 3, 1, 'caro', 0 ]
+    var r = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []);
+    console.log(r); // [ 1, 2, 3, 1, 'caro', 0 ]
  ```
 - **hasEmptyInArr(arr...) - 判斷陣列中是否有空值**
  ```javascript
     var arr = [1, 2, 3];
     var arr2 = [1, 2, ''];
-    var ret = caro.hasEmptyInArr(arr);
-    var ret2 = caro.hasEmptyInArr(arr2);
-    var ret3 = caro.hasEmptyInArr(arr, 'caro');
-    console.log(ret); // false
-    console.log(ret2); // true
-    console.log(ret3); // true
+    var r = caro.hasEmptyInArr(arr);
+    var r2 = caro.hasEmptyInArr(arr2);
+    var r3 = caro.hasEmptyInArr(arr, 'caro');
+    console.log(r); // false
+    console.log(r2); // true
+    console.log(r3); // true
  ```
 
 ### Helper
-- **isBasicVal(arg) - 判斷是否為 boolean 或 string 或 number**
+- **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
 ```javascript
+    var arg = 1, arg2 = '', arg3 = false;
+    var arg4 = {};
+    var r = caro.isBasicVal(arg, arg2, arg3);
+    var r2 = caro.isBasicVal(arg4);
+    console.log(r); // true
+    console.log(r2); // false
 ```
-- **isTrue(arg) - 判斷是否為 true 或 'true' 或 1**
+- **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
 ```javascript
+    var arg = 0, arg2 = false;
+    var arg3 = {}, arg4 = [], arg5 = null, arg6 = '';
+    var r = caro.isEmptyVal(arg, arg2);
+    var r2 = caro.isEmptyVal(arg3, arg4, arg5, arg6, undefined);
+    console.log(r); // false
+    console.log(r2); // true
 ```
-- **isFalse(arg) - 判斷是否為 false 或 'false' 或 0**
+- **isTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
 ```javascript
+    var arg = true, arg2 = 'True', arg3 = 1;
+    var arg4 = false;
+    var r = caro.isTrue(arg, arg2, arg3);
+    var r2 = caro.isTrue(arg3, arg4);
+    console.log(r); // true
+    console.log(r2); // false
 ```
-- **isEmptyVal(arg) - 判斷是否為空值**
+- **isFalse(arg...) - 判斷是否為 false 或 'false' 或 0**
 ```javascript
+    var arg = false, arg2 = 'false', arg3 = 0;
+    var arg4 = true;
+    var r = caro.isFalse(arg, arg2, arg3);
+    var r2 = caro.isFalse(arg3, arg4);
+    console.log(r); // true
+    console.log(r2); // false
 ```
-- **executeIfFn(fn [, arg...]) - 如果是 function 的話則執行**
+- **checkIfPassCb((arr, checkFn, needAllPass) - 回傳 checkFn 的執行結果**
 ```javascript
+    var arg = [1, 2, 3];
+    // 完全比對，相當於 (1===1 && 2===1 && 3===1)
+    var r = caro.checkIfPassCb(arg, function (val) {
+        return val === 1;
+    });
+    // 不完全比對，相當於 (1===1 || 2===1 || 3===1)
+    var r2 = caro.checkIfPassCb(arg, function (val) {
+        return val === 1;
+    }, false);
+    console.log(r); // false
+    console.log(r2); // true
+```
+- **executeIfFn(fn [arg...]) - 如果是 function 的話則執行**
+```javascript
+    var arg = function (i) {
+        return ++i;
+    };
+    var arg2 = null;
+    var r = caro.executeIfFn(arg, 12);
+    var r2 = caro.executeIfFn(arg2);
+    console.log(r); // 13
+    console.log(r2); // undefined
 ```
 - **getFnName(fn) - 取得 function 名稱**
 ```javascript
+    var arg = function (i) {
+        return ++i;
+    };
+    var arg2 = function b(){};
+    var r = caro.getFnName(arg);
+    var r2 = caro.getFnName(arg2);
+    console.log(r); // ""
+    console.log(r2); // 'b'
 ```
 - **coverToArr(arg) - 將變數轉為 array**
 ```javascript
+    var arg = [3, 2, 1];
+    var arg2 = null;
+    var r = caro.coverToArr(arg);
+    var r2 = caro.coverToArr(arg2);
+    console.log(r); // [ 3, 2, 1 ]
+    console.log(r2); // [ null ]
 ```
-- **coverToStr(arg [, force]) - 將變數轉為 string**
+- **coverToStr(arg [force]) - 將變數轉為 string**
 ```javascript
+    var arg = function () {};
+    var arg2 = {a: 2}, arg3 = null;
+    var r = caro.coverToStr(arg);
+    var r2 = caro.coverToStr(arg2);
+    var r3 = caro.coverToStr(arg3);
+    console.log(r); // "function () {}"
+    console.log(r2); // "{a: 2}"
+    console.log(r3); // "null"
 ```
-- **coverToInt(arg [, opt]) - 將變數轉為 integer**
+- **coverToInt(arg [force]) - 將變數轉為 integer**
 ```javascript
+    var arg = '123.6', arg2 = 'a', arg3 = null;
+    var r = caro.coverToInt(arg);
+    var r2 = caro.coverToInt(arg2, false);
+    var r3 = caro.coverToInt(arg3);
+    console.log(r); // 123 (number)
+    console.log(r2); // 'a'
+    console.log(r3); // 0
 ```
-- **coverToNum(arg [, opt]) - 將變數轉為 number**
+- **coverToNum(arg [force]) - 將變數轉為 number**
 ```javascript
+    var arg = '123.45', arg2 = {};
+    var r = caro.coverToNum(arg);
+    var r2 = caro.coverToNum(arg2, false);
+    var r3 = caro.coverToNum(undefined);
+    console.log(r); // 123.45 (number)
+    console.log(r2); // {}
+    console.log(r3); // 0
 ```
-- **coverToObj(arg [, opt]) - 將變數轉為 object**
+- **coverToObj(arg [force]) - 將變數轉為 object**
 ```javascript
+    var arg = {}, arg2 = 123;
+    var r = caro.coverToObj(arg);
+    var r2 = caro.coverToObj(arg2, false);
+    var r3 = caro.coverToObj(undefined);
+    console.log(r); // {}
+    console.log(r2); // 123
+    console.log(r3); // {}
 ```
 - **coverToJson(arg [, opt]) - 將變數轉為 JSON**
 ```javascript
+    var arg = [0, 1, 2];
+    var replacer = function (key, val) {
+        if (key === '') {
+            return val;
+        }
+        return val + 2;
+    };
+    var r = caro.coverToJson(arg, {
+        force: false, // 是否強制轉為 JSON 格式
+        replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
+        space: 2 // 請參考 JSON.stringify 的參數 space
+    });
+    console.log(r);
 ```
 
 ### Object
@@ -413,90 +515,90 @@ caro.isArr(['caro']); // true
 ```javascript
     var arg = false;
     var arg2 = 'false';
-    var ret = caro.isBool(arg);
-    var ret2 = caro.isBool(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isBool(arg);
+    var r2 = caro.isBool(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isStr(arg...) - 判斷是否為 string，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = 'false';
     var arg2 = true;
-    var ret = caro.isStr(arg);
-    var ret2 = caro.isStr(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isStr(arg);
+    var r2 = caro.isStr(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isFn(arg...) - 判斷是否為 function，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = function () {
     };
     var arg2 = 1.3;
-    var ret = caro.isFn(arg);
-    var ret2 = caro.isFn(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isFn(arg);
+    var r2 = caro.isFn(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isNum(arg...) - 判斷是否為 number，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = 1;
     var arg2 = '1';
-    var ret = caro.isNum(arg);
-    var ret2 = caro.isNum(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isNum(arg);
+    var r2 = caro.isNum(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isInt(arg...) - 判斷是否為 integer，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = 1;
     var arg2 = 1.3;
-    var ret = caro.isInt(arg);
-    var ret2 = caro.isInt(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isInt(arg);
+    var r2 = caro.isInt(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isArr(arg...) - 判斷是否為 array，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = [];
     var arg2 = {};
-    var ret = caro.isArr(arg);
-    var ret2 = caro.isArr(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isArr(arg);
+    var r2 = caro.isArr(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isNull(arg...) - 判斷是否為 null，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = null;
     var arg2 = {};
-    var ret = caro.isNull(arg);
-    var ret2 = caro.isNull(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isNull(arg);
+    var r2 = caro.isNull(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = {};
     var arg2 = null;
-    var ret = caro.isObj(arg);
-    var ret2 = caro.isObj(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isObj(arg);
+    var r2 = caro.isObj(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = /^foo(bar)?$/i;
     var arg2 = '/[a-z]/g';
-    var ret = caro.isRegExp(arg);
-    var ret2 = caro.isRegExp(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isRegExp(arg);
+    var r2 = caro.isRegExp(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
 - **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = new Buffer(1);
     var arg2 = '';
-    var ret = caro.isObj(arg);
-    var ret2 = caro.isObj(arg, arg2);
-    console.log(ret); // true
-    console.log(ret2); // false
+    var r = caro.isObj(arg);
+    var r2 = caro.isObj(arg, arg2);
+    console.log(r); // true
+    console.log(r2); // false
 ```
