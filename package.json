@@ -1,12 +1,13 @@
 {
     "name": "caro",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "通用函式 by caro",
     "author": {
         "name": "Caro.Huang",
         "email": "carozozo@yahoo.com.tw"
     },
     "main": "caro.js",
+    "files": ["caro.min.js"],
     "repository": {
         "type": "git",
         "url": "https://github.com/carozozo/caro"
@@ -15,5 +16,10 @@
     "dependencies": {
         "moment": "~2.10.2",
         "colors": "~1.0.3"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-contrib-concat": "~0.5.1",
+        "grunt-contrib-uglify": "~0.5.0"
     }
 }
