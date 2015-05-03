@@ -1,4 +1,4 @@
-/*! caro - v0.3.1 - 2015-05-03 */var caro = {};
+/*! caro - v0.3.1 - 2015-05-04 */var caro = {};
 if (typeof module !== 'undefined' && typeof exports !=='undefined') { 
  module.exports = caro;
 }
@@ -216,7 +216,6 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         }
         var r = caro.cloneArr(arr);
         var aValNeedPush = [];
-
         caro.eachObj(arguments, function (i, arg) {
             if (i === 0 || caro.isEmptyVal(arg)) {
                 return;
@@ -259,6 +258,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     };
 })();
 (function () {
+    'use strict';
     if (typeof module === 'undefined' && typeof exports === 'undefined') {
         return;
     }
@@ -267,9 +267,21 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     require('colors');
     var combineMsg = function (msg, variable) {
         msg = caro.coverToStr(msg);
+        if (caro.isUndef(variable)) {
+            variable = '';
+        }
         variable = caro.coverToStr(variable);
         msg += variable;
         return msg;
+    };
+    var doConsole = function (args, color) {
+        if (caro.getObjLength(args) <= 0) {
+            return console.log();
+        }
+        var msg = args[0];
+        var variable = args[1];
+        msg = combineMsg(msg, variable);
+        console.log(msg[color]);
     };
 
     /**
@@ -278,14 +290,12 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      * @param [variable]
      */
     self.log = function (msg, variable) {
-        msg = combineMsg(msg, variable);
-        if (!msg) return;
         if (this.isOdd) {
-            console.log(msg.green);
+            doConsole(arguments, 'green');
             this.isOdd = false;
             return;
         }
-        console.log(msg.cyan);
+        doConsole(arguments, 'cyan');
         this.isOdd = true;
     };
     /**
@@ -294,15 +304,12 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      * @param [variable]
      */
     self.log2 = function (msg, variable) {
-        msg = combineMsg(msg, variable);
-        if (!msg) return;
         if (this.isOdd) {
-            console.log(msg.blue);
+            doConsole(arguments, 'blue');
             this.isOdd = false;
             return;
         }
-        console.log(msg.yellow);
-        this.isOdd = true;
+        doConsole(arguments, 'yellow');
     };
     /**
      * print different console.log color in odd/even line
@@ -310,15 +317,12 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      * @param [variable]
      */
     self.log3 = function (msg, variable) {
-        msg = combineMsg(msg, variable);
-        if (!msg) return;
         if (this.isOdd) {
-            console.log(msg.magenta);
+            doConsole(arguments, 'magenta');
             this.isOdd = false;
             return;
         }
-        console.log(msg.red);
-        this.isOdd = true;
+        doConsole(arguments, 'red');
     };
 })();
 (function () {
@@ -2345,6 +2349,13 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         return caro.checkIfPassCb(arguments, function (val) {
             return val === null;
         });
+    };
+    /**
+     * @param {...} arg
+     * @returns {*}
+     */
+    self.isUndef = function (arg) {
+        return checkType(arguments,'undefined');
     };
     /**
      * @param {...} arg

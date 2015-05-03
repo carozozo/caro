@@ -40,13 +40,13 @@ caro.isArr(['caro']); // true
     console.log(r); // [ 1, 2, 3 ] 不會跟著 arr 改變
     console.log(r2); // []
 ```
-- **extendArr(arr... [duplicate]) - 合併陣列**
+- **extendArr(duplicate [arr...]) - 合併陣列**
 ```javascript
     var arr = [1, 2, 3];
     var arr2 = [2, 3, 4];
     var arr3 = [3, 4, 5];
-    var r = caro.extendArr(arr, arr2);
-    var r2 = caro.extendArr(arr, arr2, arr3, false);
+    var r = caro.extendArr(true, arr, arr2);
+    var r2 = caro.extendArr(false, arr, arr2, arr3);
     console.log(r); // [ 1, 2, 3, 2, 3, 4 ]
     console.log(r2); // [ 1, 2, 3, 4, 5 ]
 ```
@@ -115,6 +115,30 @@ caro.isArr(['caro']); // true
     console.log(r2); // true
     console.log(r3); // true
  ```
+
+### ★Console
+
+- 由[color](https://www.npmjs.com/package/colors)延伸
+- **log(msg, variable) - 輸出有顏色的 console 訊息**
+```javascript
+    caro.log('1', undefined);
+    caro.log();
+    caro.log('2', {});
+    caro.log(function(){
+    });
+```
+- **log2(msg, variable) - 輸出有顏色的 console 訊息**
+```javascript
+    caro.log2(undefined);
+    caro.log2('1', undefined);
+    caro.log2('2', {});
+```
+- **log3(msg, variable) - 輸出有顏色的 console 訊息**
+```javascript
+    caro.log3(undefined, 'test');
+    caro.log3('1', undefined);
+    caro.log3('2', null);
+```
 
 ### Helper
 - **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
@@ -350,19 +374,6 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 - **serializeUrl(str [, oArgs] [, coverEmpty=false]) - 將變數物件代入 URL**
-```javascript
-```
-
-### ★Console
-
-- 由[color](https://www.npmjs.com/package/colors)延伸
-- **log(msg, variable) - 輸出有顏色的 console 訊息**
-```javascript
-```
-- **log2(msg, variable) - 輸出有顏色的 console 訊息**
-```javascript
-```
-- **log3(msg, variable) - 輸出有顏色的 console 訊息**
 ```javascript
 ```
 
