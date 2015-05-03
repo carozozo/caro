@@ -26,13 +26,24 @@ module.exports = function (grunt) {
                     '<%= pkg.name %>.min.js': ['<%= pkg.name %>.js']
                 }
             }
+        },
+        nodeunit: {
+            all: ['test/test.js'],
+            options: {
+                reporter: 'junit',
+                reporterOptions: {
+                    output: 'unit_test_report'
+                }
+            }
         }
     });
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat'); // 合併檔案
     grunt.loadNpmTasks('grunt-contrib-uglify'); // 檔案最小化
+    grunt.loadNpmTasks('grunt-contrib-nodeunit'); // unit test
 
     // Default task(s).
     grunt.registerTask('default', ['concat', 'uglify']); // 在 Terminal 中下指令 grunt 會執行的任務
+    grunt.registerTask('test', ['concat', 'uglify','nodeunit']); // 在 Terminal 中下指令 grunt 會執行的任務
 };
