@@ -213,6 +213,24 @@ caro.isArr(['caro']); // true
     console.log(r); // ""
     console.log(r2); // 'b'
 ```
+- **eachArgs(fn) - 將 function 中的 arguments (e.g. {'0': 'a', '1': 'b' } 的 key 轉為 int 並代入 call-back**
+```javascript
+    var fn = function (a, b) {
+        caro.eachArgs(arguments, function (key, val) {
+            console.log('key is integer =', caro.isInt(key));
+            console.log('val  =', caro.isInt(val));
+        });
+    };
+    fn('a');
+```
+- **getArgumentsAsArr(fn) - 將 arguments 轉為陣列**
+```javascript
+    var fn = function () {
+        var args = caro.getArgumentsAsArr(arguments);
+        console.log('args is array =', caro.isArr(args));
+    };
+    fn();
+```
 - **coverToArr(arg) - 將變數轉為 array**
 ```javascript
     var arg = [3, 2, 1];

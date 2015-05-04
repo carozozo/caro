@@ -1,4 +1,4 @@
-/*! caro - v0.3.1 - 2015-05-04 */var caro = {};
+/*! caro - v0.3.2 - 2015-05-04 */var caro = {};
 if (typeof module !== 'undefined' && typeof exports !=='undefined') { 
  module.exports = caro;
 }
@@ -22,7 +22,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      * @param {boolean} [duplicate=true] if extend duplicate-val
      * @returns {*}
      */
-    self.extendArr = function (arr, duplicate) {
+    self.extendArr = function (duplicate, arr) {
         var firstArr = null;
         var otherArr = [];
         var extend = function (arr) {
@@ -71,7 +71,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             if (sort) {
                 return ((order1 < order2) ? -1 : ((order1 > order2) ? 1 : 0));
             }
-            return((order1 > order2) ? -1 : ((order1 < order2) ? 1 : 0));
+            return ((order1 > order2) ? -1 : ((order1 < order2) ? 1 : 0));
         });
         return arr;
     };
@@ -119,7 +119,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             return needRemove;
         };
         // collect the index that want to remove
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i === 0) {
                 return;
             }
@@ -155,7 +155,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             return needRemove;
         };
         // collect the index that want to remove
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i === 0) {
                 return;
             }
@@ -196,7 +196,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             return arr;
         }
         var r = caro.cloneArr(arr);
-        caro.eachObj(arguments, function (i, val) {
+        caro.eachArgs(arguments, function (i, val) {
             if (i === 0 || arr.indexOf(val) > -1) {
                 return;
             }
@@ -216,7 +216,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         }
         var r = caro.cloneArr(arr);
         var aValNeedPush = [];
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i === 0 || caro.isEmptyVal(arg)) {
                 return;
             }
@@ -247,7 +247,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
                 return true;
             });
         };
-        caro.eachObj(arguments, function (i, arr) {
+        caro.eachArgs(arguments, function (i, arr) {
             if (hasEmpty) {
                 return false;
             }
@@ -624,7 +624,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      */
     self.deleteFile = function (path) {
         var pass = true;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             try {
                 nFs.unlinkSync(arg);
             } catch (e) {
@@ -641,7 +641,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      */
     self.isEmptyDir = function (path) {
         var pass = true;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (caro.isFsDir(arg)) {
                 var count = 0;
                 caro.readDirCb(arg, function () {
@@ -676,7 +676,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
             return;
         }
         var countLevel = 0;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i === 0) {
                 return;
             }
@@ -826,7 +826,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      */
     self.fsExists = function (path) {
         var pass = true;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             try {
                 if (!nFs.existsSync(arg)) {
                     pass = false;
@@ -847,7 +847,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      */
     self.isFsDir = function (path) {
         var pass = true;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             try {
                 var stat = caro.getFsStat(arg);
                 pass = stat.isDirectory();
@@ -865,7 +865,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      */
     self.isFsFile = function (path) {
         var pass = true;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             try {
                 var stat = caro.getFsStat(arg);
                 pass = stat.isFile();
@@ -884,7 +884,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      */
     self.isFsSymlink = function (path) {
         var pass = true;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             try {
                 var stat = caro.getFsStat(arg);
                 pass = stat.isSymbolicLink();
@@ -922,7 +922,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     self.deleteFs = function (path, force) {
         var pass = true;
         var aPath = [];
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (caro.isBool(arg)) {
                 force = arg;
                 return;
@@ -960,7 +960,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         if (caro.isStr(path, newPath)) {
             aPath.push([path, newPath]);
         }
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (caro.isArr(arg)) {
                 aPath.push(arg);
             }
@@ -1025,7 +1025,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         if (bytes === null) {
             return bytes;
         }
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i <= 0) {
                 return;
             }
@@ -1067,7 +1067,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         if (bytes === null) {
             return bytes;
         }
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i <= 0) {
                 return;
             }
@@ -1180,7 +1180,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     self.executeIfFn = function (fn, args) {
         var otherArgs = [];
         var r;
-        caro.eachObj(arguments, function (i, arg) {
+        caro.eachArgs(arguments, function (i, arg) {
             if (i === 0 && caro.isFn(arg)) {
                 fn = arg;
                 return;
@@ -1204,6 +1204,33 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         var r = fn.toString();
         r = r.substr('function '.length);
         r = r.substr(0, r.indexOf('('));
+        return r;
+    };
+    /**
+     * like caor.eachObj, but key is integer
+     * @param args should be arguments (obj with numeric-key)
+     * @param cb
+     */
+    self.eachArgs = function (args, cb) {
+        for (var i in args) {
+            if (args.hasOwnProperty(i)) {
+                i = parseInt(i);
+                if (cb && cb(i, args[i]) === false) {
+                    break;
+                }
+            }
+        }
+    };
+    /**
+     * get arguments, and return as arr
+     * @param args should be arguments (obj with numeric-key)
+     * @returns {Array}
+     */
+    self.getArgumentsAsArr = function (args) {
+        var r = [];
+        caro.eachObj(args, function (i, val) {
+            r.push(val);
+        });
         return r;
     };
     /**
@@ -1497,9 +1524,6 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
     self.eachObj = function (obj, cb) {
         for (var i in obj) {
             if (obj.hasOwnProperty(i)) {
-                if (parseInt(i) == i) {
-                    i = parseInt(i);
-                }
                 if (cb && cb(i, obj[i]) === false) {
                     break;
                 }
@@ -1859,10 +1883,7 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
      * @returns {string|*}
      */
     self.normalizePath = function (path) {
-        var args = [];
-        caro.eachObj(arguments, function (i, arg) {
-            args[i] = caro.coverToStr(arg);
-        });
+        var args = caro.getArgumentsAsArr(arguments);
         return nPath.join.apply(nPath, args);
     };
     /**
@@ -2104,8 +2125,8 @@ if (typeof module !== 'undefined' && typeof exports !=='undefined') {
         var decimal = '.';
         var separated = ',';
         var prefix = '';
-        caro.eachObj(arguments, function (i, arg) {
-            if (i === '0') {
+        caro.eachArgs(arguments, function (i, arg) {
+            if (i === 0) {
                 return;
             }
             if (isObj(arg)) {
