@@ -14,8 +14,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "colors": "~1.0.3",
     "moment": "~2.10.2",
-    "colors": "~1.0.3"
+    "validator": "~3.39.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
