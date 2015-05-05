@@ -140,6 +140,54 @@ caro.isArr(['caro']); // true
     caro.log3('2', null);
 ```
 
+### ★DateTime
+- 由[moment](https://www.npmjs.com/package/moment)延伸
+- **setDefaultLocale(locale) - 預設國家語系(en)**
+```javascript
+```
+- **addDateTimeFormatType(shorthandFormat, formatType [, locale]) - 自定時間格式**
+```javascript
+```
+- **formatDateTime(dateTime, shorthandFormat | formatType [, locale]) - 時間格式化**
+```javascript
+```
+- **formatNow(formatType [, locale]) - 取得現在的時間並格式化**
+```javascript
+```
+- **addDateTime(dateTime, amount, unit [, formatType]) - 增加時間**
+```javascript
+```
+- **subtractDateTime(dateTime, amount, unit [, formatType]) - 減少時間**
+```javascript
+```
+- **startOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的開始**
+```javascript
+```
+- **endOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的結束**
+```javascript
+```
+- **getUtc(dateTime [, formatType]) - 取得指定時間單位的 UTC 時間**
+```javascript
+```
+- **isBeforeDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之前**
+```javascript
+```
+- **isAfterDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之後**
+```javascript
+```
+- **isSameDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」和「目標時間」是否相同**
+```javascript
+```
+- **isBetweenDateTime(dateTime, dateTime1, dateTime2 [ , unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
+```javascript
+```
+- **isValidDateTime(dateTime) - 檢查日期格式是否正確**
+```javascript
+```
+- **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat]) - 取得日期間的差**
+```javascript
+```
+
 ### Helper
 - **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
 ```javascript
@@ -392,54 +440,6 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 - **serializeUrl(str [, oArgs] [, coverEmpty=false]) - 將變數物件代入 URL**
-```javascript
-```
-
-### ★DateTime
-- 由[moment](https://www.npmjs.com/package/moment)延伸
-- **setDefaultLocale(locale) - 預設國家語系(en)**
-```javascript
-```
-- **addDateTimeFormatType(shorthandFormat, formatType [, locale]) - 自定時間格式**
-```javascript
-```
-- **formatDateTime(dateTime, shorthandFormat | formatType [, locale]) - 時間格式化**
-```javascript
-```
-- **formatNow(formatType [, locale]) - 取得現在的時間並格式化**
-```javascript
-```
-- **addDateTime(dateTime, amount, unit [, formatType]) - 增加時間**
-```javascript
-```
-- **subtractDateTime(dateTime, amount, unit [, formatType]) - 減少時間**
-```javascript
-```
-- **startOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的開始**
-```javascript
-```
-- **endOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的結束**
-```javascript
-```
-- **getUtc(dateTime [, formatType]) - 取得指定時間單位的 UTC 時間**
-```javascript
-```
-- **isBeforeDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之前**
-```javascript
-```
-- **isAfterDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之後**
-```javascript
-```
-- **isSameDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」和「目標時間」是否相同**
-```javascript
-```
-- **isBetweenDateTime(dateTime, dateTime1, dateTime2 [ , unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
-```javascript
-```
-- **isValidDateTime(dateTime) - 檢查日期格式是否正確**
-```javascript
-```
-- **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat]) - 取得日期間的差**
 ```javascript
 ```
 

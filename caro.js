@@ -1,4 +1,4 @@
-/*! caro - v0.3.2 - 2015-05-04 */var caro = {};
+/*! caro - v0.3.0 - 2015-05-05 */var caro = {};
 if (typeof module !== 'undefined' && typeof exports !=='undefined') { 
  module.exports = caro;
 }
