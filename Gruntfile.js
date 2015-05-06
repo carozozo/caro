@@ -6,13 +6,21 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 stripBanners: true,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */',
+                beautify: {
+                    ascii_only: true
+                }
             },
             // dist(可任意取名)
             dist: {
                 files: {
                     // 輸出檔案: [要合併的檔案]
-                    '<%= pkg.name %>.js': ['src/<%= pkg.name %>.js', 'lib/*.js']
+                    '<%= pkg.name %>.js': [
+                        //'node_modules/moment/min/moment-with-locales.js',
+                        'node_modules/validator/validator.js',
+                        'src/<%= pkg.name %>.js',
+                        'src/lib/*.js'
+                    ]
                 }
             }
         },
@@ -45,7 +53,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify'); // 檔案最小化
     grunt.loadNpmTasks('grunt-mocha-test');  // unit test
 
-    // Default task(s).
-    grunt.registerTask('default', ['concat', 'uglify']); // 在 Terminal 中下指令 grunt 會執行的任務
-    grunt.registerTask('test', ['concat', 'uglify','mochaTest']); // 在 Terminal 中下指令 grunt 會執行的任務
+    // 在 Terminal 中下指令 grunt 會執行的任務
+    grunt.registerTask('default', ['concat', 'uglify']);
+    // 在 Terminal 中下指令 grunt test 會執行的任務
+    grunt.registerTask('test', ['concat', 'uglify', 'mochaTest']);
 };
