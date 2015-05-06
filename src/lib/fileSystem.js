@@ -3,7 +3,8 @@
  * @author Caro.Huang
  */
 (function () {
-    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+    'use strict';
+    if (!caro.isNode){
         return;
     }
     var self = caro;
@@ -525,7 +526,9 @@
         fixed = fixed || 1;
         si = si !== false;
         var thresh = si ? 1000 : 1024;
-        if (bytes < thresh) return bytes + ' B';
+        if (bytes < thresh) {
+            return bytes + ' B';
+        }
         var aUnit = si ? fileSizeUnits1 : fileSizeUnits2;
         var u = -1;
         do {

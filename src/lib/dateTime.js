@@ -3,18 +3,28 @@
  * @author Caro.Huang
  */
 (function () {
-    if (typeof module === 'undefined' && typeof exports === 'undefined') {
-        return;
-    }
+    'use strict';
+    //if (typeof module === 'undefined' && typeof exports === 'undefined') {
+    //    return;
+    //}
     var self = caro;
     // https://www.npmjs.com/package/moment
-    var nMoment = require('moment');
+    //var nMoment = require('moment');
+    var nMoment;
+    if (caro.isNode) {
+        nMoment = require('moment');
+    } else if (typeof moment === 'undefined') {
+        return;
+    }
+    // TODO 需要檔案合併後 moment 的多國語言不會亂碼
+    nMoment = moment;
     var defLocale = 'en';
     // save the custom format-type, e.g { en:{date:'MM/DD/YYYY'}, zh-tw :{date:'YYYY-MM-DD'} }
     var oShorthandFormat = {};
     var getDateTimeObj = function (dateTime) {
-        if (dateTime)
+        if (dateTime) {
             return nMoment(dateTime);
+        }
         // get now-time
         return nMoment();
     };

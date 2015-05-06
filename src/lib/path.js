@@ -3,7 +3,7 @@
  * @author Caro.Huang
  */
 (function () {
-    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+    if (!caro.isNode) {
         return;
     }
     var self = caro;

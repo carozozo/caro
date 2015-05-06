@@ -1,3 +1,4 @@
+var c='水';
 /**
  * Array
  * @namespace caro

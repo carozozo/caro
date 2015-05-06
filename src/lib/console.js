@@ -4,7 +4,7 @@
  */
 (function () {
     'use strict';
-    if (typeof module === 'undefined' && typeof exports === 'undefined') {
+    if (!caro.isNode) {
         return;
     }
     var self = caro;
