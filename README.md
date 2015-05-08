@@ -25,7 +25,7 @@ caro.isArr(['caro']); // true
 
 ##### (★ 只適用於 Node.js | ☆ 部份適用於 Node.js)
 
-**[Array](#array)** | **★[Console](#console)** | **★[DateTime](#datetime)** | **[FileSystem](#filesystem)**
+**[Array](#array)** | **★[Console](#console)** | **[DateTime](#datetime)** | **[FileSystem](#filesystem)**
 | **[Helper](#helper)** | **★[Log](#log)** | **[Object](#object)** | **[Path](#path)** | **[String](#string)**
 | **☆[TypeCheck](#typecheck)**
 
@@ -140,7 +140,7 @@ caro.isArr(['caro']); // true
     caro.log3('2', null);
 ```
 
-### ★DateTime
+### DateTime
 - 由[moment](https://www.npmjs.com/package/moment)延伸
 - **setDefaultLocale(locale) - 預設國家語系(en)**
 ```javascript
