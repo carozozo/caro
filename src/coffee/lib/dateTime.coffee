@@ -8,6 +8,7 @@ do ->
   if !caro.nMoment?
     return
   self = caro
+  nMoment = self.nMoment
   defLocale = 'en'
   # save the custom format-type, e.g { en:{date:'MM/DD/YYYY'}, zh-tw :{date:'YYYY-MM-DD'} }
   oShorthandFormat = {}
@@ -28,10 +29,15 @@ do ->
     # if no shorthandFormat, return the format that user set
     oLocale[shorthandFormat] or shorthandFormat
 
-  returnMomentObjIfNoFormatType = (oDateTime, formatType) ->
-    if formatType == undefined
-      return oDateTime
-    caro.formatDateTime oDateTime, formatType
+  returnDateTimeStr = (oDateTime, formatType) ->
+    caro.formatDateTime(oDateTime, formatType)
+
+  ###*
+  # @return {string}
+  ###
+
+  self.getDefaultLocale = () ->
+    defLocale
 
   ###*
   # if set default locale first, then use formatDateTime(), will return format type by it
@@ -99,7 +105,7 @@ do ->
       oDateTime.add amount
     else
       oDateTime.add amount, unit
-    returnMomentObjIfNoFormatType oDateTime, formatType
+    returnDateTimeStr oDateTime, formatType
 
   ###*
   # subtract date-time unit
@@ -117,7 +123,7 @@ do ->
       oDateTime.subtract amount
     else
       oDateTime.subtract amount, unit
-    returnMomentObjIfNoFormatType oDateTime, formatType
+    returnDateTimeStr oDateTime, formatType
 
   ###*
   # get start of the unit
@@ -132,7 +138,7 @@ do ->
   self.startOfDateTime = (dateTime, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.startOf unit
-    returnMomentObjIfNoFormatType oDateTime, formatType
+    returnDateTimeStr oDateTime, formatType
 
   ###*
   # get end of the unit
@@ -146,7 +152,7 @@ do ->
   self.endOfDateTime = (dateTime, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.endOf unit
-    returnMomentObjIfNoFormatType oDateTime, formatType
+    returnDateTimeStr oDateTime, formatType
 
   ###*
   # get date-time with UTC
@@ -159,7 +165,7 @@ do ->
   self.getUtc = (dateTime, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.utc()
-    returnMomentObjIfNoFormatType oDateTime, formatType
+    returnDateTimeStr oDateTime, formatType
 
   ###*
   # compare date-time if before target
@@ -201,7 +207,7 @@ do ->
   self.isSameDateTime = (dateTime, targetDateTime, unit) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime2 = getDateTimeObj(targetDateTime)
-    oDateTime.isSame oDateTime2, unit
+    oDateTime.isSame(targetDateTime, unit)
 
   ###*
   # check if a moment is between two other moments

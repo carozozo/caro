@@ -10587,11 +10587,12 @@
  */
 (function() {
   'use strict';
-  var coverFormatType, coverLocale, defLocale, getDateTimeObj, oShorthandFormat, returnMomentObjIfNoFormatType, self;
+  var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnDateTimeStr, self;
   if (caro.nMoment == null) {
     return;
   }
   self = caro;
+  nMoment = self.nMoment;
   defLocale = 'en';
   oShorthandFormat = {};
   getDateTimeObj = function(dateTime) {
@@ -10610,11 +10611,15 @@
     oLocale = oShorthandFormat[locale] || oShorthandFormat[defLocale] || {};
     return oLocale[shorthandFormat] || shorthandFormat;
   };
-  returnMomentObjIfNoFormatType = function(oDateTime, formatType) {
-    if (formatType === void 0) {
-      return oDateTime;
-    }
+  returnDateTimeStr = function(oDateTime, formatType) {
     return caro.formatDateTime(oDateTime, formatType);
+  };
+
+  /**
+   * @return {string}
+   */
+  self.getDefaultLocale = function() {
+    return defLocale;
   };
 
   /**
@@ -10683,7 +10688,7 @@
     } else {
       oDateTime.add(amount, unit);
     }
-    return returnMomentObjIfNoFormatType(oDateTime, formatType);
+    return returnDateTimeStr(oDateTime, formatType);
   };
 
   /**
@@ -10703,7 +10708,7 @@
     } else {
       oDateTime.subtract(amount, unit);
     }
-    return returnMomentObjIfNoFormatType(oDateTime, formatType);
+    return returnDateTimeStr(oDateTime, formatType);
   };
 
   /**
@@ -10719,7 +10724,7 @@
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
     oDateTime.startOf(unit);
-    return returnMomentObjIfNoFormatType(oDateTime, formatType);
+    return returnDateTimeStr(oDateTime, formatType);
   };
 
   /**
@@ -10734,7 +10739,7 @@
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
     oDateTime.endOf(unit);
-    return returnMomentObjIfNoFormatType(oDateTime, formatType);
+    return returnDateTimeStr(oDateTime, formatType);
   };
 
   /**
@@ -10748,7 +10753,7 @@
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
     oDateTime.utc();
-    return returnMomentObjIfNoFormatType(oDateTime, formatType);
+    return returnDateTimeStr(oDateTime, formatType);
   };
 
   /**
@@ -10793,7 +10798,7 @@
     var oDateTime, oDateTime2;
     oDateTime = getDateTimeObj(dateTime);
     oDateTime2 = getDateTimeObj(targetDateTime);
-    return oDateTime.isSame(oDateTime2, unit);
+    return oDateTime.isSame(targetDateTime, unit);
   };
 
   /**
