@@ -45,10 +45,8 @@ caro.isArr(['caro']); // true
     var arr = [1, 2, 3];
     var arr2 = [2, 3, 4];
     var arr3 = [3, 4, 5];
-    var r = caro.extendArr(true, arr, arr2);
-    var r2 = caro.extendArr(false, arr, arr2, arr3);
-    console.log(r); // [ 1, 2, 3, 2, 3, 4 ]
-    console.log(r2); // [ 1, 2, 3, 4, 5 ]
+    var r = caro.extendArr(true, arr, arr2); // [ 1, 2, 3, 2, 3, 4 ]
+    var r2 = caro.extendArr(false, arr, arr2, arr3); // [ 1, 2, 3, 4, 5 ]
 ```
 - **sortByObjKey(arr, key [sort]) - 如果陣列中的值是物件，則可指定物件的 key 值排序**
 ```javascript
@@ -56,67 +54,51 @@ caro.isArr(['caro']); // true
     var obj2 = {index: 1, name: 'huang'};
     var obj3 = {index: 2, name: 'zozo'};
     var arr = [obj, obj3, obj2];
-    var r = caro.sortByObjKey(arr, 'index');
-    var r2 = caro.sortByObjKey(arr, 'index', false);
-    // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
-    console.log(r);
-    // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
-    console.log(r2);
+    var r = caro.sortByObjKey(arr, 'index'); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
+    var r2 = caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
 ```
 - **sumOfArr(arr [force]) - 加總陣列中的數字**
 ```javascript
     var arr = [1, 2, '5', null, {}];
-    var r = caro.sumOfArr(arr);
-    var r2 = caro.sumOfArr(arr, true);
-    console.log(r); // 3
-    console.log(r2); // 11
+    var r = caro.sumOfArr(arr); // 3
+    var r2 = caro.sumOfArr(arr, true); // 11
 ```
 - **removeByIndex(arr, index...) - 依 index 移除陣列中的元素**
 ```javascript
     var arr = [1, 2, 3, 4];
     var arr2 = [1, 2 , 3, 4, 5];
-    var r = caro.removeByIndex(arr, 0, 2);
-    var r2 = caro.removeByIndex(arr2, true, 0);
-    console.log(r); // [ 2, 4 ]
-    console.log(r2); // [ 2, 3, 4, 5 ]
+    var r = caro.removeByIndex(arr, 0, 2); // [ 2, 4 ]
+    var r2 = caro.removeByIndex(arr2, true, 0); // [ 2, 3, 4, 5 ]
 ```
 - **removeByArrVal(arr, val...) - 依 value 移除陣列中的元素**
 ```javascript
-     var arr = [1, undefined, 3, undefined, null, 4];
-     var r = caro.removeByArrVal(arr, undefined, null);
-     console.log(r); // [ 1, 3, 4 ]
+    var arr = [1, undefined, 3, undefined, null, 4];
+    var r = caro.removeByArrVal(arr, undefined, null); // [ 1, 3, 4 ]
 ```
 - **removeDup(arr) - 移除陣列中重覆的值**
- ```javascript
-    var arr = [1, 5, {}, 5, undefined, null, {}, null];
-    var r = caro.removeDup(arr);
-    console.log(r); // [ 1, 5, {}, undefined, null, {} ]
- ```
+```javascript
+   var arr = [1, 5, {}, 5, undefined, null, {}, null];
+   var r = caro.removeDup(arr); // [ 1, 5, {}, undefined, null, {} ]
+```
 - **pushNoDup(arr, val...) - 不重覆 push 值至陣列**
- ```javascript
-    var arr = [1, 2, 3];
-    var r = caro.pushNoDup(arr, 1, 3, {}, {}, 3);
-    console.log(r); // [ 1, 2, 3, {}, {} ]
- ```
+```javascript
+   var arr = [1, 2, 3];
+   var r = caro.pushNoDup(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
+```
 - **pushNoEmpty(arr, val...) - 如果值不為空值，才會 push 至陣列**
- ```javascript
-    var arr = [1, 2, 3];
-    var r = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []);
-    console.log(r); // [ 1, 2, 3, 1, 'caro', 0 ]
- ```
+```javascript
+   var arr = [1, 2, 3];
+   var r = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
+```
 - **hasEmptyInArr(arr...) - 判斷陣列中是否有空值**
- ```javascript
-    var arr = [1, 2, 3];
-    var arr2 = [1, 2, ''];
-    var r = caro.hasEmptyInArr(arr);
-    var r2 = caro.hasEmptyInArr(arr2);
-    console.log(r); // false
-    console.log(r2); // true
- ```
+```javascript
+   var arr = [1, 2, 3];
+   var arr2 = [1, 2, ''];
+   var r = caro.hasEmptyInArr(arr); // false
+   var r2 = caro.hasEmptyInArr(arr2); // true
+```
 
-### ★Console
-
-- 由[color](https://www.npmjs.com/package/colors)延伸
+### ★Console(由 [color](https://www.npmjs.com/package/colors) 延伸)  
 - **log(msg, variable) - 輸出有顏色的 console 訊息**
 ```javascript
     caro.log('1', undefined);
@@ -138,52 +120,107 @@ caro.isArr(['caro']); // true
     caro.log3('2', null);
 ```
 
-### DateTime
-- 由[moment](https://www.npmjs.com/package/moment)延伸
-- **setDefaultLocale(locale) - 預設國家語系(en)**
+### DateTime(由 [moment](https://www.npmjs.com/package/moment) 延伸，可透過 caro.nMoment 使用 moment)
+- **getDefaultLocale(locale) - 取得目前預設的語系(en)**
 ```javascript
+    caro.getDefaultLocale(); // 'en'
+```
+- **setDefaultLocale(locale) - 設定預設的國家語系**
+```javascript
+    caro.setDefaultLocale('zh-tw');
 ```
 - **addDateTimeFormatType(shorthandFormat, formatType [, locale]) - 自定時間格式**
 ```javascript
+    caro.addDateTimeShortFormat('date', 'YYYY MM DD');
+    caro.addDateTimeShortFormat('date2', 'YYYY/MM/DD');
 ```
 - **formatDateTime(dateTime, shorthandFormat | formatType [, locale]) - 時間格式化**
 ```javascript
+    caro.setDefaultLocale('zh-tw');
+    caro.addDateTimeShortFormat('date', 'LLLL');
+    caro.addDateTimeShortFormat('date2', 'L');
+    var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00
+    var r2 = caro.formatDateTime('2015-06-30', 'date2'); // 2015年6月30日
 ```
 - **formatNow(formatType [, locale]) - 取得現在的時間並格式化**
 ```javascript
+    var r = caro.formatNow('date');
 ```
 - **addDateTime(dateTime, amount, unit [, formatType]) - 增加時間**
 ```javascript
+    var t = '2015-06-30 12:34:56';
+    var r = caro.addDateTime(t, 3, 'h'); // '2015-06-30T15:34:56+08:00'
+    var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2015/07/03'
 ```
 - **subtractDateTime(dateTime, amount, unit [, formatType]) - 減少時間**
 ```javascript
+    var t = '2015-06-30 12:34:56';
+    var r = caro.addDateTime(t, 3, 'h'); // '2015-01-01 9:34'
+    var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2014/12/29'
 ```
 - **startOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的開始**
 ```javascript
+    var t = '2015-08-21 12:34:56';
+    var r = caro.startOfDateTime(t, 'Y'); // '2015-01-01T00:00:00+08:00'
+    var r2 = caro.startOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 12:00:00'
 ```
 - **endOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的結束**
 ```javascript
+    caro.setDefaultLocale('en');
+    var t = '2015-08-21 12:34:56';
+    var r = caro.endOfDateTime(t, 'Y'); // '2015-12-31T23:59:59+08:00'
+    var r2 = caro.endOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 11:59:59'
 ```
 - **getUtc(dateTime [, formatType]) - 取得指定時間單位的 UTC 時間**
 ```javascript
+    var t = '2015-02-21'
+    var r = caro.getUtc(t); // '2015-02-20T16:00:00+00:00'
 ```
 - **isBeforeDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之前**
 ```javascript
+    var t = '2015-01-01';
+    var t2 = '2020-01-01';
+    var t3 = '2010-01-01';
+    var r = caro.isBeforeDateTime(t, t2); // true
+    var r2 = caro.isBeforeDateTime(t, t3); // false
 ```
 - **isAfterDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之後**
 ```javascript
+    var t = '2015-01-01 12:00:00';
+    var t2 = '2015-01-01 13:00:00';
+    var t3 = '2010-01-01';
+    var r = caro.isAfterDateTime(t, t2); // false
+    var r2 = caro.isAfterDateTime(t, t3); // true
 ```
 - **isSameDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」和「目標時間」是否相同**
 ```javascript
+    var t = '2015-01-01';
+    var t2 = '2015-01-21';
+    var t3 = '2013-01-21';
+    var r = caro.isSameDateTime(t, t2, 'year'); // true
+    var r2 = caro.isSameDateTime(t2, t3, 'month'); // false (因為 year 不同)
 ```
 - **isBetweenDateTime(dateTime, dateTime1, dateTime2 [ , unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
 ```javascript
+    var t = '2015-01-01';
+    var t2 = '2013-01-21';
+    var t3 = '2015-01-21';
+    var r = caro.isBetweenDateTime(t, t2, t3); // true
+    var r2 = caro.isBetweenDateTime(t, t3, t2); // false (因為 t 沒有比 t3 大) 
 ```
 - **isValidDateTime(dateTime) - 檢查日期格式是否正確**
 ```javascript
+    var t = '2015-01-01';
+    var t2 = '2013-01-32';
+    var r = caro.isValidDateTime(t); // true
+    var r2 = caro.isValidDateTime(t2); // false
 ```
 - **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat]) - 取得日期間的差**
 ```javascript
+    var t = '2015-01-01';
+    var t2 = '2013-01-31';
+    var r = caro.getDateTimeDiff(t, t2); // 60480000000 
+    var r2 = caro.getDateTimeDiff(t, t2, 'month'); // 23
 ```
 
 ### Helper

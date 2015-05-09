@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     var pkgName = '<%= pkg.name %>';
     var caro = pkgName + '.js';
     var srcDir = 'src/';
-    var coffeeDir = 'src/coffee/';
+    var coffeeDir = srcDir + 'coffee/';
     var jsDir = 'src/js/';
     var testDir = 'test/';
     var nodeDir = 'node_modules/';
