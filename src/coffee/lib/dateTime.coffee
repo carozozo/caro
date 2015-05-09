@@ -5,14 +5,9 @@
 
 do ->
   'use strict'
+  if !caro.nMoment?
+    return
   self = caro
-  # https://www.npmjs.com/package/moment
-  nMoment = null
-  if caro.isNode
-    nMoment = require('moment')
-  else if typeof moment != 'undefined'
-    nMoment = moment
-  console.log 'nMoment=', nMoment
   defLocale = 'en'
   # save the custom format-type, e.g { en:{date:'MM/DD/YYYY'}, zh-tw :{date:'YYYY-MM-DD'} }
   oShorthandFormat = {}
@@ -74,7 +69,7 @@ do ->
     formatType = coverFormatType(formatType, locale)
     oDateTime = getDateTimeObj(dateTime)
     returnVal = oDateTime.format(formatType)
-    # reset locale to en
+    # reset locale to default
     nMoment.locale defLocale
     returnVal
 

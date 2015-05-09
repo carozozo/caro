@@ -1,5 +1,14 @@
 module.exports = function (grunt) {
     'use strict';
+    var pkgName = '<%= pkg.name %>';
+    var caro = pkgName + '.js';
+    var srcDir = 'src/';
+    var coffeeDir = 'src/coffee/';
+    var jsDir = 'src/js/';
+    var testDir = 'test/';
+    var nodeDir = 'node_modules/';
+    var banner = '/*! ' + pkgName + ' - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */';
+
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -10,10 +19,10 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'src/coffee',
+                    cwd: coffeeDir,
                     src: ['{,*/}*.coffee'],
                     //src: ['*.coffee'],
-                    dest: 'src/js',
+                    dest: jsDir,
                     rename: function (dest, src) {
                         return dest + '/' + src.replace(/\.coffee$/, '.js');
                     }
@@ -24,21 +33,22 @@ module.exports = function (grunt) {
                     bare: true
                 },
                 files: {
-                    '<%= pkg.name %>.js': ['src/coffee/<%= pkg.name %>.coffee', 'src/coffee/lib/*.coffee']
+                    '<%= pkg.name %>.js': [coffeeDir + pkgName + '.coffee', coffeeDir + 'lib/*.coffee']
                 }
             }
         },
         concat: {
             options: {
                 stripBanners: true,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
+                banner: banner
             },
             dist: {
                 files: {
                     // 輸出檔案: [要合併的檔案]
                     '<%= pkg.name %>.js': [
-                        'node_modules/moment/min/moment-with-locales.js',
-                        '<%= pkg.name %>.js',
+                        nodeDir + 'moment/min/moment-with-locales.js',
+                        nodeDir + '/validator/validator.js',
+                        caro
                     ]
                 }
             }
@@ -46,23 +56,37 @@ module.exports = function (grunt) {
         uglify: {
             options: {
                 stripBanners: true,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
+                banner: banner
             },
             dist: {
                 files: {
-                    '<%= pkg.name %>.min.js': ['<%= pkg.name %>.js']
+                    '<%= pkg.name %>.min.js': ['.js']
                 }
             }
         },
         mochaTest: {
             test: {
+                //options: {
+                //    reporter: 'spec',
+                //    captureFile: testDir + 'results.txt', // Optionally capture the reporter output to a file
+                //    quiet: false, // Optionally suppress output to standard out (defaults to false)
+                //    clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+                //},
+                //src: [testDir + '*.js']
                 options: {
                     reporter: 'spec',
-                    captureFile: 'results.txt', // Optionally capture the reporter output to a file
-                    quiet: false, // Optionally suppress output to standard out (defaults to false)
-                    clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+                    require: [
+                        nodeDir + 'coffee-script/register',
+                        function () {
+                            caro = require('./caro');
+                        },
+                        function () {
+                            var chai = require('chai');
+                            chai.should();
+                        }
+                    ]
                 },
-                src: ['test/*.js']
+                src: [testDir + '*.coffee']
             }
         }
     });

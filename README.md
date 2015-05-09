@@ -25,7 +25,7 @@ caro.isArr(['caro']); // true
 
 ##### (★ 只適用於 Node.js | ☆ 部份適用於 Node.js)
 
-**[Array](#array)** | **★[Console](#console)** | **[DateTime](#datetime)** | **[FileSystem](#filesystem)**
+**[Array](#array)** | **★[Console](#console)** | **[DateTime](#datetime)** | **★[FileSystem](#filesystem)**
 | **[Helper](#helper)** | **★[Log](#log)** | **[Object](#object)** | **[Path](#path)** | **[String](#string)**
 | **☆[TypeCheck](#typecheck)**
 
@@ -38,7 +38,7 @@ caro.isArr(['caro']); // true
     arr[0] = 4;
     console.log(arr); // [ 4, 2, 3 ]
     console.log(r); // [ 1, 2, 3 ] 不會跟著 arr 改變
-    console.log(r2); // []
+    console.log(r2); // [ 4, 2, 3 ]
 ```
 - **extendArr(duplicate [arr...]) - 合併陣列**
 ```javascript
@@ -89,8 +89,8 @@ caro.isArr(['caro']); // true
 - **removeDup(arr) - 移除陣列中重覆的值**
  ```javascript
     var arr = [1, 5, {}, 5, undefined, null, {}, null];
-     var r = caro.removeDup(arr);
-     console.log(r); // [ 1, 5, {}, undefined, null, {} ]
+    var r = caro.removeDup(arr);
+    console.log(r); // [ 1, 5, {}, undefined, null, {} ]
  ```
 - **pushNoDup(arr, val...) - 不重覆 push 值至陣列**
  ```javascript
@@ -110,10 +110,8 @@ caro.isArr(['caro']); // true
     var arr2 = [1, 2, ''];
     var r = caro.hasEmptyInArr(arr);
     var r2 = caro.hasEmptyInArr(arr2);
-    var r3 = caro.hasEmptyInArr(arr, 'caro');
     console.log(r); // false
     console.log(r2); // true
-    console.log(r3); // true
  ```
 
 ### ★Console

@@ -33,18 +33,10 @@ do ->
     else
       r.push str.slice(start)[type]()
     r.join ''
-
   self.isUpper = (str) ->
     str = caro.coverToStr(str, true)
     upp = str.toUpperCase()
     upp == str
-
-  self.isJson = (arg) ->
-    try
-      JSON.parse arg
-    catch e
-      return false
-    true
 
   ###*
   # create random string

@@ -29,7 +29,6 @@ do ->
   self.extendArr = (duplicate, arr) ->
     firstArr = null
     otherArr = []
-
     extend = (arr) ->
       caro.eachObj arr, (i, eachVal) ->
         if !duplicate
@@ -113,7 +112,7 @@ do ->
       caro.eachObj aRemoveIndex, (j, removeIndex) ->
         if i == removeIndex
           needRemove = true
-        return
+          return false
       needRemove
 
     # collect the index that want to remove

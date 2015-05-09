@@ -2,9 +2,21 @@
   'use strict'
   caro = {}
   caro.isNode = do ->
-    typeof module != 'undefined' and typeof exports != 'undefined'
+    return global? and module? and exports?
   g.caro = caro
   if caro.isNode
-    global.caro = caro
     module.exports = caro
-) this
+    global.caro = caro) this
+
+do ->
+  if caro.isNode
+    # https://www.npmjs.com/package/moment
+    caro.nMoment = require 'moment'
+    # https://www.npmjs.com/package/validator
+    caro.nValidator = require 'validator'
+  else
+    if moment?
+      caro.nMoment = moment
+    if validator?
+      caro.nValidator = validator
+  return
