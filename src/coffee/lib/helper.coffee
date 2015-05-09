@@ -226,7 +226,7 @@ do ->
     if caro.isObj(arg)
       return arg
     force = force != false
-    if caro.isJson(arg)
+    if  caro.nValidator? and caro.nValidator.isJSON(arg)
       return JSON.parse(arg)
     if force
       return {}
@@ -254,7 +254,7 @@ do ->
       json = JSON.stringify(arg, replacer, space)
     else
       json = JSON.stringify(arg, replacer)
-    if caro.isJson(json) or !force
+    if caro.nValidator? and caro.nValidator.isJSON(json) or !force
       return json
     ''
 

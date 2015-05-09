@@ -139,6 +139,7 @@
       caro.eachObj(aRemoveIndex, function(j, removeIndex) {
         if (i === removeIndex) {
           needRemove = true;
+          return false;
         }
       });
       return needRemove;

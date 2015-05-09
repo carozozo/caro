@@ -42,16 +42,6 @@
     upp = str.toUpperCase();
     return upp === str;
   };
-  self.isJson = function(arg) {
-    var e;
-    try {
-      JSON.parse(arg);
-    } catch (_error) {
-      e = _error;
-      return false;
-    }
-    return true;
-  };
 
   /**
    * create random string

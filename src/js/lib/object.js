@@ -57,12 +57,15 @@
    * @param {function} cb callback-fn for each key & val
    */
   self.eachObj = function(obj, cb) {
-    var i;
-    for (i in obj) {
-      if (obj.hasOwnProperty(i)) {
-        if (cb && cb(i, obj[i]) === false) {
-          break;
-        }
+    var isArr, key, val;
+    isArr = Array.isArray(obj);
+    for (key in obj) {
+      val = obj[key];
+      if (isArr) {
+        key = parseInt(key);
+      }
+      if (cb && cb(key, val) === false) {
+        break;
       }
     }
   };

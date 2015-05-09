@@ -54,10 +54,12 @@ do ->
   ###
 
   self.eachObj = (obj, cb) ->
-    for i of obj
-      if obj.hasOwnProperty(i)
-        if cb and cb(i, obj[i]) == false
-          break
+    isArr = Array.isArray obj
+    for key, val of obj
+      if isArr
+        key = parseInt key
+      if cb and cb(key, val) == false
+        break
     return
 
   ###*

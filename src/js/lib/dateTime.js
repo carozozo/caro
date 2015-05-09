@@ -5,15 +5,11 @@
  */
 (function() {
   'use strict';
-  var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnMomentObjIfNoFormatType, self;
-  self = caro;
-  nMoment = null;
-  if (caro.isNode) {
-    nMoment = require('moment');
-  } else if (typeof moment !== 'undefined') {
-    nMoment = moment;
+  var coverFormatType, coverLocale, defLocale, getDateTimeObj, oShorthandFormat, returnMomentObjIfNoFormatType, self;
+  if (caro.nMoment == null) {
+    return;
   }
-  console.log('nMoment=', nMoment);
+  self = caro;
   defLocale = 'en';
   oShorthandFormat = {};
   getDateTimeObj = function(dateTime) {

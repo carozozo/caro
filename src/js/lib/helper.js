@@ -260,7 +260,7 @@
       return arg;
     }
     force = force !== false;
-    if (caro.isJson(arg)) {
+    if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
       return JSON.parse(arg);
     }
     if (force) {
@@ -293,7 +293,7 @@
     } else {
       json = JSON.stringify(arg, replacer);
     }
-    if (caro.isJson(json) || !force) {
+    if ((caro.nValidator != null) && caro.nValidator.isJSON(json) || !force) {
       return json;
     }
     return '';
