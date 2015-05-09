@@ -98,7 +98,8 @@ caro.isArr(['caro']); // true
    var r2 = caro.hasEmptyInArr(arr2); // true
 ```
 
-### ★Console(由 [color](https://www.npmjs.com/package/colors) 延伸)  
+### ★Console
+(由 [color](https://www.npmjs.com/package/colors) 延伸)  
 - **log(msg, variable) - 輸出有顏色的 console 訊息**
 ```javascript
     caro.log('1', undefined);
@@ -120,7 +121,8 @@ caro.isArr(['caro']); // true
     caro.log3('2', null);
 ```
 
-### DateTime(由 [moment](https://www.npmjs.com/package/moment) 延伸，可透過 caro.nMoment 使用 moment)
+### DateTime
+(由 [moment](https://www.npmjs.com/package/moment) 延伸，可透過 caro.nMoment 使用 moment)
 - **getDefaultLocale(locale) - 取得目前預設的語系(en)**
 ```javascript
     caro.getDefaultLocale(); // 'en'
@@ -129,12 +131,12 @@ caro.isArr(['caro']); // true
 ```javascript
     caro.setDefaultLocale('zh-tw');
 ```
-- **addDateTimeFormatType(shorthandFormat, formatType [, locale]) - 自定時間格式**
+- **addDateTimeFormatType(shorthandFormat, formatType [locale]) - 自定時間格式**
 ```javascript
     caro.addDateTimeShortFormat('date', 'YYYY MM DD');
     caro.addDateTimeShortFormat('date2', 'YYYY/MM/DD');
 ```
-- **formatDateTime(dateTime, shorthandFormat | formatType [, locale]) - 時間格式化**
+- **formatDateTime(dateTime, shorthandFormat | formatType [locale]) - 時間格式化**
 ```javascript
     caro.setDefaultLocale('zh-tw');
     caro.addDateTimeShortFormat('date', 'LLLL');
@@ -142,41 +144,41 @@ caro.isArr(['caro']); // true
     var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00
     var r2 = caro.formatDateTime('2015-06-30', 'date2'); // 2015年6月30日
 ```
-- **formatNow(formatType [, locale]) - 取得現在的時間並格式化**
+- **formatNow(formatType [locale]) - 取得現在的時間並格式化**
 ```javascript
     var r = caro.formatNow('date');
 ```
-- **addDateTime(dateTime, amount, unit [, formatType]) - 增加時間**
+- **addDateTime(dateTime, amount, unit [formatType]) - 增加時間**
 ```javascript
     var t = '2015-06-30 12:34:56';
     var r = caro.addDateTime(t, 3, 'h'); // '2015-06-30T15:34:56+08:00'
     var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2015/07/03'
 ```
-- **subtractDateTime(dateTime, amount, unit [, formatType]) - 減少時間**
+- **subtractDateTime(dateTime, amount, unit [formatType]) - 減少時間**
 ```javascript
     var t = '2015-06-30 12:34:56';
     var r = caro.addDateTime(t, 3, 'h'); // '2015-01-01 9:34'
     var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2014/12/29'
 ```
-- **startOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的開始**
+- **startOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的開始**
 ```javascript
     var t = '2015-08-21 12:34:56';
     var r = caro.startOfDateTime(t, 'Y'); // '2015-01-01T00:00:00+08:00'
     var r2 = caro.startOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 12:00:00'
 ```
-- **endOfDateTime(dateTime, unit [, formatType]) - 取得指定時間單位的結束**
+- **endOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的結束**
 ```javascript
     caro.setDefaultLocale('en');
     var t = '2015-08-21 12:34:56';
     var r = caro.endOfDateTime(t, 'Y'); // '2015-12-31T23:59:59+08:00'
     var r2 = caro.endOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 11:59:59'
 ```
-- **getUtc(dateTime [, formatType]) - 取得指定時間單位的 UTC 時間**
+- **getUtc(dateTime [formatType]) - 取得指定時間單位的 UTC 時間**
 ```javascript
     var t = '2015-02-21'
     var r = caro.getUtc(t); // '2015-02-20T16:00:00+00:00'
 ```
-- **isBeforeDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之前**
+- **isBeforeDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」是否在「目標時間」之前**
 ```javascript
     var t = '2015-01-01';
     var t2 = '2020-01-01';
@@ -184,7 +186,7 @@ caro.isArr(['caro']); // true
     var r = caro.isBeforeDateTime(t, t2); // true
     var r2 = caro.isBeforeDateTime(t, t3); // false
 ```
-- **isAfterDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」是否在「目標時間」之後**
+- **isAfterDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」是否在「目標時間」之後**
 ```javascript
     var t = '2015-01-01 12:00:00';
     var t2 = '2015-01-01 13:00:00';
@@ -192,7 +194,7 @@ caro.isArr(['caro']); // true
     var r = caro.isAfterDateTime(t, t2); // false
     var r2 = caro.isAfterDateTime(t, t3); // true
 ```
-- **isSameDateTime(dateTime, targetDateTime [ , unit]) - 比對「指定的時間」和「目標時間」是否相同**
+- **isSameDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」和「目標時間」是否相同**
 ```javascript
     var t = '2015-01-01';
     var t2 = '2015-01-21';
@@ -200,7 +202,7 @@ caro.isArr(['caro']); // true
     var r = caro.isSameDateTime(t, t2, 'year'); // true
     var r2 = caro.isSameDateTime(t2, t3, 'month'); // false (因為 year 不同)
 ```
-- **isBetweenDateTime(dateTime, dateTime1, dateTime2 [ , unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
+- **isBetweenDateTime(dateTime, dateTime1, dateTime2 [unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
 ```javascript
     var t = '2015-01-01';
     var t2 = '2013-01-21';
@@ -215,7 +217,7 @@ caro.isArr(['caro']); // true
     var r = caro.isValidDateTime(t); // true
     var r2 = caro.isValidDateTime(t2); // false
 ```
-- **getDateTimeDiff(dateTime1, dateTime2 [, unit] [, withFloat]) - 取得日期間的差**
+- **getDateTimeDiff(dateTime1, dateTime2 [unit] [withFloat]) - 取得日期間的差**
 ```javascript
     var t = '2015-01-01';
     var t2 = '2013-01-31';
@@ -228,37 +230,29 @@ caro.isArr(['caro']); // true
 ```javascript
     var arg = 1, arg2 = '', arg3 = false;
     var arg4 = {};
-    var r = caro.isBasicVal(arg, arg2, arg3);
-    var r2 = caro.isBasicVal(arg4);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isBasicVal(arg, arg2, arg3); // true
+    var r2 = caro.isBasicVal(arg4); // false
 ```
 - **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
 ```javascript
     var arg = 0, arg2 = false;
     var arg3 = {}, arg4 = [], arg5 = null, arg6 = '';
-    var r = caro.isEmptyVal(arg, arg2);
-    var r2 = caro.isEmptyVal(arg3, arg4, arg5, arg6, undefined);
-    console.log(r); // false
-    console.log(r2); // true
+    var r = caro.isEmptyVal(arg, arg2); // false
+    var r2 = caro.isEmptyVal(arg3, arg4, arg5, arg6, undefined); // true
 ```
 - **isTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
 ```javascript
     var arg = true, arg2 = 'True', arg3 = 1;
     var arg4 = false;
-    var r = caro.isTrue(arg, arg2, arg3);
-    var r2 = caro.isTrue(arg3, arg4);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isTrue(arg, arg2, arg3); // true
+    var r2 = caro.isTrue(arg3, arg4); // false
 ```
 - **isFalse(arg...) - 判斷是否為 false 或 'false' 或 0**
 ```javascript
     var arg = false, arg2 = 'false', arg3 = 0;
     var arg4 = true;
-    var r = caro.isFalse(arg, arg2, arg3);
-    var r2 = caro.isFalse(arg3, arg4);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isFalse(arg, arg2, arg3); // true
+    var r2 = caro.isFalse(arg3, arg4); // false
 ```
 - **checkIfPassCb((arr, checkFn, needAllPass) - 回傳 checkFn 的執行結果**
 ```javascript
@@ -266,13 +260,11 @@ caro.isArr(['caro']); // true
     // 完全比對，相當於 (1===1 && 2===1 && 3===1)
     var r = caro.checkIfPassCb(arg, function (val) {
         return val === 1;
-    });
+    }); // false
     // 不完全比對，相當於 (1===1 || 2===1 || 3===1)
     var r2 = caro.checkIfPassCb(arg, function (val) {
         return val === 1;
-    }, false);
-    console.log(r); // false
-    console.log(r2); // true
+    }, false); // true
 ```
 - **executeIfFn(fn [arg...]) - 如果是 function 的話則執行**
 ```javascript
@@ -280,10 +272,8 @@ caro.isArr(['caro']); // true
         return ++i;
     };
     var arg2 = null;
-    var r = caro.executeIfFn(arg, 12);
-    var r2 = caro.executeIfFn(arg2);
-    console.log(r); // 13
-    console.log(r2); // undefined
+    var r = caro.executeIfFn(arg, 12); // 13
+    var r2 = caro.executeIfFn(arg2); // undefined
 ```
 - **getFnName(fn) - 取得 function 名稱**
 ```javascript
@@ -291,10 +281,8 @@ caro.isArr(['caro']); // true
         return ++i;
     };
     var arg2 = function b(){};
-    var r = caro.getFnName(arg);
-    var r2 = caro.getFnName(arg2);
-    console.log(r); // ""
-    console.log(r2); // 'b'
+    var r = caro.getFnName(arg); // ""
+    var r2 = caro.getFnName(arg2); // 'b'
 ```
 - **eachArgs(fn) - 將 function 中的 arguments (e.g. {'0': 'a', '1': 'b' } 的 key 轉為 int 並代入 call-back**
 ```javascript
@@ -308,61 +296,46 @@ caro.isArr(['caro']); // true
 ```
 - **getArgumentsAsArr(fn) - 將 arguments 轉為陣列**
 ```javascript
-    var fn = function () {
-        var args = caro.getArgumentsAsArr(arguments);
-        console.log('args is array =', caro.isArr(args));
+    var fn = function (a, b) {
+        var args = caro.getArgumentsAsArr(arguments); // args = [1, 2]
     };
-    fn();
+    fn(1, 2);
 ```
 - **coverToArr(arg) - 將變數轉為 array**
 ```javascript
     var arg = [3, 2, 1];
     var arg2 = null;
-    var r = caro.coverToArr(arg);
-    var r2 = caro.coverToArr(arg2);
-    console.log(r); // [ 3, 2, 1 ]
-    console.log(r2); // [ null ]
+    var r = caro.coverToArr(arg); // [ 3, 2, 1 ]
+    var r2 = caro.coverToArr(arg2); // [ null ]
 ```
 - **coverToStr(arg [force]) - 將變數轉為 string**
 ```javascript
     var arg = function () {};
     var arg2 = {a: 2}, arg3 = null;
-    var r = caro.coverToStr(arg);
-    var r2 = caro.coverToStr(arg2);
-    var r3 = caro.coverToStr(arg3);
-    console.log(r); // "function () {}"
-    console.log(r2); // "{a: 2}"
-    console.log(r3); // "null"
+    var r = caro.coverToStr(arg); // "function () {}"
+    var r2 = caro.coverToStr(arg2); // "{a: 2}"
+    var r3 = caro.coverToStr(arg3); // "null"
 ```
 - **coverToInt(arg [force]) - 將變數轉為 integer**
 ```javascript
     var arg = '123.6', arg2 = 'a', arg3 = null;
-    var r = caro.coverToInt(arg);
-    var r2 = caro.coverToInt(arg2, false);
-    var r3 = caro.coverToInt(arg3);
-    console.log(r); // 123 (number)
-    console.log(r2); // 'a'
-    console.log(r3); // 0
+    var r = caro.coverToInt(arg); // 123
+    var r2 = caro.coverToInt(arg2, false); // 'a'
+    var r3 = caro.coverToInt(arg3); // 0
 ```
 - **coverToNum(arg [force]) - 將變數轉為 number**
 ```javascript
     var arg = '123.45', arg2 = {};
-    var r = caro.coverToNum(arg);
-    var r2 = caro.coverToNum(arg2, false);
-    var r3 = caro.coverToNum(undefined);
-    console.log(r); // 123.45 (number)
-    console.log(r2); // {}
-    console.log(r3); // 0
+    var r = caro.coverToNum(arg); // 123.45
+    var r2 = caro.coverToNum(arg2, false); // {}
+    var r3 = caro.coverToNum(undefined); // 0
 ```
 - **coverToObj(arg [force]) - 將變數轉為 object**
 ```javascript
     var arg = {}, arg2 = 123;
-    var r = caro.coverToObj(arg);
-    var r2 = caro.coverToObj(arg2, false);
-    var r3 = caro.coverToObj(undefined);
-    console.log(r); // {}
-    console.log(r2); // 123
-    console.log(r3); // {}
+    var r = caro.coverToObj(arg); // {}
+    var r2 = caro.coverToObj(arg2, false); // 123
+    var r3 = caro.coverToObj(undefined); // {}
 ```
 - **coverToJson(arg [, opt]) - 將變數轉為 JSON**
 ```javascript
@@ -548,7 +521,7 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 
-### ★Path (For Node.js only)
+### ★Path
 - **setAbsolutePath(path) - 定義絕對路徑根目錄**
 ```javascript
 ```
@@ -579,90 +552,69 @@ caro.isArr(['caro']); // true
 ```javascript
     var arg = false;
     var arg2 = 'false';
-    var r = caro.isBool(arg);
-    var r2 = caro.isBool(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isBool(arg); // true
+    var r2 = caro.isBool(arg, arg2); // false
 ```
 - **isStr(arg...) - 判斷是否為 string，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = 'false';
     var arg2 = true;
-    var r = caro.isStr(arg);
-    var r2 = caro.isStr(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isStr(arg); // true
+    var r2 = caro.isStr(arg, arg2); // false
 ```
 - **isFn(arg...) - 判斷是否為 function，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = function () {
-    };
+    var arg = function () {};
     var arg2 = 1.3;
-    var r = caro.isFn(arg);
-    var r2 = caro.isFn(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isFn(arg); // true
+    var r2 = caro.isFn(arg, arg2); // false
 ```
 - **isNum(arg...) - 判斷是否為 number，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = 1;
     var arg2 = '1';
-    var r = caro.isNum(arg);
-    var r2 = caro.isNum(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isNum(arg); // true
+    var r2 = caro.isNum(arg, arg2); // false
 ```
 - **isInt(arg...) - 判斷是否為 integer，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = 1;
     var arg2 = 1.3;
-    var r = caro.isInt(arg);
-    var r2 = caro.isInt(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isInt(arg); // true
+    var r2 = caro.isInt(arg, arg2); // false
 ```
 - **isArr(arg...) - 判斷是否為 array，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = [];
     var arg2 = {};
-    var r = caro.isArr(arg);
-    var r2 = caro.isArr(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isArr(arg); // true
+    var r2 = caro.isArr(arg, arg2); // false
 ```
 - **isNull(arg...) - 判斷是否為 null，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = null;
     var arg2 = {};
-    var r = caro.isNull(arg);
-    var r2 = caro.isNull(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isNull(arg); // true
+    var r2 = caro.isNull(arg, arg2); // false
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = {};
     var arg2 = null;
-    var r = caro.isObj(arg);
-    var r2 = caro.isObj(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isObj(arg); // true
+    var r2 = caro.isObj(arg, arg2); // false
 ```
 - **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = /^foo(bar)?$/i;
     var arg2 = '/[a-z]/g';
-    var r = caro.isRegExp(arg);
-    var r2 = caro.isRegExp(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isRegExp(arg); // true
+    var r2 = caro.isRegExp(arg, arg2); // false
 ```
 - **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = new Buffer(1);
     var arg2 = '';
-    var r = caro.isObj(arg);
-    var r2 = caro.isObj(arg, arg2);
-    console.log(r); // true
-    console.log(r2); // false
+    var r = caro.isObj(arg); // true
+    var r2 = caro.isObj(arg, arg2); // false
 ```
