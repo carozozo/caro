@@ -43,8 +43,8 @@
       });
     } catch (_error) {
       e = _error;
-      return false;
     }
+    return false;
   };
 
   /**
@@ -67,8 +67,8 @@
       return true;
     } catch (_error) {
       e = _error;
-      return false;
     }
+    return false;
   };
 
   /**
@@ -122,32 +122,25 @@
    * get files under path
    * @param {string} path
    * @param {object} [opt]
-   * @param {number} [opt.maxLevel=0] the dir-level you want to read, get all-level when 0
+   * @param {number} [opt.maxLevel=1] the dir-level you want to read, get all-level when 0
    * @param {boolean} [opt.getDir=true] if return dir-path
    * @param {boolean} [opt.getFile=true] if return file-path
    * @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
    * @param {function(object)} [cb] cb with file-info
    * @returns {*}
    */
-  self.readDirCb = function(path, opt, cb) {
+  self.readDirCb = function(path, cb, opt) {
     var countLevel, getByExtend, getDir, getFile, maxLevel, pushFile, readDir;
+    if (cb == null) {
+      cb = null;
+    }
+    if (opt == null) {
+      opt = {};
+    }
     if (!caro.isFsDir(path)) {
       return;
     }
     countLevel = 0;
-    caro.eachArgs(arguments, function(i, arg) {
-      if (i === 0) {
-        return;
-      }
-      if (caro.isObj(arg)) {
-        opt = arg;
-      }
-      if (caro.isFn(arg)) {
-        cb = arg;
-      }
-    });
-    opt = opt || {};
-    cb = cb || null;
     maxLevel = opt.maxLevel ? parseInt(opt.maxLevel, 10) : 1;
     getDir = opt.getDir !== false;
     getFile = opt.getFile !== false;
@@ -258,31 +251,29 @@
     path = caro.normalizePath(path);
     force = force === true;
     pass = true;
-    deleteUnderDir = function(rootPath, getFile) {
-      getFile = getFile !== false;
-      caro.readDirCb(rootPath, (function(oFilInfo) {
+    deleteUnderDir = function(rootPath) {
+      caro.readDirCb(rootPath, function(oFilInfo) {
         var e, filePath;
         filePath = oFilInfo.filePath;
+        if (!force) {
+          return;
+        }
         if (caro.isFsDir(filePath)) {
-          if (force) {
-            deleteUnderDir(filePath);
-            try {
-              nFs.rmdirSync(filePath);
-            } catch (_error) {
-              e = _error;
-              pass = false;
-            }
+          deleteUnderDir(filePath);
+          try {
+            nFs.rmdirSync(filePath);
+          } catch (_error) {
+            e = _error;
+            pass = false;
           }
           return;
         }
         if (!caro.deleteFile(filePath)) {
           pass = false;
         }
-      }), {
-        getFile: getFile
       });
     };
-    deleteUnderDir(path, false);
+    deleteUnderDir(path);
     if (caro.isEmptyDir(path)) {
       nFs.rmdirSync(path);
     }
@@ -404,22 +395,16 @@
   /**
    * delete file or dir or link, return false delete failed
    * @param {...string} path
-   * @param {boolean} [force]
+   * @param {boolean} [force=false]
    * @returns {boolean}
    */
   self.deleteFs = function(path, force) {
     var aPath, e, pass;
+    if (force == null) {
+      force = false;
+    }
     pass = true;
     aPath = [];
-    caro.eachArgs(arguments, function(i, arg) {
-      if (caro.isBool(arg)) {
-        force = arg;
-        return;
-      }
-      if (caro.isStr(arg)) {
-        aPath.push(arg);
-      }
-    });
     try {
       caro.eachObj(aPath, function(i, path) {
         if (caro.isFsDir(path)) {
@@ -447,6 +432,9 @@
    */
   self.renameFs = function(path, newPath, force) {
     var aPath, pass;
+    if (force == null) {
+      force = false;
+    }
     pass = true;
     aPath = [];
     if (caro.isStr(path, newPath)) {
@@ -489,6 +477,9 @@
    */
   self.getFsStat = function(path, type) {
     var aType, e, stat;
+    if (type == null) {
+      type = 'l';
+    }
     stat = null;
     aType = ['l', 's', 'f'];
     type = aType.indexOf(type) > -1 ? type : aType[0];
@@ -519,23 +510,15 @@
    */
   self.getFsSize = function(path, fixed, unit) {
     var bytes, count, index, index1, index2, si, thresh;
+    if (fixed == null) {
+      fixed = 1;
+    }
     bytes = getFileSize(path);
     if (bytes === null) {
       return bytes;
     }
-    caro.eachArgs(arguments, function(i, arg) {
-      if (i <= 0) {
-        return;
-      }
-      if (caro.isNum(arg)) {
-        fixed = parseInt(arg);
-      }
-      if (caro.isStr(arg)) {
-        unit = arg;
-      }
-    });
-    fixed = fixed || 1;
     si = true;
+    unit = caro.upperStr(unit);
     index1 = fileSizeUnits1.indexOf(unit);
     index2 = fileSizeUnits2.indexOf(unit);
     if (index2 > -1) {
@@ -566,23 +549,16 @@
    */
   self.humanFeSize = function(path, fixed, si) {
     var aUnit, bytes, thresh, u;
+    if (fixed == null) {
+      fixed = 1;
+    }
+    if (si == null) {
+      si = true;
+    }
     bytes = getFileSize(path);
     if (bytes === null) {
       return bytes;
     }
-    caro.eachArgs(arguments, function(i, arg) {
-      if (i <= 0) {
-        return;
-      }
-      if (caro.isNum(arg)) {
-        fixed = parseInt(arg);
-      }
-      if (caro.isBool(arg)) {
-        si = arg;
-      }
-    });
-    fixed = fixed || 1;
-    si = si !== false;
     thresh = si ? 1000 : 1024;
     if (bytes < thresh) {
       return bytes + ' B';

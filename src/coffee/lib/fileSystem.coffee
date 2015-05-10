@@ -56,8 +56,7 @@ do ->
         encoding: encoding
         flag: flag)
     catch e
-      return false
-    return
+    return false
 
   ###*
   # write data to file, return false if failed
@@ -77,8 +76,7 @@ do ->
         flag: flag
       return true
     catch e
-      return false
-    return
+    return false
 
   ###*
   # @param {...string} path
@@ -124,7 +122,7 @@ do ->
   # get files under path
   # @param {string} path
   # @param {object} [opt]
-  # @param {number} [opt.maxLevel=0] the dir-level you want to read, get all-level when 0
+  # @param {number} [opt.maxLevel=1] the dir-level you want to read, get all-level when 0
   # @param {boolean} [opt.getDir=true] if return dir-path
   # @param {boolean} [opt.getFile=true] if return file-path
   # @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
@@ -132,20 +130,10 @@ do ->
   # @returns {*}
   ###
 
-  self.readDirCb = (path, opt, cb) ->
+  self.readDirCb = (path, cb=null, opt={}) ->
     if !caro.isFsDir(path)
       return
     countLevel = 0
-    caro.eachArgs arguments, (i, arg) ->
-      if i == 0
-        return
-      if caro.isObj(arg)
-        opt = arg
-      if caro.isFn(arg)
-        cb = arg
-      return
-    opt = opt or {}
-    cb = cb or null
     maxLevel = if opt.maxLevel then parseInt(opt.maxLevel, 10) else 1
     getDir = opt.getDir != false
     getFile = opt.getFile != false
@@ -243,26 +231,24 @@ do ->
     path = caro.normalizePath(path)
     force = force == true
     pass = true
-
-    deleteUnderDir = (rootPath, getFile) ->
-      getFile = getFile != false
-      caro.readDirCb rootPath, ((oFilInfo) ->
+    deleteUnderDir = (rootPath) ->
+      caro.readDirCb rootPath, (oFilInfo) ->
         filePath = oFilInfo.filePath
+        if !force
+          return
         if caro.isFsDir(filePath)
-          if force
-            deleteUnderDir filePath
-            try
-              nFs.rmdirSync filePath
-            catch e
-              pass = false
+          deleteUnderDir filePath
+          try
+            nFs.rmdirSync filePath
+          catch e
+            pass = false
           return
         if !caro.deleteFile(filePath)
           pass = false
         return
-      ), getFile: getFile
       return
 
-    deleteUnderDir path, false
+    deleteUnderDir path
     if caro.isEmptyDir(path)
       nFs.rmdirSync path
     pass
@@ -359,20 +345,13 @@ do ->
   ###*
   # delete file or dir or link, return false delete failed
   # @param {...string} path
-  # @param {boolean} [force]
+  # @param {boolean} [force=false]
   # @returns {boolean}
   ###
 
-  self.deleteFs = (path, force) ->
+  self.deleteFs = (path, force=false) ->
     pass = true
     aPath = []
-    caro.eachArgs arguments, (i, arg) ->
-      if caro.isBool(arg)
-        force = arg
-        return
-      if caro.isStr(arg)
-        aPath.push arg
-      return
     try
       caro.eachObj aPath, (i, path) ->
         if caro.isFsDir(path)
@@ -393,7 +372,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.renameFs = (path, newPath, force) ->
+  self.renameFs = (path, newPath, force=false) ->
     pass = true
     aPath = []
     if caro.isStr(path, newPath)
@@ -430,7 +409,7 @@ do ->
   # @returns {*}
   ###
 
-  self.getFsStat = (path, type) ->
+  self.getFsStat = (path, type='l') ->
     stat = null
     aType = [
       'l'
@@ -458,20 +437,12 @@ do ->
   # @returns {}
   ###
 
-  self.getFsSize = (path, fixed, unit) ->
+  self.getFsSize = (path, fixed=1, unit) ->
     bytes = getFileSize(path)
     if bytes == null
       return bytes
-    caro.eachArgs arguments, (i, arg) ->
-      if i <= 0
-        return
-      if caro.isNum(arg)
-        fixed = parseInt(arg)
-      if caro.isStr(arg)
-        unit = arg
-      return
-    fixed = fixed or 1
     si = true
+    unit = caro.upperStr(unit)
     index1 = fileSizeUnits1.indexOf(unit)
     index2 = fileSizeUnits2.indexOf(unit)
     if index2 > -1
@@ -496,20 +467,10 @@ do ->
   # @returns {string}
   ###
 
-  self.humanFeSize = (path, fixed, si) ->
+  self.humanFeSize = (path, fixed=1, si=true) ->
     bytes = getFileSize(path)
     if bytes == null
       return bytes
-    caro.eachArgs arguments, (i, arg) ->
-      if i <= 0
-        return
-      if caro.isNum(arg)
-        fixed = parseInt(arg)
-      if caro.isBool(arg)
-        si = arg
-      return
-    fixed = fixed or 1
-    si = si != false
     thresh = if si then 1000 else 1024
     if bytes < thresh
       return bytes + ' B'
