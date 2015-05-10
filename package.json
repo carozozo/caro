@@ -1,13 +1,13 @@
 {
   "name": "caro",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "通用函式 by caro",
   "author": {
     "name": "Caro.Huang",
     "email": "carozozo@yahoo.com.tw"
   },
   "main": "caro.js",
-  "files": ["caro.min.js"],
+  "files": ["caro.js", "caro.min.js"],
   "repository": {
     "type": "git",
     "url": "https://github.com/carozozo/caro"
