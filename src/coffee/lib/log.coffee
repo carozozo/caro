@@ -4,26 +4,71 @@
 ###
 
 do ->
-  if !caro.isNode
-    return
+  return if !caro.isNode
   self = caro
+  logPath = ''
+  extendName = '.log'
 
-  normalizeLogPath = (logPath) ->
-    logPath = caro.normalizePath(logPath)
-    caro.addTail logPath, '.log'
+  normalizeLogPath = (path) ->
+    path = caro.coverToStr(path)
+    path = caro.normalizePath(logPath, path)
+    caro.addTail path, extendName
+
+  ###*
+  # set the path that log placed
+  # @param {string} path
+  # @returns {boolean}
+  ###
+
+  self.setLogRoot = (path=logPath) ->
+    path = caro.coverToStr(path)
+    path = caro.normalizePath(path)
+    if caro.createDir(path)
+      logPath = path
+      return true
+    false
+
+  ###*
+  # get the path that log placed
+  # @returns {string}
+  ###
+
+  self.getLogRoot = () ->
+    logPath
+
+  ###*
+  # set the extend-name of log file
+  # @param {string} name=.log
+  # @returns {boolean}
+  ###
+
+  self.setLogExtendName = (name=extendName) ->
+    name = caro.coverToStr(name)
+    return false if !name
+    name = caro.addHead(name, '.')
+    extendName = name
+    true
+
+  ###*
+  # get the extend-name of log file
+  # @return {string}
+  ###
+
+  self.getLogExtendName = () ->
+    extendName
 
   ###*
   # read log-file ,and create it if not exists
-  # @param logPath
+  # @param path
   # @returns {*}
   ###
 
-  self.readLog = (logPath) ->
-    logPath = normalizeLogPath(logPath)
+  self.readLog = (path) ->
+    path = normalizeLogPath(path)
     try
-      if !caro.fsExists(logPath)
+      if !caro.fsExists(path)
         return null
-      return caro.readFileCaro(logPath)
+      return caro.readFileCaro(path)
     catch e
       console.error 'caro.log', e
       return null
@@ -32,39 +77,37 @@ do ->
   ###*
   # write log-file with data
   # create empty-file if data is empty
-  # @param logPath
-  # @param [data]
-  # @returns {*}
+  # @param {string} path
+  # @param {*} [data='']
+  # @returns {boolean}
   ###
 
-  self.writeLog = (logPath, data) ->
-    data = data or ''
-    logPath = normalizeLogPath(logPath)
+  self.writeLog = (path, data='') ->
+    path = normalizeLogPath(path)
     try
-      size = caro.getFsSize(logPath)
+      size = caro.getFsSize(path)
       maxSize = 10 ** 6
       if size > maxSize
-        console.error 'caro.log: ', logPath + ' size ' + size + ' is more thane 1 MB'
-        return
+        console.error 'caro.log: ', path + ' size ' + size + ' is more thane 1 MB'
+        return false
       data = caro.coverToStr(data)
-      caro.writeFileCaro logPath, data
+      return caro.writeFileCaro path, data
     catch e
       console.error 'caro.log: ', e
-    return
+    false
 
   ###*
   # update log data
-  # OPT
-  # ifWrap: bool (default: true) - add wrap with add-data
-  # prepend: bool (default: false) - add data in front of origin-data
-  #
-  # @param logPath
-  # @param data
-  # @param [opt]
+  # @param {string} path
+  # @param {*} [data='']
+  # @param {object} [opt={}]
+  # @param {boolean} [opt.ifWrap=true] add wrap with add-data
+  # @param {boolean} [opt.prepend=false] add data in front of origin-data
+  # @returns {boolean}
   ###
 
-  self.updateLog = (logPath, data, opt) ->
-    originData = caro.readLog(logPath)
+  self.updateLog = (path, data, opt={}) ->
+    originData = caro.readLog(path)
     wrap = '\r\n'
     ifWrap = true
     prepend = false
@@ -82,24 +125,39 @@ do ->
       data += originData
     else
       data = originData + data
-    caro.writeLog logPath, data
-    return
-
-  self.updateLogWithDayFileName = (logPath, data, opt) ->
-    today = caro.formatNow('YYYYMMDD')
-    logPath = caro.addTail(logPath, '_' + today)
-    caro.updateLog logPath, data, opt
-    return
+    caro.writeLog path, data
 
   ###*
-  # convenient-logger to [trace.log]
-  # @param data
-  # @param [opt]
+  # update log data
+  # @param {string} path
+  # @param {*} [data='']
+  # @param {object} [opt={}]
+  # @param {boolean} [opt.dateFirst=true] if set the date in first-filename
+  # @param {boolean} [opt.ifWrap=true] add wrap with add-data
+  # @param {boolean} [opt.prepend=false] add data in front of origin-data
+  # @returns {boolean}
+  ###
+
+  self.updateLogWithDayFileName = (path, data, opt={}) ->
+    today = caro.formatNow('YYYYMMDD')
+    dateFirst = if opt.dateFirst != false then true else false
+    if dateFirst
+      path = caro.addTail(today, '_' + path)
+    else
+      path = caro.addTail(path, '_' + today)
+    caro.updateLog path, data, opt
+
+  ###*
+  # create trace.log for convenience
+  # @param {*} [data='']
+  # @param {object} [opt={}]
+  # @param {boolean} [opt.ifWrap=true] add wrap with add-data
+  # @param {boolean} [opt.prepend=false] add data in front of origin-data
+  # @returns {boolean}
   ###
 
   self.traceLog = (data, opt) ->
-    logPath = 'trace'
-    caro.updateLog logPath, data, opt
-    return
+    path = 'trace'
+    caro.updateLog path, data, opt
 
   return
