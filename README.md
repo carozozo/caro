@@ -18,10 +18,10 @@ $ npm install caro
 ```
 
 ```javascript
-var validator = require('caro');
+var caro = require('caro');
 caro.isArr(['caro']); // true
 ```
-## 索引
+## Index
 
 ##### (★ 只適用於 Node.js | ☆ 部份適用於 Node.js)
 
@@ -66,9 +66,9 @@ caro.isArr(['caro']); // true
 - **removeByIndex(arr, index...) - 依 index 移除陣列中的元素**
 ```javascript
     var arr = [1, 2, 3, 4];
-    var arr2 = [1, 2 , 3, 4, 5];
+    var arr2 = [1, 2, 3, 4, 5];
     var r = caro.removeByIndex(arr, 0, 2); // [ 2, 4 ]
-    var r2 = caro.removeByIndex(arr2, true, 0); // [ 2, 3, 4, 5 ]
+    var r2 = caro.removeByIndex(arr2, 0); // [ 2, 3, 4, 5 ]
 ```
 - **removeByArrVal(arr, val...) - 依 value 移除陣列中的元素**
 ```javascript
@@ -250,7 +250,7 @@ caro.isArr(['caro']); // true
 ```javascript
     caro.readDirCb('../src', function(oFileInfo) {
         console.log(oFileInfo); // 檔案訊息(Object) 
-        console.log(oFileName.filename);
+        console.log(oFileInfo.filename);
         // filename 檔名
         // extendName 副檔名
         // basename 全檔名
@@ -313,7 +313,7 @@ caro.isArr(['caro']); // true
     // https://nodejs.org/api/fs.html#fs_class_fs_stats
     var r = caro.getFsStat('./caro.js');
 ```
-- **getFsSize(path[, fixed] [, unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
+- **getFsSize(path[fixed] [unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
 ```javascript
     var r = caro.getFsSize('./caro.js'); // e.g. 439078
     var r2 = caro.getFsSize('./caro.js', 'mb'); // e.g. 439 
@@ -382,11 +382,11 @@ caro.isArr(['caro']); // true
     var arg = function (i) {
         return ++i;
     };
-    var arg2 = function IsFn(){};
+    var arg2 = function isFn(){};
     var r = caro.getFnName(arg); // ''
     var r2 = caro.getFnName(arg2); // 'isFn'
 ```
-- **eachArgs(fn) - 將 function 中的 arguments (e.g. {'0': 'a', '1': 'b' } 的 key 轉為 int 並代入 callback-fn**
+- **eachArgs(fn) - 將 function 中的 arguments 的 key 轉為 integer 並代入 callback-fn**
 ```javascript
     var fn = function (a, b, c) {
         caro.eachArgs(arguments, function (key, val) {
