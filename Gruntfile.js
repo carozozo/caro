@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     var jsDir = 'src/js/';
     var testDir = 'test/';
     var nodeDir = 'node_modules/';
-    var banner = '/*! ' + pkgName + ' - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */';
+    var banner = '/*! ' + pkgName + ' - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\r\n';
 
     // Project configuration.
     grunt.initConfig({
@@ -60,19 +60,12 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    '<%= pkg.name %>.min.js': ['.js']
+                    '<%= pkg.name %>.min.js': [caro]
                 }
             }
         },
         mochaTest: {
             test: {
-                //options: {
-                //    reporter: 'spec',
-                //    captureFile: testDir + 'results.txt', // Optionally capture the reporter output to a file
-                //    quiet: false, // Optionally suppress output to standard out (defaults to false)
-                //    clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
-                //},
-                //src: [testDir + '*.js']
                 options: {
                     reporter: 'spec',
                     require: [
@@ -82,7 +75,7 @@ module.exports = function (grunt) {
                         },
                         function () {
                             var chai = require('chai');
-                            chai.should();
+                            should = chai.should();
                         }
                     ]
                 },

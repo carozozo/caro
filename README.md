@@ -410,7 +410,7 @@ caro.isArr(['caro']); // true
     var r = caro.coverToArr(arg); // [ 3, 2, 1 ]
     var r2 = caro.coverToArr(arg2); // [ null ]
 ```
-- **coverToStr(arg [force]) - 將變數轉為 string**
+- **coverToStr(arg [force=true]) - 將變數轉為 string**
 ```javascript
     var arg = function () {};
     var arg2 = {a: 2}, arg3 = null, arg4 = ['caro',1];
@@ -419,28 +419,28 @@ caro.isArr(['caro']); // true
     var r3 = caro.coverToStr(arg3); // 'null'
     var r4 = caro.coverToStr(arg3); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
 ```
-- **coverToInt(arg [force]) - 將變數轉為 integer**
+- **coverToInt(arg [force=true]) - 將變數轉為 integer**
 ```javascript
     var arg = '123.6', arg2 = 'a', arg3 = null;
     var r = caro.coverToInt(arg); // 123
     var r2 = caro.coverToInt(arg2, false); // 'a'
     var r3 = caro.coverToInt(arg3); // 0
 ```
-- **coverToNum(arg [force]) - 將變數轉為 number**
+- **coverToNum(arg [force=true]) - 將變數轉為 number**
 ```javascript
     var arg = '123.45', arg2 = {};
     var r = caro.coverToNum(arg); // 123.45
     var r2 = caro.coverToNum(arg2, false); // {}
     var r3 = caro.coverToNum(undefined); // 0
 ```
-- **coverToObj(arg [force]) - 將變數轉為 object**
+- **coverToObj(arg [force=true]) - 將變數轉為 object**
 ```javascript
     var arg = {}, arg2 = 123;
     var r = caro.coverToObj(arg); // {}
     var r2 = caro.coverToObj(arg2, false); // 123
     var r3 = caro.coverToObj(undefined); // {}
 ```
-- **coverToJson(arg [, opt]) - 將變數轉為 JSON**
+- **coverToJson(arg [opt]) - 將變數轉為 JSON**
 ```javascript
     var arg = [0, 1, 2];
     var replacer = function (key, val) {
@@ -455,6 +455,66 @@ caro.isArr(['caro']); // true
         space: 2 // 請參考 JSON.stringify 的參數 space
     });
     console.log(r);
+    
+    var r = caro.coverToJson(3.4); // '3.4'
+    var r2 = caro.coverToJson(null); // 'null'
+    var r3 = caro.coverToJson('caro', false); // '"caro"'    
+```
+
+### ★Log
+- **setLogRoot(path) - 設置 log 檔所要放的路徑**
+```javascript
+    var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
+```
+- **getLogRoot() - 取得 log 檔所在的路徑**
+```javascript
+    var r = caro.getLogRoot(); // 資料夾路徑
+```
+- **setLogExtendName() - 設定 log 的副檔名(預設為 .log)**
+```javascript
+    var r = caro.setLogExtendName('logger'); // true
+    var r2 = caro.setLogExtendName(''); // false
+```
+- **getLogExtendName() - 取得 log 的副檔名(預設為 .log)**
+```javascript
+    var r = caro.getLogExtendName(); // '.log'
+```
+- **readLog(logPath) - 讀取 .log 檔**
+```javascript
+    var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
+```
+- **writeLog(logPath, data) - 寫入 .log 檔，如檔案已存在則覆寫**
+```javascript
+    var r = caro.writeLog('test', {
+      name: 'Caro'
+      like: 'Snoopy'
+    }); // 檔案產生成功則回傳 true
+```
+- **updateLog(logPath, data [opt]) - 加入資料至 .log 檔，如檔案不存在則先產生檔案**
+```javascript
+    var r = caro.writeLog('test', 'This is first log'); // true
+    var r2 = caro.writeLog('test', 'This is second log', {
+        ifWrap: true // 是否換行
+        prepend: false // 是否加到舊資料之前
+    }); // 檔案產生成功則回傳 true    
+```
+- **updateLogWithDayFileName(logPath, data [opt]) - 產生/更新有今天日期名稱的 .log 檔**
+```javascript
+    var r = caro.updateLogWithDayFileName('test', 'This is log with day', {
+        dateFirst: true // log 檔名中的日期是否顯示在前面
+        ifWrap: true // 是否換行
+        prepend: false // 是否加到舊資料之前
+    }); // 檔案產生成功則回傳 true， e.g. 檔名為 20151221_test.log
+    var r2 = caro.updateLogWithDayFileName('test', 'This is log with day', {
+        dateFirst: false
+    }); // 檔案產生成功則回傳 true， e.g. 檔名為 test_20151221.log
+```
+- **traceLog( data [opt]) - 產生/更新 trace.log 檔**
+```javascript
+    var r = caro.traceLog('This is log trace data', {
+        ifWrap: true // 是否換行
+        prepend: false // 是否加到舊資料之前
+    }); // 檔案產生成功則回傳 true
 ```
 
 ### Object
@@ -551,23 +611,6 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 - **serializeUrl(str [, oArgs] [, coverEmpty=false]) - 將變數物件代入 URL**
-```javascript
-```
-
-### ★Log
-- **readLog(logPath) - 讀取 .log 檔**
-```javascript
-```
-- **writeLog(logPath, data) - 寫入 .log 檔，如檔案已存在則覆寫**
-```javascript
-```
-- **updateLog(logPath, data [,opt]) - 加入資料至 .log 檔**
-```javascript
-```
-- **updateLogWithDayFileName(logPath, data [,opt]) - 產生/更新有今天日期名稱的 .log 檔**
-```javascript
-```
-- **traceLog( data [,opt]) - 產生/更新 trace.log 檔**
 ```javascript
 ```
 

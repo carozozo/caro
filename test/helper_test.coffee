@@ -69,3 +69,35 @@ describe 'Helper', ->
     r2 = caro.coverToStr(['caro', 4])
     r.should.eq('3')
     r2.should.eq('caro,4')
+
+  it 'coverToInt', ->
+    r = caro.coverToInt('3')
+    r2 = caro.coverToInt('caro')
+    r3 = caro.coverToInt('caro', false)
+    r.should.eq(3)
+    r2.should.eq(0)
+    r3.should.eq('caro')
+
+  it 'coverToNum', ->
+    r = caro.coverToNum('3.4')
+    r2 = caro.coverToNum('caro')
+    r3 = caro.coverToNum('caro', false)
+    r.should.eq(3.4)
+    r2.should.eq(0)
+    r3.should.eq('caro')
+
+  it 'coverToObj', ->
+    r = caro.coverToObj('3.4')
+    r2 = caro.coverToObj(null)
+    r3 = caro.coverToObj('caro', false)
+    r.should.eq(3.4)
+    r2.should.eql({})
+    r3.should.eq('caro')
+
+  it 'coverToJson', ->
+    r = caro.coverToJson(3.4)
+    r2 = caro.coverToJson(null)
+    r3 = caro.coverToJson('caro', false)
+    r.should.eq('3.4')
+    r2.should.eql('null')
+    r3.should.eq('"caro"')

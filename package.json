@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "通用函式 by caro",
   "author": {
     "name": "Caro.Huang",
@@ -14,9 +14,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "colors": "~1.1.0",
-    "moment": "~2.10.2",
-    "validator": "~3.39.0"
+    "colors": "~1.1.0"
   },
   "devDependencies": {
     "coffee-script": "1.9.2",
@@ -27,6 +25,8 @@
     "grunt-contrib-nodeunit": "~0.4.0",
     "grunt-mocha-test": "~0.12.7",
     "mocha": "~2.2.4",
-    "chai": "~2.3.0"
+    "moment": "~2.10.2",
+    "chai": "~2.3.0",
+    "validator": "~3.39.0"
   }
 }

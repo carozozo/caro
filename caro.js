@@ -1,4 +1,5 @@
-/*! caro - v0.4.4 - 2015-05-10 */(function (global, factory) {
+/*! caro - v0.4.5 - 2015-05-10 */
+(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     global.moment = factory()
@@ -11750,29 +11751,84 @@
  * @author Caro.Huang
  */
 (function() {
-  var normalizeLogPath, self;
+  var extendName, logPath, normalizeLogPath, self;
   if (!caro.isNode) {
     return;
   }
   self = caro;
-  normalizeLogPath = function(logPath) {
-    logPath = caro.normalizePath(logPath);
-    return caro.addTail(logPath, '.log');
+  logPath = '';
+  extendName = '.log';
+  normalizeLogPath = function(path) {
+    path = caro.coverToStr(path);
+    path = caro.normalizePath(logPath, path);
+    return caro.addTail(path, extendName);
+  };
+
+  /**
+   * set the path that log placed
+   * @param {string} path
+   * @returns {boolean}
+   */
+  self.setLogRoot = function(path) {
+    if (path == null) {
+      path = logPath;
+    }
+    path = caro.coverToStr(path);
+    path = caro.normalizePath(path);
+    if (caro.createDir(path)) {
+      logPath = path;
+      return true;
+    }
+    return false;
+  };
+
+  /**
+   * get the path that log placed
+   * @returns {string}
+   */
+  self.getLogRoot = function() {
+    return logPath;
+  };
+
+  /**
+   * set the extend-name of log file
+   * @param {string} name=.log
+   * @returns {boolean}
+   */
+  self.setLogExtendName = function(name) {
+    if (name == null) {
+      name = extendName;
+    }
+    name = caro.coverToStr(name);
+    if (!name) {
+      return false;
+    }
+    name = caro.addHead(name, '.');
+    extendName = name;
+    return true;
+  };
+
+  /**
+   * get the extend-name of log file
+   * @return {string}
+   */
+  self.getLogExtendName = function() {
+    return extendName;
   };
 
   /**
    * read log-file ,and create it if not exists
-   * @param logPath
+   * @param path
    * @returns {*}
    */
-  self.readLog = function(logPath) {
+  self.readLog = function(path) {
     var e;
-    logPath = normalizeLogPath(logPath);
+    path = normalizeLogPath(path);
     try {
-      if (!caro.fsExists(logPath)) {
+      if (!caro.fsExists(path)) {
         return null;
       }
-      return caro.readFileCaro(logPath);
+      return caro.readFileCaro(path);
     } catch (_error) {
       e = _error;
       console.error('caro.log', e);
@@ -11783,42 +11839,47 @@
   /**
    * write log-file with data
    * create empty-file if data is empty
-   * @param logPath
-   * @param [data]
-   * @returns {*}
+   * @param {string} path
+   * @param {*} [data='']
+   * @returns {boolean}
    */
-  self.writeLog = function(logPath, data) {
+  self.writeLog = function(path, data) {
     var e, maxSize, size;
-    data = data || '';
-    logPath = normalizeLogPath(logPath);
+    if (data == null) {
+      data = '';
+    }
+    path = normalizeLogPath(path);
     try {
-      size = caro.getFsSize(logPath);
+      size = caro.getFsSize(path);
       maxSize = Math.pow(10, 6);
       if (size > maxSize) {
-        console.error('caro.log: ', logPath + ' size ' + size + ' is more thane 1 MB');
-        return;
+        console.error('caro.log: ', path + ' size ' + size + ' is more thane 1 MB');
+        return false;
       }
       data = caro.coverToStr(data);
-      caro.writeFileCaro(logPath, data);
+      return caro.writeFileCaro(path, data);
     } catch (_error) {
       e = _error;
       console.error('caro.log: ', e);
     }
+    return false;
   };
 
   /**
    * update log data
-   * OPT
-   * ifWrap: bool (default: true) - add wrap with add-data
-   * prepend: bool (default: false) - add data in front of origin-data
-  #
-   * @param logPath
-   * @param data
-   * @param [opt]
+   * @param {string} path
+   * @param {*} [data='']
+   * @param {object} [opt={}]
+   * @param {boolean} [opt.ifWrap=true] add wrap with add-data
+   * @param {boolean} [opt.prepend=false] add data in front of origin-data
+   * @returns {boolean}
    */
-  self.updateLog = function(logPath, data, opt) {
+  self.updateLog = function(path, data, opt) {
     var ifWrap, originData, prepend, wrap;
-    originData = caro.readLog(logPath);
+    if (opt == null) {
+      opt = {};
+    }
+    originData = caro.readLog(path);
     wrap = '\r\n';
     ifWrap = true;
     prepend = false;
@@ -11840,24 +11901,46 @@
     } else {
       data = originData + data;
     }
-    caro.writeLog(logPath, data);
-  };
-  self.updateLogWithDayFileName = function(logPath, data, opt) {
-    var today;
-    today = caro.formatNow('YYYYMMDD');
-    logPath = caro.addTail(logPath, '_' + today);
-    caro.updateLog(logPath, data, opt);
+    return caro.writeLog(path, data);
   };
 
   /**
-   * convenient-logger to [trace.log]
-   * @param data
-   * @param [opt]
+   * update log data
+   * @param {string} path
+   * @param {*} [data='']
+   * @param {object} [opt={}]
+   * @param {boolean} [opt.dateFirst=true] if set the date in first-filename
+   * @param {boolean} [opt.ifWrap=true] add wrap with add-data
+   * @param {boolean} [opt.prepend=false] add data in front of origin-data
+   * @returns {boolean}
+   */
+  self.updateLogWithDayFileName = function(path, data, opt) {
+    var dateFirst, today;
+    if (opt == null) {
+      opt = {};
+    }
+    today = caro.formatNow('YYYYMMDD');
+    dateFirst = opt.dateFirst !== false ? true : false;
+    if (dateFirst) {
+      path = caro.addTail(today, '_' + path);
+    } else {
+      path = caro.addTail(path, '_' + today);
+    }
+    return caro.updateLog(path, data, opt);
+  };
+
+  /**
+   * create trace.log for convenience
+   * @param {*} [data='']
+   * @param {object} [opt={}]
+   * @param {boolean} [opt.ifWrap=true] add wrap with add-data
+   * @param {boolean} [opt.prepend=false] add data in front of origin-data
+   * @returns {boolean}
    */
   self.traceLog = function(data, opt) {
-    var logPath;
-    logPath = 'trace';
-    caro.updateLog(logPath, data, opt);
+    var path;
+    path = 'trace';
+    return caro.updateLog(path, data, opt);
   };
 })();
 
