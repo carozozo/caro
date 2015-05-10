@@ -13,6 +13,18 @@
     "url": "https://github.com/carozozo/caro"
   },
   "license": "MIT",
+  "keywords": [
+    "array",
+    "console",
+    "date time",
+    "file system",
+    "helper",
+    "log",
+    "object",
+    "path",
+    "string",
+    "type check"
+  ],
   "dependencies": {
     "colors": "~1.1.0"
   },
