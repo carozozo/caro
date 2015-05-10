@@ -29,6 +29,9 @@
    */
   self.extendArr = function(duplicate, arr) {
     var extend, firstArr, otherArr;
+    if (duplicate == null) {
+      duplicate = true;
+    }
     firstArr = null;
     otherArr = [];
     extend = function(arr) {
@@ -40,7 +43,7 @@
         firstArr.push(eachVal);
       });
     };
-    caro.eachObj(arguments, function(i, arg) {
+    caro.eachArgs(arguments, function(i, arg) {
       if (caro.isArr(arg)) {
         if (!firstArr) {
           firstArr = caro.cloneArr(arg);
@@ -52,7 +55,6 @@
         duplicate = arg;
       }
     });
-    duplicate = duplicate !== false;
     caro.eachObj(otherArr, function(i, eachArr) {
       extend(eachArr);
     });
@@ -67,10 +69,12 @@
    * @returns {*}
    */
   self.sortByObjKey = function(arr, key, sort) {
+    if (sort == null) {
+      sort = true;
+    }
     if (!caro.isArr(arr)) {
       return arr;
     }
-    sort = sort !== false;
     arr = caro.cloneArr(arr);
     arr.sort(function(a, b) {
       var order1, order2;
@@ -104,11 +108,13 @@
    */
   self.sumOfArr = function(arr, force) {
     var sum;
+    if (force == null) {
+      force = false;
+    }
     sum = 0;
     if (!caro.isArr(arr)) {
       return 0;
     }
-    force = force === true;
     caro.eachObj(arr, function(i, val) {
       if (caro.isNum(val)) {
         sum += val;

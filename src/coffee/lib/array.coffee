@@ -26,7 +26,7 @@ do ->
   # @returns {*}
   ###
 
-  self.extendArr = (duplicate, arr) ->
+  self.extendArr = (duplicate=true, arr) ->
     firstArr = null
     otherArr = []
     extend = (arr) ->
@@ -38,7 +38,7 @@ do ->
         return
       return
 
-    caro.eachObj arguments, (i, arg) ->
+    caro.eachArgs arguments, (i, arg) ->
       if caro.isArr(arg)
         if !firstArr
           firstArr = caro.cloneArr(arg)
@@ -47,7 +47,6 @@ do ->
       if caro.isBool(arg)
         duplicate = arg
       return
-    duplicate = duplicate != false
     caro.eachObj otherArr, (i, eachArr) ->
       extend eachArr
       return
@@ -61,10 +60,9 @@ do ->
   # @returns {*}
   ###
 
-  self.sortByObjKey = (arr, key, sort) ->
+  self.sortByObjKey = (arr, key, sort=true) ->
     if !caro.isArr(arr)
       return arr
-    sort = sort != false
     arr = caro.cloneArr(arr)
     arr.sort (a, b) ->
       order1 = a[key] or 0
@@ -81,11 +79,10 @@ do ->
   # @returns {number}
   ###
 
-  self.sumOfArr = (arr, force) ->
+  self.sumOfArr = (arr, force=false) ->
     sum = 0
     if !caro.isArr(arr)
       return 0
-    force = force == true
     caro.eachObj arr, (i, val) ->
       if caro.isNum(val)
         sum += val

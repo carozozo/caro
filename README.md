@@ -225,6 +225,108 @@ caro.isArr(['caro']); // true
     var r2 = caro.getDateTimeDiff(t, t2, 'month'); // 23
 ```
 
+### ★FileSystem
+- **readFileCaro(path [encoding='utf8'] [flag=null]) - 讀取檔案內容**
+```javascript
+    // https://nodejs.org/api/fs.html#fs_fs_readfilesync_filename_options
+    r = caro.readFileCaro(__dirname+'/test.html');
+```
+- **writeFileCaro(path, data [encoding='utf8'] [flag=null]) - 寫入檔案內容**
+```javascript
+    // https://nodejs.org/api/fs.html#fs_fs_writefilesync_filename_data_options
+    var data = caro.readFileCaro(__dirname + '/test.html');
+    var r = caro.writeFileCaro(__dirname + '/test.html',data); // 寫入成功回傳 true, 否則回傳 false
+```
+- **deleteFile(path...) - 刪除檔案**
+```javascript
+    // https://nodejs.org/api/fs.html#fs_fs_unlinksync_path
+    var r = caro.deleteFile('1.js',__dirname + '2.js'); // 只要其中一個刪除失敗，回傳 false 
+```
+- **isEmptyDir(path...) - 判斷是否為空資料夾**
+```javascript
+    var r = caro.isEmptyDir(__dirname + '/1', __dirname + '/2'); / 只要其中一個不是資料夾或不是空的，回傳 false
+```
+- **readDirCb(path, cb [opt]) - 取得資料夾內容**
+```javascript
+    caro.readDirCb('../src', function(oFileInfo) {
+        console.log(oFileInfo); // 檔案訊息(Object) 
+        console.log(oFileName.filename);
+        // filename 檔名
+        // extendName 副檔名
+        // basename 全檔名
+        // filePath 檔案相對路徑
+        // dirPath 資料夾相對路徑
+        // fullPAth 檔案絕對路徑
+        // fullDirPath 資料夾絕對路徑
+        // fileType 檔案類型
+        // level 檔案在資料夾底下的第 level 層
+        // index 檔案在所屬的資料夾的第 index 個
+     }, {
+        maxLevel: 1, // 要讀取該資料夾底下的層級，設0則讀取全部
+        getDir: true, // 是否讀取資料夾
+        getFile: true, // 是否讀取檔案
+        getByExtend: false // 指定要讀取的檔案類型， e.g. 'js,html' => 只讀取 .js/.html 檔
+    });
+```
+- **createDir(path) - 新增資料夾**
+```javascript
+    // 假設 src 底下沒有 lib 資料夾
+    var r = caro.createDir('./src/lib/coffee'); // 會產生 src/lib 和 src/lib/coffee 資料夾，失敗則回傳 false
+```
+- **deleteDir(path [force=false]) - 刪除資料夾**
+```javascript
+    var r = caro.createDir('./src'); // 如果 /src 底下有檔案，則不刪除
+    var r2 = caro.createDir('./test',true); // 強制刪除 /test 和底下所有的檔案，失敗則回傳 false
+```
+- **fsExists(path...) - 判斷檔案/資料夾是否存在**
+```javascript
+    var r = caro.fsExists('./a','./caro.js'); // 其中一個不存在則回傳 false
+```
+- **isFsDir(path...) - 判斷是否為資料夾**
+```javascript
+    var r = caro.isFsDir('./a','./caro.js'); // 其中一個不是資料夾或不存在則回傳 false
+```
+- **isFsFile(path...) - 判斷是否為檔案**
+```javascript
+    var r = caro.isFsDir('./a','./caro.js'); // 其中一個不是檔案或不存在則回傳 false
+```
+- **isFsSymlink(path...) - 判斷是否為 symbolic link**
+```javascript
+    var r = caro.isFsSymlink('./a','./caro.js'); // 其中一個不是symbolic link 或不存在則回傳 false
+```
+- **getFileType(path) - 取得檔案類型**
+```javascript
+    var r = caro.getFileType('./caro.js'); // dir/file/link，不知道類型則為 ''
+```
+- **deleteFs(path... [force=false]) - 刪除檔案及資料夾**
+```javascript
+    var r = caro.getFileType('./1.js','./2.lnk');
+    var r = caro.getFileType('./test','./1.js','./2.lnk', true); // 強制刪除 /test 和底下所有的檔案，失敗則回傳 false
+```
+- **renameFs(path , newPath  [force=false]) - 檔案移動更名**
+```javascript
+    r = caro.renameFs('./a', './b/c', true); // a 移到 /b 底下並更名為 c
+    r2 = caro.renameFs(['1.js', '2.js'], ['3.js', '4.js']); // 1.js 更名為 2.js，3.js 更名為 4.js
+```
+- **getFsStat(path , newPath  [type='l']) - 取得檔案資訊**
+```javascript
+    // https://nodejs.org/api/fs.html#fs_class_fs_stats
+    var r = caro.getFsStat('./caro.js');
+```
+- **getFsSize(path[, fixed] [, unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
+```javascript
+    var r = caro.getFsSize('./caro.js'); // e.g. 439078
+    var r2 = caro.getFsSize('./caro.js', 'mb'); // e.g. 439 
+    var r3 = caro.getFsSize(123000, 'mb'); // 100
+```
+- **humanFeSize(bytes [fixed=1] [si=false]) - 將檔案大小轉為易讀格式**
+```javascript
+    // http://en.wikipedia.org/wiki/File_size
+    r = caro.humanFeSize('./caro.js'); // '439.1 KB' (預設計算到小數第1位)
+    r2 = caro.humanFeSize('./caro.js', 3); // '439.078 KB'
+    r3 = caro.humanFeSize(10000000.456, 2, false); // '9.54 MiB'
+```
+
 ### Helper
 - **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
 ```javascript
@@ -448,59 +550,6 @@ caro.isArr(['caro']); // true
 ```javascript
 ```
 - **serializeUrl(str [, oArgs] [, coverEmpty=false]) - 將變數物件代入 URL**
-```javascript
-```
-
-### ★FileSystem
-- **readFileCaro(path [, encoding] [, flag]) - 讀取檔案內容**
-```javascript
-```
-- **writeFileCaro(path, data [, encoding] [, flag]) - 寫入檔案內容**
-```javascript
-```
-- **deleteFile(path,  [, path2, path3...]) - 刪除檔案**
-```javascript
-```
-- **isEmptyDir(path,  [, path2, path3...]) - 判斷是否為空資料夾**
-```javascript
-```
-- **readDirCb(path,  [, opt] [, cb]) - 取得資料夾內容**
-```javascript
-```
-- **createDir(path) - 新增資料夾**
-```javascript
-```
-- **deleteDir(path [,force]) - 刪除資料夾**
-```javascript
-```
-- **fsExists(path [, path2, path3...]) - 判斷檔案是否存在**
-```javascript
-```
-- **isFsDir(path [, path2, path3...]) - 判斷是否為資料夾**
-```javascript
-```
-- **isFsFile(path [, path2, path3...]) - 判斷是否為檔案**
-```javascript
-```
-- **isFsSymlink(path [, path2, path3...]) - 判斷是否為 symbolic link**
-```javascript
-```
-- **getFileType(path) - 取得檔案類型**
-```javascript
-```
-- **deleteFs(path [, path2, path3...] [, force]) - 刪除檔案及資料夾**
-```javascript
-```
-- **renameFs(path , newPath  [, force]) - 檔案移動更名**
-```javascript
-```
-- **getFsStat(path , newPath  [, type]) - 取得檔案資訊**
-```javascript
-```
-- **getFsSize(path[, fixed] [, unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB...)**
-```javascript
-```
-- **humanFeSize(bytes [, fixed] [, si]) - 將檔案大小轉為易讀格式**
 ```javascript
 ```
 
