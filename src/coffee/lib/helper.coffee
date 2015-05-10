@@ -16,7 +16,7 @@ do ->
 
   self.isBasicVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-# return false if arg is not bool | str | num
+      # return false if arg is not bool | str | num
       !(!caro.isBool(arg) and !caro.isStr(arg) and !caro.isNum(arg))
 
   ###*
@@ -65,8 +65,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.checkIfPassCb = (arr, checkFn, needAllPass) ->
-    needAllPass = needAllPass != false
+  self.checkIfPassCb = (arr, checkFn, needAllPass=true) ->
     if !Array.isArray(arr) and typeof arr != 'object' or arr == null or !caro.isFn(checkFn)
       return false
     caro.eachObj arr, (i, arg) ->
@@ -148,7 +147,7 @@ do ->
   self.coverToArr = (arg) ->
     if caro.isArr(arg)
       return arg
-    [ arg ]
+    [arg]
 
   ###*
   # cover to str, will return '' if force!=false
@@ -157,10 +156,9 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToStr = (arg, force) ->
+  self.coverToStr = (arg, force=true) ->
     if caro.isStr(arg)
       return arg
-    force = force != false
     if arg == undefined
       if force
         return 'undefined'
@@ -171,7 +169,7 @@ do ->
       return ''
     if caro.isObj(arg)
       if force
-# cover fn to str first, and not replace \r\n
+        # cover fn to str first, and not replace \r\n
         caro.coverFnToStrInObj arg, replaceWrap: false
         # after cover to json, replace \\r\\n to wrap
         arg = caro.coverToJson(arg)
@@ -192,9 +190,8 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToInt = (arg, force) ->
+  self.coverToInt = (arg, force=true) ->
     int = parseInt(arg)
-    force = force != false
     if caro.isEmptyVal(int) and !force
       return arg
     int = int or 0
@@ -207,9 +204,8 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToNum = (arg, force) ->
+  self.coverToNum = (arg, force=true) ->
     int = parseFloat(arg)
-    force = force != false
     if caro.isEmptyVal(int) and !force
       return arg
     int = int or 0
@@ -222,10 +218,9 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToObj = (arg, force) ->
+  self.coverToObj = (arg, force=true) ->
     if caro.isObj(arg)
       return arg
-    force = force != false
     if  caro.nValidator? and caro.nValidator.isJSON(arg)
       return JSON.parse(arg)
     if force

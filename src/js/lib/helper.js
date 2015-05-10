@@ -73,7 +73,9 @@
    * @returns {boolean}
    */
   self.checkIfPassCb = function(arr, checkFn, needAllPass) {
-    needAllPass = needAllPass !== false;
+    if (needAllPass == null) {
+      needAllPass = true;
+    }
     if (!Array.isArray(arr) && typeof arr !== 'object' || arr === null || !caro.isFn(checkFn)) {
       return false;
     }
@@ -178,10 +180,12 @@
    * @returns {*}
    */
   self.coverToStr = function(arg, force) {
+    if (force == null) {
+      force = true;
+    }
     if (caro.isStr(arg)) {
       return arg;
     }
-    force = force !== false;
     if (arg === void 0) {
       if (force) {
         return 'undefined';
@@ -223,8 +227,10 @@
    */
   self.coverToInt = function(arg, force) {
     var int;
+    if (force == null) {
+      force = true;
+    }
     int = parseInt(arg);
-    force = force !== false;
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
@@ -240,8 +246,10 @@
    */
   self.coverToNum = function(arg, force) {
     var int;
+    if (force == null) {
+      force = true;
+    }
     int = parseFloat(arg);
-    force = force !== false;
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
@@ -256,10 +264,12 @@
    * @returns {*}
    */
   self.coverToObj = function(arg, force) {
+    if (force == null) {
+      force = true;
+    }
     if (caro.isObj(arg)) {
       return arg;
     }
-    force = force !== false;
     if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
       return JSON.parse(arg);
     }

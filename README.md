@@ -229,22 +229,22 @@ caro.isArr(['caro']); // true
 - **readFileCaro(path [encoding='utf8'] [flag=null]) - 讀取檔案內容**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_readfilesync_filename_options
-    r = caro.readFileCaro(__dirname+'/test.html');
+    r = caro.readFileCaro('./test.html');
 ```
 - **writeFileCaro(path, data [encoding='utf8'] [flag=null]) - 寫入檔案內容**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_writefilesync_filename_data_options
-    var data = caro.readFileCaro(__dirname + '/test.html');
-    var r = caro.writeFileCaro(__dirname + '/test.html',data); // 寫入成功回傳 true, 否則回傳 false
+    var data = caro.readFileCaro('./test.html');
+    var r = caro.writeFileCaro('./test.html', data); // 寫入成功回傳 true, 否則回傳 false
 ```
 - **deleteFile(path...) - 刪除檔案**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_unlinksync_path
-    var r = caro.deleteFile('1.js',__dirname + '2.js'); // 只要其中一個刪除失敗，回傳 false 
+    var r = caro.deleteFile('1.js', '2.js'); // 只要其中一個刪除失敗，回傳 false 
 ```
 - **isEmptyDir(path...) - 判斷是否為空資料夾**
 ```javascript
-    var r = caro.isEmptyDir(__dirname + '/1', __dirname + '/2'); / 只要其中一個不是資料夾或不是空的，回傳 false
+    var r = caro.isEmptyDir('/1', '/2'); / 只要其中一個不是資料夾或不是空的，回傳 false
 ```
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
@@ -382,19 +382,19 @@ caro.isArr(['caro']); // true
     var arg = function (i) {
         return ++i;
     };
-    var arg2 = function b(){};
-    var r = caro.getFnName(arg); // ""
-    var r2 = caro.getFnName(arg2); // 'b'
+    var arg2 = function IsFn(){};
+    var r = caro.getFnName(arg); // ''
+    var r2 = caro.getFnName(arg2); // 'isFn'
 ```
-- **eachArgs(fn) - 將 function 中的 arguments (e.g. {'0': 'a', '1': 'b' } 的 key 轉為 int 並代入 call-back**
+- **eachArgs(fn) - 將 function 中的 arguments (e.g. {'0': 'a', '1': 'b' } 的 key 轉為 int 並代入 callback-fn**
 ```javascript
-    var fn = function (a, b) {
+    var fn = function (a, b, c) {
         caro.eachArgs(arguments, function (key, val) {
-            console.log('key is integer =', caro.isInt(key));
-            console.log('val  =', caro.isInt(val));
+            // key 是 0, 1...
+            // val 為代入的值 'd', 'e', ...
         });
     };
-    fn('a');
+    fn('d','e', {});
 ```
 - **getArgumentsAsArr(fn) - 將 arguments 轉為陣列**
 ```javascript
@@ -403,7 +403,7 @@ caro.isArr(['caro']); // true
     };
     fn(1, 2);
 ```
-- **coverToArr(arg) - 將變數轉為 array**
+- **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
 ```javascript
     var arg = [3, 2, 1];
     var arg2 = null;
@@ -413,10 +413,11 @@ caro.isArr(['caro']); // true
 - **coverToStr(arg [force]) - 將變數轉為 string**
 ```javascript
     var arg = function () {};
-    var arg2 = {a: 2}, arg3 = null;
-    var r = caro.coverToStr(arg); // "function () {}"
-    var r2 = caro.coverToStr(arg2); // "{a: 2}"
-    var r3 = caro.coverToStr(arg3); // "null"
+    var arg2 = {a: 2}, arg3 = null, arg4 = ['caro',1];
+    var r = caro.coverToStr(arg); // 'function () {}'
+    var r2 = caro.coverToStr(arg2); // '{a: 2}'
+    var r3 = caro.coverToStr(arg3); // 'null'
+    var r4 = caro.coverToStr(arg3); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
 ```
 - **coverToInt(arg [force]) - 將變數轉為 integer**
 ```javascript

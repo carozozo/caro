@@ -1,4 +1,4 @@
-/*! caro - v0.4.3 - 2015-05-10 */(function (global, factory) {
+/*! caro - v0.4.4 - 2015-05-10 */(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     global.moment = factory()
@@ -11507,7 +11507,9 @@
    * @returns {boolean}
    */
   self.checkIfPassCb = function(arr, checkFn, needAllPass) {
-    needAllPass = needAllPass !== false;
+    if (needAllPass == null) {
+      needAllPass = true;
+    }
     if (!Array.isArray(arr) && typeof arr !== 'object' || arr === null || !caro.isFn(checkFn)) {
       return false;
     }
@@ -11612,10 +11614,12 @@
    * @returns {*}
    */
   self.coverToStr = function(arg, force) {
+    if (force == null) {
+      force = true;
+    }
     if (caro.isStr(arg)) {
       return arg;
     }
-    force = force !== false;
     if (arg === void 0) {
       if (force) {
         return 'undefined';
@@ -11657,8 +11661,10 @@
    */
   self.coverToInt = function(arg, force) {
     var int;
+    if (force == null) {
+      force = true;
+    }
     int = parseInt(arg);
-    force = force !== false;
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
@@ -11674,8 +11680,10 @@
    */
   self.coverToNum = function(arg, force) {
     var int;
+    if (force == null) {
+      force = true;
+    }
     int = parseFloat(arg);
-    force = force !== false;
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
@@ -11690,10 +11698,12 @@
    * @returns {*}
    */
   self.coverToObj = function(arg, force) {
+    if (force == null) {
+      force = true;
+    }
     if (caro.isObj(arg)) {
       return arg;
     }
-    force = force !== false;
     if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
       return JSON.parse(arg);
     }
