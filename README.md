@@ -558,10 +558,6 @@ caro.isArr(['caro']); // true
     console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
     console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
     console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
-```
-- **copyByObjKey(obj1, keys [, opt]) - 指定 key 複製 obj 中的 element**
-```javascript
-```
 - **replaceObjKey(obj, replaceFn [, opt]) - 轉換 obj 中的 key**
 ```javascript
 ```

@@ -1,4 +1,4 @@
-/*! caro - v0.4.5 - 2015-05-11 */
+/*! caro - v0.4.6 - 2015-05-12 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -12055,32 +12055,28 @@
    * @param {object} obj
    * @param {string[]|string} keys the element that want to copy by keys
    * @param {object} [opt]
-   * @param {boolean} [opt.clone=true] if clone for not replacing original
+   * @param {boolean} [opt.clone=false] if clone for not replacing original
    * @param {boolean} [opt.keep=true] if keep original element
    * @returns {{}}
    */
-  self.copyByObjKey = function(obj, keys, opt) {
-    var clone, keep, obj2;
-    clone = true;
-    keep = true;
-    obj2 = {};
+  self.getByObjKey = function(obj, keys, opt) {
+    var clone, keep, r;
+    r = null;
     keys = caro.splitStr(keys, ',');
-    opt = caro.isObj(opt) ? opt : {};
-    if (opt) {
-      clone = opt.clone !== false;
-      keep = opt.keep !== false;
-    }
+    opt = caro.coverToObj(opt);
+    clone = opt.clone === true;
+    keep = opt.keep !== false;
     caro.eachObj(keys, function(i, key) {
       if (clone) {
-        obj2[key] = caro.cloneObj(obj[key]);
+        r = caro.cloneObj(obj[key]);
       } else {
-        obj2[key] = obj[key];
+        r = obj[key];
       }
       if (!keep) {
         delete obj[key];
       }
     });
-    return obj2;
+    return r;
   };
 
   /**
