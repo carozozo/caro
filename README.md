@@ -30,7 +30,7 @@ caro.isArr(['caro']); // true
 | **☆[TypeCheck](#typecheck)**
 
 ### Array
-- **cloneArr(arr) - 複製陣列**
+- **XcloneArr(arr) - 複製陣列(已棄用，合併至 cloneObj)**
 ```javascript
     var arr = [1, 2, 3];
     var r = caro.cloneArr(arr);
@@ -40,7 +40,7 @@ caro.isArr(['caro']); // true
     console.log(r); // [ 1, 2, 3 ] 不會跟著 arr 改變
     console.log(r2); // [ 4, 2, 3 ]
 ```
-- **extendArr(duplicate [arr...]) - 合併陣列**
+- **XextendArr(duplicate [arr...]) - 合併陣列(已棄用，合併至 extendObj)**
 ```javascript
     var arr = [1, 2, 3];
     var arr2 = [2, 3, 4];
@@ -435,10 +435,11 @@ caro.isArr(['caro']); // true
 ```
 - **coverToObj(arg [force=true]) - 將變數轉為 object**
 ```javascript
-    var arg = {}, arg2 = 123;
+    var arg = {}, arg2 = 123, arg3 = '{"a":1}';
     var r = caro.coverToObj(arg); // {}
     var r2 = caro.coverToObj(arg2, false); // 123
-    var r3 = caro.coverToObj(undefined); // {}
+    var r3 = caro.coverToObj(arg3); // {a:1}
+    var r4 = caro.coverToObj(undefined); // {}
 ```
 - **coverToJson(arg [opt]) - 將變數轉為 JSON**
 ```javascript
@@ -531,11 +532,32 @@ caro.isArr(['caro']); // true
     var arg = ['a' ,'b', ''c];
     var r = caro.getObjLength(arg); // 3    
 ```
-- **extendObj(obj1, obj2 [, deep]) - 將 obj2 合併至 obj1**
+- **extendObj(obj1, obj2 [deep]) - 將 obj2 合併至 obj1**
 ```javascript
+    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
+    var arg2 = ['a', 'b', 'c'];
+    var r = caro.extendObj(arg, arg2);
+    var r2 = caro.extendObj(arg, arg2, true);
+    var r3 = caro.extendObj(arg2, arg);
+    arg.cc.c1 = 5;
+    console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
+    console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
+    console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
 ```
-- **cloneObj(obj [, deep]) - 複製 obj**
+- **cloneObj(obj) - 複製 obj**
 ```javascript
+    arg = ['a', 'b', 'c'];
+    arg2 = {'a': 1, 'b': 2};
+    r = arg;
+    r2 = arg2;
+    r3 = caro.cloneObj(arg);
+    r4 = caro.cloneObj(arg2);
+    arg[0] = 'g';
+    arg2.a = 3;
+    console.log(r); // [ 'g', 'b', 'c' ]
+    console.log(r2); // { a: 3, b: 2 }
+    console.log(r3); // [ 'a', 'b', 'c' ] - r3 裡面的值不會跟著 arg 而改變
+    console.log(r4); // { a: 1, b: 2 } - r4 裡面的值不會跟著 arg2 而改變
 ```
 - **copyByObjKey(obj1, keys [, opt]) - 指定 key 複製 obj 中的 element**
 ```javascript
