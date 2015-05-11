@@ -10221,74 +10221,6 @@
   self = caro;
 
   /**
-   * clone arr
-   * @param {[]} arr
-   * @returns {Array}
-   */
-  self.cloneArr = function(arr, deep) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    if (!caro.isArr(arr)) {
-      return [];
-    }
-    r = [];
-    caro.eachObj(arr, function(i, val) {
-      if (deep) {
-        if (caro.isArr(val)) {
-          val = caro.cloneArr(val, deep);
-        }
-        if (caro.isObj(val)) {
-          val = caro.cloneObj(val, deep);
-        }
-      }
-      return r.push(val);
-    });
-    return r;
-  };
-
-  /**
-   * extend arr
-   * @param  {...[]} arr the arr that want to extend
-   * @param {boolean} [duplicate=true] if extend duplicate-val
-   * @returns {*}
-   */
-  self.extendArr = function(duplicate, arr) {
-    var extend, firstArr, otherArr;
-    if (duplicate == null) {
-      duplicate = true;
-    }
-    firstArr = null;
-    otherArr = [];
-    extend = function(arr) {
-      caro.eachObj(arr, function(i, eachVal) {
-        if (!duplicate) {
-          firstArr = caro.pushNoDup(firstArr, eachVal);
-          return;
-        }
-        firstArr.push(eachVal);
-      });
-    };
-    caro.eachArgs(arguments, function(i, arg) {
-      if (caro.isArr(arg)) {
-        if (!firstArr) {
-          firstArr = caro.cloneArr(arg);
-        } else {
-          otherArr.push(arg);
-        }
-      }
-      if (caro.isBool(arg)) {
-        duplicate = arg;
-      }
-    });
-    caro.eachObj(otherArr, function(i, eachArr) {
-      extend(eachArr);
-    });
-    return firstArr;
-  };
-
-  /**
    * sort arr by key if value is obj
    * @param {[]} arr
    * @param {string} key
@@ -10302,7 +10234,7 @@
     if (!caro.isArr(arr)) {
       return arr;
     }
-    arr = caro.cloneArr(arr);
+    arr = caro.cloneObj(arr);
     arr.sort(function(a, b) {
       var order1, order2;
       order1 = a[key] || 0;
@@ -10459,7 +10391,7 @@
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = caro.cloneArr(arr);
+    r = caro.cloneObj(arr);
     caro.eachArgs(arguments, function(i, val) {
       if (i === 0 || arr.indexOf(val) > -1) {
         return;
@@ -10480,7 +10412,7 @@
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = caro.cloneArr(arr);
+    r = caro.cloneObj(arr);
     aValNeedPush = [];
     caro.eachArgs(arguments, function(i, arg) {
       if (i === 0 || caro.isEmptyVal(arg)) {
@@ -11730,7 +11662,10 @@
       return r;
     }
     if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
-      return JSON.parse(arg);
+      r = JSON.parse(arg);
+      if (caro.isObj(r)) {
+        return r;
+      }
     }
     if (force) {
       return {};
@@ -11973,8 +11908,10 @@
  * Object
  * @author Caro.Huang
  */
+var hasProp = {}.hasOwnProperty;
+
 (function() {
-  var changeStrValByObjKey, self;
+  var changeStrValByObjKey, isObjOrArr, pushValToObjOrArr, self;
   self = caro;
 
   /**
@@ -12011,14 +11948,26 @@
       val = objRet[key];
       switch (type) {
         case 'upper':
-          return objRet[key] = caro.upperStr(val);
+          objRet[key] = caro.upperStr(val);
+          break;
         case 'lower':
-          return objRet[key] = caro.lowerStr(val);
+          objRet[key] = caro.lowerStr(val);
+          break;
         case 'upperFirst':
           objRet[key] = caro.upperFirst(val);
       }
     });
     return objRet;
+  };
+  isObjOrArr = function(arg) {
+    return caro.isArr(arg) || caro.isObj(arg);
+  };
+  pushValToObjOrArr = function(arg, key, val) {
+    if (caro.isArr(arg)) {
+      arg.push(val);
+    } else if (caro.isObj(arg)) {
+      arg[key] = val;
+    }
   };
 
   /**
@@ -12030,6 +11979,7 @@
     var isArr, key, val;
     isArr = Array.isArray(obj);
     for (key in obj) {
+      if (!hasProp.call(obj, key)) continue;
       val = obj[key];
       if (isArr) {
         key = parseInt(key);
@@ -12049,6 +11999,29 @@
   };
 
   /**
+   * clone obj
+   * @param {object} obj
+   * @param {boolean} [deep=false] if clone all under obj
+   * @returns {*}
+   */
+  self.cloneObj = function(obj) {
+    var clone;
+    clone = function(obj) {
+      var r;
+      if (!isObjOrArr(obj)) {
+        return obj;
+      }
+      r = obj.constructor();
+      caro.eachObj(obj, function(key, val) {
+        val = clone(val);
+        return r[key] = val;
+      });
+      return r;
+    };
+    return clone(obj);
+  };
+
+  /**
    * extend obj similar jQuery.extend
    * @param {object} obj1
    * @param {object} obj2
@@ -12056,61 +12029,28 @@
    * @returns {*}
    */
   self.extendObj = function(obj1, obj2, deep) {
-    var isArr, r;
+    var r;
     if (deep == null) {
       deep = false;
     }
-    if ((!caro.isArr(obj1) && !caro.isObj(obj1)) || (!caro.isObj(obj2) && !caro.isArr(obj2))) {
-      return;
+    if (!isObjOrArr(obj1) || !isObjOrArr(obj2)) {
+      return obj1;
     }
-    r = {};
-    isArr = caro.isArr(obj1);
-    r = isArr ? caro.cloneArr(obj1, deep) : caro.cloneObj(obj1, deep);
+    r = caro.isObj(obj1) ? {} : [];
+    if (deep) {
+      r = caro.cloneObj(obj1);
+    } else {
+      caro.eachObj(obj1, function(key, val) {
+        return pushValToObjOrArr(r, key, val);
+      });
+    }
     caro.eachObj(obj2, function(key, val) {
       if (deep) {
-        if (caro.isArr(val)) {
-          val = caro.cloneArr(val, deep);
-        } else {
-          val = caro.cloneObj(val, deep);
-        }
+        val = caro.cloneObj(val);
       }
-      if (isArr) {
-        r.push(val);
-      } else {
-        r[key] = val;
-      }
+      pushValToObjOrArr(r, key, val);
     });
     return r;
-  };
-
-  /**¬
-   * clone obj
-   * @param {object} obj
-   * @param {boolean} [deep=false] if clone all under obj
-   * @returns {*}
-   */
-  self.cloneObj = function(obj, deep) {
-    var clone;
-    if (deep == null) {
-      deep = false;
-    }
-    deep = deep !== false;
-    clone = function(obj) {
-      var copy;
-      if (!caro.isObj(obj)) {
-        return obj;
-      }
-      copy = obj.constructor();
-      caro.eachObj(obj, function(key, val) {
-        if (deep) {
-          copy[key] = clone(val);
-          return;
-        }
-        copy[key] = val;
-      });
-      return copy;
-    };
-    return clone(obj);
   };
 
   /**
@@ -12128,6 +12068,7 @@
     keep = true;
     obj2 = {};
     keys = caro.splitStr(keys, ',');
+    opt = caro.isObj(opt) ? opt : {};
     if (opt) {
       clone = opt.clone !== false;
       keep = opt.keep !== false;
@@ -12783,7 +12724,7 @@
     }
     indexCount = 0;
     aStr = str.split('');
-    aStrClone = caro.cloneArr(aStr);
+    aStrClone = caro.cloneObj(aStr);
     caro.eachObj(aStrClone, function(i, char) {
       var isUpper;
       isUpper = caro.isUpper(char);

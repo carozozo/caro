@@ -227,8 +227,10 @@ do ->
         r[i] = val
       )
       return r
+    # 未來可以新增 TypeCheck.isObjJson
     if  caro.nValidator? and caro.nValidator.isJSON(arg)
-      return JSON.parse(arg)
+      r = JSON.parse(arg)
+      return r if caro.isObj(r)
     if force
       return {}
     arg

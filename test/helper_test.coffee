@@ -90,7 +90,7 @@ describe 'Helper', ->
     r = caro.coverToObj('3.4')
     r2 = caro.coverToObj(null)
     r3 = caro.coverToObj('caro', false)
-    r.should.eq(3.4)
+    r.should.eql({})
     r2.should.eql({})
     r3.should.eq('caro')
 
