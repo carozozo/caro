@@ -74,28 +74,36 @@ do ->
   # extend obj similar jQuery.extend
   # @param {object} obj1
   # @param {object} obj2
-  # @param {boolean} [deep=true]
+  # @param {boolean} [deep=false] if clone all under obj
   # @returns {*}
   ###
 
-  self.extendObj = (obj1, obj2, deep) ->
-    deep = deep != false
+  self.extendObj = (obj1, obj2, deep = false) ->
+    return if (!caro.isArr(obj1) and !caro.isObj(obj1)) or (!caro.isObj(obj2) and !caro.isArr(obj2))
+    r = {}
+    isArr = caro.isArr(obj1)
+    r = if isArr then caro.cloneArr(obj1, deep) else caro.cloneObj(obj1, deep)
     caro.eachObj obj2, (key, val) ->
       if deep
-        obj1[key] = caro.cloneObj(val, deep)
-        return
-      obj1[key] = val
+        if caro.isArr(val)
+          val = caro.cloneArr(val, deep)
+        else
+          val = caro.cloneObj(val, deep)
+      if isArr
+        r.push(val)
+      else
+        r[key] = val
       return
-    obj1
+    r
 
-  ###*
-  # clone obj, will clone all under obj when deep !== false
+  ###*¬
+  # clone obj
   # @param {object} obj
-  # @param {boolean} [deep=true]
+  # @param {boolean} [deep=false] if clone all under obj
   # @returns {*}
   ###
 
-  self.cloneObj = (obj, deep) ->
+  self.cloneObj = (obj, deep = false) ->
     deep = deep != false
 
     clone = (obj) ->
@@ -107,8 +115,7 @@ do ->
           copy[key] = clone(val)
           return
         copy[key] = val
-        return
-      copy
+        returncopy
 
     clone obj
 

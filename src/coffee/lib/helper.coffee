@@ -16,7 +16,7 @@ do ->
 
   self.isBasicVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      # return false if arg is not bool | str | num
+# return false if arg is not bool | str | num
       !(!caro.isBool(arg) and !caro.isStr(arg) and !caro.isNum(arg))
 
   ###*
@@ -65,7 +65,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.checkIfPassCb = (arr, checkFn, needAllPass=true) ->
+  self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
     if !Array.isArray(arr) and typeof arr != 'object' or arr == null or !caro.isFn(checkFn)
       return false
     caro.eachObj arr, (i, arg) ->
@@ -156,7 +156,7 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToStr = (arg, force=true) ->
+  self.coverToStr = (arg, force = true) ->
     if caro.isStr(arg)
       return arg
     if arg == undefined
@@ -169,7 +169,7 @@ do ->
       return ''
     if caro.isObj(arg)
       if force
-        # cover fn to str first, and not replace \r\n
+# cover fn to str first, and not replace \r\n
         caro.coverFnToStrInObj arg, replaceWrap: false
         # after cover to json, replace \\r\\n to wrap
         arg = caro.coverToJson(arg)
@@ -190,7 +190,7 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToInt = (arg, force=true) ->
+  self.coverToInt = (arg, force = true) ->
     int = parseInt(arg)
     if caro.isEmptyVal(int) and !force
       return arg
@@ -204,7 +204,7 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToNum = (arg, force=true) ->
+  self.coverToNum = (arg, force = true) ->
     int = parseFloat(arg)
     if caro.isEmptyVal(int) and !force
       return arg
@@ -218,9 +218,15 @@ do ->
   # @returns {*}
   ###
 
-  self.coverToObj = (arg, force=true) ->
+  self.coverToObj = (arg, force = true) ->
     if caro.isObj(arg)
       return arg
+    if caro.isArr(arg)
+      r = {}
+      caro.eachObj(arg, (i, val) ->
+        r[i] = val
+      )
+      return r
     if  caro.nValidator? and caro.nValidator.isJSON(arg)
       return JSON.parse(arg)
     if force
