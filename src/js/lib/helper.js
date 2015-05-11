@@ -264,11 +264,19 @@
    * @returns {*}
    */
   self.coverToObj = function(arg, force) {
+    var r;
     if (force == null) {
       force = true;
     }
     if (caro.isObj(arg)) {
       return arg;
+    }
+    if (caro.isArr(arg)) {
+      r = {};
+      caro.eachObj(arg, function(i, val) {
+        return r[i] = val;
+      });
+      return r;
     }
     if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
       return JSON.parse(arg);
