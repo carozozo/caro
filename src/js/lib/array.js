@@ -14,11 +14,27 @@
    * @param {[]} arr
    * @returns {Array}
    */
-  self.cloneArr = function(arr) {
+  self.cloneArr = function(arr, deep) {
+    var r;
+    if (deep == null) {
+      deep = false;
+    }
     if (!caro.isArr(arr)) {
       return [];
     }
-    return arr.slice(0);
+    r = [];
+    caro.eachObj(arr, function(i, val) {
+      if (deep) {
+        if (caro.isArr(val)) {
+          val = caro.cloneArr(val, deep);
+        }
+        if (caro.isObj(val)) {
+          val = caro.cloneObj(val, deep);
+        }
+      }
+      return r.push(val);
+    });
+    return r;
   };
 
   /**
