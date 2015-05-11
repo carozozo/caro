@@ -1,24 +1,5 @@
 do ->
 describe 'Array', ->
-  it 'cloneArr', ->
-    arr = [1, 2, 3]
-    r = caro.cloneArr(arr)
-    r2 = arr
-    arr[0] = 4
-    #      console.log r
-    #      console.log r2
-    r.should.eql([1, 2, 3])
-    r2.should.eql([4, 2, 3])
-
-  it 'extendArr', ->
-    arr = [1, 2, 3]
-    arr2 = [2, 3, 4]
-    arr3 = [3, 4, 5]
-    r = caro.extendArr true, arr, arr2
-    r2 = caro.extendArr false, arr, arr2, arr3
-    r.should.eql([1, 2, 3, 2, 3, 4])
-    r2.should.eql([1, 2, 3, 4, 5])
-
   it 'sortByObjKey', ->
     obj = {index: 0, name: 'caro'}
     obj2 = {index: 1, name: 'huang'}

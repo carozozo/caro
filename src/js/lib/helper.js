@@ -279,7 +279,10 @@
       return r;
     }
     if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
-      return JSON.parse(arg);
+      r = JSON.parse(arg);
+      if (caro.isObj(r)) {
+        return r;
+      }
     }
     if (force) {
       return {};

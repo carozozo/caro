@@ -9,58 +9,6 @@ do ->
   self = caro
 
   ###*
-  # clone arr
-  # @param {[]} arr
-  # @returns {Array}
-  ###
-
-  self.cloneArr = (arr, deep = false) ->
-    return [] if !caro.isArr(arr)
-    r = []
-    caro.eachObj(arr, (i, val)->
-      if deep
-        if caro.isArr(val)
-          val = caro.cloneArr(val, deep)
-        if caro.isObj(val)
-          val = caro.cloneObj(val, deep)
-      r.push(val)
-    )
-    r
-
-  ###*
-  # extend arr
-  # @param  {...[]} arr the arr that want to extend
-  # @param {boolean} [duplicate=true] if extend duplicate-val
-  # @returns {*}
-  ###
-
-  self.extendArr = (duplicate = true, arr) ->
-    firstArr = null
-    otherArr = []
-    extend = (arr) ->
-      caro.eachObj arr, (i, eachVal) ->
-        if !duplicate
-          firstArr = caro.pushNoDup(firstArr, eachVal)
-          return
-        firstArr.push eachVal
-        return
-      return
-
-    caro.eachArgs arguments, (i, arg) ->
-      if caro.isArr(arg)
-        if !firstArr
-          firstArr = caro.cloneArr(arg)
-        else
-          otherArr.push arg
-      if caro.isBool(arg)
-        duplicate = arg
-      return
-    caro.eachObj otherArr, (i, eachArr) ->
-      extend eachArr
-      return
-    firstArr
-
-  ###*
   # sort arr by key if value is obj
   # @param {[]} arr
   # @param {string} key
@@ -71,7 +19,7 @@ do ->
   self.sortByObjKey = (arr, key, sort = true) ->
     if !caro.isArr(arr)
       return arr
-    arr = caro.cloneArr(arr)
+    arr = caro.cloneObj(arr)
     arr.sort (a, b) ->
       order1 = a[key] or 0
       order2 = b[key] or 0
@@ -192,7 +140,7 @@ do ->
   self.pushNoDup = (arr, val) ->
     if !caro.isArr(arr)
       return arr
-    r = caro.cloneArr(arr)
+    r = caro.cloneObj(arr)
     caro.eachArgs arguments, (i, val) ->
       if i == 0 or arr.indexOf(val) > -1
         return
@@ -210,7 +158,7 @@ do ->
   self.pushNoEmpty = (arr, val) ->
     if !caro.isArr(arr)
       return arr
-    r = caro.cloneArr(arr)
+    r = caro.cloneObj(arr)
     aValNeedPush = []
     caro.eachArgs arguments, (i, arg) ->
       if i == 0 or caro.isEmptyVal(arg)

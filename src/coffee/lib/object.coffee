@@ -44,8 +44,18 @@ do ->
           objRet[key] = caro.lowerStr(val)
         when 'upperFirst'
           objRet[key] = caro.upperFirst(val)
-          return
+      return
     objRet
+
+  isObjOrArr = (arg) ->
+    caro.isArr(arg) || caro.isObj(arg)
+
+  pushValToObjOrArr = (arg, key, val) ->
+    if caro.isArr(arg)
+      arg.push(val)
+    else if caro.isObj(arg)
+      arg[key] = val
+    return
 
   ###*
   # like jQuery.each function
@@ -71,6 +81,23 @@ do ->
     Object.keys(obj).length
 
   ###*
+  # clone obj
+  # @param {object} obj
+  # @param {boolean} [deep=false] if clone all under obj
+  # @returns {*}
+  ###
+
+  self.cloneObj = (obj) ->
+    clone = (obj) ->
+      return obj if !isObjOrArr(obj)
+      r = obj.constructor()
+      caro.eachObj obj, (key, val) ->
+        val = clone(val)
+        r[key] = val
+      r
+    clone obj
+
+  ###*
   # extend obj similar jQuery.extend
   # @param {object} obj1
   # @param {object} obj2
@@ -79,45 +106,19 @@ do ->
   ###
 
   self.extendObj = (obj1, obj2, deep = false) ->
-    return if (!caro.isArr(obj1) and !caro.isObj(obj1)) or (!caro.isObj(obj2) and !caro.isArr(obj2))
-    r = {}
-    isArr = caro.isArr(obj1)
-    r = if isArr then caro.cloneArr(obj1, deep) else caro.cloneObj(obj1, deep)
+    return obj1 if !isObjOrArr(obj1) or !isObjOrArr(obj2)
+    r = if caro.isObj(obj1) then {} else []
+    if deep
+      r = caro.cloneObj(obj1)
+    else
+      caro.eachObj(obj1, (key, val) ->
+        pushValToObjOrArr(r, key, val)
+      )
     caro.eachObj obj2, (key, val) ->
-      if deep
-        if caro.isArr(val)
-          val = caro.cloneArr(val, deep)
-        else
-          val = caro.cloneObj(val, deep)
-      if isArr
-        r.push(val)
-      else
-        r[key] = val
+      val = caro.cloneObj(val) if deep
+      pushValToObjOrArr(r, key, val)
       return
     r
-
-  ###*¬
-  # clone obj
-  # @param {object} obj
-  # @param {boolean} [deep=false] if clone all under obj
-  # @returns {*}
-  ###
-
-  self.cloneObj = (obj, deep = false) ->
-    deep = deep != false
-
-    clone = (obj) ->
-      if !caro.isObj(obj)
-        return obj
-      copy = obj.constructor()
-      caro.eachObj obj, (key, val) ->
-        if deep
-          copy[key] = clone(val)
-          return
-        copy[key] = val
-        returncopy
-
-    clone obj
 
   ###*
   # copy obj-value by key
@@ -134,6 +135,7 @@ do ->
     keep = true
     obj2 = {}
     keys = caro.splitStr(keys, ',')
+    opt = if caro.isObj(opt) then opt else {}
     if opt
       clone = opt.clone != false
       keep = opt.keep != false
