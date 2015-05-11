@@ -10,74 +10,6 @@
   self = caro;
 
   /**
-   * clone arr
-   * @param {[]} arr
-   * @returns {Array}
-   */
-  self.cloneArr = function(arr, deep) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    if (!caro.isArr(arr)) {
-      return [];
-    }
-    r = [];
-    caro.eachObj(arr, function(i, val) {
-      if (deep) {
-        if (caro.isArr(val)) {
-          val = caro.cloneArr(val, deep);
-        }
-        if (caro.isObj(val)) {
-          val = caro.cloneObj(val, deep);
-        }
-      }
-      return r.push(val);
-    });
-    return r;
-  };
-
-  /**
-   * extend arr
-   * @param  {...[]} arr the arr that want to extend
-   * @param {boolean} [duplicate=true] if extend duplicate-val
-   * @returns {*}
-   */
-  self.extendArr = function(duplicate, arr) {
-    var extend, firstArr, otherArr;
-    if (duplicate == null) {
-      duplicate = true;
-    }
-    firstArr = null;
-    otherArr = [];
-    extend = function(arr) {
-      caro.eachObj(arr, function(i, eachVal) {
-        if (!duplicate) {
-          firstArr = caro.pushNoDup(firstArr, eachVal);
-          return;
-        }
-        firstArr.push(eachVal);
-      });
-    };
-    caro.eachArgs(arguments, function(i, arg) {
-      if (caro.isArr(arg)) {
-        if (!firstArr) {
-          firstArr = caro.cloneArr(arg);
-        } else {
-          otherArr.push(arg);
-        }
-      }
-      if (caro.isBool(arg)) {
-        duplicate = arg;
-      }
-    });
-    caro.eachObj(otherArr, function(i, eachArr) {
-      extend(eachArr);
-    });
-    return firstArr;
-  };
-
-  /**
    * sort arr by key if value is obj
    * @param {[]} arr
    * @param {string} key
@@ -91,7 +23,7 @@
     if (!caro.isArr(arr)) {
       return arr;
     }
-    arr = caro.cloneArr(arr);
+    arr = caro.cloneObj(arr);
     arr.sort(function(a, b) {
       var order1, order2;
       order1 = a[key] || 0;
@@ -248,7 +180,7 @@
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = caro.cloneArr(arr);
+    r = caro.cloneObj(arr);
     caro.eachArgs(arguments, function(i, val) {
       if (i === 0 || arr.indexOf(val) > -1) {
         return;
@@ -269,7 +201,7 @@
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = caro.cloneArr(arr);
+    r = caro.cloneObj(arr);
     aValNeedPush = [];
     caro.eachArgs(arguments, function(i, arg) {
       if (i === 0 || caro.isEmptyVal(arg)) {

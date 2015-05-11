@@ -279,7 +279,7 @@ do ->
       return str
     indexCount = 0
     aStr = str.split('')
-    aStrClone = caro.cloneArr(aStr)
+    aStrClone = caro.cloneObj(aStr)
     caro.eachObj aStrClone, (i, char) ->
       isUpper = caro.isUpper(char)
       if indexCount > 0 and isUpper

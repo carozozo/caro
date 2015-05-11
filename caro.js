@@ -11908,8 +11908,6 @@
  * Object
  * @author Caro.Huang
  */
-var hasProp = {}.hasOwnProperty;
-
 (function() {
   var changeStrValByObjKey, isObjOrArr, pushValToObjOrArr, self;
   self = caro;
@@ -11979,7 +11977,6 @@ var hasProp = {}.hasOwnProperty;
     var isArr, key, val;
     isArr = Array.isArray(obj);
     for (key in obj) {
-      if (!hasProp.call(obj, key)) continue;
       val = obj[key];
       if (isArr) {
         key = parseInt(key);

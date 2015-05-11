@@ -308,7 +308,7 @@
     }
     indexCount = 0;
     aStr = str.split('');
-    aStrClone = caro.cloneArr(aStr);
+    aStrClone = caro.cloneObj(aStr);
     caro.eachObj(aStrClone, function(i, char) {
       var isUpper;
       isUpper = caro.isUpper(char);

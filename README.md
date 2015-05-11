@@ -532,18 +532,6 @@ caro.isArr(['caro']); // true
     var arg = ['a' ,'b', ''c];
     var r = caro.getObjLength(arg); // 3    
 ```
-- **extendObj(obj1, obj2 [deep]) - 將 obj2 合併至 obj1**
-```javascript
-    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
-    var arg2 = ['a', 'b', 'c'];
-    var r = caro.extendObj(arg, arg2);
-    var r2 = caro.extendObj(arg, arg2, true);
-    var r3 = caro.extendObj(arg2, arg);
-    arg.cc.c1 = 5;
-    console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
-    console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
-    console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
-```
 - **cloneObj(obj) - 複製 obj**
 ```javascript
     arg = ['a', 'b', 'c'];
@@ -558,6 +546,18 @@ caro.isArr(['caro']); // true
     console.log(r2); // { a: 3, b: 2 }
     console.log(r3); // [ 'a', 'b', 'c' ] - r3 裡面的值不會跟著 arg 而改變
     console.log(r4); // { a: 1, b: 2 } - r4 裡面的值不會跟著 arg2 而改變
+```
+- **extendObj(obj1, obj2 [deep]) - 將 obj2 合併至 obj1**
+```javascript
+    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
+    var arg2 = ['a', 'b', 'c'];
+    var r = caro.extendObj(arg, arg2);
+    var r2 = caro.extendObj(arg, arg2, true);
+    var r3 = caro.extendObj(arg2, arg);
+    arg.cc.c1 = 5;
+    console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
+    console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
+    console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
 ```
 - **copyByObjKey(obj1, keys [, opt]) - 指定 key 複製 obj 中的 element**
 ```javascript
