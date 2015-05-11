@@ -520,9 +520,16 @@ caro.isArr(['caro']); // true
 ### Object
 - **eachObj(obj, cb) - 遍歷 arr/obj 中的 key 和 val， 並回傳至 cb 中(用法同 jQuery.each)**
 ```javascript
+    var arg = ['a', 'b', c'];
+    r = caro.eachObj(arg, (i, val)->
+      console.log 'i,', i
+      console.log 'val=', val
+    );
 ```
 - **getObjLength(obj) - 取得 obj 長度(element 數量)**
 ```javascript
+    var arg = ['a' ,'b', ''c];
+    var r = caro.getObjLength(arg); // 3    
 ```
 - **extendObj(obj1, obj2 [, deep]) - 將 obj2 合併至 obj1**
 ```javascript

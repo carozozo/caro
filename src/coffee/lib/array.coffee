@@ -14,10 +14,18 @@ do ->
   # @returns {Array}
   ###
 
-  self.cloneArr = (arr) ->
-    if !caro.isArr(arr)
-      return []
-    arr.slice 0
+  self.cloneArr = (arr, deep = false) ->
+    return [] if !caro.isArr(arr)
+    r = []
+    caro.eachObj(arr, (i, val)->
+      if deep
+        if caro.isArr(val)
+          val = caro.cloneArr(val, deep)
+        if caro.isObj(val)
+          val = caro.cloneObj(val, deep)
+      r.push(val)
+    )
+    r
 
   ###*
   # extend arr
@@ -26,7 +34,7 @@ do ->
   # @returns {*}
   ###
 
-  self.extendArr = (duplicate=true, arr) ->
+  self.extendArr = (duplicate = true, arr) ->
     firstArr = null
     otherArr = []
     extend = (arr) ->
@@ -60,7 +68,7 @@ do ->
   # @returns {*}
   ###
 
-  self.sortByObjKey = (arr, key, sort=true) ->
+  self.sortByObjKey = (arr, key, sort = true) ->
     if !caro.isArr(arr)
       return arr
     arr = caro.cloneArr(arr)
@@ -79,7 +87,7 @@ do ->
   # @returns {number}
   ###
 
-  self.sumOfArr = (arr, force=false) ->
+  self.sumOfArr = (arr, force = false) ->
     sum = 0
     if !caro.isArr(arr)
       return 0

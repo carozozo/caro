@@ -1,4 +1,4 @@
-/*! caro - v0.4.5 - 2015-05-10 */
+/*! caro - v0.4.5 - 2015-05-11 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -10225,11 +10225,27 @@
    * @param {[]} arr
    * @returns {Array}
    */
-  self.cloneArr = function(arr) {
+  self.cloneArr = function(arr, deep) {
+    var r;
+    if (deep == null) {
+      deep = false;
+    }
     if (!caro.isArr(arr)) {
       return [];
     }
-    return arr.slice(0);
+    r = [];
+    caro.eachObj(arr, function(i, val) {
+      if (deep) {
+        if (caro.isArr(val)) {
+          val = caro.cloneArr(val, deep);
+        }
+        if (caro.isObj(val)) {
+          val = caro.cloneObj(val, deep);
+        }
+      }
+      return r.push(val);
+    });
+    return r;
   };
 
   /**
@@ -11699,11 +11715,19 @@
    * @returns {*}
    */
   self.coverToObj = function(arg, force) {
+    var r;
     if (force == null) {
       force = true;
     }
     if (caro.isObj(arg)) {
       return arg;
+    }
+    if (caro.isArr(arg)) {
+      r = {};
+      caro.eachObj(arg, function(i, val) {
+        return r[i] = val;
+      });
+      return r;
     }
     if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
       return JSON.parse(arg);
@@ -12028,29 +12052,48 @@
    * extend obj similar jQuery.extend
    * @param {object} obj1
    * @param {object} obj2
-   * @param {boolean} [deep=true]
+   * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
    */
   self.extendObj = function(obj1, obj2, deep) {
-    deep = deep !== false;
+    var isArr, r;
+    if (deep == null) {
+      deep = false;
+    }
+    if ((!caro.isArr(obj1) && !caro.isObj(obj1)) || (!caro.isObj(obj2) && !caro.isArr(obj2))) {
+      return;
+    }
+    r = {};
+    isArr = caro.isArr(obj1);
+    r = isArr ? caro.cloneArr(obj1, deep) : caro.cloneObj(obj1, deep);
     caro.eachObj(obj2, function(key, val) {
       if (deep) {
-        obj1[key] = caro.cloneObj(val, deep);
-        return;
+        if (caro.isArr(val)) {
+          val = caro.cloneArr(val, deep);
+        } else {
+          val = caro.cloneObj(val, deep);
+        }
       }
-      obj1[key] = val;
+      if (isArr) {
+        r.push(val);
+      } else {
+        r[key] = val;
+      }
     });
-    return obj1;
+    return r;
   };
 
-  /**
-   * clone obj, will clone all under obj when deep !== false
+  /**¬
+   * clone obj
    * @param {object} obj
-   * @param {boolean} [deep=true]
+   * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
    */
   self.cloneObj = function(obj, deep) {
     var clone;
+    if (deep == null) {
+      deep = false;
+    }
     deep = deep !== false;
     clone = function(obj) {
       var copy;
