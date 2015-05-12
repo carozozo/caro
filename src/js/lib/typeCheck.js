@@ -111,6 +111,19 @@
    * @param {...} arg
    * @returns {boolean}
    */
+  self.isObjOrArr = function(arg) {
+    if (!checkType(arguments, 'object')) {
+      return false;
+    }
+    return caro.checkIfPassCb(arguments, function(val) {
+      return !caro.isNull(val);
+    });
+  };
+
+  /**
+   * @param {...} arg
+   * @returns {boolean}
+   */
   self.isRegExp = function(arg) {
     return caro.checkIfPassCb(arguments, function(val) {
       return val instanceof RegExp;

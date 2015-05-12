@@ -85,7 +85,7 @@ do ->
 
   self.cloneObj = (obj) ->
     clone = (obj) ->
-      return obj if !isObjOrArr(obj)
+      return obj if !caro.isObjOrArr(obj)
       r = obj.constructor()
       caro.eachObj obj, (key, val) ->
         val = clone(val)
@@ -102,7 +102,7 @@ do ->
   ###
 
   self.extendObj = (obj1, obj2, deep = false) ->
-    return obj1 if !isObjOrArr(obj1) or !isObjOrArr(obj2)
+    return obj1 if !caro.isObjOrArr(obj1) or !caro.isObjOrArr(obj2)
     r = if caro.isObj(obj1) then {} else []
     if deep
       r = caro.cloneObj(obj1)
@@ -202,21 +202,17 @@ do ->
   ###
 
   self.trimObjVal = (obj, opt) ->
-    deep = true
-    clone = false
-    objRet = obj
-    if opt
-      deep = opt.deep != false
-      clone = opt.clone == true
-    if clone
-      objRet = caro.cloneObj(obj)
-    caro.eachObj objRet, (key, val) ->
-      if caro.isObj(val) and deep
-        objRet[key] = caro.trimObjVal(val, opt)
-      if caro.isStr(val)
-        objRet[key] = val.trim()
+    opt = caro.coverToObj(opt)
+    deep = opt.deep != false
+    clone = opt.clone == true
+    r = if clone then  caro.cloneObj(obj) else obj
+    caro.eachObj r, (key, val) ->
+      if caro.isObjOrArr(val) and deep
+        r[key] = caro.trimObjVal(val, opt)
+      else if caro.isStr(val)
+        r[key] = val.trim()
       return
-    objRet
+    r
 
   ###*
   # check if key exists in obj, will return false when key not exist,no matter that other-keys are
@@ -246,46 +242,38 @@ do ->
 
   self.getKeysInObj = (obj, levelLimit) ->
     arr = []
-    if !caro.isObj(obj)
-      return arr
+    return arr if !caro.isObj(obj)
+    levelLimit = if caro.coverToInt(levelLimit, false) > -1 then levelLimit else 1
     levelCount = 0
-
     getKey = (obj) ->
       levelCount++
       caro.eachObj obj, (key, val) ->
-        if levelLimit > 0 and levelCount > levelLimit
-          return
+        return if levelLimit > 0 and levelCount > levelLimit
         arr.push key
         if caro.isObj(val)
           getKey val
         return
       levelCount--
       return
-
-    obj = obj or {}
-    levelLimit = if caro.coverToInt(levelLimit) > -1 then levelLimit else 1
     getKey obj
     arr
 
   ###*
   # @param {object} obj
-  # @param {object} [opt]
-  # @param {boolean} [opt.replaceWrap=true] if replace \r\n
+  # @param {boolean} [replaceWrap=true] if replace \r\n
   ###
 
-  self.coverFnToStrInObj = (obj, opt) ->
-    replaceWrap = true
-    if opt
-      replaceWrap = opt.replaceWrap != false
+  self.coverFnToStrInObj = (obj, replaceWrap = true) ->
     caro.eachObj obj, (key, val) ->
-      if caro.isObj(val)
-        caro.coverFnToStrInObj val
-        return
-      if caro.isFn(val)
+      if caro.isObjOrArr(val)
+        caro.coverFnToStrInObj(val)
+      else if caro.isFn(val)
         fnStr = val.toString()
         if replaceWrap
-          fnStr = caro.replaceAll(fnStr, '\r', '')
-          fnStr = caro.replaceAll(fnStr, '\n', '')
+          fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g,'');
+        else
+          fnStr = fnStr.replace(/[\r]\s*/g,'\r ');
+          fnStr = fnStr.replace(/[\n]\s*/g,'\n ');
         obj[key] = fnStr
       return
     obj

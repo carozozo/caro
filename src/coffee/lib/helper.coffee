@@ -170,7 +170,7 @@ do ->
     if caro.isObj(arg)
       if force
 # cover fn to str first, and not replace \r\n
-        caro.coverFnToStrInObj arg, replaceWrap: false
+        caro.coverFnToStrInObj arg, false
         # after cover to json, replace \\r\\n to wrap
         arg = caro.coverToJson(arg)
         arg = caro.replaceAll(arg, '\\r', '\r')

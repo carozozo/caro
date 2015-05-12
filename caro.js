@@ -1,4 +1,4 @@
-/*! caro - v0.4.6 - 2015-05-12 */
+/*! caro - v0.4.6 - 2015-05-13 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11583,9 +11583,7 @@
     }
     if (caro.isObj(arg)) {
       if (force) {
-        caro.coverFnToStrInObj(arg, {
-          replaceWrap: false
-        });
+        caro.coverFnToStrInObj(arg, false);
         arg = caro.coverToJson(arg);
         arg = caro.replaceAll(arg, '\\r', '\r');
         arg = caro.replaceAll(arg, '\\n', '\n');
@@ -12003,7 +12001,7 @@
     var clone;
     clone = function(obj) {
       var r;
-      if (!isObjOrArr(obj)) {
+      if (!caro.isObjOrArr(obj)) {
         return obj;
       }
       r = obj.constructor();
@@ -12028,7 +12026,7 @@
     if (deep == null) {
       deep = false;
     }
-    if (!isObjOrArr(obj1) || !isObjOrArr(obj2)) {
+    if (!caro.isObjOrArr(obj1) || !caro.isObjOrArr(obj2)) {
       return obj1;
     }
     r = caro.isObj(obj1) ? {} : [];
@@ -12144,26 +12142,19 @@
    * @returns {*}
    */
   self.trimObjVal = function(obj, opt) {
-    var clone, deep, objRet;
-    deep = true;
-    clone = false;
-    objRet = obj;
-    if (opt) {
-      deep = opt.deep !== false;
-      clone = opt.clone === true;
-    }
-    if (clone) {
-      objRet = caro.cloneObj(obj);
-    }
-    caro.eachObj(objRet, function(key, val) {
-      if (caro.isObj(val) && deep) {
-        objRet[key] = caro.trimObjVal(val, opt);
-      }
-      if (caro.isStr(val)) {
-        objRet[key] = val.trim();
+    var clone, deep, r;
+    opt = caro.coverToObj(opt);
+    deep = opt.deep !== false;
+    clone = opt.clone === true;
+    r = clone ? caro.cloneObj(obj) : obj;
+    caro.eachObj(r, function(key, val) {
+      if (caro.isObjOrArr(val) && deep) {
+        r[key] = caro.trimObjVal(val, opt);
+      } else if (caro.isStr(val)) {
+        r[key] = val.trim();
       }
     });
-    return objRet;
+    return r;
   };
 
   /**
@@ -12201,6 +12192,7 @@
     if (!caro.isObj(obj)) {
       return arr;
     }
+    levelLimit = caro.coverToInt(levelLimit, false) > -1 ? levelLimit : 1;
     levelCount = 0;
     getKey = function(obj) {
       levelCount++;
@@ -12215,34 +12207,29 @@
       });
       levelCount--;
     };
-    obj = obj || {};
-    levelLimit = caro.coverToInt(levelLimit) > -1 ? levelLimit : 1;
     getKey(obj);
     return arr;
   };
 
   /**
    * @param {object} obj
-   * @param {object} [opt]
-   * @param {boolean} [opt.replaceWrap=true] if replace \r\n
+   * @param {boolean} [replaceWrap=true] if replace \r\n
    */
-  self.coverFnToStrInObj = function(obj, opt) {
-    var replaceWrap;
-    replaceWrap = true;
-    if (opt) {
-      replaceWrap = opt.replaceWrap !== false;
+  self.coverFnToStrInObj = function(obj, replaceWrap) {
+    if (replaceWrap == null) {
+      replaceWrap = true;
     }
     caro.eachObj(obj, function(key, val) {
       var fnStr;
-      if (caro.isObj(val)) {
+      if (caro.isObjOrArr(val)) {
         caro.coverFnToStrInObj(val);
-        return;
-      }
-      if (caro.isFn(val)) {
+      } else if (caro.isFn(val)) {
         fnStr = val.toString();
         if (replaceWrap) {
-          fnStr = caro.replaceAll(fnStr, '\r', '');
-          fnStr = caro.replaceAll(fnStr, '\n', '');
+          fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g, '');
+        } else {
+          fnStr = fnStr.replace(/[\r]\s*/g, '\r ');
+          fnStr = fnStr.replace(/[\n]\s*/g, '\n ');
         }
         obj[key] = fnStr;
       }
@@ -12913,6 +12900,19 @@
     }
     return caro.checkIfPassCb(arguments, function(val) {
       return !caro.isNull(val) && !caro.isArr(val);
+    });
+  };
+
+  /**
+   * @param {...} arg
+   * @returns {boolean}
+   */
+  self.isObjOrArr = function(arg) {
+    if (!checkType(arguments, 'object')) {
+      return false;
+    }
+    return caro.checkIfPassCb(arguments, function(val) {
+      return !caro.isNull(val);
     });
   };
 
