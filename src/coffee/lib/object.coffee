@@ -12,12 +12,11 @@ do ->
   # @param {object} obj
   # @param {string} type=upper|lower|upperFirst support-type
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {object} [opt]
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
 
-  changeStrValByObjKey = (obj, type, keys, opt) ->
+  changeStrValByObjKey = (obj, type, keys, clone = false) ->
     aType = [
       'upper'
       'lower'
@@ -25,27 +24,24 @@ do ->
     ]
     if !caro.isObj(obj) or aType.indexOf(type) < 0
       return obj
-    objRet = obj
-    clone = false
-    if opt
-      clone = opt.clone == true
-    if clone
-      objRet = caro.cloneObj(obj)
-    keys = keys or caro.getKeysInObj(objRet)
+    r = if clone then caro.cloneObj(obj) else obj
+    keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
     caro.eachObj keys, (i, key) ->
-      if !caro.keysInObj(objRet, key)
+      if !caro.keysInObj(r, key)
         return
-      val = objRet[key]
+      val = r[key]
+      opt =
+        force: false
       switch type
         when 'upper'
-          objRet[key] = caro.upperStr(val)
+          r[key] = caro.upperStr(val, opt)
         when 'lower'
-          objRet[key] = caro.lowerStr(val)
+          r[key] = caro.lowerStr(val, opt)
         when 'upperFirst'
-          objRet[key] = caro.upperFirst(val)
+          r[key] = caro.upperFirst(val, opt)
       return
-    objRet
+    r
 
   isObjOrArr = (arg) ->
     caro.isArr(arg) || caro.isObj(arg)
@@ -170,38 +166,32 @@ do ->
   ###*
   # @param {object} obj
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {object} [opt]
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
 
-  self.upperCaseByObjKey = (obj, keys, opt) ->
-    changeStrValByObjKey obj, 'upper', keys, opt
-    obj
+  self.upperCaseByObjKey = (obj, keys, clone) ->
+    changeStrValByObjKey obj, 'upper', keys, clone
 
   ###*
   # @param {object} obj
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {object} [opt]
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
 
-  self.lowerCaseByObjKey = (obj, keys, opt) ->
-    changeStrValByObjKey obj, 'lower', keys, opt
-    obj
+  self.lowerCaseByObjKey = (obj, keys, clone) ->
+    changeStrValByObjKey obj, 'lower', keys, clone
 
   ###*
   # @param {object} obj
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {object} [opt]
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
 
-  self.upperFirstByObjKey = (obj, keys, opt) ->
-    changeStrValByObjKey obj, 'upperFirst', keys, opt
-    obj
+  self.upperFirstByObjKey = (obj, keys, clone) ->
+    changeStrValByObjKey obj, 'upperFirst', keys, clone
 
   ###*
   # @param {object} obj

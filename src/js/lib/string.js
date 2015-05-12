@@ -337,14 +337,11 @@
    * @param {string} str
    * @returns {}
    */
-  self.upperFirst = function(str) {
-    if (!caro.isStr(str)) {
-      return str;
-    }
-    return caro.upperStr(str, {
-      start: 0,
-      end: 1
-    });
+  self.upperFirst = function(str, opt) {
+    opt = caro.coverToObj(opt);
+    opt.start = 0;
+    opt.end = 1;
+    return caro.upperStr(str, opt);
   };
 
   /**

@@ -308,12 +308,11 @@ do ->
   # @returns {}
   ###
 
-  self.upperFirst = (str) ->
-    if !caro.isStr(str)
-      return str
-    caro.upperStr str,
-      start: 0
-      end: 1
+  self.upperFirst = (str, opt) ->
+    opt = caro.coverToObj(opt)
+    opt.start = 0
+    opt.end = 1
+    caro.upperStr str, opt
 
   ###*
   # @param {string} str

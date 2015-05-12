@@ -586,14 +586,35 @@ caro.isArr(['caro']); // true
     console.log(arg); // { aa: 4, bb: 2, cc: { c1: 3 } }
     console.log(r); // { aa: 4, bb: '5', cc: { c1: 3 } }
 ```
-- **upperCaseByObjKey(obj, aKey [, opt]) - 指定 key 將對應的 val 轉為大寫**
+- **upperCaseByObjKey(obj, aKey [clone=false]) - 指定 key 將對應的 val 轉為大寫**
 ```javascript
+    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
+    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
+    caro.upperCaseByObjKey(arg, 'aa,bb'); // 轉換 arg.aa 和 arg.bb
+    var r = caro.upperCaseByObjKey(arg2, null, true); // 指定所有的 key 轉為大寫
+    console.log(arg); // { aa: 'CARO', bb: 'PIKA', cc: 'doraemon', dd: 1 }
+    console.log(arg2); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1 }
+    console.log(r); // { aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON', dd: 1 }
 ```
-- **lowerCaseByObjKey(obj, aKey [, opt]) - 指定 key 將對應的 val 轉為小寫**
+- **lowerCaseByObjKey(obj, aKey [clone=false]) - 指定 key 將對應的 val 轉為小寫**
 ```javascript
+    var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
+    var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
+    caro.lowerCaseByObjKey(arg, ['aa','bb']); // 轉換 arg.aa 和 arg.bb
+    var r = caro.lowerCaseByObjKey(arg2, null, true); // 指定所有的 key 轉為小寫
+    console.log(arg); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon', 'dd': 1};
+    console.log(arg2); // {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
+    console.log(r); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
 ```
-- **upperFirstByObjKey(obj, aKey [, opt]) - 指定 key 將對應的 val 的第一個字母轉為大寫**
+- **upperFirstByObjKey(obj, aKey [clone=false]) - 指定 key 將對應的 val 的第一個字母轉為大寫**
 ```javascript
+    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
+    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
+    caro.upperFirstByObjKey(arg, 'aa,bb'); // 轉換 arg.aa 和 arg.bb
+    var r = caro.upperFirstByObjKey(arg2, null, true); // 指定所有的 key 轉為第一個字母大寫
+    console.log(arg); // { aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: ['dd_1']};
+    console.log(arg2); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']};
+    console.log(r); // { aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
 ```
 - **trimObjVal(obj [, opt]) - obj 中 val 為 str 的值，去除頭尾空白**
 ```javascript
