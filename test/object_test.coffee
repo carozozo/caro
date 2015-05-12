@@ -40,3 +40,33 @@ describe 'Object', ->
     r2.should.eql({'0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: {c1: 3}})
     r3.should.eql(['a', 'b', 'c', 1, 2, {c1: 5}])
     r4.should.eql(['a', 'b', 'c', 'd'])
+
+  it 'replaceObjKey', ->
+    arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}}
+    caro.replaceObjKey(arg, (key)->
+      return 'dd' if key == 'cc'
+    );
+    r = caro.replaceObjKey(arg, (key)->
+      return 'ee' if key == 'bb'
+    , true);
+    #    console.log(arg);
+    #    console.log(r);
+    #    console.log(r2);
+    arg.should.eql({aa: 1, bb: 2, dd: {c1: 3}})
+    r.should.eql({aa: 1, dd: {c1: 3}, ee: 2})
+
+  it 'replaceObjVal', ->
+    arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}}
+    caro.replaceObjVal(arg, (val)->
+      return 4 if val == 1
+    );
+    r = caro.replaceObjVal(arg, (val)->
+      return '5' if val == 2
+    ,
+      deep: true
+      clone: true
+    );
+#    console.log(arg);
+#    console.log(r);
+    arg.should.eql({ aa: 4, bb: 2, cc: { c1: 3 } })
+    r.should.eql({ aa: 4, bb: '5', cc: { c1: 3 } })
