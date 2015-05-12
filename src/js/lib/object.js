@@ -13,44 +13,42 @@
    * @param {object} obj
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  changeStrValByObjKey = function(obj, type, keys, opt) {
-    var aType, clone, objRet;
+  changeStrValByObjKey = function(obj, type, keys, clone) {
+    var aType, r;
+    if (clone == null) {
+      clone = false;
+    }
     aType = ['upper', 'lower', 'upperFirst'];
     if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
       return obj;
     }
-    objRet = obj;
-    clone = false;
-    if (opt) {
-      clone = opt.clone === true;
-    }
-    if (clone) {
-      objRet = caro.cloneObj(obj);
-    }
-    keys = keys || caro.getKeysInObj(objRet);
+    r = clone ? caro.cloneObj(obj) : obj;
+    keys = keys || caro.getKeysInObj(r);
     keys = caro.splitStr(keys, ',');
     caro.eachObj(keys, function(i, key) {
-      var val;
-      if (!caro.keysInObj(objRet, key)) {
+      var opt, val;
+      if (!caro.keysInObj(r, key)) {
         return;
       }
-      val = objRet[key];
+      val = r[key];
+      opt = {
+        force: false
+      };
       switch (type) {
         case 'upper':
-          objRet[key] = caro.upperStr(val);
+          r[key] = caro.upperStr(val, opt);
           break;
         case 'lower':
-          objRet[key] = caro.lowerStr(val);
+          r[key] = caro.lowerStr(val, opt);
           break;
         case 'upperFirst':
-          objRet[key] = caro.upperFirst(val);
+          r[key] = caro.upperFirst(val, opt);
       }
     });
-    return objRet;
+    return r;
   };
   isObjOrArr = function(arg) {
     return caro.isArr(arg) || caro.isObj(arg);
@@ -93,6 +91,7 @@
   /**
    * clone obj
    * @param {object} obj
+   * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
    */
   self.cloneObj = function(obj) {
@@ -209,8 +208,7 @@
    * @returns {*}
    */
   self.upperCaseByObjKey = function(obj, keys, clone) {
-    changeStrValByObjKey(obj, 'upper', keys, clone);
-    return obj;
+    return changeStrValByObjKey(obj, 'upper', keys, clone);
   };
 
   /**
@@ -220,8 +218,7 @@
    * @returns {*}
    */
   self.lowerCaseByObjKey = function(obj, keys, clone) {
-    changeStrValByObjKey(obj, 'lower', keys, clone);
-    return obj;
+    return changeStrValByObjKey(obj, 'lower', keys, clone);
   };
 
   /**
@@ -231,8 +228,7 @@
    * @returns {*}
    */
   self.upperFirstByObjKey = function(obj, keys, clone) {
-    changeStrValByObjKey(obj, 'upperFirst', keys, clone);
-    return obj;
+    return changeStrValByObjKey(obj, 'upperFirst', keys, clone);
   };
 
   /**

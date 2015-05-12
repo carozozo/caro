@@ -11918,44 +11918,42 @@
    * @param {object} obj
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  changeStrValByObjKey = function(obj, type, keys, opt) {
-    var aType, clone, objRet;
+  changeStrValByObjKey = function(obj, type, keys, clone) {
+    var aType, r;
+    if (clone == null) {
+      clone = false;
+    }
     aType = ['upper', 'lower', 'upperFirst'];
     if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
       return obj;
     }
-    objRet = obj;
-    clone = false;
-    if (opt) {
-      clone = opt.clone === true;
-    }
-    if (clone) {
-      objRet = caro.cloneObj(obj);
-    }
-    keys = keys || caro.getKeysInObj(objRet);
+    r = clone ? caro.cloneObj(obj) : obj;
+    keys = keys || caro.getKeysInObj(r);
     keys = caro.splitStr(keys, ',');
     caro.eachObj(keys, function(i, key) {
-      var val;
-      if (!caro.keysInObj(objRet, key)) {
+      var opt, val;
+      if (!caro.keysInObj(r, key)) {
         return;
       }
-      val = objRet[key];
+      val = r[key];
+      opt = {
+        force: false
+      };
       switch (type) {
         case 'upper':
-          objRet[key] = caro.upperStr(val);
+          r[key] = caro.upperStr(val, opt);
           break;
         case 'lower':
-          objRet[key] = caro.lowerStr(val);
+          r[key] = caro.lowerStr(val, opt);
           break;
         case 'upperFirst':
-          objRet[key] = caro.upperFirst(val);
+          r[key] = caro.upperFirst(val, opt);
       }
     });
-    return objRet;
+    return r;
   };
   isObjOrArr = function(arg) {
     return caro.isArr(arg) || caro.isObj(arg);
@@ -12111,37 +12109,31 @@
   /**
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.upperCaseByObjKey = function(obj, keys, opt) {
-    changeStrValByObjKey(obj, 'upper', keys, opt);
-    return obj;
+  self.upperCaseByObjKey = function(obj, keys, clone) {
+    return changeStrValByObjKey(obj, 'upper', keys, clone);
   };
 
   /**
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.lowerCaseByObjKey = function(obj, keys, opt) {
-    changeStrValByObjKey(obj, 'lower', keys, opt);
-    return obj;
+  self.lowerCaseByObjKey = function(obj, keys, clone) {
+    return changeStrValByObjKey(obj, 'lower', keys, clone);
   };
 
   /**
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.upperFirstByObjKey = function(obj, keys, opt) {
-    changeStrValByObjKey(obj, 'upperFirst', keys, opt);
-    return obj;
+  self.upperFirstByObjKey = function(obj, keys, clone) {
+    return changeStrValByObjKey(obj, 'upperFirst', keys, clone);
   };
 
   /**
@@ -12709,14 +12701,11 @@
    * @param {string} str
    * @returns {}
    */
-  self.upperFirst = function(str) {
-    if (!caro.isStr(str)) {
-      return str;
-    }
-    return caro.upperStr(str, {
-      start: 0,
-      end: 1
-    });
+  self.upperFirst = function(str, opt) {
+    opt = caro.coverToObj(opt);
+    opt.start = 0;
+    opt.end = 1;
+    return caro.upperStr(str, opt);
   };
 
   /**

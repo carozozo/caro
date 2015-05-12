@@ -49,9 +49,6 @@ describe 'Object', ->
     r = caro.replaceObjKey(arg, (key)->
       return 'ee' if key == 'bb'
     , true);
-    #    console.log(arg);
-    #    console.log(r);
-    #    console.log(r2);
     arg.should.eql({aa: 1, bb: 2, dd: {c1: 3}})
     r.should.eql({aa: 1, dd: {c1: 3}, ee: 2})
 
@@ -66,7 +63,32 @@ describe 'Object', ->
       deep: true
       clone: true
     );
-#    console.log(arg);
-#    console.log(r);
-    arg.should.eql({ aa: 4, bb: 2, cc: { c1: 3 } })
-    r.should.eql({ aa: 4, bb: '5', cc: { c1: 3 } })
+    arg.should.eql({aa: 4, bb: 2, cc: {c1: 3}})
+    r.should.eql({aa: 4, bb: '5', cc: {c1: 3}})
+
+  it 'upperCaseByObjKey', ->
+    arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
+    arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
+    caro.upperCaseByObjKey(arg, 'aa,bb');
+    r = caro.upperCaseByObjKey(arg2, null, true);
+    arg.should.eql { aa: 'CARO', bb: 'PIKA', cc: 'doraemon', dd: 1 }
+    arg2.should.eql { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1 }
+    r.should.eql { aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON', dd: 1 }
+
+  it 'lowerCaseByObjKey', ->
+    arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
+    arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
+    caro.lowerCaseByObjKey(arg, 'aa,bb');
+    r = caro.lowerCaseByObjKey(arg2, null, true);
+    arg.should.eql { aa: 'caro', bb: 'pika', cc: 'Doraemon', dd: 1 }
+    arg2.should.eql { aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: 1 }
+    r.should.eql { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1 }
+
+  it 'upperFirstByObjKey', ->
+    arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
+    arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
+    caro.upperFirstByObjKey(arg, 'aa,bb');
+    r = caro.upperFirstByObjKey(arg2, null, true);
+    arg.should.eql { aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: ['dd_1']};
+    arg2.should.eql { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']};
+    r.should.eql { aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
