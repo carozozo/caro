@@ -547,7 +547,7 @@ caro.isArr(['caro']); // true
     console.log(r3); // [ 'a', 'b', 'c' ] - r3 裡面的值不會跟著 arg 而改變
     console.log(r4); // { a: 1, b: 2 } - r4 裡面的值不會跟著 arg2 而改變
 ```
-- **extendObj(obj1, obj2 [deep]) - 將 obj2 合併至 obj1**
+- **extendObj(obj1, obj2 [deep=false]) - 將 obj2 合併至 obj1**
 ```javascript
     var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
     var arg2 = ['a', 'b', 'c'];
@@ -558,11 +558,33 @@ caro.isArr(['caro']); // true
     console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
     console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
     console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
-- **replaceObjKey(obj, replaceFn [, opt]) - 轉換 obj 中的 key**
+```    
+- **replaceObjKey(obj, replaceFn [clone=false]) - 轉換 obj 中的 key**
 ```javascript
+    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
+    caro.replaceObjKey(arg, function (key){
+      return 'dd' if key == 'cc'
+    });
+    var r = caro.replaceObjKey(arg, function (key){
+      return 'ee' if key == 'bb'
+    , true);
+    console.log(arg); // { aa: 1, bb: 2, dd: { c1: 3 } }
+    console.log(r); // { aa: 1, dd: { c1: 3 }, ee: 2 }
 ```
-- **replaceObjVal(obj, replaceFn [, opt]) - 轉換 obj 中的 val**
+- **replaceObjVal(obj, replaceFn [opt]) - 轉換 obj 中的 val**
 ```javascript
+    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
+    caro.replaceObjVal(arg, function (val) {
+      return 4 if val == 1
+    });
+    var r = caro.replaceObjVal(arg, function (val){
+      return '5' if val == 2
+    }, {
+      deep: true
+      clone: true
+    });
+    console.log(arg); // { aa: 4, bb: 2, cc: { c1: 3 } }
+    console.log(r); // { aa: 4, bb: '5', cc: { c1: 3 } }
 ```
 - **upperCaseByObjKey(obj, aKey [, opt]) - 指定 key 將對應的 val 轉為大寫**
 ```javascript

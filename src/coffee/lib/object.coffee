@@ -124,18 +124,13 @@ do ->
   # replace key in object
   # @param {object} obj
   # @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
-  # @param {object} [opt]
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
 
-  self.replaceObjKey = (obj, cb, opt) ->
+  self.replaceObjKey = (obj, cb, clone = false) ->
     objRet = obj
-    clone = false
-    if opt
-      clone = opt.clone == true
-    if clone
-      objRet = caro.cloneObj(obj)
+    objRet = caro.cloneObj(obj) if clone
     caro.eachObj objRet, (key, val) ->
       newKey = caro.executeIfFn(cb, key)
       if newKey
@@ -154,10 +149,9 @@ do ->
   ###
 
   self.replaceObjVal = (obj, cb, opt) ->
-    oClone = obj
-    deep = false
-    clone = false
-
+    opt = caro.coverToObj(opt)
+    deep = opt.deep == true
+    clone = opt.clone == true
     coverObjVal = (o) ->
       caro.eachObj o, (key, val) ->
         if caro.isObj(val) and deep
@@ -169,11 +163,7 @@ do ->
         return
       return
 
-    if opt
-      deep = opt.deep != false
-      clone = opt.clone == true
-    if clone
-      oClone = caro.cloneObj(obj)
+    oClone = if clone then caro.cloneObj(obj) else obj
     coverObjVal oClone
     oClone
 

@@ -93,7 +93,6 @@
   /**
    * clone obj
    * @param {object} obj
-   * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
    */
   self.cloneObj = function(obj) {
@@ -146,49 +145,18 @@
   };
 
   /**
-   * copy obj-value by key
-   * @param {object} obj
-   * @param {string[]|string} keys the element that want to copy by keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
-   * @param {boolean} [opt.keep=true] if keep original element
-   * @returns {{}}
-   */
-  self.getByObjKey = function(obj, keys, opt) {
-    var clone, keep, r;
-    r = null;
-    keys = caro.splitStr(keys, ',');
-    opt = caro.coverToObj(opt);
-    clone = opt.clone === true;
-    keep = opt.keep !== false;
-    caro.eachObj(keys, function(i, key) {
-      if (clone) {
-        r = caro.cloneObj(obj[key]);
-      } else {
-        r = obj[key];
-      }
-      if (!keep) {
-        delete obj[key];
-      }
-    });
-    return r;
-  };
-
-  /**
    * replace key in object
    * @param {object} obj
    * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.replaceObjKey = function(obj, cb, opt) {
-    var clone, objRet;
-    objRet = obj;
-    clone = false;
-    if (opt) {
-      clone = opt.clone === true;
+  self.replaceObjKey = function(obj, cb, clone) {
+    var objRet;
+    if (clone == null) {
+      clone = false;
     }
+    objRet = obj;
     if (clone) {
       objRet = caro.cloneObj(obj);
     }
@@ -213,9 +181,9 @@
    */
   self.replaceObjVal = function(obj, cb, opt) {
     var clone, coverObjVal, deep, oClone;
-    oClone = obj;
-    deep = false;
-    clone = false;
+    opt = caro.coverToObj(opt);
+    deep = opt.deep === true;
+    clone = opt.clone === true;
     coverObjVal = function(o) {
       caro.eachObj(o, function(key, val) {
         var newVal;
@@ -229,13 +197,7 @@
         }
       });
     };
-    if (opt) {
-      deep = opt.deep !== false;
-      clone = opt.clone === true;
-    }
-    if (clone) {
-      oClone = caro.cloneObj(obj);
-    }
+    oClone = clone ? caro.cloneObj(obj) : obj;
     coverObjVal(oClone);
     return oClone;
   };
@@ -243,36 +205,33 @@
   /**
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.upperCaseByObjKey = function(obj, keys, opt) {
-    changeStrValByObjKey(obj, 'upper', keys, opt);
+  self.upperCaseByObjKey = function(obj, keys, clone) {
+    changeStrValByObjKey(obj, 'upper', keys, clone);
     return obj;
   };
 
   /**
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.lowerCaseByObjKey = function(obj, keys, opt) {
-    changeStrValByObjKey(obj, 'lower', keys, opt);
+  self.lowerCaseByObjKey = function(obj, keys, clone) {
+    changeStrValByObjKey(obj, 'lower', keys, clone);
     return obj;
   };
 
   /**
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {object} [opt]
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.upperFirstByObjKey = function(obj, keys, opt) {
-    changeStrValByObjKey(obj, 'upperFirst', keys, opt);
+  self.upperFirstByObjKey = function(obj, keys, clone) {
+    changeStrValByObjKey(obj, 'upperFirst', keys, clone);
     return obj;
   };
 
