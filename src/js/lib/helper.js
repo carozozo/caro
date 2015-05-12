@@ -200,9 +200,7 @@
     }
     if (caro.isObj(arg)) {
       if (force) {
-        caro.coverFnToStrInObj(arg, {
-          replaceWrap: false
-        });
+        caro.coverFnToStrInObj(arg, false);
         arg = caro.coverToJson(arg);
         arg = caro.replaceAll(arg, '\\r', '\r');
         arg = caro.replaceAll(arg, '\\n', '\n');

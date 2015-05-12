@@ -95,8 +95,20 @@ do ->
     if !checkType(arguments, 'object')
       return false
     caro.checkIfPassCb arguments, (val) ->
-# Note: array and null is object in js
+      # Note: array and null is object in js
       !caro.isNull(val) and !caro.isArr(val)
+
+  ###*
+  # @param {...} arg
+  # @returns {boolean}
+  ###
+
+  self.isObjOrArr = (arg) ->
+    if !checkType(arguments, 'object')
+      return false
+    caro.checkIfPassCb arguments, (val) ->
+      # Note: null is object in js
+      !caro.isNull(val)
 
   ###*
   # @param {...} arg

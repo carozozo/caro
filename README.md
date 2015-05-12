@@ -616,17 +616,44 @@ caro.isArr(['caro']); // true
     console.log(arg2); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']};
     console.log(r); // { aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
 ```
-- **trimObjVal(obj [, opt]) - obj 中 val 為 str 的值，去除頭尾空白**
+- **trimObjVal(obj [opt]) - obj 中 val 為 str 的值，去除頭尾空白**
 ```javascript
+    var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
+    var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
+    caro.trimObjVal(arg);
+    var r = caro.trimObjVal(arg2, {
+      deep: false
+      clone: true
+    });
+    console.log(arg); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [ 'dd_1' ] }
+    console.log(arg2); // { aa: ' caro ', bb: ' pika ', cc: ' doraemon ', dd: [ ' dd_1 ' ] }
+    console.log(r); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [ ' dd_1 ' ] }
 ```
 - **keysInObj(obj [, keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
+    var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
+    var r = caro.keysInObj(arg, 'aa,bb'); // true
+    var r2 = caro.keysInObj(arg, ['aa', 'ee']); // false
 ```
 - **getKeysInObj(obj [, levelLimit]) - 取得 obj 中的 key**
 ```javascript
+    var arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
+    var r = caro.getKeysInObj(arg); // [ 'a', 'b', 'c' ] - 取得第一層的 key
+    var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] // 取到第二層的 key
+    var r3 = caro.getKeysInObj(arg, 0); // [ 'a', 'b', 'c', 'd', 'e', 'f' ] - 取得所有層級的 key
 ```
 - **coverFnToStrInObj(obj [, opt]) - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)**
 ```javascript
+    var arg = {
+      a: 1, b: 2, c: (a) ->
+        return a
+    };
+    var arg2 = {
+      a: 1, b: 2, c: (a) ->
+        return a
+    };
+    r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
+    r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
 ```
 
 ### String
@@ -764,6 +791,12 @@ caro.isArr(['caro']); // true
     var arg2 = null;
     var r = caro.isObj(arg); // true
     var r2 = caro.isObj(arg, arg2); // false
+```
+- **isObjOrArr(arg...) - 判斷是否為 object 或 array，當其中一個參數不符合時，回傳 false**
+```javascript
+    var arg = {}, arg2 = [] ,arg3 = null;
+    var r = caro.isObjOrArr(arg); // true
+    var r2 = caro.isObjOrArr(arg, arg2); // false
 ```
 - **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
 ```javascript
