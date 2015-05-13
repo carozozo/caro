@@ -86,12 +86,8 @@ do ->
   # @returns {boolean}
   ###
 
-  self.toBool = (str) ->
-    if !caro.isStr(str)
-      return false
-    if !str
-# return false when str is empty
-      return false
+  self.strToBool = (str) ->
+    return false if !caro.isStr(str) or !str
     str = str.toLowerCase()
     # return false when str='false', otherwise return true
     str != 'false'
@@ -262,7 +258,8 @@ do ->
     s = if str < 0 then '-' else ''
     iStr = parseInt(Math.abs(str or 0).toFixed(float)).toString()
     sepLength = if iStr.length > 3 then iStr.length % 3 else 0
-    retStr = s + (if sepLength then iStr.substr(0, sepLength) + separated else '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (if float then decimal + Math.abs(str - iStr).toFixed(float).slice(2) else '')
+    retStr = s + (if sepLength then iStr.substr 0, sepLength + separated else '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g,
+      '$1' + separated) + (if float then decimal + Math.abs(str - iStr).toFixed(float).slice(2) else '')
     if prefix
       r.push prefix
     r.push retStr
@@ -384,7 +381,7 @@ do ->
 
   self.serializeUrl = (url, oArgs, coverEmpty) ->
     count = 0
-    aArgs = [ '?' ]
+    aArgs = ['?']
     url = caro.coverToStr(url)
     oArgs = caro.coverToObj(oArgs)
     coverEmpty = coverEmpty == true

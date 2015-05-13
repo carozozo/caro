@@ -12446,11 +12446,8 @@
    * @param {string} str
    * @returns {boolean}
    */
-  self.toBool = function(str) {
-    if (!caro.isStr(str)) {
-      return false;
-    }
-    if (!str) {
+  self.strToBool = function(str) {
+    if (!caro.isStr(str) || !str) {
       return false;
     }
     str = str.toLowerCase();
@@ -12639,7 +12636,7 @@
     s = str < 0 ? '-' : '';
     iStr = parseInt(Math.abs(str || 0).toFixed(float)).toString();
     sepLength = iStr.length > 3 ? iStr.length % 3 : 0;
-    retStr = s + (sepLength ? iStr.substr(0, sepLength) + separated : '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
+    retStr = s + (sepLength ? iStr.substr(0, sepLength + separated) : '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
     if (prefix) {
       r.push(prefix);
     }
