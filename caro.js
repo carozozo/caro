@@ -12436,14 +12436,11 @@
     var aType, end, force, r, start;
     r = [];
     aType = ['toUpperCase', 'toLowerCase'];
-    start = null;
-    end = null;
-    force = true;
-    if (opt) {
-      start = !caro.isEmptyVal(opt.start) ? opt.start : start;
-      end = opt.end || end;
-      force = opt.force !== false;
-    }
+    opt = caro.coverToObj(opt);
+    start = caro.coverToInt(opt.start);
+    end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
+    force = opt.force !== false;
+    console.log('force=', force);
     if (!caro.isStr(str)) {
       if (!force) {
         return str;
@@ -12451,8 +12448,6 @@
       str = '';
     }
     type = aType.indexOf(type) > -1 ? type : aType[0];
-    start = caro.coverToInt(start);
-    end = caro.coverToInt(end);
     r.push(str.slice(0, start));
     if (end) {
       r.push(str.slice(start, end)[type]());
@@ -12692,7 +12687,7 @@
    * @param {number} [opt.start] the start-index you want to uppercase
    * @param {number} [opt.end] the end-index you want to uppercase
    * @param {boolean} [opt.force] if force cover to str
-   * @returns {}
+   * @returns {*}
    */
   self.upperStr = function(str, opt) {
     return changeCase(str, 'upperCase', opt);
@@ -12700,12 +12695,16 @@
 
   /**
    * @param {string} str
-   * @returns {}
+   * @param {boolean} [force] if force cover to str
+   * @returns {*}
    */
-  self.upperFirst = function(str, opt) {
-    opt = caro.coverToObj(opt);
-    opt.start = 0;
-    opt.end = 1;
+  self.upperFirst = function(str, force) {
+    var opt;
+    opt = {
+      start: 0,
+      end: 1,
+      force: force !== false
+    };
     return caro.upperStr(str, opt);
   };
 
@@ -12715,7 +12714,7 @@
    * @param {number} [opt.start] the start-index you want to lowercase
    * @param {number} [opt.end] the end-index you want to lowercase
    * @param {boolean} [opt.force] if force cover to str
-   * @returns {}
+   * @returns {*}
    */
   self.lowerStr = function(str, opt) {
     return changeCase(str, 'toLowerCase', opt);
