@@ -139,6 +139,53 @@ do ->
     r
 
   ###*
+  # format to money type like 1,000.00
+  # @param {string|number} str
+  # @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+  # @param {object} [opt]
+  # @param {number} [opt.float=0]
+  # @param [opt.decimal=.]
+  # @param [opt.separated=,]
+  # @param [opt.prefix]
+  # @returns {string}
+  ###
+
+  self.formatMoney = (arg, type, opt) ->
+    r = []
+    caro.eachArgs arguments, (i, arg) ->
+      return if i == 0
+      return opt = arg if caro.isObj(arg)
+      return type = arg if caro.isStr(arg)
+      return
+    opt = caro.coverToObj(opt);
+    float = Math.abs(caro.coverToInt(opt.float))
+    decimal = if caro.isStr(opt.decimal) then opt.decimal else '.'
+    separated = if caro.isStr(opt.separated) then opt.separated else ','
+    prefix = if caro.isStr(opt.prefix) then opt.prefix else ''
+    forceFloat = opt.forceFloat == true
+    s = if arg < 0 then '-' else ''
+    switch type
+      when 'sInt'
+        float = 0
+        prefix = '$'
+      when 'int'
+        float = 0
+    arg = caro.coverToFloat(arg)
+    arg = caro.coverToStr(arg)
+    aStr = caro.splitStr(arg, '.')
+    iStr = aStr[0]
+    fStr = if aStr[1] then aStr[1].slice(0, float) else ''
+    if forceFloat
+      for i in [1..float - fStr.length]
+        fStr += '0'
+    sepLength = if iStr.length > 3 then iStr.length % 3 else 0
+    r.push prefix
+    r.push s + (if sepLength then iStr.substr(0, sepLength) + separated else '')
+    r.push iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated)
+    r.push if fStr then (decimal + fStr) else ''
+    r.join ''
+
+  ###*
   # cover to arr
   # @param arg
   # @returns {*}
@@ -192,10 +239,20 @@ do ->
 
   self.coverToInt = (arg, force = true) ->
     int = parseInt(arg)
-    if caro.isEmptyVal(int) and !force
-      return arg
-    int = int or 0
-    int
+    return arg if caro.isEmptyVal(int) and !force
+    int or 0
+
+  ###*
+  # cover to float, will return 0 if force!=false
+  # @param arg
+  # @param {boolean} [force=true] if return int
+  # @returns {*}
+  ###
+
+  self.coverToFloat = (arg, force = true) ->
+    float = parseFloat(arg)
+    return arg if caro.isEmptyVal(float) and !force
+    float or 0
 
   ###*
   # cover to num,, will return 0 if force not false

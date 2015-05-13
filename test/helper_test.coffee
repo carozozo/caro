@@ -58,6 +58,27 @@ describe 'Helper', ->
       args.should.be.instanceof(Array)
     fn(1, 2);
 
+  it 'formatMoney', ->
+    arg = null;
+    arg2 = '12003000.923';
+    arg3 = 12003000.923;
+    r = caro.formatMoney(arg);
+    r2 = caro.formatMoney(arg2, 'int');
+    r3 = caro.formatMoney(arg3, 'sInt');
+    r4 = caro.formatMoney(arg3, {
+      float: 0, separated: ',',
+      decimal: '.', prefix: '',
+      forceFloat: false
+    });
+    r5 = caro.formatMoney(arg3, {
+      float: 5, forceFloat: true
+    });
+    r.should.eq '0'
+    r2.should.eq '12,003,000'
+    r3.should.eq '$12,003,000'
+    r4.should.eq '12,003,000'
+    r5.should.eq '12,003,000.92300'
+
   it 'coverToArr', ->
     r = caro.coverToArr('3')
     r2 = caro.coverToArr([1])
@@ -73,10 +94,18 @@ describe 'Helper', ->
   it 'coverToInt', ->
     r = caro.coverToInt('3')
     r2 = caro.coverToInt('caro')
-    r3 = caro.coverToInt('caro', false)
+    r3 = caro.coverToInt(null, false)
     r.should.eq(3)
     r2.should.eq(0)
-    r3.should.eq('caro')
+    should.equal(r3, null);
+
+  it 'coverToFloat', ->
+    r = caro.coverToFloat('3.6')
+    r2 = caro.coverToFloat('caro')
+    r3 = caro.coverToFloat(null, false)
+    r.should.eq(3.6)
+    r2.should.eq(0)
+    should.equal(r3, null);
 
   it 'coverToNum', ->
     r = caro.coverToNum('3.4')
