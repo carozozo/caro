@@ -12,20 +12,16 @@ do ->
       'toUpperCase'
       'toLowerCase'
     ]
-    start = null
-    end = null
-    force = true
-    if opt
-      start = if !caro.isEmptyVal(opt.start) then opt.start else start
-      end = opt.end or end
-      force = opt.force != false
+    opt = caro.coverToObj(opt)
+    start = caro.coverToInt(opt.start)
+    end = if caro.coverToInt(opt.end) > 0 then caro.coverToInt(opt.end) else null
+    force = opt.force != false
+    console.log 'force=',force
     if !caro.isStr(str)
       if !force
         return str
       str = ''
     type = if aType.indexOf(type) > -1 then type else aType[0]
-    start = caro.coverToInt(start)
-    end = caro.coverToInt(end)
     r.push str.slice(0, start)
     if end
       r.push str.slice(start, end)[type]()
@@ -100,12 +96,8 @@ do ->
   ###
 
   self.hasHead = (str, str2) ->
-    if !caro.isStr(str)
-      return false
-    if !caro.isStr(str2)
-      return false
-    index = str.indexOf(str2)
-    index == 0
+    return false if !caro.isStr(str, str2)
+    str.indexOf(str2) == 0
 
   ###*
   # add the head to string if not exist
@@ -115,8 +107,7 @@ do ->
   ###
 
   self.addHead = (str, addStr) ->
-    if !caro.hasHead(str, addStr)
-      str = addStr + str
+    str = addStr + str if !caro.hasHead(str, addStr)
     str
 
   ###*
@@ -127,10 +118,7 @@ do ->
   ###
 
   self.hasTail = (str, str2) ->
-    if !caro.isStr(str)
-      return false
-    if !caro.isStr(str2)
-      return false
+    return false if !caro.isStr(str, str2)
     index = str.lastIndexOf(str2)
     strLength = str.length
     strLength2 = str2.length
@@ -144,8 +132,7 @@ do ->
   ###
 
   self.addTail = (str, addStr) ->
-    if !caro.hasTail(str, addStr)
-      str += addStr
+    str += addStr if !caro.hasTail(str, addStr)
     str
 
   ###*
@@ -202,7 +189,6 @@ do ->
     str.replace /([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1'
 
   ###*
-  # TODO
   # replace all find in str
   # @param {string} str
   # @param {string} find
@@ -211,59 +197,13 @@ do ->
   ###
 
   self.replaceAll = (str, find, replace) ->
-    if !caro.isStr(str) or !caro.isStr(find) or !caro.isStr(replace)
-      return str
-    find = caro.escapeRegExp(find)
-    regex = new RegExp(find, 'g')
+    isRegExp = caro.isRegExp(find)
+    return str if !caro.isStr(str, find, replace) and !isRegExp
+    regex = find
+    if !isRegExp
+      find = caro.escapeRegExp(find)
+      regex = new RegExp(find, 'g')
     str.replace regex, replace
-
-  ###*
-  # format str to money type like 1,000.00
-  # @param {string|number} str
-  # @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
-  # @param {object} [opt]
-  # @param {number} [opt.float=2]
-  # @param [opt.decimal=.]
-  # @param [opt.separated=,]
-  # @param [opt.prefix]
-  # @returns {string}
-  ###
-
-  self.formatMoney = (str, type, opt) ->
-    r = []
-    isObj = caro.isObj
-    isStr = caro.isStr
-    float = 2
-    decimal = '.'
-    separated = ','
-    prefix = ''
-    caro.eachArgs arguments, (i, arg) ->
-      if i == 0
-        return
-      if isObj(arg)
-        opt = arg
-      if isStr(arg)
-        type = arg
-      return
-    if type == 'sInt'
-      float = 0
-      prefix = '$'
-    else if type == 'int'
-      float = 0
-    else if isObj(opt)
-      float = if (float = Math.abs(opt.float)) > -1 then float else 2
-      decimal = if isStr(opt.decimal) then opt.decimal else decimal
-      separated = if isStr(opt.separated) then opt.separated else separated
-      prefix = if isStr(opt.prefix) then opt.prefix else prefix
-    s = if str < 0 then '-' else ''
-    iStr = parseInt(Math.abs(str or 0).toFixed(float)).toString()
-    sepLength = if iStr.length > 3 then iStr.length % 3 else 0
-    retStr = s + (if sepLength then iStr.substr 0, sepLength + separated else '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g,
-      '$1' + separated) + (if float then decimal + Math.abs(str - iStr).toFixed(float).slice(2) else '')
-    if prefix
-      r.push prefix
-    r.push retStr
-    r.join ' '
 
   ###*
   # e.g. ThisIsWord -> This Is Word
@@ -294,7 +234,7 @@ do ->
   # @param {number} [opt.start] the start-index you want to uppercase
   # @param {number} [opt.end] the end-index you want to uppercase
   # @param {boolean} [opt.force] if force cover to str
-  # @returns {}
+  # @returns {*}
   ###
 
   self.upperStr = (str, opt) ->
@@ -302,13 +242,15 @@ do ->
 
   ###*
   # @param {string} str
-  # @returns {}
+  # @param {boolean} [force] if force cover to str
+  # @returns {*}
   ###
 
-  self.upperFirst = (str, opt) ->
-    opt = caro.coverToObj(opt)
-    opt.start = 0
-    opt.end = 1
+  self.upperFirst = (str, force) ->
+    opt =
+      start: 0
+      end: 1
+      force: force != false
     caro.upperStr str, opt
 
   ###*
@@ -317,7 +259,7 @@ do ->
   # @param {number} [opt.start] the start-index you want to lowercase
   # @param {number} [opt.end] the end-index you want to lowercase
   # @param {boolean} [opt.force] if force cover to str
-  # @returns {}
+  # @returns {*}
   ###
 
   self.lowerStr = (str, opt) ->

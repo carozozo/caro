@@ -653,20 +653,20 @@ caro.isArr(['caro']); // true
     console.log(arg2); // { aa: ' caro ', bb: ' pika ', cc: ' doraemon ', dd: [ ' dd_1 ' ] }
     console.log(r); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [ ' dd_1 ' ] }
 ```
-- **keysInObj(obj [, keys]) - 確認 obj 中的 key 是否存在**
+- **keysInObj(obj [keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
     var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
     var r = caro.keysInObj(arg, 'aa,bb'); // true
     var r2 = caro.keysInObj(arg, ['aa', 'ee']); // false
 ```
-- **getKeysInObj(obj [, levelLimit]) - 取得 obj 中的 key**
+- **getKeysInObj(obj [levelLimit]) - 取得 obj 中的 key**
 ```javascript
     var arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
     var r = caro.getKeysInObj(arg); // [ 'a', 'b', 'c' ] - 取得第一層的 key
     var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] // 取到第二層的 key
     var r3 = caro.getKeysInObj(arg, 0); // [ 'a', 'b', 'c', 'd', 'e', 'f' ] - 取得所有層級的 key
 ```
-- **coverFnToStrInObj(obj [, opt]) - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)**
+- **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)**
 ```javascript
     var arg = {
       a: 1, b: 2, c: (a) ->
@@ -681,7 +681,7 @@ caro.isArr(['caro']); // true
 ```
 
 ### String
-- **random(len [, opt]) - 產生隨機字串**
+- **random(len [opt]) - 產生隨機字串**
 ```javascript
     var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
     var r2 = caro.random(15, {
@@ -748,23 +748,41 @@ caro.isArr(['caro']); // true
 ```
 - **insertBlankBefUpper(str) - 在大寫的字母前面加上空白**
 ```javascript
+    var r = caro.insertBlankBefUpper('IAmCaro'); // 'I Am Caro'
 ```
-- **upperStr(str [, opt]) - 將字串轉為大寫**
+- **upperStr(str [opt]) - 將字串轉為大寫**
+```javascript
+    var r = caro.upperStr('i am caro'); // 'I AM CARO'
+    var r2 = caro.upperStr('i am caro', {
+      start: 0,
+      end: null,
+      force: true
+    }); // 'I AM CARO' - here is default options
+    var r3 = caro.upperStr('i am caro', {
+      start: 5,
+      end: null
+    }); // 'i am CARO'
+    var r4 = caro.upperStr('i am caro', {
+      start: 5,
+      end: 6
+    }); // 'i am Caro'
+```
+- **upperFirst(str [force=true]) - 將第一個字母轉為大寫**
+```javascript
+    var r = caro.upperFirst('I am Caro'); // 'I am caro'
+    var r2 = caro.upperFirst({}); // ''
+    var r3 = caro.upperFirst({}, false); // {}
+```
+- **lowerStr(str [opt]) - 將字串轉為小寫**
 ```javascript
 ```
-- **upperFirst(str) - 將第一個字母轉為大寫**
+- **trimStr(str [force]) - 移除字串前後空白**
 ```javascript
 ```
-- **lowerStr(str [, opt]) - 將字串轉為小寫**
+- **splitStr(str [splitter] [force]) - 移除字串前後空白**
 ```javascript
 ```
-- **trimStr(str [, force]) - 移除字串前後空白**
-```javascript
-```
-- **splitStr(str [, splitter] [, force]) - 移除字串前後空白**
-```javascript
-```
-- **serializeUrl(str [, oArgs] [, coverEmpty=false]) - 將變數物件代入 URL**
+- **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
 ```javascript
 ```
 
@@ -781,16 +799,16 @@ caro.isArr(['caro']); // true
 - **getDirPath(path) - 取得所在的資料夾路徑**
 ```javascript
 ```
-- **getFileName(path [, getFull]) - 取得檔案名稱**
+- **getFileName(path [getFull]) - 取得檔案名稱**
 ```javascript
 ```
-- **getExtendName(path [, withDot]) - 取得附檔名**
+- **getExtendName(path [withDot]) - 取得附檔名**
 ```javascript
 ```
-- **normalizePath(path [, path2, path3...]) - 正規化路徑**
+- **normalizePath(path [path2, path3...]) - 正規化路徑**
 ```javascript
 ```
-- **coverToFullPath(path [, path2, path3...]) - 轉為絕對路徑**
+- **coverToFullPath(path [path2, path3...]) - 轉為絕對路徑**
 ```javascript
 ```
 
