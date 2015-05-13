@@ -659,9 +659,20 @@ caro.isArr(['caro']); // true
 ### String
 - **random(len [, opt]) - 產生隨機字串**
 ```javascript
+    var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
+    var r2 = caro.random(15, {
+      lower: true
+      upper: false
+      num: false
+      exclude: 'a,b,c,d,e,f,g,1,2,3,4'
+    }); // e.g. 'vhjryhtqwlivmso'
 ```
-- **toBool(str) - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false**
+- **strToBool(str) - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false**
 ```javascript
+    var r = caro.strToBool('false'); // false
+    var r2 = caro.strToBool('True'); // true
+    var r3 = caro.strToBool('123'); // true
+    var r4 = caro.strToBool(''); // false
 ```
 - **addHead(str, addStr) - 在字串的開頭加上新字串(不重覆)**
 ```javascript
