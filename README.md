@@ -403,6 +403,23 @@ caro.isArr(['caro']); // true
     };
     fn(1, 2);
 ```
+- **formatMoney(str [type | opt]) - 轉換為錢幣格式**
+```javascript
+    var arg = null;
+    var arg2 = '12003000.923';
+    var arg3 = 12003000.923;
+    var r = caro.formatMoney(arg); // '0' 
+    var r2 = caro.formatMoney(arg2, 'int'); // '$12,003,000'
+    var r3 = caro.formatMoney(arg3, 'sInt');
+    var r4 = caro.formatMoney(arg3, {
+      float: 0, separated: ',',
+      decimal: '.', prefix: '',
+      forceFloat: false
+    }); // '12,003,000' - here is default options
+    var r5 = caro.formatMoney(arg3, {
+      float: 5, forceFloat: true
+    }); // '12,003,000.92300'
+```
 - **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
 ```javascript
     var arg = [3, 2, 1];
@@ -423,6 +440,13 @@ caro.isArr(['caro']); // true
 ```javascript
     var arg = '123.6', arg2 = 'a', arg3 = null;
     var r = caro.coverToInt(arg); // 123
+    var r2 = caro.coverToInt(arg2, false); // 'a'
+    var r3 = caro.coverToInt(arg3); // 0
+```
+- **coverToFloat(arg [force=true]) - 將變數轉為 float**
+```javascript
+    var arg = '123.6', arg2 = 'a', arg3 = null;
+    var r = caro.coverToInt(arg); // 123.6
     var r2 = caro.coverToInt(arg2, false); // 'a'
     var r3 = caro.coverToInt(arg3); // 0
 ```
@@ -674,29 +698,53 @@ caro.isArr(['caro']); // true
     var r3 = caro.strToBool('123'); // true
     var r4 = caro.strToBool(''); // false
 ```
+- **hasHead(str, str2) - 確認字串的開頭是否符合特定字串**
+```javascript
+    var r = caro.hasHead('false', 'fa'); // true
+    var r2 = caro.hasHead('false', 'se'); // false
+```
 - **addHead(str, addStr) - 在字串的開頭加上新字串(不重覆)**
 ```javascript
+    var r = caro.addHead('moon', 'mo'); // 'moon'
+    var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
+```
+- **hasHead(str, str2) - 確認字串的結尾是否符合特定字串**
+```javascript
+    var r = caro.hasTail('false', 'fa'); // false
+    var r2 = caro.hasTail('false', 'se'); // true
 ```
 - **addTail(str, addStr) - 在字串的尾巴加上新字串(不重覆)**
 ```javascript
+    var r = caro.addTail('moon', 'on'); // 'moon'
+    var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
 ```
 - **wrapToBr(str, addStr) - 將字串中的換行符號轉為 '\<br /\>'**
 ```javascript
+    var r = caro.wrapToBr('''this is
+            wrap content.
+          '''); // 'this is<br />wrap content.'
 ```
 - **brToWrap(str, addStr) - 將字串中的 '\<br /\>' 轉為換行符號**
 ```javascript
+    var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
 ```
 - **splitByWrap(str) - 將字串以換行符號切割為陣列**
 ```javascript
+    var r = caro.splitByWrap('''
+          I love
+          my mother
+          and
+          my father
+        '''); // [ 'I love', 'my mother', 'and', 'my father' ]
 ```
 - **escapeRegExp(str) - 將字串中的特定符號轉為跳脫字元**
 ```javascript
+    var r = caro.escapeRegExp('I*am*{Caro}.'); // 'I\\*am\\*\\{Caro\\}\\.'
 ```
 - **replaceAll(str, find, replace) - 取代符合的字串**
 ```javascript
-```
-- **formatMoney(str [, type] [, opt]) - 轉換為錢幣格式**
-```javascript
+    var r = caro.replaceAll('I*am*{Caro}.','*','-'); // 'I-am-{Caro}.'
+    var r2 = caro.replaceAll('I*am*{Caro}.',/\w/g,'-'); // '-*--*{----}.'
 ```
 - **insertBlankBefUpper(str) - 在大寫的字母前面加上空白**
 ```javascript

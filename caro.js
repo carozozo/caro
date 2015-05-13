@@ -1,4 +1,4 @@
-/*! caro - v0.4.7 - 2015-05-13 */
+/*! caro - v0.4.7 - 2015-05-14 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11545,6 +11545,64 @@
   };
 
   /**
+   * format to money type like 1,000.00
+   * @param {string|number} str
+   * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+   * @param {object} [opt]
+   * @param {number} [opt.float=0]
+   * @param [opt.decimal=.]
+   * @param [opt.separated=,]
+   * @param [opt.prefix]
+   * @returns {string}
+   */
+  self.formatMoney = function(arg, type, opt) {
+    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, prefix, r, ref, s, sepLength, separated;
+    r = [];
+    caro.eachArgs(arguments, function(i, arg) {
+      if (i === 0) {
+        return;
+      }
+      if (caro.isObj(arg)) {
+        return opt = arg;
+      }
+      if (caro.isStr(arg)) {
+        return type = arg;
+      }
+    });
+    opt = caro.coverToObj(opt);
+    float = Math.abs(caro.coverToInt(opt.float));
+    decimal = caro.isStr(opt.decimal) ? opt.decimal : '.';
+    separated = caro.isStr(opt.separated) ? opt.separated : ',';
+    prefix = caro.isStr(opt.prefix) ? opt.prefix : '';
+    forceFloat = opt.forceFloat === true;
+    s = arg < 0 ? '-' : '';
+    switch (type) {
+      case 'sInt':
+        float = 0;
+        prefix = '$';
+        break;
+      case 'int':
+        float = 0;
+    }
+    arg = caro.coverToFloat(arg);
+    arg = caro.coverToStr(arg);
+    aStr = caro.splitStr(arg, '.');
+    iStr = aStr[0];
+    fStr = aStr[1] ? aStr[1].slice(0, float) : '';
+    if (forceFloat) {
+      for (i = j = 1, ref = float - fStr.length; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+        fStr += '0';
+      }
+    }
+    sepLength = iStr.length > 3 ? iStr.length % 3 : 0;
+    r.push(prefix);
+    r.push(s + (sepLength ? iStr.substr(0, sepLength) + separated : ''));
+    r.push(iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated));
+    r.push(fStr ? decimal + fStr : '');
+    return r.join('');
+  };
+
+  /**
    * cover to arr
    * @param arg
    * @returns {*}
@@ -11615,8 +11673,25 @@
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
-    int = int || 0;
-    return int;
+    return int || 0;
+  };
+
+  /**
+   * cover to float, will return 0 if force!=false
+   * @param arg
+   * @param {boolean} [force=true] if return int
+   * @returns {*}
+   */
+  self.coverToFloat = function(arg, force) {
+    var float;
+    if (force == null) {
+      force = true;
+    }
+    float = parseFloat(arg);
+    if (caro.isEmptyVal(float) && !force) {
+      return arg;
+    }
+    return float || 0;
   };
 
   /**
@@ -12461,15 +12536,10 @@
    * @returns {*}
    */
   self.hasHead = function(str, str2) {
-    var index;
-    if (!caro.isStr(str)) {
+    if (!caro.isStr(str, str2)) {
       return false;
     }
-    if (!caro.isStr(str2)) {
-      return false;
-    }
-    index = str.indexOf(str2);
-    return index === 0;
+    return str.indexOf(str2) === 0;
   };
 
   /**
@@ -12493,10 +12563,7 @@
    */
   self.hasTail = function(str, str2) {
     var index, strLength, strLength2;
-    if (!caro.isStr(str)) {
-      return false;
-    }
-    if (!caro.isStr(str2)) {
+    if (!caro.isStr(str, str2)) {
       return false;
     }
     index = str.lastIndexOf(str2);
@@ -12574,7 +12641,6 @@
   };
 
   /**
-   * TODO
    * replace all find in str
    * @param {string} str
    * @param {string} find
@@ -12582,66 +12648,17 @@
    * @returns {*|string}
    */
   self.replaceAll = function(str, find, replace) {
-    var regex;
-    if (!caro.isStr(str) || !caro.isStr(find) || !caro.isStr(replace)) {
+    var isRegExp, regex;
+    isRegExp = caro.isRegExp(find);
+    if (!caro.isStr(str, find, replace) && !isRegExp) {
       return str;
     }
-    find = caro.escapeRegExp(find);
-    regex = new RegExp(find, 'g');
+    regex = find;
+    if (!isRegExp) {
+      find = caro.escapeRegExp(find);
+      regex = new RegExp(find, 'g');
+    }
     return str.replace(regex, replace);
-  };
-
-  /**
-   * format str to money type like 1,000.00
-   * @param {string|number} str
-   * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
-   * @param {object} [opt]
-   * @param {number} [opt.float=2]
-   * @param [opt.decimal=.]
-   * @param [opt.separated=,]
-   * @param [opt.prefix]
-   * @returns {string}
-   */
-  self.formatMoney = function(str, type, opt) {
-    var decimal, float, iStr, isObj, isStr, prefix, r, retStr, s, sepLength, separated;
-    r = [];
-    isObj = caro.isObj;
-    isStr = caro.isStr;
-    float = 2;
-    decimal = '.';
-    separated = ',';
-    prefix = '';
-    caro.eachArgs(arguments, function(i, arg) {
-      if (i === 0) {
-        return;
-      }
-      if (isObj(arg)) {
-        opt = arg;
-      }
-      if (isStr(arg)) {
-        type = arg;
-      }
-    });
-    if (type === 'sInt') {
-      float = 0;
-      prefix = '$';
-    } else if (type === 'int') {
-      float = 0;
-    } else if (isObj(opt)) {
-      float = (float = Math.abs(opt.float)) > -1 ? float : 2;
-      decimal = isStr(opt.decimal) ? opt.decimal : decimal;
-      separated = isStr(opt.separated) ? opt.separated : separated;
-      prefix = isStr(opt.prefix) ? opt.prefix : prefix;
-    }
-    s = str < 0 ? '-' : '';
-    iStr = parseInt(Math.abs(str || 0).toFixed(float)).toString();
-    sepLength = iStr.length > 3 ? iStr.length % 3 : 0;
-    retStr = s + (sepLength ? iStr.substr(0, sepLength + separated) : '') + iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated) + (float ? decimal + Math.abs(str - iStr).toFixed(float).slice(2) : '');
-    if (prefix) {
-      r.push(prefix);
-    }
-    r.push(retStr);
-    return r.join(' ');
   };
 
   /**

@@ -162,6 +162,64 @@
   };
 
   /**
+   * format to money type like 1,000.00
+   * @param {string|number} str
+   * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+   * @param {object} [opt]
+   * @param {number} [opt.float=0]
+   * @param [opt.decimal=.]
+   * @param [opt.separated=,]
+   * @param [opt.prefix]
+   * @returns {string}
+   */
+  self.formatMoney = function(arg, type, opt) {
+    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, prefix, r, ref, s, sepLength, separated;
+    r = [];
+    caro.eachArgs(arguments, function(i, arg) {
+      if (i === 0) {
+        return;
+      }
+      if (caro.isObj(arg)) {
+        return opt = arg;
+      }
+      if (caro.isStr(arg)) {
+        return type = arg;
+      }
+    });
+    opt = caro.coverToObj(opt);
+    float = Math.abs(caro.coverToInt(opt.float));
+    decimal = caro.isStr(opt.decimal) ? opt.decimal : '.';
+    separated = caro.isStr(opt.separated) ? opt.separated : ',';
+    prefix = caro.isStr(opt.prefix) ? opt.prefix : '';
+    forceFloat = opt.forceFloat === true;
+    s = arg < 0 ? '-' : '';
+    switch (type) {
+      case 'sInt':
+        float = 0;
+        prefix = '$';
+        break;
+      case 'int':
+        float = 0;
+    }
+    arg = caro.coverToFloat(arg);
+    arg = caro.coverToStr(arg);
+    aStr = caro.splitStr(arg, '.');
+    iStr = aStr[0];
+    fStr = aStr[1] ? aStr[1].slice(0, float) : '';
+    if (forceFloat) {
+      for (i = j = 1, ref = float - fStr.length; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+        fStr += '0';
+      }
+    }
+    sepLength = iStr.length > 3 ? iStr.length % 3 : 0;
+    r.push(prefix);
+    r.push(s + (sepLength ? iStr.substr(0, sepLength) + separated : ''));
+    r.push(iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated));
+    r.push(fStr ? decimal + fStr : '');
+    return r.join('');
+  };
+
+  /**
    * cover to arr
    * @param arg
    * @returns {*}
@@ -232,8 +290,25 @@
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
-    int = int || 0;
-    return int;
+    return int || 0;
+  };
+
+  /**
+   * cover to float, will return 0 if force!=false
+   * @param arg
+   * @param {boolean} [force=true] if return int
+   * @returns {*}
+   */
+  self.coverToFloat = function(arg, force) {
+    var float;
+    if (force == null) {
+      force = true;
+    }
+    float = parseFloat(arg);
+    if (caro.isEmptyVal(float) && !force) {
+      return arg;
+    }
+    return float || 0;
   };
 
   /**
