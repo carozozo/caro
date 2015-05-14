@@ -775,15 +775,38 @@ caro.isArr(['caro']); // true
 ```
 - **lowerStr(str [opt]) - 將字串轉為小寫**
 ```javascript
+    var r = caro.lowerStr('I AM CARO'); // 'i am caro'
+    var r2 = caro.lowerStr('I AM CARO', {
+      start: 0,
+      end: null,
+      force: true
+    }); // 'i am caro' - here is defaut options
+    var r3 = caro.lowerStr('I AM CARO', {
+      start: 5,
+      end: null
+    }); // 'I AM caro'
+    var r4 = caro.lowerStr('I AM CARO', {
+      start: 5,
+      end: 6
+    }); 'I AM cARO'
 ```
-- **trimStr(str [force]) - 移除字串前後空白**
+- **trimStr(str [force=true]) - 移除字串前後空白**
 ```javascript
+    var r = caro.trimStr(' i am caro '); // 'i am caro'
+    var r2 = caro.trimStr({}, false); // {}
 ```
 - **splitStr(str [splitter] [force]) - 移除字串前後空白**
 ```javascript
+    var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
+    var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
+    var r3 = caro.splitStr(null, ',',  false); // null
 ```
 - **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
 ```javascript
+    var arg = 'http://localhost';
+    var obj = {a: 1, b: 2, c: null};
+    var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
+    var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
 
 ### ★Path

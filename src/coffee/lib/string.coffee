@@ -16,7 +16,6 @@ do ->
     start = caro.coverToInt(opt.start)
     end = if caro.coverToInt(opt.end) > 0 then caro.coverToInt(opt.end) else null
     force = opt.force != false
-    console.log 'force=',force
     if !caro.isStr(str)
       if !force
         return str
@@ -271,8 +270,7 @@ do ->
   # @returns {}
   ###
 
-  self.trimStr = (str, force) ->
-    force = force != false
+  self.trimStr = (str, force = true) ->
     if !caro.isStr(str)
       if !force
         return str
@@ -287,10 +285,8 @@ do ->
   ###
 
   self.splitStr = (str, splitter, force) ->
-    if caro.isArr(str)
-      return str
-    if splitter == undefined
-      return []
+    return str if caro.isArr(str)
+    return [] if !splitter
     splitter = caro.coverToArr(splitter)
     force = force != false
     if !caro.isStr(str)
@@ -298,17 +294,20 @@ do ->
         return str
       return []
     # get mainSplit first
-    # e.g. splitter=['a','ab','c']; => mainSplit='c'
+    # e.g. splitter=['a','ab','c']; => mainSplit='a'
     mainSplit = splitter[0]
-    caro.eachObj splitter, (j, eachSplit2) ->
-      if mainSplit.length >= eachSplit2.length
-        mainSplit = eachSplit2
-      return
-    if !mainSplit
-      return str
+    if(mainSplit.length > 1)
+      caro.eachObj splitter, (j, eachSplit) ->
+        return if !caro.isStr(eachSplit)
+        return if mainSplit < 2
+        if mainSplit.length >= eachSplit.length
+          mainSplit = eachSplit
+        return
+    return str if !caro.isStr(mainSplit)
     # replace all splitter to mainSplitter
     # e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
     caro.eachObj splitter, (i, eachSplit) ->
+      return if !caro.isStr(eachSplit)
       str = caro.replaceAll(str, eachSplit, mainSplit)
       return
     str.split mainSplit
@@ -321,25 +320,21 @@ do ->
   # @returns {*}
   ###
 
-  self.serializeUrl = (url, oArgs, coverEmpty) ->
+  self.serializeUrl = (url, oArgs, coverEmpty = false) ->
     count = 0
     aArgs = ['?']
     url = caro.coverToStr(url)
     oArgs = caro.coverToObj(oArgs)
-    coverEmpty = coverEmpty == true
     caro.eachObj oArgs, (key, val) ->
       if caro.isEmptyVal(val)
-        if !coverEmpty
-          return
+        return if !coverEmpty
         val = ''
-      if count > 0
-        aArgs.push '&'
+      aArgs.push '&' if count > 0
       aArgs.push key
       aArgs.push '='
       aArgs.push val
       count++
       return
     url += aArgs.join('')
-    url
 
   return

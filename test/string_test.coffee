@@ -98,8 +98,50 @@ describe 'String', ->
     r3.should.eq 'i am CARO'
     r4.should.eq 'i am Caro'
 
-  it.only 'upperFirst', ->
+  it 'upperFirst', ->
     r = caro.upperFirst('i am caro');
     r2 = caro.upperFirst({}, false);
     r.should.eq 'I am caro'
     r2.should.eql {}
+
+  it 'lowerStr', ->
+    r = caro.lowerStr('I AM CARO');
+    r2 = caro.lowerStr('I AM CARO', {
+      start: 0,
+      end: null,
+      force: true
+    });
+    r3 = caro.lowerStr('I AM CARO', {
+      start: 5,
+      end: null
+    });
+    r4 = caro.lowerStr('I AM CARO', {
+      start: 5,
+      end: 6
+    });
+    r.should.eq 'i am caro'
+    r2.should.eq 'i am caro'
+    r3.should.eq 'I AM caro'
+    r4.should.eq 'I AM cARO'
+
+  it.only 'trimStr', ->
+    r = caro.trimStr(' i am caro ');
+    r2 = caro.trimStr({}, false);
+    r.should.eq 'i am caro'
+    r2.should.eql {}
+
+  it.only 'splitStr', ->
+    r = caro.splitStr('i am caro', ' ');
+    r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']);
+    r3 = caro.splitStr(null, ',', false);
+    r.should.eql ['i', 'am', 'caro']
+    r2.should.eql ['I', '', 'love', 'Snoopy', '!', '!']
+    should.equal(r3, null);
+
+  it.only 'serializeUrl', ->
+    arg = 'http://localhost';
+    obj = {a: 1, b: 2, c: null}
+    r = caro.serializeUrl(arg, obj);
+    r2 = caro.serializeUrl(arg, obj, true);
+    r.should.eq 'http://localhost?a=1&b=2'
+    r2.should.eq 'http://localhost?a=1&b=2&c='

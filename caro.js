@@ -12440,7 +12440,6 @@
     start = caro.coverToInt(opt.start);
     end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
     force = opt.force !== false;
-    console.log('force=', force);
     if (!caro.isStr(str)) {
       if (!force) {
         return str;
@@ -12726,7 +12725,9 @@
    * @returns {}
    */
   self.trimStr = function(str, force) {
-    force = force !== false;
+    if (force == null) {
+      force = true;
+    }
     if (!caro.isStr(str)) {
       if (!force) {
         return str;
@@ -12747,7 +12748,7 @@
     if (caro.isArr(str)) {
       return str;
     }
-    if (splitter === void 0) {
+    if (!splitter) {
       return [];
     }
     splitter = caro.coverToArr(splitter);
@@ -12759,15 +12760,26 @@
       return [];
     }
     mainSplit = splitter[0];
-    caro.eachObj(splitter, function(j, eachSplit2) {
-      if (mainSplit.length >= eachSplit2.length) {
-        mainSplit = eachSplit2;
-      }
-    });
-    if (!mainSplit) {
+    if (mainSplit.length > 1) {
+      caro.eachObj(splitter, function(j, eachSplit) {
+        if (!caro.isStr(eachSplit)) {
+          return;
+        }
+        if (mainSplit < 2) {
+          return;
+        }
+        if (mainSplit.length >= eachSplit.length) {
+          mainSplit = eachSplit;
+        }
+      });
+    }
+    if (!caro.isStr(mainSplit)) {
       return str;
     }
     caro.eachObj(splitter, function(i, eachSplit) {
+      if (!caro.isStr(eachSplit)) {
+        return;
+      }
       str = caro.replaceAll(str, eachSplit, mainSplit);
     });
     return str.split(mainSplit);
@@ -12782,11 +12794,13 @@
    */
   self.serializeUrl = function(url, oArgs, coverEmpty) {
     var aArgs, count;
+    if (coverEmpty == null) {
+      coverEmpty = false;
+    }
     count = 0;
     aArgs = ['?'];
     url = caro.coverToStr(url);
     oArgs = caro.coverToObj(oArgs);
-    coverEmpty = coverEmpty === true;
     caro.eachObj(oArgs, function(key, val) {
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {
@@ -12802,8 +12816,7 @@
       aArgs.push(val);
       count++;
     });
-    url += aArgs.join('');
-    return url;
+    return url += aArgs.join('');
   };
 })();
 
