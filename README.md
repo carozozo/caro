@@ -30,6 +30,7 @@ caro.isArr(['caro']); // true
 | **☆[TypeCheck](#typecheck)**
 
 ### Array
+[Back to Index](#index)
 - **XcloneArr(arr) - 複製陣列(已棄用，合併至 cloneObj)**
 ```javascript
     var arr = [1, 2, 3];
@@ -99,6 +100,7 @@ caro.isArr(['caro']); // true
 ```
 
 ### ★Console
+[Back to Index](#index)  
 (由 [color](https://www.npmjs.com/package/colors) 延伸)  
 - **log(msg, variable) - 輸出有顏色的 console 訊息**
 ```javascript
@@ -122,6 +124,7 @@ caro.isArr(['caro']); // true
 ```
 
 ### DateTime
+[Back to Index](#index)
 (由 [moment](https://www.npmjs.com/package/moment) 延伸，可透過 caro.nMoment 使用 moment)
 - **getDefaultLocale(locale) - 取得目前預設的語系(en)**
 ```javascript
@@ -226,6 +229,7 @@ caro.isArr(['caro']); // true
 ```
 
 ### ★FileSystem
+[Back to Index](#index)
 - **readFileCaro(path [encoding='utf8'] [flag=null]) - 讀取檔案內容**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_readfilesync_filename_options
@@ -328,6 +332,7 @@ caro.isArr(['caro']); // true
 ```
 
 ### Helper
+[Back to Index](#index)
 - **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
 ```javascript
     var arg = 1, arg2 = '', arg3 = false;
@@ -479,14 +484,13 @@ caro.isArr(['caro']); // true
         replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
         space: 2 // 請參考 JSON.stringify 的參數 space
     });
-    console.log(r);
-    
     var r = caro.coverToJson(3.4); // '3.4'
     var r2 = caro.coverToJson(null); // 'null'
     var r3 = caro.coverToJson('caro', false); // '"caro"'    
 ```
 
 ### ★Log
+[Back to Index](#index)
 - **setLogRoot(path) - 設置 log 檔所要放的路徑**
 ```javascript
     var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
@@ -543,10 +547,11 @@ caro.isArr(['caro']); // true
 ```
 
 ### Object
+[Back to Index](#index)
 - **eachObj(obj, cb) - 遍歷 arr/obj 中的 key 和 val， 並回傳至 cb 中(用法同 jQuery.each)**
 ```javascript
     var arg = ['a', 'b', c'];
-    r = caro.eachObj(arg, (i, val)->
+    var r = caro.eachObj(arg, (i, val)->
       console.log 'i,', i
       console.log 'val=', val
     );
@@ -558,12 +563,12 @@ caro.isArr(['caro']); // true
 ```
 - **cloneObj(obj) - 複製 obj**
 ```javascript
-    arg = ['a', 'b', 'c'];
-    arg2 = {'a': 1, 'b': 2};
-    r = arg;
-    r2 = arg2;
-    r3 = caro.cloneObj(arg);
-    r4 = caro.cloneObj(arg2);
+    var arg = ['a', 'b', 'c'];
+    var arg2 = {'a': 1, 'b': 2};
+    var r = arg;
+    var r2 = arg2;
+    var r3 = caro.cloneObj(arg);
+    var r4 = caro.cloneObj(arg2);
     arg[0] = 'g';
     arg2.a = 3;
     console.log(r); // [ 'g', 'b', 'c' ]
@@ -680,7 +685,35 @@ caro.isArr(['caro']); // true
     r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
 ```
 
+### ★Path
+[Back to Index](#index)
+- **setAbsolutePath(path) - 定義絕對路徑根目錄**
+```javascript
+```
+- **getAbsolutePath(path) - 取得絕對路徑根目錄**
+```javascript
+```
+- **isFullPath(path) - 確認是否為絕對路徑**
+```javascript
+```
+- **getDirPath(path) - 取得所在的資料夾路徑**
+```javascript
+```
+- **getFileName(path [getFull]) - 取得檔案名稱**
+```javascript
+```
+- **getExtendName(path [withDot]) - 取得附檔名**
+```javascript
+```
+- **normalizePath(path [path2, path3...]) - 正規化路徑**
+```javascript
+```
+- **coverToFullPath(path [path2, path3...]) - 轉為絕對路徑**
+```javascript
+```
+
 ### String
+[Back to Index](#index)
 - **random(len [opt]) - 產生隨機字串**
 ```javascript
     var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
@@ -809,33 +842,8 @@ caro.isArr(['caro']); // true
     var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
 
-### ★Path
-- **setAbsolutePath(path) - 定義絕對路徑根目錄**
-```javascript
-```
-- **getAbsolutePath(path) - 取得絕對路徑根目錄**
-```javascript
-```
-- **isFullPath(path) - 確認是否為絕對路徑**
-```javascript
-```
-- **getDirPath(path) - 取得所在的資料夾路徑**
-```javascript
-```
-- **getFileName(path [getFull]) - 取得檔案名稱**
-```javascript
-```
-- **getExtendName(path [withDot]) - 取得附檔名**
-```javascript
-```
-- **normalizePath(path [path2, path3...]) - 正規化路徑**
-```javascript
-```
-- **coverToFullPath(path [path2, path3...]) - 轉為絕對路徑**
-```javascript
-```
-
 ### ☆TypeCheck
+[Back to Index](#index)
 - **isBool(arg...) - 判斷是否為 boolean，當其中一個參數不符合時，回傳 false**
 ```javascript
     var arg = false;
