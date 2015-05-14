@@ -2,9 +2,8 @@ module.exports = function (grunt) {
     'use strict';
     var pkgName = '<%= pkg.name %>';
     var caro = pkgName + '.js';
-    var srcDir = 'src/';
-    var coffeeDir = srcDir + 'coffee/';
-    var jsDir = 'src/js/';
+    var coffeeDir = 'coffee/';
+    var jsDir = 'js/';
     var testDir = 'test/';
     var nodeDir = 'node_modules/';
     var banner = '/*! ' + pkgName + ' - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\r\n';

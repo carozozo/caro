@@ -22,7 +22,7 @@ do ->
     absolutePath
 
   ###*
-  #
+  # get absolute root path
   # @returns {String}
   ###
 

@@ -24,7 +24,7 @@
   };
 
   /**
-  #
+   * get absolute root path
    * @returns {String}
    */
   self.getAbsolutePath = function() {
