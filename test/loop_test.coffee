@@ -1,5 +1,5 @@
 do ->
-describe.only 'Loop', ->
+describe 'Loop', ->
   it 'each', ->
     caro.each(['a', 'b', 'c'], (key, val)->
     );

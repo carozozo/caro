@@ -1,5 +1,5 @@
 do ->
-describe 'Array', ->
+describe.only 'Array', ->
   it 'sortArr', ->
     arg = [1, 3, 2, null];
     arg2 = [1, 3, 2, null];
@@ -11,7 +11,7 @@ describe 'Array', ->
     r.should.be.eql [3, 2, 1, null]
     r2.should.be.eql [null, 1, 2, 3]
 
-  it.only 'sortByObjKey', ->
+  it 'sortByObjKey', ->
     obj = {index: 0, name: 'caro'}
     obj2 = {index: 1, name: 'huang'}
     obj3 = {index: 2, name: 'zozo'}
@@ -68,6 +68,6 @@ describe 'Array', ->
     arr = [1, 2, 3];
     arr2 = [1, 2, ''];
     r = caro.hasEmptyInArr(arr);
-    r2 = caro.hasEmptyInArr(arr2);
+    r2 = caro.hasEmptyInArr(arr, arr2);
     r.should.be.false
     r2.should.be.true

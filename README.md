@@ -89,7 +89,7 @@ caro.isArr(['caro']); // true
    var arr = [1, 2, 3];
    var arr2 = [1, 2, ''];
    var r = caro.hasEmptyInArr(arr); // false
-   var r2 = caro.hasEmptyInArr(arr2); // true
+   var r2 = caro.hasEmptyInArr(arr, arr2); // true
 ```
 
 ### ★Console
