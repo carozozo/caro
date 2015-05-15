@@ -10653,6 +10653,7 @@
         r.push(val);
       }
     });
+    arr = r;
     return r;
   };
 
@@ -10690,6 +10691,7 @@
         r.push(val);
       }
     });
+    arr = r;
     return r;
   };
 
@@ -10709,7 +10711,8 @@
         r.push(val);
       }
     });
-    return r;
+    arr = r;
+    return arr;
   };
 
   /**
@@ -10719,18 +10722,16 @@
    * @returns {*}
    */
   self.pushNoDup = function(arr, val) {
-    var r;
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = caro.cloneObj(arr);
     caro.eachArgs(arguments, function(i, val) {
       if (i === 0 || arr.indexOf(val) > -1) {
         return;
       }
-      r.push(val);
+      arr.push(val);
     });
-    return r;
+    return arr;
   };
 
   /**
@@ -10740,22 +10741,16 @@
    * @returns {*}
    */
   self.pushNoEmpty = function(arr, val) {
-    var aValNeedPush, r;
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = caro.cloneObj(arr);
-    aValNeedPush = [];
     caro.eachArgs(arguments, function(i, arg) {
       if (i === 0 || caro.isEmptyVal(arg)) {
         return;
       }
-      aValNeedPush.push(arg);
+      arr.push(arg);
     });
-    caro.each(aValNeedPush, function(i, valNeedPush) {
-      r.push(valNeedPush);
-    });
-    return r;
+    return arr;
   };
 
   /**
@@ -12306,9 +12301,13 @@
    * @param {function} cb callback-fn for each key & val
    */
   self.each = function(arg, cb) {
-    var key, val;
+    var isArr, key, val;
+    isArr = Array.isArray(arg);
     for (key in arg) {
       val = arg[key];
+      if (isArr) {
+        key = parseInt(key);
+      }
       if (cb && cb(key, val) === false) {
         break;
       }

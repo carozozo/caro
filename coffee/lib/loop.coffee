@@ -12,7 +12,9 @@ do ->
   # @param {function} cb callback-fn for each key & val
   ###
   self.each = (arg, cb) ->
+    isArr = Array.isArray(arg)
     for key, val of arg
+      key = parseInt(key) if isArr
       if cb and cb(key, val) == false
         break
     return

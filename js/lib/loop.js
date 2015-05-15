@@ -13,9 +13,13 @@
    * @param {function} cb callback-fn for each key & val
    */
   self.each = function(arg, cb) {
-    var key, val;
+    var isArr, key, val;
+    isArr = Array.isArray(arg);
     for (key in arg) {
       val = arg[key];
+      if (isArr) {
+        key = parseInt(key);
+      }
       if (cb && cb(key, val) === false) {
         break;
       }

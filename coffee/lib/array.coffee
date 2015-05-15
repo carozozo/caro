@@ -65,13 +65,10 @@ do ->
   # @param {...number} index
   # @returns {*}
   ###
-
   self.removeByIndex = (arr, index) ->
-    if !caro.isArr(arr)
-      return arr
+    return arr if !caro.isArr(arr)
     r = []
     aRemoveIndex = []
-
     checkIndexIfNeedRemove = (i) ->
       needRemove = false
       caro.each aRemoveIndex, (j, removeIndex) ->
@@ -79,11 +76,9 @@ do ->
           needRemove = true
           return false
       needRemove
-
     # collect the index that want to remove
     caro.eachArgs arguments, (i, arg) ->
-      if i == 0
-        return
+      return if i == 0
       arg = parseInt(arg)
       aRemoveIndex.push arg
       return
@@ -91,6 +86,7 @@ do ->
       if !checkIndexIfNeedRemove(i)
         r.push val
       return
+    arr = r
     r
 
   ###*
@@ -99,13 +95,10 @@ do ->
   # @param {...*} val
   # @returns {*}
   ###
-
   self.removeByArrVal = (arr, val) ->
-    if !caro.isArr(arr)
-      return arr
+    return arr if !caro.isArr(arr)
     r = []
     aRemoveVal = []
-
     checkValIfNeedRemove = (val) ->
       needRemove = false
       caro.each aRemoveVal, (j, removeIndex) ->
@@ -113,17 +106,16 @@ do ->
           needRemove = true
         return
       needRemove
-
     # collect the index that want to remove
     caro.eachArgs arguments, (i, arg) ->
-      if i == 0
-        return
+      return if i == 0
       aRemoveVal.push arg
       return
     caro.each arr, (i, val) ->
       if !checkValIfNeedRemove(val)
         r.push val
       return
+    arr = r
     r
 
   ###*
@@ -131,16 +123,14 @@ do ->
   # @param {[]} arr
   # @returns {*}
   ###
-
   self.removeDup = (arr) ->
-    if !caro.isArr(arr)
-      return arr
+    return arr if !caro.isArr(arr)
     r = []
     caro.each arr, (i, val) ->
-      if r.indexOf(val) < 0
-        r.push val
+      r.push val if r.indexOf(val) < 0
       return
-    r
+    arr = r
+    arr
 
   ###*
   # push val into arr if not exists
@@ -148,17 +138,13 @@ do ->
   # @param {...*} val
   # @returns {*}
   ###
-
   self.pushNoDup = (arr, val) ->
-    if !caro.isArr(arr)
-      return arr
-    r = caro.cloneObj(arr)
+    return arr if !caro.isArr(arr)
     caro.eachArgs arguments, (i, val) ->
-      if i == 0 or arr.indexOf(val) > -1
-        return
-      r.push val
+      return if i == 0 or arr.indexOf(val) > -1
+      arr.push val
       return
-    r
+    arr
 
   ###*
   # will not push to arr if value is empty
@@ -166,21 +152,14 @@ do ->
   # @param {...*} val
   # @returns {*}
   ###
-
   self.pushNoEmpty = (arr, val) ->
-    if !caro.isArr(arr)
-      return arr
-    r = caro.cloneObj(arr)
-    aValNeedPush = []
+    return arr if !caro.isArr(arr)
     caro.eachArgs arguments, (i, arg) ->
       if i == 0 or caro.isEmptyVal(arg)
         return
-      aValNeedPush.push arg
+      arr.push arg
       return
-    caro.each aValNeedPush, (i, valNeedPush) ->
-      r.push valNeedPush
-      return
-    r
+    arr
 
   ###*
   # check if empty-value in arr
@@ -190,7 +169,6 @@ do ->
 
   self.hasEmptyInArr = (arr) ->
     hasEmpty = false
-
     checkVal = (arr) ->
       if !caro.isArr(arr)
         hasEmpty = true
@@ -201,10 +179,8 @@ do ->
           return false
         true
       return
-
     caro.eachArgs arguments, (i, arr) ->
-      if hasEmpty
-        return false
+      return false if hasEmpty
       checkVal arr
       true
     hasEmpty
