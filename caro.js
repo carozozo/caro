@@ -1,4 +1,4 @@
-/*! caro - v0.4.8 - 2015-05-15 */
+/*! caro - v0.4.9 - 2015-05-15 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -12353,14 +12353,12 @@
     pass = true;
     caro.eachArgs(arguments, function(i, val) {
       val = caro.normalizePath(val);
-      console.log('val=', val);
       if (val.indexOf(absolutePath) !== 0) {
         pass = false;
         return false;
       }
       return true;
     });
-    console.log('pass-', pass);
     return pass;
   };
 
