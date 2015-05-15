@@ -31,31 +31,24 @@ caro.isArr(['caro']); // true
 
 ### Array
 [Back to Index](#index)
-- **XcloneArr(arr) - 複製陣列(已棄用，合併至 cloneObj)**
+- **sortArr(arr [sort=true [clone=false]]) - 陣列排序
 ```javascript
-    var arr = [1, 2, 3];
-    var r = caro.cloneArr(arr);
-    var r2 = caro.cloneArr('123');
-    arr[0] = 4;
-    console.log(arr); // [ 4, 2, 3 ]
-    console.log(r); // [ 1, 2, 3 ] 不會跟著 arr 改變
-    console.log(r2); // [ 4, 2, 3 ]
+    arg = [1, 3, 2, null]; 
+    arg2 = [1, 3, 2, null];
+    r = caro.sortArr(arg, false);
+    r2 = caro.sortArr(arg2, true, true);
+    console.log arg // [ 3, 2, 1, null ]
+    console.log arg2 // [ 1, 3, 2, null ] - 不受排序影響
+    console.log r // [ 3, 2, 1, null ]
+    console.log r2 // [ null, 1, 2, 3 ]
 ```
-- **XextendArr(duplicate [arr...]) - 合併陣列(已棄用，合併至 extendObj)**
-```javascript
-    var arr = [1, 2, 3];
-    var arr2 = [2, 3, 4];
-    var arr3 = [3, 4, 5];
-    var r = caro.extendArr(true, arr, arr2); // [ 1, 2, 3, 2, 3, 4 ]
-    var r2 = caro.extendArr(false, arr, arr2, arr3); // [ 1, 2, 3, 4, 5 ]
-```
-- **sortByObjKey(arr, key [sort]) - 如果陣列中的值是物件，則可指定物件的 key 值排序**
+- **sortByObjKey(arr, key [sort=true] [clone=false]) - 如果陣列中的值是物件，則可指定物件的 key 值排序**
 ```javascript
     var obj = {index: 0, name: 'caro'};
     var obj2 = {index: 1, name: 'huang'};
     var obj3 = {index: 2, name: 'zozo'};
     var arr = [obj, obj3, obj2];
-    var r = caro.sortByObjKey(arr, 'index'); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
+    var r = caro.sortByObjKey(arr, 'index', true, true); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
     var r2 = caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
 ```
 - **sumOfArr(arr [force]) - 加總陣列中的數字**
@@ -144,7 +137,7 @@ caro.isArr(['caro']); // true
     caro.setDefaultLocale('zh-tw');
     caro.addDateTimeShortFormat('date', 'LLLL');
     caro.addDateTimeShortFormat('date2', 'L');
-    var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00
+    var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00分
     var r2 = caro.formatDateTime('2015-06-30', 'date2'); // 2015年6月30日
 ```
 - **formatNow(formatType [locale]) - 取得現在的時間並格式化**

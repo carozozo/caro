@@ -11,7 +11,7 @@ describe 'Path', ->
     r = caro.getAbsolutePath();
     r.should.eq '/path/from/root'
 
-  it.only 'isFullPath', ->
+  it 'isFullPath', ->
     caro.setAbsolutePath('/path/from/root');
     r = caro.isFullPath('/path/from/root/caro.js');
     r2 = caro.isFullPath('/path/from/root/caro.js', '/path2/from/root/caro.js');

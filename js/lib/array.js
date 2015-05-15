@@ -5,26 +5,69 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
   var self;
   self = caro;
+
+  /**
+   * sort arr
+   * @param {[]} arr
+   * @param {boolean} [clone=false] if clone for not change original-arr
+   * @returns {*}
+   */
+  self.sortArr = function(arr, sort, clone) {
+    var r;
+    if (sort == null) {
+      sort = true;
+    }
+    if (clone == null) {
+      clone = false;
+    }
+    if (!caro.isArr(arr)) {
+      return arr;
+    }
+    r = clone === false ? arr : caro.cloneObj(arr);
+    r.sort(function(a, b) {
+      if (sort) {
+        if (a < b) {
+          return -1;
+        } else if (a > b) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      if (a > b) {
+        return -1;
+      } else if (a < b) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return r;
+  };
 
   /**
    * sort arr by key if value is obj
    * @param {[]} arr
    * @param {string} key
    * @param {boolean} [sort=true]
+   * @param {boolean} [clone=false] if clone for not change original-arr
    * @returns {*}
    */
-  self.sortByObjKey = function(arr, key, sort) {
+  self.sortByObjKey = function(arr, key, sort, clone) {
+    var r;
     if (sort == null) {
       sort = true;
+    }
+    if (clone == null) {
+      clone = false;
     }
     if (!caro.isArr(arr)) {
       return arr;
     }
-    arr = caro.cloneObj(arr);
-    arr.sort(function(a, b) {
+    r = clone === false ? arr : caro.cloneObj(arr);
+    r.sort(function(a, b) {
       var order1, order2;
       order1 = a[key] || 0;
       order2 = b[key] || 0;
@@ -45,7 +88,7 @@
         return 0;
       }
     });
-    return arr;
+    return r;
   };
 
   /**

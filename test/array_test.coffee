@@ -1,11 +1,22 @@
 do ->
 describe 'Array', ->
-  it 'sortByObjKey', ->
+  it 'sortArr', ->
+    arg = [1, 3, 2, null];
+    arg2 = [1, 3, 2, null];
+    r = caro.sortArr(arg, false);
+    r2 = caro.sortArr(arg2, true, true);
+
+    arg.should.be.eql [3, 2, 1, null]
+    arg2.should.be.eql [1, 3, 2, null]
+    r.should.be.eql [3, 2, 1, null]
+    r2.should.be.eql [null, 1, 2, 3]
+
+  it.only 'sortByObjKey', ->
     obj = {index: 0, name: 'caro'}
     obj2 = {index: 1, name: 'huang'}
     obj3 = {index: 2, name: 'zozo'}
     arr = [obj, obj3, obj2]
-    r = caro.sortByObjKey(arr, 'index')
+    r = caro.sortByObjKey(arr, 'index', true, true)
     r2 = caro.sortByObjKey(arr, 'index', false)
     r.should.eql [
       {index: 0, name: 'caro'}
