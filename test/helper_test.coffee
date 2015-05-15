@@ -45,13 +45,6 @@ describe 'Helper', ->
     r = caro.getFnName(arg)
     r.should.be.a('string')
 
-  it 'eachArgs', ->
-    fn = (a, b) ->
-      caro.eachArgs(arguments, (key, val) ->
-        key.should.be.a('number')
-      );
-    fn(1, 2);
-
   it 'getArgumentsAsArr', ->
     fn = (a, b) ->
       args = caro.getArgumentsAsArr(arguments);

@@ -1,4 +1,4 @@
-/*! caro - v0.4.9 - 2015-05-15 */
+/*! caro - v0.4.9 - 2015-05-16 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -10510,6 +10510,7 @@
   /**
    * sort arr
    * @param {[]} arr
+   * @param {boolean} [sort=true] if sort by ASC
    * @param {boolean} [clone=false] if clone for not change original-arr
    * @returns {*}
    */
@@ -10550,7 +10551,7 @@
    * sort arr by key if value is obj
    * @param {[]} arr
    * @param {string} key
-   * @param {boolean} [sort=true]
+   * @param {boolean} [sort=true] if sort by ASC
    * @param {boolean} [clone=false] if clone for not change original-arr
    * @returns {*}
    */
@@ -10603,7 +10604,7 @@
     }
     sum = 0;
     if (!caro.isArr(arr)) {
-      return 0;
+      return sum;
     }
     caro.eachObj(arr, function(i, val) {
       if (caro.isNum(val)) {
@@ -11845,23 +11846,6 @@
   };
 
   /**
-   * like caor.eachObj, but key is integer
-   * @param args should be arguments (obj with numeric-key)
-   * @param cb
-   */
-  self.eachArgs = function(args, cb) {
-    var i;
-    for (i in args) {
-      if (args.hasOwnProperty(i)) {
-        i = parseInt(i);
-        if (cb && cb(i, args[i]) === false) {
-          break;
-        }
-      }
-    }
-  };
-
-  /**
    * get arguments, and return as arr
    * @param args should be arguments (obj with numeric-key)
    * @returns {Array}
@@ -12304,6 +12288,46 @@
     var path;
     path = 'trace';
     return caro.updateLog(path, data, opt);
+  };
+})();
+
+
+/**
+ * Loop
+ * @author Caro.Huang
+ */
+(function() {
+  var self;
+  self = caro;
+
+  /**
+   * like jQuery.each function
+   * @param {*} arg
+   * @param {function} cb callback-fn for each key & val
+   */
+  self.each = function(arg, cb) {
+    var key, val;
+    for (key in arg) {
+      val = arg[key];
+      if (cb && cb(key, val) === false) {
+        break;
+      }
+    }
+  };
+
+  /**
+    * like caor.eachObj, but key is integer
+    * @param args should be arguments (obj with numeric-key)
+    * @param cb
+   */
+  self.eachArgs = function(arg, cb) {
+    var i;
+    for (i in arg) {
+      i = parseInt(i);
+      if (cb && cb(i, arg[i]) === false) {
+        break;
+      }
+    }
   };
 })();
 

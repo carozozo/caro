@@ -2,7 +2,7 @@ do ->
 describe 'Object', ->
   it 'eachObj', ->
     arg = ['a', 'b', 'c']
-    r = caro.eachObj(arg, (i, val)->
+    r = caro.each(arg, (i, val)->
 #      console.log 'i,', i
 #      console.log 'val=', val
     );
