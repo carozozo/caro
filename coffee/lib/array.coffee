@@ -5,28 +5,41 @@
 ###
 
 do ->
-  'use strict'
   self = caro
+
+  ###*
+  # sort arr
+  # @param {[]} arr
+  # @param {boolean} [clone=false] if clone for not change original-arr
+  # @returns {*}
+  ###
+  self.sortArr = (arr, sort = true, clone = false) ->
+    return arr if !caro.isArr(arr)
+    r = if clone == false then arr else caro.cloneObj(arr);
+    r.sort (a, b) ->
+      if sort
+        return if a < b then -1 else if a > b then 1 else 0
+      if a > b then -1 else if a < b then 1 else 0
+    r
 
   ###*
   # sort arr by key if value is obj
   # @param {[]} arr
   # @param {string} key
   # @param {boolean} [sort=true]
+  # @param {boolean} [clone=false] if clone for not change original-arr
   # @returns {*}
   ###
-
-  self.sortByObjKey = (arr, key, sort = true) ->
-    if !caro.isArr(arr)
-      return arr
-    arr = caro.cloneObj(arr)
-    arr.sort (a, b) ->
+  self.sortByObjKey = (arr, key, sort = true, clone = false) ->
+    return arr if !caro.isArr(arr)
+    r = if clone == false then arr else caro.cloneObj(arr);
+    r.sort (a, b) ->
       order1 = a[key] or 0
       order2 = b[key] or 0
       if sort
         return if order1 < order2 then -1 else if order1 > order2 then 1 else 0
       if order1 > order2 then -1 else if order1 < order2 then 1 else 0
-    arr
+    r
 
   ###*
   # get sum of val in arr
@@ -34,7 +47,6 @@ do ->
   # @param {boolean} [force=false]
   # @returns {number}
   ###
-
   self.sumOfArr = (arr, force = false) ->
     sum = 0
     if !caro.isArr(arr)

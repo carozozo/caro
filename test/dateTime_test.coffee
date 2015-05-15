@@ -6,7 +6,7 @@ describe 'DateTime', ->
     caro.addDateTimeShortFormat('date2', 'L')
     r = caro.formatDateTime('2015-06-30', 'date')
     r2 = caro.formatDateTime('2015-06-30', 'date2')
-    r.should.eq '2015年6月30日星期二早上12點00'
+    r.should.eq '2015年6月30日星期二早上12點00分'
     r2.should.eq '2015年6月30日'
 
   it 'formatNow', ->
