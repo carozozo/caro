@@ -124,13 +124,13 @@ describe 'String', ->
     r3.should.eq 'I AM caro'
     r4.should.eq 'I AM cARO'
 
-  it.only 'trimStr', ->
+  it 'trimStr', ->
     r = caro.trimStr(' i am caro ');
     r2 = caro.trimStr({}, false);
     r.should.eq 'i am caro'
     r2.should.eql {}
 
-  it.only 'splitStr', ->
+  it 'splitStr', ->
     r = caro.splitStr('i am caro', ' ');
     r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']);
     r3 = caro.splitStr(null, ',', false);
@@ -138,7 +138,7 @@ describe 'String', ->
     r2.should.eql ['I', '', 'love', 'Snoopy', '!', '!']
     should.equal(r3, null);
 
-  it.only 'serializeUrl', ->
+  it 'serializeUrl', ->
     arg = 'http://localhost';
     obj = {a: 1, b: 2, c: null}
     r = caro.serializeUrl(arg, obj);
