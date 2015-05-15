@@ -19,7 +19,7 @@
    */
   self.setAbsolutePath = function(path) {
     path = caro.coverToStr(path);
-    absolutePath = path;
+    absolutePath = caro.normalizePath(path);
     return absolutePath;
   };
 
@@ -33,12 +33,23 @@
 
   /**
    * check if path contain absolute root path
-   * @param {*} path
+   * @param {*...} path
    * @returns {boolean}
    */
   self.isFullPath = function(path) {
-    path = caro.normalizePath(path);
-    return path.indexOf(absolutePath) === 0;
+    var pass;
+    pass = true;
+    caro.eachArgs(arguments, function(i, val) {
+      val = caro.normalizePath(val);
+      console.log('val=', val);
+      if (val.indexOf(absolutePath) !== 0) {
+        pass = false;
+        return false;
+      }
+      return true;
+    });
+    console.log('pass-', pass);
+    return pass;
   };
 
   /**
@@ -52,15 +63,15 @@
 
   /**
    * get file name from path
-   * OPT
-   * full: bool (default: true) - if get full file name
    * @param {string} path
-   * @param {boolean} [getFull] return basename if true
+   * @param {boolean} [getFull=true] return basename if true
    * @returns {*}
    */
   self.getFileName = function(path, getFull) {
     var extendName;
-    getFull = getFull !== false;
+    if (getFull == null) {
+      getFull = true;
+    }
     if (!getFull) {
       extendName = caro.getExtendName(path);
       return nPath.basename(path, extendName);
@@ -77,8 +88,10 @@
    */
   self.getExtendName = function(path, withDot) {
     var extendName;
+    if (withDot == null) {
+      withDot = true;
+    }
     extendName = nPath.extname(path);
-    withDot = withDot !== false;
     if (!withDot) {
       extendName = extendName.replace('.', '');
     }

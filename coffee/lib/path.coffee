@@ -18,7 +18,7 @@ do ->
 
   self.setAbsolutePath = (path) ->
     path = caro.coverToStr(path)
-    absolutePath = path
+    absolutePath = caro.normalizePath path
     absolutePath
 
   ###*
@@ -31,13 +31,20 @@ do ->
 
   ###*
   # check if path contain absolute root path
-  # @param {*} path
+  # @param {*...} path
   # @returns {boolean}
   ###
 
   self.isFullPath = (path) ->
-    path = caro.normalizePath(path)
-    path.indexOf(absolutePath) == 0
+    pass = true
+    caro.eachArgs(arguments, (i, val)->
+      val = caro.normalizePath(val)
+      if val.indexOf(absolutePath) != 0
+        pass = false
+        return false
+      return true
+    )
+    pass
 
   ###*
   # get dir-path of path
@@ -50,15 +57,12 @@ do ->
 
   ###*
   # get file name from path
-  # OPT
-  # full: bool (default: true) - if get full file name
   # @param {string} path
-  # @param {boolean} [getFull] return basename if true
+  # @param {boolean} [getFull=true] return basename if true
   # @returns {*}
   ###
 
-  self.getFileName = (path, getFull) ->
-    getFull = getFull != false
+  self.getFileName = (path, getFull = true) ->
     if !getFull
       extendName = caro.getExtendName(path)
       return nPath.basename(path, extendName)
@@ -72,9 +76,8 @@ do ->
   # @returns {*}
   ###
 
-  self.getExtendName = (path, withDot) ->
+  self.getExtendName = (path, withDot = true) ->
     extendName = nPath.extname(path)
-    withDot = withDot != false
     if !withDot
       extendName = extendName.replace('.', '')
     extendName
