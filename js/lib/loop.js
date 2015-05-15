@@ -8,7 +8,7 @@
   self = caro;
 
   /**
-   * like jQuery.each function
+   * for-loop the arg and callback of key/val
    * @param {*} arg
    * @param {function} cb callback-fn for each key & val
    */
@@ -23,9 +23,9 @@
   };
 
   /**
-    * like caor.eachObj, but key is integer
-    * @param args should be arguments (obj with numeric-key)
-    * @param cb
+    * for-loop the arg and callback of int-key/val
+    * @param arg
+    * @param {function} cb callback-fn for each key & val
    */
   self.eachArgs = function(arg, cb) {
     var i;

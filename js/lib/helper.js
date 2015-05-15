@@ -79,7 +79,7 @@
     if (!Array.isArray(arr) && typeof arr !== 'object' || arr === null || !caro.isFn(checkFn)) {
       return false;
     }
-    caro.eachObj(arr, function(i, arg) {
+    caro.each(arr, function(i, arg) {
       var result;
       result = caro.executeIfFn(checkFn, arg);
       if (needAllPass && result === false || !needAllPass && result === true) {
@@ -138,7 +138,7 @@
   self.getArgumentsAsArr = function(args) {
     var r;
     r = [];
-    caro.eachObj(args, function(i, val) {
+    caro.each(args, function(i, val) {
       r.push(val);
     });
     return r;
@@ -329,7 +329,7 @@
     }
     if (caro.isArr(arg)) {
       r = {};
-      caro.eachObj(arg, function(i, val) {
+      caro.each(arg, function(i, val) {
         return r[i] = val;
       });
       return r;

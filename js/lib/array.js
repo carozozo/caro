@@ -107,7 +107,7 @@
     if (!caro.isArr(arr)) {
       return sum;
     }
-    caro.eachObj(arr, function(i, val) {
+    caro.each(arr, function(i, val) {
       if (caro.isNum(val)) {
         sum += val;
       }
@@ -134,7 +134,7 @@
     checkIndexIfNeedRemove = function(i) {
       var needRemove;
       needRemove = false;
-      caro.eachObj(aRemoveIndex, function(j, removeIndex) {
+      caro.each(aRemoveIndex, function(j, removeIndex) {
         if (i === removeIndex) {
           needRemove = true;
           return false;
@@ -149,7 +149,7 @@
       arg = parseInt(arg);
       aRemoveIndex.push(arg);
     });
-    caro.eachObj(arr, function(i, val) {
+    caro.each(arr, function(i, val) {
       if (!checkIndexIfNeedRemove(i)) {
         r.push(val);
       }
@@ -173,7 +173,7 @@
     checkValIfNeedRemove = function(val) {
       var needRemove;
       needRemove = false;
-      caro.eachObj(aRemoveVal, function(j, removeIndex) {
+      caro.each(aRemoveVal, function(j, removeIndex) {
         if (val === removeIndex) {
           needRemove = true;
         }
@@ -186,7 +186,7 @@
       }
       aRemoveVal.push(arg);
     });
-    caro.eachObj(arr, function(i, val) {
+    caro.each(arr, function(i, val) {
       if (!checkValIfNeedRemove(val)) {
         r.push(val);
       }
@@ -205,7 +205,7 @@
       return arr;
     }
     r = [];
-    caro.eachObj(arr, function(i, val) {
+    caro.each(arr, function(i, val) {
       if (r.indexOf(val) < 0) {
         r.push(val);
       }
@@ -253,7 +253,7 @@
       }
       aValNeedPush.push(arg);
     });
-    caro.eachObj(aValNeedPush, function(i, valNeedPush) {
+    caro.each(aValNeedPush, function(i, valNeedPush) {
       r.push(valNeedPush);
     });
     return r;
@@ -272,7 +272,7 @@
         hasEmpty = true;
         return;
       }
-      caro.eachObj(arr, function(i, val) {
+      caro.each(arr, function(i, val) {
         if (caro.isEmptyVal(val)) {
           hasEmpty = true;
           return false;

@@ -149,7 +149,7 @@
       r = false;
       if (opt.getByExtend) {
         r = caro.splitStr(opt.getByExtend, ',');
-        caro.eachObj(r, function(i, extendName) {
+        caro.each(r, function(i, extendName) {
           r[i] = caro.addHead(extendName, '.');
         });
       }
@@ -173,7 +173,7 @@
         return;
       }
       level++;
-      caro.eachObj(files, function(i, basename) {
+      caro.each(files, function(i, basename) {
         var dirPath, extendName, filePath, fileType, filename, fullDirPath, fullPath, oFileInfo;
         filename = caro.getFileName(basename, false);
         extendName = caro.getExtendName(basename);
@@ -222,7 +222,7 @@
     aPath = caro.splitStr(path, ['\\', '/']);
     subPath = '';
     try {
-      caro.eachObj(aPath, function(i, eachDir) {
+      caro.each(aPath, function(i, eachDir) {
         var exists;
         subPath = caro.normalizePath(subPath, eachDir);
         exists = caro.fsExists(subPath);
@@ -406,7 +406,7 @@
     pass = true;
     aPath = [];
     try {
-      caro.eachObj(aPath, function(i, path) {
+      caro.each(aPath, function(i, path) {
         if (caro.isFsDir(path)) {
           if (!caro.deleteDir(path, force)) {
             pass = false;
@@ -448,7 +448,7 @@
         force = arg;
       }
     });
-    caro.eachObj(aPath, function(i, pathMap) {
+    caro.each(aPath, function(i, pathMap) {
       var dirPath2, e, path1, path2;
       path1 = pathMap[0];
       path2 = pathMap[1];
