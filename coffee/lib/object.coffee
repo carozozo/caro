@@ -43,9 +43,6 @@ do ->
       return
     r
 
-  isObjOrArr = (arg) ->
-    caro.isArr(arg) || caro.isObj(arg)
-
   pushValToObjOrArr = (arg, key, val) ->
     if caro.isArr(arg)
       arg.push(val)

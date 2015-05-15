@@ -4,7 +4,7 @@
  * @author Caro.Huang
  */
 (function() {
-  var changeStrValByObjKey, isObjOrArr, pushValToObjOrArr, self;
+  var changeStrValByObjKey, pushValToObjOrArr, self;
   self = caro;
 
   /**
@@ -49,9 +49,6 @@
       }
     });
     return r;
-  };
-  isObjOrArr = function(arg) {
-    return caro.isArr(arg) || caro.isObj(arg);
   };
   pushValToObjOrArr = function(arg, key, val) {
     if (caro.isArr(arg)) {

@@ -1,4 +1,4 @@
-/*! caro - v0.4.8 - 2015-05-14 */
+/*! caro - v0.4.8 - 2015-05-15 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11982,7 +11982,7 @@
  * @author Caro.Huang
  */
 (function() {
-  var changeStrValByObjKey, isObjOrArr, pushValToObjOrArr, self;
+  var changeStrValByObjKey, pushValToObjOrArr, self;
   self = caro;
 
   /**
@@ -12023,13 +12023,10 @@
           r[key] = caro.lowerStr(val, opt);
           break;
         case 'upperFirst':
-          r[key] = caro.upperFirst(val, opt);
+          r[key] = caro.upperFirst(val, false);
       }
     });
     return r;
-  };
-  isObjOrArr = function(arg) {
-    return caro.isArr(arg) || caro.isObj(arg);
   };
   pushValToObjOrArr = function(arg, key, val) {
     if (caro.isArr(arg)) {
@@ -12334,7 +12331,7 @@
    */
   self.setAbsolutePath = function(path) {
     path = caro.coverToStr(path);
-    absolutePath = path;
+    absolutePath = caro.normalizePath(path);
     return absolutePath;
   };
 
