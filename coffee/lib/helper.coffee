@@ -68,7 +68,7 @@ do ->
   self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
     if !Array.isArray(arr) and typeof arr != 'object' or arr == null or !caro.isFn(checkFn)
       return false
-    caro.eachObj arr, (i, arg) ->
+    caro.each arr, (i, arg) ->
       result = caro.executeIfFn(checkFn, arg)
       # need all pass, but result is false || no-need all pass, and result is true
       if needAllPass and result == false or !needAllPass and result == true
@@ -112,20 +112,6 @@ do ->
     r
 
   ###*
-  # like caor.eachObj, but key is integer
-  # @param args should be arguments (obj with numeric-key)
-  # @param cb
-  ###
-
-  self.eachArgs = (args, cb) ->
-    for i of args
-      if args.hasOwnProperty(i)
-        i = parseInt(i)
-        if cb and cb(i, args[i]) == false
-          break
-    return
-
-  ###*
   # get arguments, and return as arr
   # @param args should be arguments (obj with numeric-key)
   # @returns {Array}
@@ -133,7 +119,7 @@ do ->
 
   self.getArgumentsAsArr = (args) ->
     r = []
-    caro.eachObj args, (i, val) ->
+    caro.each args, (i, val) ->
       r.push val
       return
     r
@@ -280,7 +266,7 @@ do ->
       return arg
     if caro.isArr(arg)
       r = {}
-      caro.eachObj(arg, (i, val) ->
+      caro.each(arg, (i, val) ->
         r[i] = val
       )
       return r

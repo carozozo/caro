@@ -66,7 +66,7 @@ do ->
     chars = chars.join('')
     # cover to array if string
     exclude = caro.splitStr(exclude, ',')
-    caro.eachObj exclude, (i, excludeStr) ->
+    caro.each exclude, (i, excludeStr) ->
       chars = caro.replaceAll(String(chars), excludeStr, '')
       return
     i = 0
@@ -216,7 +216,7 @@ do ->
     indexCount = 0
     aStr = str.split('')
     aStrClone = caro.cloneObj(aStr)
-    caro.eachObj aStrClone, (i, char) ->
+    caro.each aStrClone, (i, char) ->
       isUpper = caro.isUpper(char)
       if indexCount > 0 and isUpper
 # add ' ' before upper-char
@@ -297,7 +297,7 @@ do ->
     # e.g. splitter=['a','ab','c']; => mainSplit='a'
     mainSplit = splitter[0]
     if(mainSplit.length > 1)
-      caro.eachObj splitter, (j, eachSplit) ->
+      caro.each splitter, (j, eachSplit) ->
         return if !caro.isStr(eachSplit)
         return if mainSplit < 2
         if mainSplit.length >= eachSplit.length
@@ -306,7 +306,7 @@ do ->
     return str if !caro.isStr(mainSplit)
     # replace all splitter to mainSplitter
     # e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
-    caro.eachObj splitter, (i, eachSplit) ->
+    caro.each splitter, (i, eachSplit) ->
       return if !caro.isStr(eachSplit)
       str = caro.replaceAll(str, eachSplit, mainSplit)
       return
@@ -325,7 +325,7 @@ do ->
     aArgs = ['?']
     url = caro.coverToStr(url)
     oArgs = caro.coverToObj(oArgs)
-    caro.eachObj oArgs, (key, val) ->
+    caro.each oArgs, (key, val) ->
       if caro.isEmptyVal(val)
         return if !coverEmpty
         val = ''

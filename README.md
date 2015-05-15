@@ -26,8 +26,8 @@ caro.isArr(['caro']); // true
 ##### (★ 只適用於 Node.js | ☆ 部份適用於 Node.js)
 
 **[Array](#array)** | **★[Console](#console)** | **[DateTime](#datetime)** | **★[FileSystem](#filesystem)**
-| **[Helper](#helper)** | **★[Log](#log)** | **[Object](#object)** | **[Path](#path)** | **[String](#string)**
-| **☆[TypeCheck](#typecheck)**
+| **[Helper](#helper)** | **★[Log](#log)** | **★[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
+| **[String](#string)** | **☆[TypeCheck](#typecheck)**
 
 ### Array
 [Back to Index](#index)
@@ -384,16 +384,6 @@ caro.isArr(['caro']); // true
     var r = caro.getFnName(arg); // ''
     var r2 = caro.getFnName(arg2); // 'isFn'
 ```
-- **eachArgs(fn) - 將 function 中的 arguments 的 key 轉為 integer 並代入 callback-fn**
-```javascript
-    var fn = function (a, b, c) {
-        caro.eachArgs(arguments, function (key, val) {
-            // key 是 0, 1...
-            // val 為代入的值 'd', 'e', ...
-        });
-    };
-    fn('d','e', {});
-```
 - **getArgumentsAsArr(fn) - 將 arguments 轉為陣列**
 ```javascript
     var fn = function (a, b) {
@@ -539,9 +529,36 @@ caro.isArr(['caro']); // true
     }); // 檔案產生成功則回傳 true
 ```
 
+### ★Loop
+[Back to Index](#index)
+- **each(arg, cb) - 遍歷 arr/obj 中的 key 和 val， 並代入 callback-function**
+```javascript
+    caro.each(['a', 'b', 'c'], function (key, val){
+      console.log(val);
+      if(val==='b') return false; // break
+    }); // console only print 'a', 'b' 
+    caro.each({a: 1, b: 2, c: 3}, function (key, val){
+      // key will be 'a', 'b', 'c'
+      // val will be 1, 2, 3
+    });
+    caro.each(null, function (key, val){
+    }); // do nothing
+```
+- **eachArgs(fn) - 遍歷 arr/obj 中的 key 和 val ，將 key 轉為 int 之後代入 callback-fn**
+```javascript
+    var fn = function (a, b, c) {
+        caro.eachArgs(arguments, function (key, val) {
+            // key will be 0, 1...
+            // val will be 'd', 'e', ...
+        });
+    };
+    fn('d','e', {});
+```
+
 ### Object
 [Back to Index](#index)
 - **eachObj(obj, cb) - 遍歷 arr/obj 中的 key 和 val， 並回傳至 cb 中(用法同 jQuery.each)**
+- **✪Will replaced by Loop.each✪**
 ```javascript
     var arg = ['a', 'b', c'];
     var r = caro.eachObj(arg, (i, val)->

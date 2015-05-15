@@ -10,7 +10,7 @@ do ->
 
   checkType = (args, type) ->
     pass = true
-    caro.eachObj args, (i, arg) ->
+    caro.each args, (i, arg) ->
       if typeof arg != type
         pass = false
       return
@@ -104,8 +104,7 @@ do ->
   ###
 
   self.isObjOrArr = (arg) ->
-    if !checkType(arguments, 'object')
-      return false
+    return false if !checkType(arguments, 'object')
     caro.checkIfPassCb arguments, (val) ->
       # Note: null is object in js
       !caro.isNull(val)

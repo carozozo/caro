@@ -10,6 +10,7 @@ do ->
   ###*
   # sort arr
   # @param {[]} arr
+  # @param {boolean} [sort=true] if sort by ASC
   # @param {boolean} [clone=false] if clone for not change original-arr
   # @returns {*}
   ###
@@ -26,7 +27,7 @@ do ->
   # sort arr by key if value is obj
   # @param {[]} arr
   # @param {string} key
-  # @param {boolean} [sort=true]
+  # @param {boolean} [sort=true] if sort by ASC
   # @param {boolean} [clone=false] if clone for not change original-arr
   # @returns {*}
   ###
@@ -49,9 +50,8 @@ do ->
   ###
   self.sumOfArr = (arr, force = false) ->
     sum = 0
-    if !caro.isArr(arr)
-      return 0
-    caro.eachObj arr, (i, val) ->
+    return sum if !caro.isArr(arr)
+    caro.each arr, (i, val) ->
       if caro.isNum(val)
         sum += val
       if force
@@ -74,7 +74,7 @@ do ->
 
     checkIndexIfNeedRemove = (i) ->
       needRemove = false
-      caro.eachObj aRemoveIndex, (j, removeIndex) ->
+      caro.each aRemoveIndex, (j, removeIndex) ->
         if i == removeIndex
           needRemove = true
           return false
@@ -87,7 +87,7 @@ do ->
       arg = parseInt(arg)
       aRemoveIndex.push arg
       return
-    caro.eachObj arr, (i, val) ->
+    caro.each arr, (i, val) ->
       if !checkIndexIfNeedRemove(i)
         r.push val
       return
@@ -108,7 +108,7 @@ do ->
 
     checkValIfNeedRemove = (val) ->
       needRemove = false
-      caro.eachObj aRemoveVal, (j, removeIndex) ->
+      caro.each aRemoveVal, (j, removeIndex) ->
         if val == removeIndex
           needRemove = true
         return
@@ -120,7 +120,7 @@ do ->
         return
       aRemoveVal.push arg
       return
-    caro.eachObj arr, (i, val) ->
+    caro.each arr, (i, val) ->
       if !checkValIfNeedRemove(val)
         r.push val
       return
@@ -136,7 +136,7 @@ do ->
     if !caro.isArr(arr)
       return arr
     r = []
-    caro.eachObj arr, (i, val) ->
+    caro.each arr, (i, val) ->
       if r.indexOf(val) < 0
         r.push val
       return
@@ -177,7 +177,7 @@ do ->
         return
       aValNeedPush.push arg
       return
-    caro.eachObj aValNeedPush, (i, valNeedPush) ->
+    caro.each aValNeedPush, (i, valNeedPush) ->
       r.push valNeedPush
       return
     r
@@ -195,7 +195,7 @@ do ->
       if !caro.isArr(arr)
         hasEmpty = true
         return
-      caro.eachObj arr, (i, val) ->
+      caro.each arr, (i, val) ->
         if caro.isEmptyVal(val)
           hasEmpty = true
           return false

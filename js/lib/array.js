@@ -11,6 +11,7 @@
   /**
    * sort arr
    * @param {[]} arr
+   * @param {boolean} [sort=true] if sort by ASC
    * @param {boolean} [clone=false] if clone for not change original-arr
    * @returns {*}
    */
@@ -51,7 +52,7 @@
    * sort arr by key if value is obj
    * @param {[]} arr
    * @param {string} key
-   * @param {boolean} [sort=true]
+   * @param {boolean} [sort=true] if sort by ASC
    * @param {boolean} [clone=false] if clone for not change original-arr
    * @returns {*}
    */
@@ -104,7 +105,7 @@
     }
     sum = 0;
     if (!caro.isArr(arr)) {
-      return 0;
+      return sum;
     }
     caro.eachObj(arr, function(i, val) {
       if (caro.isNum(val)) {

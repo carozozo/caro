@@ -141,7 +141,7 @@ do ->
       r = false
       if opt.getByExtend
         r = caro.splitStr(opt.getByExtend, ',')
-        caro.eachObj r, (i, extendName) ->
+        caro.each r, (i, extendName) ->
           r[i] = caro.addHead(extendName, '.')
           return
       r
@@ -160,7 +160,7 @@ do ->
       if maxLevel > 0 and level >= maxLevel
         return
       level++
-      caro.eachObj files, (i, basename) ->
+      caro.each files, (i, basename) ->
         filename = caro.getFileName(basename, false)
         extendName = caro.getExtendName(basename)
         filePath = caro.normalizePath(rootPath, basename)
@@ -208,7 +208,7 @@ do ->
     ])
     subPath = ''
     try
-      caro.eachObj aPath, (i, eachDir) ->
+      caro.each aPath, (i, eachDir) ->
         subPath = caro.normalizePath(subPath, eachDir)
         exists = caro.fsExists(subPath)
         if !exists
@@ -353,7 +353,7 @@ do ->
     pass = true
     aPath = []
     try
-      caro.eachObj aPath, (i, path) ->
+      caro.each aPath, (i, path) ->
         if caro.isFsDir(path)
           if !caro.deleteDir(path, force)
             pass = false
@@ -387,7 +387,7 @@ do ->
         force = arg
       return
     # e.g. aPath=[[path, path2],[path3, path4]]
-    caro.eachObj aPath, (i, pathMap) ->
+    caro.each aPath, (i, pathMap) ->
       path1 = pathMap[0]
       path2 = pathMap[1]
       try

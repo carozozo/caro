@@ -27,7 +27,7 @@ do ->
     r = if clone then caro.cloneObj(obj) else obj
     keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
-    caro.eachObj keys, (i, key) ->
+    caro.each keys, (i, key) ->
       if !caro.keysInObj(r, key)
         return
       val = r[key]
@@ -51,19 +51,13 @@ do ->
     return
 
   ###*
+  # TODO will replaced by Loop.each
   # like jQuery.each function
   # @param {object} obj
   # @param {function} cb callback-fn for each key & val
   ###
-
   self.eachObj = (obj, cb) ->
-    isArr = Array.isArray obj
-    for key, val of obj
-      if isArr
-        key = parseInt key
-      if cb and cb(key, val) == false
-        break
-    return
+    caro.each(obj, cb)
 
   ###*
   # @param {object} obj
@@ -84,7 +78,7 @@ do ->
     clone = (obj) ->
       return obj if !caro.isObjOrArr(obj)
       r = obj.constructor()
-      caro.eachObj obj, (key, val) ->
+      caro.each obj, (key, val) ->
         val = clone(val)
         r[key] = val
       r
@@ -104,10 +98,10 @@ do ->
     if deep
       r = caro.cloneObj(obj1)
     else
-      caro.eachObj(obj1, (key, val) ->
+      caro.each(obj1, (key, val) ->
         pushValToObjOrArr(r, key, val)
       )
-    caro.eachObj obj2, (key, val) ->
+    caro.each obj2, (key, val) ->
       val = caro.cloneObj(val) if deep
       pushValToObjOrArr(r, key, val)
       return
@@ -124,7 +118,7 @@ do ->
   self.replaceObjKey = (obj, cb, clone = false) ->
     objRet = obj
     objRet = caro.cloneObj(obj) if clone
-    caro.eachObj objRet, (key, val) ->
+    caro.each objRet, (key, val) ->
       newKey = caro.executeIfFn(cb, key)
       if newKey
         objRet[newKey] = val
@@ -146,7 +140,7 @@ do ->
     deep = opt.deep == true
     clone = opt.clone == true
     coverObjVal = (o) ->
-      caro.eachObj o, (key, val) ->
+      caro.each o, (key, val) ->
         if caro.isObj(val) and deep
           coverObjVal val
           return
@@ -203,7 +197,7 @@ do ->
     deep = opt.deep != false
     clone = opt.clone == true
     r = if clone then  caro.cloneObj(obj) else obj
-    caro.eachObj r, (key, val) ->
+    caro.each r, (key, val) ->
       if caro.isObjOrArr(val) and deep
         r[key] = caro.trimObjVal(val, opt)
       else if caro.isStr(val)
@@ -223,7 +217,7 @@ do ->
       return false
     pass = true
     keys = caro.splitStr(keys, ',')
-    caro.eachObj keys, (i, key) ->
+    caro.each keys, (i, key) ->
       if !obj.hasOwnProperty(key)
         pass = false
         return false
@@ -244,7 +238,7 @@ do ->
     levelCount = 0
     getKey = (obj) ->
       levelCount++
-      caro.eachObj obj, (key, val) ->
+      caro.each obj, (key, val) ->
         return if levelLimit > 0 and levelCount > levelLimit
         arr.push key
         if caro.isObj(val)
@@ -261,16 +255,16 @@ do ->
   ###
 
   self.coverFnToStrInObj = (obj, replaceWrap = true) ->
-    caro.eachObj obj, (key, val) ->
+    caro.each obj, (key, val) ->
       if caro.isObjOrArr(val)
         caro.coverFnToStrInObj(val)
       else if caro.isFn(val)
         fnStr = val.toString()
         if replaceWrap
-          fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g,'');
+          fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g, '');
         else
-          fnStr = fnStr.replace(/[\r]\s*/g,'\r ');
-          fnStr = fnStr.replace(/[\n]\s*/g,'\n ');
+          fnStr = fnStr.replace(/[\r]\s*/g, '\r ');
+          fnStr = fnStr.replace(/[\n]\s*/g, '\n ');
         obj[key] = fnStr
       return
     obj

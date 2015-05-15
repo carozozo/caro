@@ -131,23 +131,6 @@
   };
 
   /**
-   * like caor.eachObj, but key is integer
-   * @param args should be arguments (obj with numeric-key)
-   * @param cb
-   */
-  self.eachArgs = function(args, cb) {
-    var i;
-    for (i in args) {
-      if (args.hasOwnProperty(i)) {
-        i = parseInt(i);
-        if (cb && cb(i, args[i]) === false) {
-          break;
-        }
-      }
-    }
-  };
-
-  /**
    * get arguments, and return as arr
    * @param args should be arguments (obj with numeric-key)
    * @returns {Array}
