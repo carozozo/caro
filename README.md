@@ -31,7 +31,7 @@ caro.isArr(['caro']); // true
 
 ### Array
 [Back to Index](#index)
-- **sortArr(arr [sort=true [clone=false]]) - 陣列排序
+- **sortArr(arr [sort=true [clone=false]]) - 陣列排序**
 ```javascript
     arg = [1, 3, 2, null]; 
     arg2 = [1, 3, 2, null];
@@ -561,10 +561,10 @@ caro.isArr(['caro']); // true
 - **✪Will replaced by Loop.each✪**
 ```javascript
     var arg = ['a', 'b', c'];
-    var r = caro.eachObj(arg, (i, val)->
+    var r = caro.eachObj(arg, function (i, val){
       console.log 'i,', i
       console.log 'val=', val
-    );
+    });
 ```
 - **getObjLength(obj) - 取得 obj 長度(element 數量)**
 ```javascript
@@ -684,12 +684,14 @@ caro.isArr(['caro']); // true
 - **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)**
 ```javascript
     var arg = {
-      a: 1, b: 2, c: (a) ->
+      a: 1, b: 2, c: function (a){
         return a
+      }
     };
     var arg2 = {
-      a: 1, b: 2, c: (a) ->
+      a: 1, b: 2, c: function (a){
         return a
+      }
     };
     r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
     r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
