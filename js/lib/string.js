@@ -73,7 +73,7 @@
     }
     chars = chars.join('');
     exclude = caro.splitStr(exclude, ',');
-    caro.eachObj(exclude, function(i, excludeStr) {
+    caro.each(exclude, function(i, excludeStr) {
       chars = caro.replaceAll(String(chars), excludeStr, '');
     });
     i = 0;
@@ -242,7 +242,7 @@
     indexCount = 0;
     aStr = str.split('');
     aStrClone = caro.cloneObj(aStr);
-    caro.eachObj(aStrClone, function(i, char) {
+    caro.each(aStrClone, function(i, char) {
       var isUpper;
       isUpper = caro.isUpper(char);
       if (indexCount > 0 && isUpper) {
@@ -335,7 +335,7 @@
     }
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
-      caro.eachObj(splitter, function(j, eachSplit) {
+      caro.each(splitter, function(j, eachSplit) {
         if (!caro.isStr(eachSplit)) {
           return;
         }
@@ -350,7 +350,7 @@
     if (!caro.isStr(mainSplit)) {
       return str;
     }
-    caro.eachObj(splitter, function(i, eachSplit) {
+    caro.each(splitter, function(i, eachSplit) {
       if (!caro.isStr(eachSplit)) {
         return;
       }
@@ -375,7 +375,7 @@
     aArgs = ['?'];
     url = caro.coverToStr(url);
     oArgs = caro.coverToObj(oArgs);
-    caro.eachObj(oArgs, function(key, val) {
+    caro.each(oArgs, function(key, val) {
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {
           return;

@@ -28,7 +28,7 @@
     r = clone ? caro.cloneObj(obj) : obj;
     keys = keys || caro.getKeysInObj(r);
     keys = caro.splitStr(keys, ',');
-    caro.eachObj(keys, function(i, key) {
+    caro.each(keys, function(i, key) {
       var opt, val;
       if (!caro.keysInObj(r, key)) {
         return;
@@ -59,22 +59,13 @@
   };
 
   /**
+   * TODO will replaced by Loop.each
    * like jQuery.each function
    * @param {object} obj
    * @param {function} cb callback-fn for each key & val
    */
   self.eachObj = function(obj, cb) {
-    var isArr, key, val;
-    isArr = Array.isArray(obj);
-    for (key in obj) {
-      val = obj[key];
-      if (isArr) {
-        key = parseInt(key);
-      }
-      if (cb && cb(key, val) === false) {
-        break;
-      }
-    }
+    return caro.each(obj, cb);
   };
 
   /**
@@ -99,7 +90,7 @@
         return obj;
       }
       r = obj.constructor();
-      caro.eachObj(obj, function(key, val) {
+      caro.each(obj, function(key, val) {
         val = clone(val);
         return r[key] = val;
       });
@@ -127,11 +118,11 @@
     if (deep) {
       r = caro.cloneObj(obj1);
     } else {
-      caro.eachObj(obj1, function(key, val) {
+      caro.each(obj1, function(key, val) {
         return pushValToObjOrArr(r, key, val);
       });
     }
-    caro.eachObj(obj2, function(key, val) {
+    caro.each(obj2, function(key, val) {
       if (deep) {
         val = caro.cloneObj(val);
       }
@@ -156,7 +147,7 @@
     if (clone) {
       objRet = caro.cloneObj(obj);
     }
-    caro.eachObj(objRet, function(key, val) {
+    caro.each(objRet, function(key, val) {
       var newKey;
       newKey = caro.executeIfFn(cb, key);
       if (newKey) {
@@ -181,7 +172,7 @@
     deep = opt.deep === true;
     clone = opt.clone === true;
     coverObjVal = function(o) {
-      caro.eachObj(o, function(key, val) {
+      caro.each(o, function(key, val) {
         var newVal;
         if (caro.isObj(val) && deep) {
           coverObjVal(val);
@@ -241,7 +232,7 @@
     deep = opt.deep !== false;
     clone = opt.clone === true;
     r = clone ? caro.cloneObj(obj) : obj;
-    caro.eachObj(r, function(key, val) {
+    caro.each(r, function(key, val) {
       if (caro.isObjOrArr(val) && deep) {
         r[key] = caro.trimObjVal(val, opt);
       } else if (caro.isStr(val)) {
@@ -264,7 +255,7 @@
     }
     pass = true;
     keys = caro.splitStr(keys, ',');
-    caro.eachObj(keys, function(i, key) {
+    caro.each(keys, function(i, key) {
       if (!obj.hasOwnProperty(key)) {
         pass = false;
         return false;
@@ -290,7 +281,7 @@
     levelCount = 0;
     getKey = function(obj) {
       levelCount++;
-      caro.eachObj(obj, function(key, val) {
+      caro.each(obj, function(key, val) {
         if (levelLimit > 0 && levelCount > levelLimit) {
           return;
         }
@@ -313,7 +304,7 @@
     if (replaceWrap == null) {
       replaceWrap = true;
     }
-    caro.eachObj(obj, function(key, val) {
+    caro.each(obj, function(key, val) {
       var fnStr;
       if (caro.isObjOrArr(val)) {
         caro.coverFnToStrInObj(val);

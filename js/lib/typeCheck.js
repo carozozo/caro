@@ -11,7 +11,7 @@
   checkType = function(args, type) {
     var pass;
     pass = true;
-    caro.eachObj(args, function(i, arg) {
+    caro.each(args, function(i, arg) {
       if (typeof arg !== type) {
         pass = false;
       }
