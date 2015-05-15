@@ -14,6 +14,8 @@
     start = caro.coverToInt(opt.start);
     end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
     force = opt.force !== false;
+    console.log('str=', str);
+    console.log('force=', force);
     if (!caro.isStr(str)) {
       if (!force) {
         return str;

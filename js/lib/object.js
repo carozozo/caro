@@ -45,7 +45,7 @@
           r[key] = caro.lowerStr(val, opt);
           break;
         case 'upperFirst':
-          r[key] = caro.upperFirst(val, opt);
+          r[key] = caro.upperFirst(val, false);
       }
     });
     return r;

@@ -39,7 +39,7 @@ do ->
         when 'lower'
           r[key] = caro.lowerStr(val, opt)
         when 'upperFirst'
-          r[key] = caro.upperFirst(val, opt)
+          r[key] = caro.upperFirst(val, false)
       return
     r
 
