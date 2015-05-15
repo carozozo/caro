@@ -41,14 +41,12 @@
     pass = true;
     caro.eachArgs(arguments, function(i, val) {
       val = caro.normalizePath(val);
-      console.log('val=', val);
       if (val.indexOf(absolutePath) !== 0) {
         pass = false;
         return false;
       }
       return true;
     });
-    console.log('pass-', pass);
     return pass;
   };
 
