@@ -1,5 +1,9 @@
 do ->
 describe 'FileSystem', ->
+  it 'setTrace', ->
+    r = caro.setTrace(false);
+    r.should.be.a('boolean')
+
   it 'readFileCaro', ->
     r = caro.readFileCaro(__dirname + '/test.html');
     r.should.be.string
@@ -9,8 +13,10 @@ describe 'FileSystem', ->
     r = caro.writeFileCaro(__dirname + '/\/test2.html', data);
     r.should.be.a('boolean')
 
-  it.only 'deleteFile', ->
-    r = caro.deleteFile('./1.js', __dirname + '/2.js');
+  it 'deleteFile', ->
+    r = caro.deleteFile('./1.js', __dirname + '/2.js', (e) ->
+      # do something when catch error
+    );
     r.should.be.a('boolean')
 
   it 'isEmptyDir', ->
@@ -24,7 +30,7 @@ describe 'FileSystem', ->
         getFile: true
         getByExtend: false
       }, (oFileInfo) ->
-      console.log oFileInfo
+        console.log oFileInfo
     );
 
   it 'createDir', ->
@@ -74,7 +80,7 @@ describe 'FileSystem', ->
     r3.should.be.a('number')
 
   it 'humanFeSize', ->
-    r = caro.humanFeSize('./caro.js','ededed',undefined);
+    r = caro.humanFeSize('./caro.js', 'ededed', undefined);
     r2 = caro.humanFeSize('./caro.js', 3);
     r3 = caro.humanFeSize(10000000.456, 2, false);
     r.should.be.a('string')
