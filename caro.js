@@ -1,4 +1,4 @@
-/*! caro - v0.4.13 - 2015-05-16 */
+/*! caro - v0.4.14 - 2015-05-16 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -12344,7 +12344,7 @@
    * support-type: upper/lower/upperFirst
    * @param {object} object
    * @param {string} type=upper|lower|upperFirst support-type
-   * @param {string[]|[]} [keys] the assign-keys
+   * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
   changeStrValByObjKey = function(obj, type, keys) {
@@ -12520,7 +12520,7 @@
   /**
    * upper-case value in object by key, will replace-all if key is empty
    * @param {object} object
-   * @param {string[]|[]} [keys] the assign-keys
+   * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
   self.upperCaseByObjKey = function(obj, keys) {
@@ -12530,7 +12530,7 @@
   /**
    * lower-case value in object by key, will replace-all if key is empty
    * @param {object} object
-   * @param {string[]|[]} [keys] the assign-keys
+   * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
   self.lowerCaseByObjKey = function(obj, keys) {
@@ -12540,7 +12540,7 @@
   /**
    * upper-case the first char of value in object by key, will replace-all if key is empty
    * @param {object} object
-   * @param {string[]|[]} [keys] the assign-keys
+   * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
   self.upperFirstByObjKey = function(obj, keys) {
@@ -12550,7 +12550,7 @@
   /**
    * trim value in object by key, will replace-all if key is empty
    * @param {object} object
-   * @param {string[]|[]} [keys] the assign-keys
+   * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
   self.trimByObjKey = function(obj, keys) {
