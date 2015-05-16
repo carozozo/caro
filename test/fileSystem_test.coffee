@@ -14,24 +14,27 @@ describe 'FileSystem', ->
     r.should.be.a('boolean')
 
   it 'deleteFile', ->
-    r = caro.deleteFile('./1.js', __dirname + '/2.js', (e) ->
-      # do something when catch error
+    r = caro.deleteFile('./1.js', __dirname + '/\/test2.html', (e) ->
+# do something when catch error
     );
     r.should.be.a('boolean')
 
   it 'isEmptyDir', ->
-    r = caro.isEmptyDir(__dirname + '/1', __dirname + '/2');
+    r = caro.isEmptyDir(__dirname + '/1', __dirname + '/2', (e) ->
+# do something when catch error
+    );
     r.should.be.a('boolean')
 
   it 'readDirCb', ->
-    caro.readDirCb('../src', {
+    caro.readDirCb('../src',
+      (err, oFileInfo) ->
+# do something when catch error
+    , {
         maxLevel: 1
         getDir: true
         getFile: true
         getByExtend: false
-      }, (oFileInfo) ->
-        console.log oFileInfo
-    );
+      });
 
   it 'createDir', ->
     r = caro.createDir('./src');

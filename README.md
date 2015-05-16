@@ -243,16 +243,18 @@ caro.isArr(['caro']); // true
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_unlinksync_path
     var r = caro.deleteFile('1.js', '2.js', function (e){
-        console.log(e.path); // 可取得發生錯誤的 path
+        console.log(e);
     }); // 只要其中一個刪除失敗，回傳 false 
 ```
 - **isEmptyDir(path...) - 判斷是否為空資料夾**
 ```javascript
-    var r = caro.isEmptyDir('/1', '/2'); / 只要其中一個不是資料夾或不是空的，回傳 false
+    var r = caro.isEmptyDir('/1', '/2', function (e){
+        console.log(e);
+    }); / 只要其中一個不是資料夾或不是空的，回傳 false
 ```
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
-    caro.readDirCb('../src', function(oFileInfo) {
+    caro.readDirCb('../src', function(err, oFileInfo) {
         console.log(oFileInfo); // 檔案訊息(Object) 
         console.log(oFileInfo.filename);
         // filename 檔名

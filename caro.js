@@ -11138,7 +11138,7 @@
  * @author Caro.Huang
  */
 (function() {
-  var fileSizeUnits1, fileSizeUnits2, getFileSize, nFs, self, showErr, traceMode;
+  var fileSizeUnits1, fileSizeUnits2, getArgsAndCb, getFileSize, nFs, self, showErr, traceMode;
   if (!caro.isNode) {
     return;
   }
@@ -11151,6 +11151,19 @@
     if (traceMode) {
       return console.error(e);
     }
+  };
+  getArgsAndCb = function(args) {
+    var cb, r;
+    r = [];
+    cb = null;
+    caro.each(args, function(i, arg) {
+      if (caro.isFn(arg)) {
+        cb = arg;
+        return;
+      }
+      r.push(arg);
+    });
+    return [r, cb];
   };
   getFileSize = function(path) {
     var status;
@@ -11228,21 +11241,17 @@
   };
 
   /**
+   * delete file
    * @param {...string} path
    * @param {function} cb the callback-function when catch error
    * @returns {boolean}
    */
   self.deleteFile = function(path, cb) {
-    var pass, r;
+    var argAndCb, pass, r;
     pass = true;
-    r = [];
-    caro.each(arguments, function(i, arg) {
-      if (caro.isFn(arg)) {
-        cb = arg;
-        return;
-      }
-      r.push(arg);
-    });
+    argAndCb = getArgsAndCb(arguments);
+    r = argAndCb[0];
+    cb = argAndCb[1];
     caro.each(r, function(i, arg) {
       var e;
       try {
@@ -11260,12 +11269,16 @@
   /**
    * check if empty-folder, return false if anyone is false
    * @param {...string} path
+   * @param {function} cb the callback-function when catch error
    * @returns {boolean}
    */
-  self.isEmptyDir = function(path) {
-    var pass;
+  self.isEmptyDir = function(path, cb) {
+    var argAndCb, pass, r;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    argAndCb = getArgsAndCb(arguments);
+    r = argAndCb[0];
+    cb = argAndCb[1];
+    caro.each(r, function(i, arg) {
       var count, e;
       try {
         count = 0;
@@ -11276,11 +11289,12 @@
           pass = false;
           return false;
         }
-        return true;
+        return;
       } catch (_error) {
         e = _error;
         showErr(e);
-        return pass = false;
+        cb(e);
+        pass = false;
       }
     });
     return pass;
@@ -11289,12 +11303,12 @@
   /**
    * get files under path
    * @param {string} path
+   * @param {function(object)} [cb] cb with file-info
    * @param {object} [opt]
    * @param {number} [opt.maxLevel=1] the dir-level you want to read, get all-level when 0
    * @param {boolean} [opt.getDir=true] if return dir-path
    * @param {boolean} [opt.getFile=true] if return file-path
    * @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
-   * @param {function(object)} [cb] cb with file-info
    * @returns {*}
    */
   self.readDirCb = function(path, cb, opt) {
@@ -11304,9 +11318,6 @@
     }
     if (opt == null) {
       opt = {};
-    }
-    if (!caro.isFsDir(path)) {
-      return;
     }
     countLevel = 0;
     maxLevel = opt.maxLevel ? parseInt(opt.maxLevel, 10) : 1;
@@ -11329,14 +11340,17 @@
       if (getByExtend && getByExtend.indexOf(extendName) < 0) {
         return;
       }
-      caro.executeIfFn(cb, oFileInfo);
+      cb(false, oFileInfo);
     };
     readDir = function(rootPath, level) {
-      var files;
-      if (!caro.isFsDir(rootPath)) {
-        return;
+      var e, files;
+      try {
+        files = nFs.readdirSync(rootPath);
+      } catch (_error) {
+        e = _error;
+        showErr(e);
+        cb(e);
       }
-      files = nFs.readdirSync(rootPath);
       if (maxLevel > 0 && level >= maxLevel) {
         return;
       }
@@ -11376,6 +11390,7 @@
         }
       });
     };
+    console.log('cb=', cb);
     readDir(path, countLevel);
   };
 
