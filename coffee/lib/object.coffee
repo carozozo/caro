@@ -91,10 +91,15 @@ do ->
   # @param {boolean} [deep=false] if clone all under obj
   # @returns {*}
   ###
-  self.cloneObj = (arg) ->
+  self.cloneObj = (arg, deep = false) ->
     return arg if !caro.isObjOrArr(arg)
     r = if caro.isArr(arg) then [] else {}
     caro.extendObj(r, arg)
+    if(deep)
+      caro.each(r, (key, val) ->
+        r[key] = caro.cloneObj(val)
+      )
+    r
 
   ###*
   # replace key in object

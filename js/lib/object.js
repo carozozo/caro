@@ -117,13 +117,22 @@
    * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
    */
-  self.cloneObj = function(arg) {
+  self.cloneObj = function(arg, deep) {
     var r;
+    if (deep == null) {
+      deep = false;
+    }
     if (!caro.isObjOrArr(arg)) {
       return arg;
     }
     r = caro.isArr(arg) ? [] : {};
-    return caro.extendObj(r, arg);
+    caro.extendObj(r, arg);
+    if (deep) {
+      caro.each(r, function(key, val) {
+        return r[key] = caro.cloneObj(val);
+      });
+    }
+    return r;
   };
 
   /**
