@@ -29,6 +29,17 @@ do ->
   traceMode = false
   showErr = (e) ->
     console.error(e) if traceMode
+  getArgsAndCb = (args) ->
+    r = []
+    cb = null
+    caro.each args, (i, arg) ->
+      if caro.isFn(arg)
+        cb = arg
+        return
+      r.push arg
+      return
+    [r, cb]
+
   getFileSize = (path) ->
     status = caro.getFsStat(path)
     return status.size if status
@@ -77,20 +88,16 @@ do ->
     false
 
   ###*
+  # delete file
   # @param {...string} path
   # @param {function} cb the callback-function when catch error
   # @returns {boolean}
   ###
   self.deleteFile = (path, cb) ->
     pass = true
-    r = []
-    # TODO ¥i§ï¼g¬° function
-    caro.each arguments, (i,arg) ->
-      if caro.isFn(arg)
-        cb = arg
-        return
-      r.push arg
-      return
+    argAndCb = getArgsAndCb(arguments)
+    r = argAndCb[0]
+    cb = argAndCb[1]
     caro.each r, (i, arg) ->
       try
         nFs.unlinkSync arg
@@ -105,11 +112,15 @@ do ->
   ###*
   # check if empty-folder, return false if anyone is false
   # @param {...string} path
+  # @param {function} cb the callback-function when catch error
   # @returns {boolean}
   ###
-  self.isEmptyDir = (path) ->
+  self.isEmptyDir = (path, cb) ->
     pass = true
-    caro.eachArgs arguments, (i, arg) ->
+    argAndCb = getArgsAndCb(arguments)
+    r = argAndCb[0]
+    cb = argAndCb[1]
+    caro.each r, (i, arg) ->
       try
         count = 0
         caro.readDirCb arg, ->
@@ -118,27 +129,26 @@ do ->
         if count > 0
           pass = false
           return false
-        true
+        return
       catch e
         showErr(e)
+        cb(e)
         pass = false
+      return
     pass
 
   ###*
   # get files under path
   # @param {string} path
+  # @param {function(object)} [cb] cb with file-info
   # @param {object} [opt]
   # @param {number} [opt.maxLevel=1] the dir-level you want to read, get all-level when 0
   # @param {boolean} [opt.getDir=true] if return dir-path
   # @param {boolean} [opt.getFile=true] if return file-path
   # @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
-  # @param {function(object)} [cb] cb with file-info
   # @returns {*}
   ###
-
   self.readDirCb = (path, cb = null, opt = {}) ->
-    if !caro.isFsDir(path)
-      return
     countLevel = 0
     maxLevel = if opt.maxLevel then parseInt(opt.maxLevel, 10) else 1
     getDir = opt.getDir != false
@@ -151,18 +161,18 @@ do ->
           r[i] = caro.addHead(extendName, '.')
           return
       r
-
     pushFile = (oFileInfo) ->
       extendName = oFileInfo.extendName
       if getByExtend and getByExtend.indexOf(extendName) < 0
         return
-      caro.executeIfFn cb, oFileInfo
+      cb false, oFileInfo
       return
-
     readDir = (rootPath, level) ->
-      if !caro.isFsDir(rootPath)
-        return
-      files = nFs.readdirSync(rootPath)
+      try
+        files = nFs.readdirSync(rootPath)
+      catch e
+        showErr(e)
+        cb e
       if maxLevel > 0 and level >= maxLevel
         return
       level++
@@ -195,7 +205,6 @@ do ->
             pushFile oFileInfo
         return
       return
-
     readDir path, countLevel
     return
 
