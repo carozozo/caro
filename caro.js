@@ -12409,26 +12409,59 @@
   };
 
   /**
-   * clone obj
-   * @param {object} obj
+   * extend obj similar jQuery.extend
    * @param {boolean} [deep=false] if clone all under obj
+   * @param {object...|array...} arg arr or obj
    * @returns {*}
    */
-  self.cloneObj = function(obj) {
-    var clone;
-    clone = function(obj) {
-      var r;
-      if (!caro.isObjOrArr(obj)) {
-        return obj;
+  self.extend = function(deep, arg) {
+    var firstArg;
+    if (deep == null) {
+      deep = false;
+    }
+    firstArg = null;
+    caro.eachArgs(arguments, function(key, arg) {
+      if (key !== 0) {
+        return false;
       }
-      r = obj.constructor();
-      caro.each(obj, function(key, val) {
-        val = clone(val);
-        return r[key] = val;
-      });
-      return r;
-    };
-    return clone(obj);
+      if (caro.isBool(arg)) {
+        deep = arg;
+        return false;
+      }
+      if (caro.isObjOrArr(arg)) {
+        firstArg = arg;
+        deep = false;
+        return false;
+      }
+    });
+    caro.eachArgs(arguments, function(key, arg) {
+      var results, val;
+      if (!firstArg && caro.isObjOrArr(arg)) {
+        firstArg = arg;
+        return true;
+      }
+      results = [];
+      for (key in arg) {
+        val = arg[key];
+        if (caro.isObj(firstArg) && caro.keysInObj(firstArg, key) && !deep) {
+          continue;
+        }
+        results.push(pushValToObjOrArr(firstArg, key, val));
+      }
+      return results;
+    });
+    return firstArg;
+  };
+
+  /**
+   * clone an obj
+  #
+   */
+  self.clone = function(arg) {
+    if (!caro.isObjOrArr(arg)) {
+      return arg;
+    }
+    return caro.extend({}, arg);
   };
 
   /**
@@ -12461,6 +12494,29 @@
       pushValToObjOrArr(r, key, val);
     });
     return r;
+  };
+
+  /**
+   * clone obj
+   * @param {object} obj
+   * @param {boolean} [deep=false] if clone all under obj
+   * @returns {*}
+   */
+  self.cloneObj = function(obj) {
+    var clone;
+    clone = function(obj) {
+      var r;
+      if (!caro.isObjOrArr(obj)) {
+        return obj;
+      }
+      r = obj.constructor();
+      caro.each(obj, function(key, val) {
+        val = clone(val);
+        return r[key] = val;
+      });
+      return r;
+    };
+    return clone(obj);
   };
 
   /**

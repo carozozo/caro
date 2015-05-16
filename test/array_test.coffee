@@ -1,5 +1,5 @@
 do ->
-describe.only 'Array', ->
+describe 'Array', ->
   it 'sortArr', ->
     arg = [1, 3, 2, null];
     arg2 = [1, 3, 2, null];

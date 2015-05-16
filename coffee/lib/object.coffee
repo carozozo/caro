@@ -67,31 +67,50 @@ do ->
   self.getObjLength = (obj) ->
     Object.keys(obj).length
 
+
   ###*
-  # clone obj
-  # @param {object} obj
+  # extend obj similar jQuery.extend
   # @param {boolean} [deep=false] if clone all under obj
+  # @param {object...|array...} arg arr or obj
   # @returns {*}
   ###
-
-  self.cloneObj = (obj) ->
-    clone = (obj) ->
-      return obj if !caro.isObjOrArr(obj)
-      r = obj.constructor()
-      caro.each obj, (key, val) ->
-        val = clone(val)
-        r[key] = val
-      r
-    clone obj
+  self.extend = (deep = false, arg) ->
+    firstArg = null
+    caro.eachArgs arguments, (key, arg)->
+      return false if key != 0
+      if caro.isBool(arg)
+        deep = arg
+        return false
+      if caro.isObjOrArr(arg)
+        firstArg = arg
+        deep = false
+        return false
+    caro.eachArgs arguments, (key, arg)->
+      if !firstArg and caro.isObjOrArr(arg)
+        firstArg = arg
+        return true
+      for key, val of arg
+        if caro.isObj(firstArg) and caro.keysInObj(firstArg, key) and !deep
+          continue
+        pushValToObjOrArr(firstArg, key, val)
+    firstArg
 
   ###*
+  # clone an obj
+  #
+  ###
+  self.clone = (arg) ->
+    return arg if !caro.isObjOrArr(arg)
+    caro.extend({}, arg)
+
+  ###*
+  ## TODO will be replaced by Object.exetnd
   # extend obj similar jQuery.extend
   # @param {object} obj1
   # @param {object} obj2
   # @param {boolean} [deep=false] if clone all under obj
   # @returns {*}
   ###
-
   self.extendObj = (obj1, obj2, deep = false) ->
     return obj1 if !caro.isObjOrArr(obj1) or !caro.isObjOrArr(obj2)
     r = if caro.isObj(obj1) then {} else []
@@ -106,6 +125,23 @@ do ->
       pushValToObjOrArr(r, key, val)
       return
     r
+
+  ###*
+  ## TODO will be replaced by Object.clone
+  # clone obj
+  # @param {object} obj
+  # @param {boolean} [deep=false] if clone all under obj
+  # @returns {*}
+  ###
+  self.cloneObj = (obj) ->
+    clone = (obj) ->
+      return obj if !caro.isObjOrArr(obj)
+      r = obj.constructor()
+      caro.each obj, (key, val) ->
+        val = clone(val)
+        r[key] = val
+      r
+    clone obj
 
   ###*
   # replace key in object
