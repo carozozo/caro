@@ -7,9 +7,9 @@ do ->
   self = caro
 
   ###*
-  # for-loop the arg and callback of key/val
+  # for-loop the arg and callback of key/value
   # @param {*} arg
-  # @param {function} cb callback-fn for each key & val
+  # @param {function} cb callback-function for each key & value
   ###
   self.each = (arg, cb) ->
     isArr = Array.isArray(arg)
@@ -20,9 +20,9 @@ do ->
     return
 
   ###*
-   # for-loop the arg and callback of int-key/val
+   # for-loop the arg and callback of int-key/value
    # @param arg
-   # @param {function} cb callback-fn for each key & val
+   # @param {function} cb callback-function for each key & value
    ###
   self.eachArgs = (arg, cb) ->
     for i of arg

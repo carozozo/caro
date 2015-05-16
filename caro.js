@@ -10508,10 +10508,10 @@
   self = caro;
 
   /**
-   * sort arr
+   * sort array
    * @param {[]} arr
    * @param {boolean} [sort=true] if sort by ASC
-   * @param {boolean} [clone=false] if clone for not change original-arr
+   * @param {boolean} [clone=false] if clone for not change original-array
    * @returns {*}
    */
   self.sortArr = function(arr, sort, clone) {
@@ -10548,11 +10548,11 @@
   };
 
   /**
-   * sort arr by key if value is obj
+   * sort array by key if value is object
    * @param {[]} arr
    * @param {string} key
    * @param {boolean} [sort=true] if sort by ASC
-   * @param {boolean} [clone=false] if clone for not change original-arr
+   * @param {boolean} [clone=false] if clone for not change original-array
    * @returns {*}
    */
   self.sortByObjKey = function(arr, key, sort, clone) {
@@ -10592,7 +10592,7 @@
   };
 
   /**
-   * get sum of val in arr
+   * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false]
    * @returns {number}
@@ -10618,7 +10618,7 @@
   };
 
   /**
-   * remove item from arr by index
+   * remove item from array by index
    * @param {[]} arr
    * @param {...number} index
    * @returns {*}
@@ -10658,9 +10658,9 @@
   };
 
   /**
-   * remove the item from arr by val
+   * remove the item from array by value
    * @param {[]} arr
-   * @param {...*} val
+   * @param {...*} value
    * @returns {*}
    */
   self.removeByArrVal = function(arr, val) {
@@ -10696,7 +10696,7 @@
   };
 
   /**
-   * remove duplicate-val in arr
+   * remove duplicate-value in array
    * @param {[]} arr
    * @returns {*}
    */
@@ -10716,9 +10716,9 @@
   };
 
   /**
-   * push val into arr if not exists
+   * push value into array if not exists
    * @param {[]} arr
-   * @param {...*} val
+   * @param {...*} value
    * @returns {*}
    */
   self.pushNoDup = function(arr, val) {
@@ -10735,9 +10735,9 @@
   };
 
   /**
-   * will not push to arr if value is empty
+   * will not push to array if value is empty
    * @param {[]} arr
-   * @param {...*} val
+   * @param {...*} value
    * @returns {*}
    */
   self.pushNoEmpty = function(arr, val) {
@@ -10754,7 +10754,7 @@
   };
 
   /**
-   * check if empty-value in arr
+   * check if empty-value in array
    * @param {...[]} arr
    * @returns {boolean}
    */
@@ -10956,10 +10956,10 @@
   /**
    * add date-time unit
    * please refer {@link http://momentjs.com/docs/#/manipulating/add/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
    * @param {number|string} amount
    * @param {string} unit time-unit
-   * @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+   * @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
    * @returns {*}
    */
   self.addDateTime = function(dateTime, amount, unit, formatType) {
@@ -10976,10 +10976,10 @@
   /**
    * subtract date-time unit
    * please refer {@link http://momentjs.com/docs/#/manipulating/subtract/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
    * @param {number|string} amount
    * @param {string} unit time-unit
-   * @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+   * @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
    * @returns {*}
    */
   self.subtractDateTime = function(dateTime, amount, unit, formatType) {
@@ -10997,9 +10997,9 @@
    * get start of the unit
    * e.g. startOf('2013-01-01 23:00:00','day') = 2013-01-01 00:00:00
    * please refer {@link http://momentjs.com/docs/#/manipulating/start-of/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
    * @param {string} unit time-unit
-   * @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+   * @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
    * @returns {moment.Moment|*}
    */
   self.startOfDateTime = function(dateTime, unit, formatType) {
@@ -11012,9 +11012,9 @@
   /**
    * get end of the unit
    * please refer {@link http://momentjs.com/docs/#/manipulating/end-of/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
    * @param {string} unit time-unit
-   * @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+   * @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
    * @returns {moment.Moment|*}
    */
   self.endOfDateTime = function(dateTime, unit, formatType) {
@@ -11027,8 +11027,8 @@
   /**
    * get date-time with UTC
    * please refer {@link http://momentjs.com/docs/#/parsing/utc/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
-   * @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
+   * @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
    * @returns {*}
    */
   self.getUtc = function(dateTime, formatType) {
@@ -11041,8 +11041,8 @@
   /**
    * compare date-time if before target
    * please refer {@link http://momentjs.com/docs/#/query/is-before/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
-   * @param {?string|object} targetDateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
+   * @param {?string|object} targetDateTime the string with date-time format, or moment-object
    * @param {string} [unit] time-unit
    * @returns {*}
    */
@@ -11056,8 +11056,8 @@
   /**
    * check date-time if after target
    * please refer {@link http://momentjs.com/docs/#/query/is-after/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
-   * @param {?string|object} targetDateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
+   * @param {?string|object} targetDateTime the string with date-time format, or moment-object
    * @param {string} [unit] time-unit
    * @returns {*}
    */
@@ -11071,8 +11071,8 @@
   /**
    * check date-time if same as target
    * please refer {@link http://momentjs.com/docs/#/query/is-same/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
-   * @param {?string|object} targetDateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
+   * @param {?string|object} targetDateTime the string with date-time format, or moment-object
    * @param {string} [unit] time-unit
    * @returns {*}
    */
@@ -11086,9 +11086,9 @@
   /**
    * check if a moment is between two other moments
    * please refer {@link http://momentjs.com/docs/#/query/is-between/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
-   * @param {?string|object} dateTime1 the str with date-time format, or moment-obj
-   * @param {?string|object} dateTime2 the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
+   * @param {?string|object} dateTime1 the string with date-time format, or moment-object
+   * @param {?string|object} dateTime2 the string with date-time format, or moment-object
    * @param {string} [unit] time-unit
    * @returns {*}
    */
@@ -11103,7 +11103,7 @@
   /**
    * validate is date-time format
    * please refer {@link http://momentjs.com/docs/#/utilities/invalid/}
-   * @param {?string|object} dateTime the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime the string with date-time format, or moment-object
    * @returns {*}
    */
   self.isValidDateTime = function(dateTime) {
@@ -11115,8 +11115,8 @@
   /**
    * get different between 2 date-time
    * please refer {@link http://momentjs.com/docs/#/displaying/difference/}
-   * @param {?string|object} dateTime1 the str with date-time format, or moment-obj
-   * @param {?string|object} dateTime2 the str with date-time format, or moment-obj
+   * @param {?string|object} dateTime1 the string with date-time format, or moment-object
+   * @param {?string|object} dateTime2 the string with date-time format, or moment-object
    * @param {string} [unit] time-unit
    * @param {boolean} [withFloat=false]
    * @returns {number|*}
@@ -11720,7 +11720,7 @@
   self = caro;
 
   /**
-   * check if arg is bool | str | num
+   * check if arg is boolean | string | number
    * @param {...} arg
    * @returns {boolean}
    */
@@ -11776,8 +11776,8 @@
   };
 
   /**
-   * check all argument in arr by check-function, get false if check-function return false
-   * @param {[]} arr
+   * check all argument in array by check-function, get false if check-function return false
+   * @param {[]} array
    * @param {function} checkFn
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
    * @returns {boolean}
@@ -11841,8 +11841,8 @@
   };
 
   /**
-   * get arguments, and return as arr
-   * @param args should be arguments (obj with numeric-key)
+   * get arguments, and return as array
+   * @param args should be arguments (object with numeric-key)
    * @returns {Array}
    */
   self.getArgumentsAsArr = function(args) {
@@ -11856,7 +11856,7 @@
 
   /**
    * format to money type like 1,000.00
-   * @param {string|number} str
+   * @param {string|number} arg
    * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
    * @param {object} [opt]
    * @param {number} [opt.float=0]
@@ -11913,7 +11913,7 @@
   };
 
   /**
-   * cover to arr
+   * cover to array
    * @param arg
    * @returns {*}
    */
@@ -11925,9 +11925,9 @@
   };
 
   /**
-   * cover to str, will return '' if force!=false
+   * cover to string, will return '' if force!=false
    * @param arg
-   * @param {boolean} [force=true] if return str
+   * @param {boolean} [force=true] if return string
    * @returns {*}
    */
   self.coverToStr = function(arg, force) {
@@ -12024,7 +12024,7 @@
   };
 
   /**
-   * cover to obj, will return {} if force!=false
+   * cover to object, will return {} if force!=false
    * @param arg
    * @param {boolean} [force=true] if return object
    * @returns {*}
@@ -12296,9 +12296,9 @@
   self = caro;
 
   /**
-   * for-loop the arg and callback of key/val
+   * for-loop the arg and callback of key/value
    * @param {*} arg
-   * @param {function} cb callback-fn for each key & val
+   * @param {function} cb callback-function for each key & value
    */
   self.each = function(arg, cb) {
     var isArr, key, val;
@@ -12315,9 +12315,9 @@
   };
 
   /**
-    * for-loop the arg and callback of int-key/val
+    * for-loop the arg and callback of int-key/value
     * @param arg
-    * @param {function} cb callback-fn for each key & val
+    * @param {function} cb callback-function for each key & value
    */
   self.eachArgs = function(arg, cb) {
     var i;
@@ -12340,16 +12340,16 @@
   self = caro;
 
   /**
-   * change obj string-value by key, will change-all if aKey is empty
+   * change object string-value by key, will change-all if aKey is empty
    * support-type: upper/lower/upperFirst
-   * @param {object} obj
+   * @param {object} object
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
   changeStrValByObjKey = function(obj, type, keys) {
     var aType, r;
-    aType = ['upper', 'lower', 'upperFirst'];
+    aType = ['upper', 'lower', 'upperFirst', 'trim'];
     r = obj;
     if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
       return obj;
@@ -12374,6 +12374,9 @@
           break;
         case 'upperFirst':
           r[key] = caro.upperFirst(val, false);
+          break;
+        case 'trim':
+          r[key] = caro.trimStr(val, false);
       }
     });
     return r;
@@ -12388,7 +12391,7 @@
 
   /**
    * get object-length
-   * @param {object} obj
+   * @param {object} object
    * @returns {Number}
    */
   self.getObjLength = function(obj) {
@@ -12442,8 +12445,8 @@
 
   /**
    * clone object, similar jQuery.clone
-   * @param {object} obj
-   * @param {boolean} [deep=false] if clone all under obj
+   * @param {object} object
+   * @param {boolean} [deep=false] if clone all under object
    * @returns {*}
    */
   self.cloneObj = function(arg, deep) {
@@ -12466,8 +12469,8 @@
 
   /**
    * replace key in object
-   * @param {object} obj
-   * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
+   * @param {object} object
+   * @param {function({})} cb callback-function that include key, and return new-key if you want to replace
    * @returns {*}
    */
   self.replaceObjKey = function(obj, cb) {
@@ -12486,9 +12489,9 @@
 
   /**
    * replace value in object
-   * @param {object} obj
-   * @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
-   * @param {boolean} [deep=false] if deep-replace when element is obj
+   * @param {object} object
+   * @param {function({})} cb callback-function that include value, and return new-value if you want to replace
+   * @param {boolean} [deep=false] if deep-replace when element is object
    * @returns {*}
    */
   self.replaceObjVal = function(obj, cb, deep) {
@@ -12516,7 +12519,7 @@
 
   /**
    * upper-case value in object by key, will replace-all if key is empty
-   * @param {object} obj
+   * @param {object} object
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
@@ -12526,7 +12529,7 @@
 
   /**
    * lower-case value in object by key, will replace-all if key is empty
-   * @param {object} obj
+   * @param {object} object
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
@@ -12536,7 +12539,7 @@
 
   /**
    * upper-case the first char of value in object by key, will replace-all if key is empty
-   * @param {object} obj
+   * @param {object} object
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
@@ -12545,29 +12548,18 @@
   };
 
   /**
-   * @param {object} obj
-   * @param {boolean} [deep=false] if deep-replace when element is obj
+   * trim value in object by key, will replace-all if key is empty
+   * @param {object} object
+   * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
-  self.trimObjVal = function(obj, deep) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    r = obj;
-    caro.each(r, function(key, val) {
-      if (caro.isObjOrArr(val) && deep) {
-        r[key] = caro.trimObjVal(val, deep);
-      } else if (caro.isStr(val)) {
-        r[key] = val.trim();
-      }
-    });
-    return r;
+  self.trimByObjKey = function(obj, keys) {
+    return changeStrValByObjKey(obj, 'trim', keys);
   };
 
   /**
-   * check if key exists in obj, will return false when key not exist,no matter that other-keys are
-   * @param {object} obj
+   * check if key exists in object, will return false when key not exist, no matter that other-keys are
+   * @param {object} object
    * @param {string[]|string} keys the keys that want to validate
    * @returns {boolean}
    */
@@ -12583,22 +12575,21 @@
         pass = false;
         return false;
       }
-      return true;
     });
     return pass;
   };
 
   /**
-   * get keys in obj, and get all if levelLimit = 0
-   * @param {object} obj
-   * @param {number} [levelLimit=1] the level of obj you want to get keys
+   * get keys in object, and get all if levelLimit = 0
+   * @param {object} object
+   * @param {number} [levelLimit=1] the level of object you want to get keys
    * @returns {Array}
    */
   self.getKeysInObj = function(obj, levelLimit) {
-    var arr, getKey, levelCount;
-    arr = [];
+    var getKey, levelCount, r;
+    r = [];
     if (!caro.isObj(obj)) {
-      return arr;
+      return r;
     }
     levelLimit = caro.coverToInt(levelLimit, false) > -1 ? levelLimit : 1;
     levelCount = 0;
@@ -12608,7 +12599,7 @@
         if (levelLimit > 0 && levelCount > levelLimit) {
           return;
         }
-        arr.push(key);
+        r.push(key);
         if (caro.isObj(val)) {
           getKey(val);
         }
@@ -12616,18 +12607,21 @@
       levelCount--;
     };
     getKey(obj);
-    return arr;
+    return r;
   };
 
   /**
-   * @param {object} obj
+   * covert to string if element is function in object
+   * @param {object} object
    * @param {boolean} [replaceWrap=true] if replace \r\n
    */
   self.coverFnToStrInObj = function(obj, replaceWrap) {
+    var r;
     if (replaceWrap == null) {
       replaceWrap = true;
     }
-    caro.each(obj, function(key, val) {
+    r = obj;
+    caro.each(r, function(key, val) {
       var fnStr;
       if (caro.isObjOrArr(val)) {
         caro.coverFnToStrInObj(val);
@@ -12639,10 +12633,10 @@
           fnStr = fnStr.replace(/[\r]\s*/g, '\r ');
           fnStr = fnStr.replace(/[\n]\s*/g, '\n ');
         }
-        obj[key] = fnStr;
+        r[key] = fnStr;
       }
     });
-    return obj;
+    return r;
   };
 })();
 
@@ -12855,8 +12849,8 @@
   };
 
   /**
-   * check str if ("true" | not-empty) / ("false" | empty) and covert to boolean
-   * @param {string} str
+   * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
+   * @param {string} string
    * @returns {boolean}
    */
   self.strToBool = function(str) {
@@ -12869,7 +12863,7 @@
 
   /**
    * check if charts has in head of string
-   * @param str
+   * @param string
    * @param str2
    * @returns {*}
    */
@@ -12882,7 +12876,7 @@
 
   /**
    * add the head to string if not exist
-   * @param {string} str
+   * @param {string} string
    * @param {string} addStr
    * @returns {*}
    */
@@ -12895,7 +12889,7 @@
 
   /**
    * check if charts has in tail of string
-   * @param str
+   * @param string
    * @param str2
    * @returns {*}
    */
@@ -12912,7 +12906,7 @@
 
   /**
    * add the tail to string if not exist
-   * @param {string} str
+   * @param {string} string
    * @param {string} addStr
    * @returns {*}
    */
@@ -12925,7 +12919,7 @@
 
   /**
    * replace \r\n | \r | \n to <br/>
-   * @param {string} str
+   * @param {string} string
    * @returns {*|string}
    */
   self.wrapToBr = function(str) {
@@ -12940,7 +12934,7 @@
 
   /**
    * replace the <br/> to \n
-   * @param {string} str
+   * @param {string} string
    * @returns {*|string}
    */
   self.brToWrap = function(str) {
@@ -12954,7 +12948,7 @@
 
   /**
    * split to array by '\r\n' | '\n' | '\r'
-   * @param {string} str
+   * @param {string} string
    * @returns {*}
    */
   self.splitByWrap = function(str) {
@@ -12968,7 +12962,7 @@
 
   /**
    * escape RegExp
-   * @param {string} str
+   * @param {string} string
    * @returns {*|string}
    */
   self.escapeRegExp = function(str) {
@@ -12979,8 +12973,8 @@
   };
 
   /**
-   * replace all find in str
-   * @param {string} str
+   * replace all find in string
+   * @param {string} string
    * @param {string} find
    * @param {string} replace
    * @returns {*|string}
@@ -13001,7 +12995,7 @@
 
   /**
    * e.g. ThisIsWord -> This Is Word
-   * @param {string} str
+   * @param {string} string
    * @returns {string}
    */
   self.insertBlankBefUpper = function(str) {
@@ -13025,11 +13019,11 @@
   };
 
   /**
-   * @param {string} str
+   * @param {string} string
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to uppercase
    * @param {number} [opt.end] the end-index you want to uppercase
-   * @param {boolean} [opt.force] if force cover to str
+   * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
    */
   self.upperStr = function(str, opt) {
@@ -13037,8 +13031,8 @@
   };
 
   /**
-   * @param {string} str
-   * @param {boolean} [force] if force cover to str
+   * @param {string} string
+   * @param {boolean} [force] if force cover to string
    * @returns {*}
    */
   self.upperFirst = function(str, force) {
@@ -13052,11 +13046,11 @@
   };
 
   /**
-   * @param {string} str
+   * @param {string} string
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to lowercase
    * @param {number} [opt.end] the end-index you want to lowercase
-   * @param {boolean} [opt.force] if force cover to str
+   * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
    */
   self.lowerStr = function(str, opt) {
@@ -13064,8 +13058,8 @@
   };
 
   /**
-   * @param {string} str
-   * @param {boolean} [force=true] if force cover to str
+   * @param {string} string
+   * @param {boolean} [force=true] if force cover to string
    * @returns {}
    */
   self.trimStr = function(str, force) {
@@ -13082,9 +13076,9 @@
   };
 
   /**
-   * @param {string} str
+   * @param {string} string
    * @param {string|string[]} splitter
-   * @param {boolean} [force=true] if force cover to str
+   * @param {boolean} [force=true] if force cover to string
    * @returns {*}
    */
   self.splitStr = function(str, splitter, force) {
@@ -13130,7 +13124,7 @@
   };
 
   /**
-   * serialize obj-arguments to url
+   * serialize object-arguments to url
    * @param {string} url
    * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
    * @param {boolean} [coverEmpty=false] if cover when value is empty

@@ -85,8 +85,8 @@
   };
 
   /**
-   * check str if ("true" | not-empty) / ("false" | empty) and covert to boolean
-   * @param {string} str
+   * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
+   * @param {string} string
    * @returns {boolean}
    */
   self.strToBool = function(str) {
@@ -99,7 +99,7 @@
 
   /**
    * check if charts has in head of string
-   * @param str
+   * @param string
    * @param str2
    * @returns {*}
    */
@@ -112,7 +112,7 @@
 
   /**
    * add the head to string if not exist
-   * @param {string} str
+   * @param {string} string
    * @param {string} addStr
    * @returns {*}
    */
@@ -125,7 +125,7 @@
 
   /**
    * check if charts has in tail of string
-   * @param str
+   * @param string
    * @param str2
    * @returns {*}
    */
@@ -142,7 +142,7 @@
 
   /**
    * add the tail to string if not exist
-   * @param {string} str
+   * @param {string} string
    * @param {string} addStr
    * @returns {*}
    */
@@ -155,7 +155,7 @@
 
   /**
    * replace \r\n | \r | \n to <br/>
-   * @param {string} str
+   * @param {string} string
    * @returns {*|string}
    */
   self.wrapToBr = function(str) {
@@ -170,7 +170,7 @@
 
   /**
    * replace the <br/> to \n
-   * @param {string} str
+   * @param {string} string
    * @returns {*|string}
    */
   self.brToWrap = function(str) {
@@ -184,7 +184,7 @@
 
   /**
    * split to array by '\r\n' | '\n' | '\r'
-   * @param {string} str
+   * @param {string} string
    * @returns {*}
    */
   self.splitByWrap = function(str) {
@@ -198,7 +198,7 @@
 
   /**
    * escape RegExp
-   * @param {string} str
+   * @param {string} string
    * @returns {*|string}
    */
   self.escapeRegExp = function(str) {
@@ -209,8 +209,8 @@
   };
 
   /**
-   * replace all find in str
-   * @param {string} str
+   * replace all find in string
+   * @param {string} string
    * @param {string} find
    * @param {string} replace
    * @returns {*|string}
@@ -231,7 +231,7 @@
 
   /**
    * e.g. ThisIsWord -> This Is Word
-   * @param {string} str
+   * @param {string} string
    * @returns {string}
    */
   self.insertBlankBefUpper = function(str) {
@@ -255,11 +255,11 @@
   };
 
   /**
-   * @param {string} str
+   * @param {string} string
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to uppercase
    * @param {number} [opt.end] the end-index you want to uppercase
-   * @param {boolean} [opt.force] if force cover to str
+   * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
    */
   self.upperStr = function(str, opt) {
@@ -267,8 +267,8 @@
   };
 
   /**
-   * @param {string} str
-   * @param {boolean} [force] if force cover to str
+   * @param {string} string
+   * @param {boolean} [force] if force cover to string
    * @returns {*}
    */
   self.upperFirst = function(str, force) {
@@ -282,11 +282,11 @@
   };
 
   /**
-   * @param {string} str
+   * @param {string} string
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to lowercase
    * @param {number} [opt.end] the end-index you want to lowercase
-   * @param {boolean} [opt.force] if force cover to str
+   * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
    */
   self.lowerStr = function(str, opt) {
@@ -294,8 +294,8 @@
   };
 
   /**
-   * @param {string} str
-   * @param {boolean} [force=true] if force cover to str
+   * @param {string} string
+   * @param {boolean} [force=true] if force cover to string
    * @returns {}
    */
   self.trimStr = function(str, force) {
@@ -312,9 +312,9 @@
   };
 
   /**
-   * @param {string} str
+   * @param {string} string
    * @param {string|string[]} splitter
-   * @param {boolean} [force=true] if force cover to str
+   * @param {boolean} [force=true] if force cover to string
    * @returns {*}
    */
   self.splitStr = function(str, splitter, force) {
@@ -360,7 +360,7 @@
   };
 
   /**
-   * serialize obj-arguments to url
+   * serialize object-arguments to url
    * @param {string} url
    * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
    * @param {boolean} [coverEmpty=false] if cover when value is empty

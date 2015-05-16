@@ -92,10 +92,10 @@ do ->
   ###*
   # add date-time unit
   # please refer {@link http://momentjs.com/docs/#/manipulating/add/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
   # @param {number|string} amount
   # @param {string} unit time-unit
-  # @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+  # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {*}
   ###
 
@@ -110,10 +110,10 @@ do ->
   ###*
   # subtract date-time unit
   # please refer {@link http://momentjs.com/docs/#/manipulating/subtract/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
   # @param {number|string} amount
   # @param {string} unit time-unit
-  # @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+  # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {*}
   ###
 
@@ -129,9 +129,9 @@ do ->
   # get start of the unit
   # e.g. startOf('2013-01-01 23:00:00','day') = 2013-01-01 00:00:00
   # please refer {@link http://momentjs.com/docs/#/manipulating/start-of/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
   # @param {string} unit time-unit
-  # @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+  # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {moment.Moment|*}
   ###
 
@@ -143,9 +143,9 @@ do ->
   ###*
   # get end of the unit
   # please refer {@link http://momentjs.com/docs/#/manipulating/end-of/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
   # @param {string} unit time-unit
-  # @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+  # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {moment.Moment|*}
   ###
 
@@ -157,8 +157,8 @@ do ->
   ###*
   # get date-time with UTC
   # please refer {@link http://momentjs.com/docs/#/parsing/utc/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
-  # @param {?string} [formatType] will return formatted-str if set, otherwise return moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
+  # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {*}
   ###
 
@@ -170,8 +170,8 @@ do ->
   ###*
   # compare date-time if before target
   # please refer {@link http://momentjs.com/docs/#/query/is-before/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
-  # @param {?string|object} targetDateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
+  # @param {?string|object} targetDateTime the string with date-time format, or moment-object
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
@@ -184,8 +184,8 @@ do ->
   ###*
   # check date-time if after target
   # please refer {@link http://momentjs.com/docs/#/query/is-after/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
-  # @param {?string|object} targetDateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
+  # @param {?string|object} targetDateTime the string with date-time format, or moment-object
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
@@ -198,8 +198,8 @@ do ->
   ###*
   # check date-time if same as target
   # please refer {@link http://momentjs.com/docs/#/query/is-same/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
-  # @param {?string|object} targetDateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
+  # @param {?string|object} targetDateTime the string with date-time format, or moment-object
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
@@ -212,9 +212,9 @@ do ->
   ###*
   # check if a moment is between two other moments
   # please refer {@link http://momentjs.com/docs/#/query/is-between/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
-  # @param {?string|object} dateTime1 the str with date-time format, or moment-obj
-  # @param {?string|object} dateTime2 the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
+  # @param {?string|object} dateTime1 the string with date-time format, or moment-object
+  # @param {?string|object} dateTime2 the string with date-time format, or moment-object
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
@@ -228,7 +228,7 @@ do ->
   ###*
   # validate is date-time format
   # please refer {@link http://momentjs.com/docs/#/utilities/invalid/}
-  # @param {?string|object} dateTime the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime the string with date-time format, or moment-object
   # @returns {*}
   ###
 
@@ -239,8 +239,8 @@ do ->
   ###*
   # get different between 2 date-time
   # please refer {@link http://momentjs.com/docs/#/displaying/difference/}
-  # @param {?string|object} dateTime1 the str with date-time format, or moment-obj
-  # @param {?string|object} dateTime2 the str with date-time format, or moment-obj
+  # @param {?string|object} dateTime1 the string with date-time format, or moment-object
+  # @param {?string|object} dateTime2 the string with date-time format, or moment-object
   # @param {string} [unit] time-unit
   # @param {boolean} [withFloat=false]
   # @returns {number|*}

@@ -3,13 +3,16 @@ describe 'Path', ->
   it 'setAbsolutePath', ->
     r = caro.setAbsolutePath('/path/from/root');
     r2 = caro.setAbsolutePath('/path2//from\root');
-    r.should.eq '/path/from/root'
-    r2.should.eq '/path2/from\root'
+    r = r == '/path/from/root' || r == '\\path\\from\\root'
+    r2 = r2 == '/path/from\root' || r2 == '\\path2\\from\root'
+    r.should.be.true
+    r2.should.be.true
 
   it 'getAbsolutePath', ->
     caro.setAbsolutePath('/path/from/root');
     r = caro.getAbsolutePath();
-    r.should.eq '/path/from/root'
+    r = r == '/path/from/root' || r == '\\path\\from\\root'
+    r.should.be.true
 
   it 'isFullPath', ->
     caro.setAbsolutePath('/path/from/root');
@@ -41,14 +44,19 @@ describe 'Path', ->
   it 'normalizePath', ->
     r = caro.normalizePath('path//seems/not/exists');
     r2 = caro.normalizePath('path', '\exists');
-    r.should.eq 'path/seems/not/exists'
-    r2.should.eq 'path/exists'
+    r = r == 'path/seems/not/exists' || r == 'path\\seems\\not\\exists'
+    r2 = r2 == 'path/exists' || r2 == 'path\\exists'
+    r.should.be.true
+    r2.should.be.true
 
   it 'coverToFullPath', ->
     caro.setAbsolutePath('/path/from/root');
     r = caro.coverToFullPath('caro.js');
     r2 = caro.coverToFullPath('other', 'caro.js');
     r3 = caro.coverToFullPath('/path/from/root/caro.js');
-    r.should.eq '/path/from/root/caro.js'
-    r2.should.eq '/path/from/root/other/caro.js'
-    r3.should.eq '/path/from/root/caro.js'
+    r = r == '/path/from/root/caro.js' || r == '\\path\\from\\root\\caro.js'
+    r2 = r2 == '/path/from/root/other/caro.js' || r2 == '\\path\\from\\root\\other\\caro.js'
+    r3 = r3 == '/path/from/root/caro.js' || r3 == '\\path\\from\\root\\caro.js'
+    r.should.be.true
+    r2.should.be.true
+    r3.should.be.true

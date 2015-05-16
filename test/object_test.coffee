@@ -67,25 +67,25 @@ describe 'Object', ->
     arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1}
 
   it 'upperFirstByObjKey', ->
-    arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
-    arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
+    arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
+    arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
     caro.upperFirstByObjKey(arg, 'aa,bb');
     caro.upperFirstByObjKey(arg2);
-    arg.should.eql {aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: ['dd_1']};
-    arg2.should.eql {aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
+    arg.should.eql {aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: 1};
+    arg2.should.eql {aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: 1};
 
-  it 'trimObjVal', ->
-    arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
-    arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
-    caro.trimObjVal(arg);
-    r = caro.trimObjVal(arg2,true);
-    arg.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [' dd_1 ']}
-    arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']}
+  it 'trimByObjKey', ->
+    arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
+    arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
+    caro.trimByObjKey(arg, ['aa','cc']);
+    caro.trimByObjKey(arg2);
+    arg.should.eql {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
+    arg2.should.eql {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
 
   it 'keysInObj', ->
     arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
-    r = caro.keysInObj(arg, 'aa,bb'); # true
-    r2 = caro.keysInObj(arg, ['aa', 'ee']); # false
+    r = caro.keysInObj(arg, 'aa,bb');
+    r2 = caro.keysInObj(arg, ['aa', 'ee']);
     r.should.be.true
     r2.should.be.false
 

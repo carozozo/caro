@@ -9,10 +9,10 @@
   self = caro;
 
   /**
-   * sort arr
+   * sort array
    * @param {[]} arr
    * @param {boolean} [sort=true] if sort by ASC
-   * @param {boolean} [clone=false] if clone for not change original-arr
+   * @param {boolean} [clone=false] if clone for not change original-array
    * @returns {*}
    */
   self.sortArr = function(arr, sort, clone) {
@@ -49,11 +49,11 @@
   };
 
   /**
-   * sort arr by key if value is obj
+   * sort array by key if value is object
    * @param {[]} arr
    * @param {string} key
    * @param {boolean} [sort=true] if sort by ASC
-   * @param {boolean} [clone=false] if clone for not change original-arr
+   * @param {boolean} [clone=false] if clone for not change original-array
    * @returns {*}
    */
   self.sortByObjKey = function(arr, key, sort, clone) {
@@ -93,7 +93,7 @@
   };
 
   /**
-   * get sum of val in arr
+   * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false]
    * @returns {number}
@@ -119,7 +119,7 @@
   };
 
   /**
-   * remove item from arr by index
+   * remove item from array by index
    * @param {[]} arr
    * @param {...number} index
    * @returns {*}
@@ -159,9 +159,9 @@
   };
 
   /**
-   * remove the item from arr by val
+   * remove the item from array by value
    * @param {[]} arr
-   * @param {...*} val
+   * @param {...*} value
    * @returns {*}
    */
   self.removeByArrVal = function(arr, val) {
@@ -197,7 +197,7 @@
   };
 
   /**
-   * remove duplicate-val in arr
+   * remove duplicate-value in array
    * @param {[]} arr
    * @returns {*}
    */
@@ -217,9 +217,9 @@
   };
 
   /**
-   * push val into arr if not exists
+   * push value into array if not exists
    * @param {[]} arr
-   * @param {...*} val
+   * @param {...*} value
    * @returns {*}
    */
   self.pushNoDup = function(arr, val) {
@@ -236,9 +236,9 @@
   };
 
   /**
-   * will not push to arr if value is empty
+   * will not push to array if value is empty
    * @param {[]} arr
-   * @param {...*} val
+   * @param {...*} value
    * @returns {*}
    */
   self.pushNoEmpty = function(arr, val) {
@@ -255,7 +255,7 @@
   };
 
   /**
-   * check if empty-value in arr
+   * check if empty-value in array
    * @param {...[]} arr
    * @returns {boolean}
    */

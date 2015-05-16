@@ -9,14 +9,14 @@ do ->
   self = caro
 
   ###*
-  # check if arg is bool | str | num
+  # check if arg is boolean | string | number
   # @param {...} arg
   # @returns {boolean}
   ###
 
   self.isBasicVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-# return false if arg is not bool | str | num
+# return false if arg is not bool | string | num
       !(!caro.isBool(arg) and !caro.isStr(arg) and !caro.isNum(arg))
 
   ###*
@@ -58,8 +58,8 @@ do ->
       arg == false or arg == 'false' or arg == 0
 
   ###*
-  # check all argument in arr by check-function, get false if check-function return false
-  # @param {[]} arr
+  # check all argument in array by check-function, get false if check-function return false
+  # @param {[]} array
   # @param {function} checkFn
   # @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
   # @returns {boolean}
@@ -112,8 +112,8 @@ do ->
     r
 
   ###*
-  # get arguments, and return as arr
-  # @param args should be arguments (obj with numeric-key)
+  # get arguments, and return as array
+  # @param args should be arguments (object with numeric-key)
   # @returns {Array}
   ###
 
@@ -126,7 +126,7 @@ do ->
 
   ###*
   # format to money type like 1,000.00
-  # @param {string|number} str
+  # @param {string|number} arg
   # @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
   # @param {object} [opt]
   # @param {number} [opt.float=0]
@@ -172,7 +172,7 @@ do ->
     r.join ''
 
   ###*
-  # cover to arr
+  # cover to array
   # @param arg
   # @returns {*}
   ###
@@ -183,9 +183,9 @@ do ->
     [arg]
 
   ###*
-  # cover to str, will return '' if force!=false
+  # cover to string, will return '' if force!=false
   # @param arg
-  # @param {boolean} [force=true] if return str
+  # @param {boolean} [force=true] if return string
   # @returns {*}
   ###
 
@@ -202,7 +202,7 @@ do ->
       return ''
     if caro.isObj(arg)
       if force
-# cover fn to str first, and not replace \r\n
+# cover fn to string first, and not replace \r\n
         caro.coverFnToStrInObj arg, false
         # after cover to json, replace \\r\\n to wrap
         arg = caro.coverToJson(arg)
@@ -255,7 +255,7 @@ do ->
     int
 
   ###*
-  # cover to obj, will return {} if force!=false
+  # cover to object, will return {} if force!=false
   # @param arg
   # @param {boolean} [force=true] if return object
   # @returns {*}
