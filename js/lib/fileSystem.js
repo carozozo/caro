@@ -12,7 +12,7 @@
   nFs = require('fs');
   fileSizeUnits1 = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
   fileSizeUnits2 = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-  traceMode = true;
+  traceMode = false;
   showErr = function(e) {
     if (traceMode) {
       return console.error(e);
@@ -34,7 +34,7 @@
    * set trace-mode, will console.error when
    */
   self.setTrace = function(bool) {
-    return traceMode = bool !== false;
+    return traceMode = bool === true;
   };
 
   /**
@@ -95,6 +95,7 @@
 
   /**
    * @param {...string} path
+   * @param {function} cb the callback-function when catch error
    * @returns {boolean}
    */
   self.deleteFile = function(path, cb) {
@@ -108,8 +109,6 @@
       }
       r.push(arg);
     });
-    console.log('arguments=', arguments);
-    console.log('r=', r);
     caro.each(r, function(i, arg) {
       var e;
       try {
@@ -267,6 +266,7 @@
       });
     } catch (_error) {
       e = _error;
+      showErr(e);
       return false;
     }
     return true;
@@ -299,6 +299,7 @@
             nFs.rmdirSync(filePath);
           } catch (_error) {
             e = _error;
+            showErr(e);
             pass = false;
           }
           return;
@@ -332,6 +333,7 @@
         }
       } catch (_error) {
         e = _error;
+        showErr(e);
         pass = false;
         return false;
       }
@@ -355,6 +357,7 @@
         pass = stat.isDirectory();
       } catch (_error) {
         e = _error;
+        showErr(e);
         pass = false;
         return false;
       }
@@ -377,6 +380,7 @@
         pass = stat.isFile();
       } catch (_error) {
         e = _error;
+        showErr(e);
         pass = false;
         return false;
       }
@@ -400,6 +404,7 @@
         pass = stat.isSymbolicLink();
       } catch (_error) {
         e = _error;
+        showErr(e);
         pass = false;
         return false;
       }
@@ -454,6 +459,7 @@
       });
     } catch (_error) {
       e = _error;
+      showErr(e);
       pass = false;
     }
     return pass;
@@ -498,6 +504,7 @@
         }
       } catch (_error) {
         e = _error;
+        showErr(e);
         pass = false;
       }
     });
@@ -532,6 +539,7 @@
       }
     } catch (_error) {
       e = _error;
+      showErr(e);
     }
     return stat;
   };
