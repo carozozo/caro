@@ -12,19 +12,17 @@ do ->
   # @param {object} obj
   # @param {string} type=upper|lower|upperFirst support-type
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
-
-  changeStrValByObjKey = (obj, type, keys, clone = false) ->
+  changeStrValByObjKey = (obj, type, keys) ->
     aType = [
       'upper'
       'lower'
       'upperFirst'
     ]
+    r=obj
     if !caro.isObj(obj) or aType.indexOf(type) < 0
       return obj
-    r = if clone then caro.cloneObj(obj) else obj
     keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
     caro.each keys, (i, key) ->
@@ -51,15 +49,15 @@ do ->
     return
 
   ###*
+  # get object-length
   # @param {object} obj
   # @returns {Number}
   ###
-
   self.getObjLength = (obj) ->
     Object.keys(obj).length
 
   ###*
-  # extend obj similar jQuery.extend
+  # extend object, similar jQuery.extend
   # @param {boolean} [deep=false] extend-recursive
   # @param {object...|array...} arg
   # @returns {*}
@@ -86,7 +84,7 @@ do ->
     firstArg
 
   ###*
-  # clone obj
+  # clone object, similar jQuery.clone
   # @param {object} obj
   # @param {boolean} [deep=false] if clone all under obj
   # @returns {*}
@@ -105,34 +103,27 @@ do ->
   # replace key in object
   # @param {object} obj
   # @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
-  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
-
-  self.replaceObjKey = (obj, cb, clone = false) ->
-    objRet = obj
-    objRet = caro.cloneObj(obj) if clone
-    caro.each objRet, (key, val) ->
+  self.replaceObjKey = (obj, cb) ->
+    r = obj
+    caro.each r, (key, val) ->
       newKey = caro.executeIfFn(cb, key)
       if newKey
-        objRet[newKey] = val
-        delete objRet[key]
+        r[newKey] = val
+        delete r[key]
       return
-    objRet
+    r
 
   ###*
+  # replace value in object
   # @param {object} obj
   # @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
-  # @param {object} [opt]
-  # @param {boolean} [opt.deep=false] if deep-replace when element is obj
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [deep=false] if deep-replace when element is obj
   # @returns {*}
   ###
-
-  self.replaceObjVal = (obj, cb, opt) ->
-    opt = caro.coverToObj(opt)
-    deep = opt.deep == true
-    clone = opt.clone == true
+  self.replaceObjVal = (obj, cb, deep = false) ->
+    r = obj
     coverObjVal = (o) ->
       caro.each o, (key, val) ->
         if caro.isObj(val) and deep
@@ -143,57 +134,47 @@ do ->
           o[key] = newVal
         return
       return
-
-    oClone = if clone then caro.cloneObj(obj) else obj
-    coverObjVal oClone
-    oClone
+    coverObjVal r
+    r
 
   ###*
+  # upper-case value in object by key, will replace-all if key is empty
   # @param {object} obj
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
-
-  self.upperCaseByObjKey = (obj, keys, clone) ->
-    changeStrValByObjKey obj, 'upper', keys, clone
+  self.upperCaseByObjKey = (obj, keys) ->
+    changeStrValByObjKey obj, 'upper', keys
 
   ###*
+  # lower-case value in object by key, will replace-all if key is empty
   # @param {object} obj
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
-
-  self.lowerCaseByObjKey = (obj, keys, clone) ->
-    changeStrValByObjKey obj, 'lower', keys, clone
+  self.lowerCaseByObjKey = (obj, keys) ->
+    changeStrValByObjKey obj, 'lower', keys
 
   ###*
+  # upper-case the first char of value in object by key, will replace-all if key is empty
   # @param {object} obj
   # @param {string[]|[]} [keys] the assign-keys
-  # @param {boolean} [clone=false] if clone for not replacing original
   # @returns {*}
   ###
-
-  self.upperFirstByObjKey = (obj, keys, clone) ->
-    changeStrValByObjKey obj, 'upperFirst', keys, clone
+  self.upperFirstByObjKey = (obj, keys) ->
+    changeStrValByObjKey obj, 'upperFirst', keys
 
   ###*
   # @param {object} obj
-  # @param {object} [opt]
-  # @param {boolean} [opt.deep=true] if deep-replace when element is obj
-  # @param {boolean} [opt.clone=false] if clone for not replacing original
+  # @param {boolean} [deep=false] if deep-replace when element is obj
   # @returns {*}
   ###
 
-  self.trimObjVal = (obj, opt) ->
-    opt = caro.coverToObj(opt)
-    deep = opt.deep != false
-    clone = opt.clone == true
-    r = if clone then  caro.cloneObj(obj) else obj
+  self.trimObjVal = (obj, deep = false) ->
+    r = obj
     caro.each r, (key, val) ->
       if caro.isObjOrArr(val) and deep
-        r[key] = caro.trimObjVal(val, opt)
+        r[key] = caro.trimObjVal(val, deep)
       else if caro.isStr(val)
         r[key] = val.trim()
       return

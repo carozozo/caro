@@ -27,72 +27,60 @@ describe 'Object', ->
     r2 = caro.cloneObj(arg, true);
     arg.a = 3
     arg.c.c1 = 3
-    r.should.be.eql { a: 1, b: 2, c: { c1: 3 } }
-    r2.should.be.eql { a: 1, b: 2, c: { c1: 1 } }
+    r.should.be.eql {a: 1, b: 2, c: {c1: 3}}
+    r2.should.be.eql {a: 1, b: 2, c: {c1: 1}}
 
   it 'replaceObjKey', ->
     arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}}
     caro.replaceObjKey(arg, (key)->
       return 'dd' if key == 'cc'
     );
-    r = caro.replaceObjKey(arg, (key)->
-      return 'ee' if key == 'bb'
-    , true);
     arg.should.eql({aa: 1, bb: 2, dd: {c1: 3}})
-    r.should.eql({aa: 1, dd: {c1: 3}, ee: 2})
 
   it 'replaceObjVal', ->
-    arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}}
+    arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
     caro.replaceObjVal(arg, (val)->
-      return 4 if val == 1
+      return 1 if val == 4
     );
-    r = caro.replaceObjVal(arg, (val)->
-      return '5' if val == 2
-    ,
-      deep: true
-      clone: true
-    );
-    arg.should.eql({aa: 4, bb: 2, cc: {c1: 3}})
-    r.should.eql({aa: 4, bb: '5', cc: {c1: 3}})
+    arg.should.eql({aa: 1, bb: 2, cc: {c1: 4}})
+
+    arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
+    caro.replaceObjVal(arg, (val)->
+      return 1 if val == 4
+    , true);
+    arg.should.eql({aa: 1, bb: 2, cc: {c1: 1}})
 
   it 'upperCaseByObjKey', ->
     arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
     arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
     caro.upperCaseByObjKey(arg, 'aa,bb');
-    r = caro.upperCaseByObjKey(arg2, null, true);
+    caro.upperCaseByObjKey(arg2);
     arg.should.eql {aa: 'CARO', bb: 'PIKA', cc: 'doraemon', dd: 1}
-    arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1}
-    r.should.eql {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON', dd: 1}
+    arg2.should.eql {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON', dd: 1}
 
   it 'lowerCaseByObjKey', ->
     arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
     arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
     caro.lowerCaseByObjKey(arg, 'aa,bb');
-    r = caro.lowerCaseByObjKey(arg2, null, true);
+    caro.lowerCaseByObjKey(arg2);
     arg.should.eql {aa: 'caro', bb: 'pika', cc: 'Doraemon', dd: 1}
-    arg2.should.eql {aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: 1}
-    r.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1}
+    arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1}
 
   it 'upperFirstByObjKey', ->
     arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
     arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
     caro.upperFirstByObjKey(arg, 'aa,bb');
-    r = caro.upperFirstByObjKey(arg2, null, true);
+    caro.upperFirstByObjKey(arg2);
     arg.should.eql {aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: ['dd_1']};
-    arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']};
-    r.should.eql {aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
+    arg2.should.eql {aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
 
   it 'trimObjVal', ->
     arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
     arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
     caro.trimObjVal(arg);
-    r = caro.trimObjVal(arg2, {
-      deep: false
-      clone: true
-    });
-    arg.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']}
-    arg2.should.eql {aa: ' caro ', bb: ' pika ', cc: ' doraemon ', dd: [' dd_1 ']}
-    r.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [' dd_1 ']}
+    r = caro.trimObjVal(arg2,true);
+    arg.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [' dd_1 ']}
+    arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']}
 
   it 'keysInObj', ->
     arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};

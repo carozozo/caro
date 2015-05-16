@@ -584,75 +584,53 @@ caro.isArr(['caro']); // true
     console.log r // { a: 1, b: 2, c: { c1: 3 } }
     console.log r2 // { a: 1, b: 2, c: { c1: 1 } } - 所有的值都不受 arg 影響
 ```
-- **replaceObjKey(obj, replaceFn [clone=false]) - 轉換 obj 中的 key**
+- **replaceObjKey(obj, replaceFn) - 轉換 obj 中的 key**
 ```javascript
     var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
     caro.replaceObjKey(arg, function (key){
       return 'dd' if key == 'cc'
     });
-    var r = caro.replaceObjKey(arg, function (key){
-      return 'ee' if key == 'bb'
-    , true);
     console.log(arg); // { aa: 1, bb: 2, dd: { c1: 3 } }
-    console.log(r); // { aa: 1, dd: { c1: 3 }, ee: 2 }
 ```
-- **replaceObjVal(obj, replaceFn [opt]) - 轉換 obj 中的 val**
+- **replaceObjVal(obj, replaceFn [deep=false]) - 轉換 obj 中的 val**
 ```javascript
-    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
-    caro.replaceObjVal(arg, function (val) {
-      return 4 if val == 1
-    });
-    var r = caro.replaceObjVal(arg, function (val){
-      return '5' if val == 2
-    }, {
-      deep: true
-      clone: true
-    });
-    console.log(arg); // { aa: 4, bb: 2, cc: { c1: 3 } }
-    console.log(r); // { aa: 4, bb: '5', cc: { c1: 3 } }
+    var arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
+    caro.replaceObjVal(arg, function (val){
+      return 1 if val == 4
+    }); // {aa: 1, bb: 2, cc: {c1: 4}}
+
+    arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
+    caro.replaceObjVal(arg, (val)->
+      return 1 if val == 4
+    , true); // {aa: 1, bb: 2, cc: {c1: 1}}
 ```
-- **upperCaseByObjKey(obj, aKey [clone=false]) - 指定 key 將對應的 val 轉為大寫**
+- **upperCaseByObjKey(obj, keys) - 指定 key 將對應的 val 轉為大寫**
 ```javascript
-    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
-    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
-    caro.upperCaseByObjKey(arg, 'aa,bb'); // 轉換 arg.aa 和 arg.bb
-    var r = caro.upperCaseByObjKey(arg2, null, true); // 指定所有的 key 轉為大寫
-    console.log(arg); // { aa: 'CARO', bb: 'PIKA', cc: 'doraemon', dd: 1 }
-    console.log(arg2); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1 }
-    console.log(r); // { aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON', dd: 1 }
+    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+    caro.upperCaseByObjKey(arg, 'aa,bb'); // {aa: 'CARO', bb: 'PIKA', cc: 'doraemon'}
+    caro.upperCaseByObjKey(arg2); // {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON'}
 ```
-- **lowerCaseByObjKey(obj, aKey [clone=false]) - 指定 key 將對應的 val 轉為小寫**
+- **lowerCaseByObjKey(obj, keys) - 指定 key 將對應的 val 轉為小寫**
 ```javascript
-    var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
-    var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
-    caro.lowerCaseByObjKey(arg, ['aa','bb']); // 轉換 arg.aa 和 arg.bb
-    var r = caro.lowerCaseByObjKey(arg2, null, true); // 指定所有的 key 轉為小寫
-    console.log(arg); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon', 'dd': 1};
-    console.log(arg2); // {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
-    console.log(r); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
+    var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
+    var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
+    caro.lowerCaseByObjKey(arg, ['aa','bb']); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon'};
+    caro.lowerCaseByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
 ```
-- **upperFirstByObjKey(obj, aKey [clone=false]) - 指定 key 將對應的 val 的第一個字母轉為大寫**
+- **upperFirstByObjKey(obj, aKey) - 指定 key 將對應的 val 的第一個字母轉為大寫**
 ```javascript
-    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
-    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': ['dd_1']};
-    caro.upperFirstByObjKey(arg, 'aa,bb'); // 轉換 arg.aa 和 arg.bb
-    var r = caro.upperFirstByObjKey(arg2, null, true); // 指定所有的 key 轉為第一個字母大寫
-    console.log(arg); // { aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: ['dd_1']};
-    console.log(arg2); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: ['dd_1']};
-    console.log(r); // { aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: ['dd_1']};
+    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+    caro.upperFirstByObjKey(arg, 'aa,bb'); // {aa: 'Caro', bb: 'Pika', cc: 'doraemon'};
+    var r = caro.upperFirstByObjKey(arg2, null, true); // {aa: 'Caro', bb: 'Pika', cc: 'Doraemon'}
 ```
 - **trimObjVal(obj [opt]) - obj 中 val 為 str 的值，去除頭尾空白**
 ```javascript
-    var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
-    var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', 'dd': [' dd_1 ']};
-    caro.trimObjVal(arg);
-    var r = caro.trimObjVal(arg2, {
-      deep: false
-      clone: true
-    });
-    console.log(arg); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [ 'dd_1' ] }
-    console.log(arg2); // { aa: ' caro ', bb: ' pika ', cc: ' doraemon ', dd: [ ' dd_1 ' ] }
-    console.log(r); // { aa: 'caro', bb: 'pika', cc: 'doraemon', dd: [ ' dd_1 ' ] }
+    var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': {c1: ' doraemon '}};
+    var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': {c1: ' doraemon '}};
+    caro.trimObjVal(arg); // {'aa': 'caro', 'bb': 'pika', 'cc': {c1: ' doraemon '}};
+    caro.trimObjVal(arg2, true); // {'aa': 'caro', 'bb': 'pika', 'cc': {c1: 'doraemon'}};
 ```
 - **keysInObj(obj [keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
