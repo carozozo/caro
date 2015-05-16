@@ -10791,12 +10791,12 @@
  * @author Caro.Huang
  */
 (function() {
-  var colors, combineMsg, doConsole, self;
+  var combineMsg, doConsole, self;
   if (!caro.isNode) {
     return;
   }
   self = caro;
-  colors = require('colors');
+  require('colors');
   combineMsg = function(msg, variable) {
     msg = caro.coverToStr(msg);
     if (caro.isUndef(variable)) {
@@ -11138,7 +11138,7 @@
  * @author Caro.Huang
  */
 (function() {
-  var fileSizeUnits1, fileSizeUnits2, getFileSize, nFs, self;
+  var fileSizeUnits1, fileSizeUnits2, getFileSize, nFs, self, showErr, traceMode;
   if (!caro.isNode) {
     return;
   }
@@ -11146,6 +11146,12 @@
   nFs = require('fs');
   fileSizeUnits1 = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
   fileSizeUnits2 = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+  traceMode = true;
+  showErr = function(e) {
+    if (traceMode) {
+      return console.error(e);
+    }
+  };
   getFileSize = function(path) {
     var status;
     status = caro.getFsStat(path);
@@ -11156,6 +11162,13 @@
       return path;
     }
     return null;
+  };
+
+  /**
+   * set trace-mode, will console.error when
+   */
+  self.setTrace = function(bool) {
+    return traceMode = bool !== false;
   };
 
   /**
@@ -11180,6 +11193,7 @@
       });
     } catch (_error) {
       e = _error;
+      showErr(e);
     }
     return false;
   };
@@ -11208,6 +11222,7 @@
       return true;
     } catch (_error) {
       e = _error;
+      showErr(e);
     }
     return false;
   };
@@ -11216,17 +11231,27 @@
    * @param {...string} path
    * @returns {boolean}
    */
-  self.deleteFile = function(path) {
-    var pass;
+  self.deleteFile = function(path, cb) {
+    var pass, r;
     pass = true;
+    r = [];
     caro.each(arguments, function(i, arg) {
+      if (caro.isFn(arg)) {
+        cb = arg;
+        return;
+      }
+      r.push(arg);
+    });
+    console.log('arguments=', arguments);
+    console.log('r=', r);
+    caro.each(r, function(i, arg) {
       var e;
       try {
-        arg = caro.normalizePath(arg);
         nFs.unlinkSync(arg);
       } catch (_error) {
         e = _error;
-        console.error(e);
+        showErr(e);
+        cb(e);
         pass = false;
       }
     });
@@ -11242,8 +11267,8 @@
     var pass;
     pass = true;
     caro.eachArgs(arguments, function(i, arg) {
-      var count;
-      if (caro.isFsDir(arg)) {
+      var count, e;
+      try {
         count = 0;
         caro.readDirCb(arg, function() {
           count++;
@@ -11253,9 +11278,10 @@
           return false;
         }
         return true;
-      } else {
-        pass = false;
-        return false;
+      } catch (_error) {
+        e = _error;
+        showErr(e);
+        return pass = false;
       }
     });
     return pass;

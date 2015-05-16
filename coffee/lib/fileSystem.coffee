@@ -2,11 +2,8 @@
 # FileSystem
 # @author Caro.Huang
 ###
-
 do ->
-  'use strict'
-  if !caro.isNode
-    return
+  return if !caro.isNode
   self = caro
   nFs = require('fs')
   fileSizeUnits1 = [
@@ -29,17 +26,22 @@ do ->
     'ZiB'
     'YiB'
   ]
-
+  traceMode = false
+  showErr = (e) ->
+    console.error(e) if traceMode
   getFileSize = (path) ->
     status = caro.getFsStat(path)
-    if status
-      return status.size
-    if caro.isNum(path)
-      return path
+    return status.size if status
+    return path if caro.isNum(path)
     null
 
-  # FILE --
+  ###*
+  # set trace-mode, will console.error when
+  ###
+  self.setTrace = (bool) ->
+    traceMode = bool == true
 
+  # FILE --
   ###*
   # read file content, return false if failed
   # @param {string} path
@@ -47,16 +49,14 @@ do ->
   # @param {?string} [flag=null]
   # @returns {*}
   ###
-
-  self.readFileCaro = (path, encoding, flag) ->
-    encoding = encoding or 'utf8'
-    flag = flag or null
+  self.readFileCaro = (path, encoding = 'utf8', flag = null) ->
     try
       return nFs.readFileSync(path,
         encoding: encoding
         flag: flag)
     catch e
-    return false
+      showErr(e)
+    false
 
   ###*
   # write data to file, return false if failed
@@ -66,45 +66,51 @@ do ->
   # @param {?string} [flag=null]
   # @returns {*}
   ###
-
-  self.writeFileCaro = (path, data, encoding, flag) ->
-    encoding = encoding or 'utf8'
-    flag = flag or null
+  self.writeFileCaro = (path, data, encoding = 'utf8', flag = null) ->
     try
       nFs.writeFileSync path, data,
         encoding: encoding
         flag: flag
       return true
     catch e
-    return false
+      showErr(e)
+    false
 
   ###*
   # @param {...string} path
+  # @param {function} cb the callback-function when catch error
   # @returns {boolean}
   ###
-
-  self.deleteFile = (path) ->
+  self.deleteFile = (path, cb) ->
     pass = true
-    caro.eachArgs arguments, (i, arg) ->
+    r = []
+    # TODO ¥i§ï¼g¬° function
+    caro.each arguments, (i,arg) ->
+      if caro.isFn(arg)
+        cb = arg
+        return
+      r.push arg
+      return
+    caro.each r, (i, arg) ->
       try
         nFs.unlinkSync arg
       catch e
+        showErr(e)
+        cb(e)
         pass = false
       return
     pass
 
   # DIR --
-
   ###*
   # check if empty-folder, return false if anyone is false
   # @param {...string} path
   # @returns {boolean}
   ###
-
   self.isEmptyDir = (path) ->
     pass = true
     caro.eachArgs arguments, (i, arg) ->
-      if caro.isFsDir(arg)
+      try
         count = 0
         caro.readDirCb arg, ->
           count++
@@ -113,9 +119,9 @@ do ->
           pass = false
           return false
         true
-      else
+      catch e
+        showErr(e)
         pass = false
-        false
     pass
 
   ###*
@@ -130,7 +136,7 @@ do ->
   # @returns {*}
   ###
 
-  self.readDirCb = (path, cb=null, opt={}) ->
+  self.readDirCb = (path, cb = null, opt = {}) ->
     if !caro.isFsDir(path)
       return
     countLevel = 0
@@ -215,6 +221,7 @@ do ->
           nFs.mkdirSync subPath
         return
     catch e
+      showErr(e)
       return false
     true
 
@@ -241,6 +248,7 @@ do ->
           try
             nFs.rmdirSync filePath
           catch e
+            showErr(e)
             pass = false
           return
         if !caro.deleteFile(filePath)
@@ -269,6 +277,7 @@ do ->
           pass = false
           return false
       catch e
+        showErr(e)
         pass = false
         return false
       true
@@ -287,6 +296,7 @@ do ->
         stat = caro.getFsStat(arg)
         pass = stat.isDirectory()
       catch e
+        showErr(e)
         pass = false
         return false
       true
@@ -304,6 +314,7 @@ do ->
         stat = caro.getFsStat(arg)
         pass = stat.isFile()
       catch e
+        showErr(e)
         pass = false
         return false
       true
@@ -322,6 +333,7 @@ do ->
         stat = caro.getFsStat(arg)
         pass = stat.isSymbolicLink()
       catch e
+        showErr(e)
         pass = false
         return false
       true
@@ -349,7 +361,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.deleteFs = (path, force=false) ->
+  self.deleteFs = (path, force = false) ->
     pass = true
     aPath = []
     try
@@ -362,6 +374,7 @@ do ->
           pass = false
         return
     catch e
+      showErr(e)
       pass = false
     pass
 
@@ -372,7 +385,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.renameFs = (path, newPath, force=false) ->
+  self.renameFs = (path, newPath, force = false) ->
     pass = true
     aPath = []
     if caro.isStr(path, newPath)
@@ -398,6 +411,7 @@ do ->
         if !caro.fsExists(path2)
           pass = false
       catch e
+        showErr(e)
         pass = false
       return
     pass
@@ -409,7 +423,7 @@ do ->
   # @returns {*}
   ###
 
-  self.getFsStat = (path, type='l') ->
+  self.getFsStat = (path, type = 'l') ->
     stat = null
     aType = [
       'l'
@@ -427,6 +441,7 @@ do ->
           stat = nFs.statSync(path)
           break
     catch e
+      showErr(e)
     stat
 
   ###*
@@ -437,7 +452,7 @@ do ->
   # @returns {}
   ###
 
-  self.getFsSize = (path, fixed=1, unit) ->
+  self.getFsSize = (path, fixed = 1, unit) ->
     bytes = getFileSize(path)
     if bytes == null
       return bytes
@@ -467,7 +482,7 @@ do ->
   # @returns {string}
   ###
 
-  self.humanFeSize = (path, fixed=1, si=true) ->
+  self.humanFeSize = (path, fixed = 1, si = true) ->
     bytes = getFileSize(path)
     if bytes == null
       return bytes

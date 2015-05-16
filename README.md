@@ -224,6 +224,10 @@ caro.isArr(['caro']); // true
 
 ### ★FileSystem
 [Back to Index](#index)
+- **setTrace(bool) - 設定檔案操作發生錯誤時，是否顯示 console.error (default=false)**
+```javascript
+    caro.setTrace(true);
+```
 - **readFileCaro(path [encoding='utf8'] [flag=null]) - 讀取檔案內容**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_readfilesync_filename_options
@@ -235,10 +239,12 @@ caro.isArr(['caro']); // true
     var data = caro.readFileCaro('./test.html');
     var r = caro.writeFileCaro('./test.html', data); // 寫入成功回傳 true, 否則回傳 false
 ```
-- **deleteFile(path...) - 刪除檔案**
+- **deleteFile(path...[cb]) - 刪除檔案**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_unlinksync_path
-    var r = caro.deleteFile('1.js', '2.js'); // 只要其中一個刪除失敗，回傳 false 
+    var r = caro.deleteFile('1.js', '2.js', function (e){
+        console.log(e.path); // 可取得發生錯誤的 path
+    }); // 只要其中一個刪除失敗，回傳 false 
 ```
 - **isEmptyDir(path...) - 判斷是否為空資料夾**
 ```javascript

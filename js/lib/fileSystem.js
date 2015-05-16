@@ -4,8 +4,7 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
-  var fileSizeUnits1, fileSizeUnits2, getFileSize, nFs, self;
+  var fileSizeUnits1, fileSizeUnits2, getFileSize, nFs, self, showErr, traceMode;
   if (!caro.isNode) {
     return;
   }
@@ -13,6 +12,12 @@
   nFs = require('fs');
   fileSizeUnits1 = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
   fileSizeUnits2 = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+  traceMode = true;
+  showErr = function(e) {
+    if (traceMode) {
+      return console.error(e);
+    }
+  };
   getFileSize = function(path) {
     var status;
     status = caro.getFsStat(path);
@@ -26,6 +31,13 @@
   };
 
   /**
+   * set trace-mode, will console.error when
+   */
+  self.setTrace = function(bool) {
+    return traceMode = bool !== false;
+  };
+
+  /**
    * read file content, return false if failed
    * @param {string} path
    * @param {?string} [encoding=utf8]
@@ -34,8 +46,12 @@
    */
   self.readFileCaro = function(path, encoding, flag) {
     var e;
-    encoding = encoding || 'utf8';
-    flag = flag || null;
+    if (encoding == null) {
+      encoding = 'utf8';
+    }
+    if (flag == null) {
+      flag = null;
+    }
     try {
       return nFs.readFileSync(path, {
         encoding: encoding,
@@ -43,6 +59,7 @@
       });
     } catch (_error) {
       e = _error;
+      showErr(e);
     }
     return false;
   };
@@ -57,8 +74,12 @@
    */
   self.writeFileCaro = function(path, data, encoding, flag) {
     var e;
-    encoding = encoding || 'utf8';
-    flag = flag || null;
+    if (encoding == null) {
+      encoding = 'utf8';
+    }
+    if (flag == null) {
+      flag = null;
+    }
     try {
       nFs.writeFileSync(path, data, {
         encoding: encoding,
@@ -67,6 +88,7 @@
       return true;
     } catch (_error) {
       e = _error;
+      showErr(e);
     }
     return false;
   };
@@ -75,15 +97,27 @@
    * @param {...string} path
    * @returns {boolean}
    */
-  self.deleteFile = function(path) {
-    var pass;
+  self.deleteFile = function(path, cb) {
+    var pass, r;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    r = [];
+    caro.each(arguments, function(i, arg) {
+      if (caro.isFn(arg)) {
+        cb = arg;
+        return;
+      }
+      r.push(arg);
+    });
+    console.log('arguments=', arguments);
+    console.log('r=', r);
+    caro.each(r, function(i, arg) {
       var e;
       try {
         nFs.unlinkSync(arg);
       } catch (_error) {
         e = _error;
+        showErr(e);
+        cb(e);
         pass = false;
       }
     });
@@ -99,8 +133,8 @@
     var pass;
     pass = true;
     caro.eachArgs(arguments, function(i, arg) {
-      var count;
-      if (caro.isFsDir(arg)) {
+      var count, e;
+      try {
         count = 0;
         caro.readDirCb(arg, function() {
           count++;
@@ -110,9 +144,10 @@
           return false;
         }
         return true;
-      } else {
-        pass = false;
-        return false;
+      } catch (_error) {
+        e = _error;
+        showErr(e);
+        return pass = false;
       }
     });
     return pass;

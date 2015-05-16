@@ -4,12 +4,12 @@
  * @author Caro.Huang
  */
 (function() {
-  var colors, combineMsg, doConsole, self;
+  var combineMsg, doConsole, self;
   if (!caro.isNode) {
     return;
   }
   self = caro;
-  colors = require('colors');
+  require('colors');
   combineMsg = function(msg, variable) {
     msg = caro.coverToStr(msg);
     if (caro.isUndef(variable)) {
