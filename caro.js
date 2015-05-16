@@ -1,4 +1,4 @@
-/*! caro - v0.4.11 - 2015-05-16 */
+/*! caro - v0.4.12 - 2015-05-16 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -12410,11 +12410,11 @@
 
   /**
    * extend obj similar jQuery.extend
-   * @param {boolean} [deep=false] if clone all under obj
-   * @param {object...|array...} arg arr or obj
+   * @param {boolean} [deep=false] extend-recursive
+   * @param {object...|array...} arg
    * @returns {*}
    */
-  self.extend = function(deep, arg) {
+  self.extendObj = function(deep, arg) {
     var firstArg;
     if (deep == null) {
       deep = false;
@@ -12454,69 +12454,18 @@
   };
 
   /**
-   * clone an obj
-  #
-   */
-  self.clone = function(arg) {
-    if (!caro.isObjOrArr(arg)) {
-      return arg;
-    }
-    return caro.extend({}, arg);
-  };
-
-  /**
-   * extend obj similar jQuery.extend
-   * @param {object} obj1
-   * @param {object} obj2
-   * @param {boolean} [deep=false] if clone all under obj
-   * @returns {*}
-   */
-  self.extendObj = function(obj1, obj2, deep) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    if (!caro.isObjOrArr(obj1) || !caro.isObjOrArr(obj2)) {
-      return obj1;
-    }
-    r = caro.isObj(obj1) ? {} : [];
-    if (deep) {
-      r = caro.cloneObj(obj1);
-    } else {
-      caro.each(obj1, function(key, val) {
-        return pushValToObjOrArr(r, key, val);
-      });
-    }
-    caro.each(obj2, function(key, val) {
-      if (deep) {
-        val = caro.cloneObj(val);
-      }
-      pushValToObjOrArr(r, key, val);
-    });
-    return r;
-  };
-
-  /**
    * clone obj
    * @param {object} obj
    * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
    */
-  self.cloneObj = function(obj) {
-    var clone;
-    clone = function(obj) {
-      var r;
-      if (!caro.isObjOrArr(obj)) {
-        return obj;
-      }
-      r = obj.constructor();
-      caro.each(obj, function(key, val) {
-        val = clone(val);
-        return r[key] = val;
-      });
-      return r;
-    };
-    return clone(obj);
+  self.cloneObj = function(arg) {
+    var r;
+    if (!caro.isObjOrArr(arg)) {
+      return arg;
+    }
+    r = caro.isArr(arg) ? [] : {};
+    return caro.extendObj(r, arg);
   };
 
   /**
