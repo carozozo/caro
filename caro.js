@@ -12391,16 +12391,6 @@
   };
 
   /**
-   * TODO will replaced by Loop.each
-   * like jQuery.each function
-   * @param {object} obj
-   * @param {function} cb callback-fn for each key & val
-   */
-  self.eachObj = function(obj, cb) {
-    return caro.each(obj, cb);
-  };
-
-  /**
    * @param {object} obj
    * @returns {Number}
    */
