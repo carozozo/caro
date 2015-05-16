@@ -23,15 +23,16 @@ caro.isArr(['caro']); // true
 ```
 ## Index
 
-##### (★ 只適用於 Node.js | ☆ 部份適用於 Node.js)
+##### (★ only support Node.js | ☆ some support Node.js)
 
 **[Array](#array)** | **★[Console](#console)** | **[DateTime](#datetime)** | **★[FileSystem](#filesystem)**
-| **[Helper](#helper)** | **★[Log](#log)** | **★[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
+| **[Helper](#helper)** | **★[Log](#log)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
 | **[String](#string)** | **☆[TypeCheck](#typecheck)**
 
 ### Array
 [Back to Index](#index)
 - **sortArr(arr [sort=true [clone=false]]) - 陣列排序**
+#### Will remove [clone] soon
 ```javascript
     arg = [1, 3, 2, null]; 
     arg2 = [1, 3, 2, null];
@@ -43,6 +44,7 @@ caro.isArr(['caro']); // true
     console.log r2 // [ null, 1, 2, 3 ]
 ```
 - **sortByObjKey(arr, key [sort=true] [clone=false]) - 如果陣列中的值是物件，則可指定物件的 key 值排序**
+#### Will remove [clone] soon
 ```javascript
     var obj = {index: 0, name: 'caro'};
     var obj2 = {index: 1, name: 'huang'};
@@ -239,7 +241,7 @@ caro.isArr(['caro']); // true
     var data = caro.readFileCaro('./test.html');
     var r = caro.writeFileCaro('./test.html', data); // 寫入成功回傳 true, 否則回傳 false
 ```
-- **deleteFile(path...[cb]) - 刪除檔案**
+- **deleteFile(path... [cb]) - 刪除檔案**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_unlinksync_path
     var r = caro.deleteFile('1.js', '2.js', function (e){
