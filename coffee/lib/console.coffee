@@ -2,19 +2,15 @@
 # Console
 # @author Caro.Huang
 ###
-
 do ->
-  'use strict'
-  if !caro.isNode
-    return
+  return if !caro.isNode
   self = caro
   # https://www.npmjs.org/package/colors
   require 'colors'
 
   combineMsg = (msg, variable) ->
     msg = caro.coverToStr(msg)
-    if caro.isUndef(variable)
-      variable = ''
+    variable = '' if caro.isUndef(variable)
     variable = caro.coverToStr(variable)
     msg += variable
     msg
@@ -33,7 +29,6 @@ do ->
   # @param msg
   # @param [variable]
   ###
-
   self.log = (msg, variable) ->
     if @isOdd
       doConsole arguments, 'green'
@@ -48,13 +43,13 @@ do ->
   # @param msg
   # @param [variable]
   ###
-
   self.log2 = (msg, variable) ->
     if @isOdd
       doConsole arguments, 'blue'
       @isOdd = false
       return
     doConsole arguments, 'yellow'
+    @isOdd = true
     return
 
   ###*
@@ -62,13 +57,13 @@ do ->
   # @param msg
   # @param [variable]
   ###
-
   self.log3 = (msg, variable) ->
     if @isOdd
       doConsole arguments, 'magenta'
       @isOdd = false
       return
     doConsole arguments, 'red'
+    @isOdd = true
     return
 
   return

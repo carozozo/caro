@@ -11,15 +11,12 @@ describe 'DateTime', ->
 
   it 'formatNow', ->
     r = caro.formatNow('date')
-    #    console.log 'r=', r
     r.should.be.string
 
   it 'addDateTime', ->
     t = '2015-06-30 12:34:56'
     r = caro.addDateTime(t, 3, 'h')
     r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD')
-    #    console.log 'r=',r
-    #    console.log 'r2=',r2
     r.should.eq '2015-06-30T15:34:56+08:00'
     r2.should.eq '2015/07/03'
 
@@ -27,8 +24,6 @@ describe 'DateTime', ->
     t = '2015-01-01 12:34:56'
     r = caro.subtractDateTime(t, 3, 'h', 'YYYY-MM-DD h:mm')
     r2 = caro.subtractDateTime(t, 3, 'd', 'YYYY/MM/DD')
-    #    console.log 'r=', r
-    #    console.log 'r2=', r2
     r.should.eq '2015-01-01 9:34'
     r2.should.eq '2014/12/29'
 
@@ -37,8 +32,6 @@ describe 'DateTime', ->
     t = '2015-08-21 12:34:56'
     r = caro.startOfDateTime(t, 'Y')
     r2 = caro.startOfDateTime(t, 'd', 'dddd hh:mm:ss')
-    #    console.log 'r=', r
-    #    console.log 'r2=', r2
     r.should.eq '2015-01-01T00:00:00+08:00'
     r2.should.eq 'Friday 12:00:00'
 
@@ -47,15 +40,12 @@ describe 'DateTime', ->
     t = '2015-08-21 12:34:56'
     r = caro.endOfDateTime(t, 'Y')
     r2 = caro.endOfDateTime(t, 'd', 'dddd hh:mm:ss')
-    #    console.log 'r=', r
-    #    console.log 'r2=', r2
     r.should.eq '2015-12-31T23:59:59+08:00'
     r2.should.eq 'Friday 11:59:59'
 
   it 'getUtc', ->
     t = '2015-02-21'
     r = caro.getUtc(t)
-    #    console.log 'r=', r
     r.should.eq '2015-02-20T16:00:00+00:00'
 
   it 'isBeforeDateTime', ->

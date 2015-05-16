@@ -4,7 +4,6 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
   var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnDateTimeStr, self;
   if (caro.nMoment == null) {
     return;
@@ -34,19 +33,20 @@
   };
 
   /**
-   * @return {string}
-   */
-  self.getDefaultLocale = function() {
-    return defLocale;
-  };
-
-  /**
-   * if set default locale first, then use formatDateTime(), will return format type by it
+   * set default locale
    * @param {string} locale
    */
   self.setDefaultLocale = function(locale) {
     locale = coverLocale(locale);
     defLocale = locale;
+  };
+
+  /**
+   * set default locale
+   * @return {string}
+   */
+  self.getDefaultLocale = function() {
+    return defLocale;
   };
 
   /**
@@ -213,9 +213,8 @@
    * @returns {*}
    */
   self.isSameDateTime = function(dateTime, targetDateTime, unit) {
-    var oDateTime, oDateTime2;
+    var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
-    oDateTime2 = getDateTimeObj(targetDateTime);
     return oDateTime.isSame(targetDateTime, unit);
   };
 
@@ -259,7 +258,9 @@
    */
   self.getDateTimeDiff = function(dateTime1, dateTime2, unit, withFloat) {
     var oDateTime1, oDateTime2;
-    withFloat = withFloat === true;
+    if (withFloat == null) {
+      withFloat = false;
+    }
     oDateTime1 = getDateTimeObj(dateTime1);
     oDateTime2 = getDateTimeObj(dateTime2);
     return oDateTime1.diff(oDateTime2, unit, withFloat);

@@ -2,11 +2,8 @@
 # DateTime
 # @author Caro.Huang
 ###
-
 do ->
-  'use strict'
-  if !caro.nMoment?
-    return
+  return if !caro.nMoment?
   self = caro
   nMoment = self.nMoment
   defLocale = 'en'
@@ -14,8 +11,7 @@ do ->
   oShorthandFormat = {}
 
   getDateTimeObj = (dateTime) ->
-    if dateTime
-      return nMoment(dateTime)
+    return nMoment(dateTime) if dateTime
     # get now-time
     nMoment()
 
@@ -33,28 +29,26 @@ do ->
     caro.formatDateTime(oDateTime, formatType)
 
   ###*
-  # @return {string}
-  ###
-
-  self.getDefaultLocale = () ->
-    defLocale
-
-  ###*
-  # if set default locale first, then use formatDateTime(), will return format type by it
+  # set default locale
   # @param {string} locale
   ###
-
   self.setDefaultLocale = (locale) ->
     locale = coverLocale(locale)
     defLocale = locale
     return
 
   ###*
+  # set default locale
+  # @return {string}
+  ###
+  self.getDefaultLocale = () ->
+    defLocale
+
+  ###*
   # @param {string} shorthandFormat the shorthand format type
   # @param {string} formatType the format type
   # @param {string} [locale] you can set different format type by locale
   ###
-
   self.addDateTimeShortFormat = (shorthandFormat, formatType, locale) ->
     locale = coverLocale(locale)
     oShorthandFormat[locale] = oShorthandFormat[locale] or {}
@@ -67,11 +61,9 @@ do ->
   # @param {string} [locale] localize date
   # @returns {string}
   ###
-
   self.formatDateTime = (dateTime, formatType, locale) ->
     locale = coverLocale(locale)
-    if locale
-      nMoment.locale locale
+    nMoment.locale(locale) if locale
     formatType = coverFormatType(formatType, locale)
     oDateTime = getDateTimeObj(dateTime)
     returnVal = oDateTime.format(formatType)
@@ -85,7 +77,6 @@ do ->
   # @param {string} [locale] localize date
   # @returns {string}
   ###
-
   self.formatNow = (fmt, locale) ->
     caro.formatDateTime null, fmt, locale
 
@@ -98,7 +89,6 @@ do ->
   # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {*}
   ###
-
   self.addDateTime = (dateTime, amount, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     if caro.isObj(amount)
@@ -116,7 +106,6 @@ do ->
   # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {*}
   ###
-
   self.subtractDateTime = (dateTime, amount, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     if caro.isObj(amount)
@@ -134,7 +123,6 @@ do ->
   # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {moment.Moment|*}
   ###
-
   self.startOfDateTime = (dateTime, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.startOf unit
@@ -148,7 +136,6 @@ do ->
   # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {moment.Moment|*}
   ###
-
   self.endOfDateTime = (dateTime, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.endOf unit
@@ -161,7 +148,6 @@ do ->
   # @param {?string} [formatType] will return formatted-string if set, otherwise return moment-object
   # @returns {*}
   ###
-
   self.getUtc = (dateTime, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.utc()
@@ -175,7 +161,6 @@ do ->
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
-
   self.isBeforeDateTime = (dateTime, targetDateTime, unit) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime2 = getDateTimeObj(targetDateTime)
@@ -189,7 +174,6 @@ do ->
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
-
   self.isAfterDateTime = (dateTime, targetDateTime, unit) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime2 = getDateTimeObj(targetDateTime)
@@ -203,10 +187,8 @@ do ->
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
-
   self.isSameDateTime = (dateTime, targetDateTime, unit) ->
     oDateTime = getDateTimeObj(dateTime)
-    oDateTime2 = getDateTimeObj(targetDateTime)
     oDateTime.isSame(targetDateTime, unit)
 
   ###*
@@ -218,7 +200,6 @@ do ->
   # @param {string} [unit] time-unit
   # @returns {*}
   ###
-
   self.isBetweenDateTime = (dateTime, dateTime1, dateTime2, unit) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime1 = getDateTimeObj(dateTime1)
@@ -231,7 +212,6 @@ do ->
   # @param {?string|object} dateTime the string with date-time format, or moment-object
   # @returns {*}
   ###
-
   self.isValidDateTime = (dateTime) ->
     oDateTime = getDateTimeObj(dateTime)
     oDateTime.isValid()
@@ -245,9 +225,7 @@ do ->
   # @param {boolean} [withFloat=false]
   # @returns {number|*}
   ###
-
-  self.getDateTimeDiff = (dateTime1, dateTime2, unit, withFloat) ->
-    withFloat = withFloat == true
+  self.getDateTimeDiff = (dateTime1, dateTime2, unit, withFloat = false) ->
     oDateTime1 = getDateTimeObj(dateTime1)
     oDateTime2 = getDateTimeObj(dateTime2)
     oDateTime1.diff oDateTime2, unit, withFloat
