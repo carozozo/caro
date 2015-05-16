@@ -7,10 +7,10 @@ do ->
   self = caro
 
   ###*
-  # sort arr
+  # sort array
   # @param {[]} arr
   # @param {boolean} [sort=true] if sort by ASC
-  # @param {boolean} [clone=false] if clone for not change original-arr
+  # @param {boolean} [clone=false] if clone for not change original-array
   # @returns {*}
   ###
   self.sortArr = (arr, sort = true, clone = false) ->
@@ -23,11 +23,11 @@ do ->
     r
 
   ###*
-  # sort arr by key if value is obj
+  # sort array by key if value is object
   # @param {[]} arr
   # @param {string} key
   # @param {boolean} [sort=true] if sort by ASC
-  # @param {boolean} [clone=false] if clone for not change original-arr
+  # @param {boolean} [clone=false] if clone for not change original-array
   # @returns {*}
   ###
   self.sortByObjKey = (arr, key, sort = true, clone = false) ->
@@ -42,7 +42,7 @@ do ->
     r
 
   ###*
-  # get sum of val in arr
+  # get sum of value in array
   # @param {[]} arr
   # @param {boolean} [force=false]
   # @returns {number}
@@ -59,7 +59,7 @@ do ->
     sum
 
   ###*
-  # remove item from arr by index
+  # remove item from array by index
   # @param {[]} arr
   # @param {...number} index
   # @returns {*}
@@ -89,9 +89,9 @@ do ->
     r
 
   ###*
-  # remove the item from arr by val
+  # remove the item from array by value
   # @param {[]} arr
-  # @param {...*} val
+  # @param {...*} value
   # @returns {*}
   ###
   self.removeByArrVal = (arr, val) ->
@@ -118,7 +118,7 @@ do ->
     r
 
   ###*
-  # remove duplicate-val in arr
+  # remove duplicate-value in array
   # @param {[]} arr
   # @returns {*}
   ###
@@ -132,9 +132,9 @@ do ->
     arr
 
   ###*
-  # push val into arr if not exists
+  # push value into array if not exists
   # @param {[]} arr
-  # @param {...*} val
+  # @param {...*} value
   # @returns {*}
   ###
   self.pushNoDup = (arr, val) ->
@@ -146,9 +146,9 @@ do ->
     arr
 
   ###*
-  # will not push to arr if value is empty
+  # will not push to array if value is empty
   # @param {[]} arr
-  # @param {...*} val
+  # @param {...*} value
   # @returns {*}
   ###
   self.pushNoEmpty = (arr, val) ->
@@ -161,7 +161,7 @@ do ->
     arr
 
   ###*
-  # check if empty-value in arr
+  # check if empty-value in array
   # @param {...[]} arr
   # @returns {boolean}
   ###

@@ -604,33 +604,33 @@ caro.isArr(['caro']); // true
       return 1 if val == 4
     , true); // {aa: 1, bb: 2, cc: {c1: 1}}
 ```
-- **upperCaseByObjKey(obj, keys) - 指定 key 將對應的 val 轉為大寫**
+- **upperCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為大寫**
 ```javascript
     var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
     var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
     caro.upperCaseByObjKey(arg, 'aa,bb'); // {aa: 'CARO', bb: 'PIKA', cc: 'doraemon'}
     caro.upperCaseByObjKey(arg2); // {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON'}
 ```
-- **lowerCaseByObjKey(obj, keys) - 指定 key 將對應的 val 轉為小寫**
+- **lowerCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為小寫**
 ```javascript
     var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
     var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
     caro.lowerCaseByObjKey(arg, ['aa','bb']); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon'};
     caro.lowerCaseByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
 ```
-- **upperFirstByObjKey(obj, aKey) - 指定 key 將對應的 val 的第一個字母轉為大寫**
+- **upperFirstByObjKey(obj, [keys]) - 指定 key 將對應的 val 的第一個字母轉為大寫**
 ```javascript
     var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
     var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
     caro.upperFirstByObjKey(arg, 'aa,bb'); // {aa: 'Caro', bb: 'Pika', cc: 'doraemon'};
     var r = caro.upperFirstByObjKey(arg2, null, true); // {aa: 'Caro', bb: 'Pika', cc: 'Doraemon'}
 ```
-- **trimObjVal(obj [opt]) - obj 中 val 為 str 的值，去除頭尾空白**
+- **trimByObjKey(obj, [keys]) - obj 中 val 為 str 的值，去除頭尾空白**
 ```javascript
-    var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': {c1: ' doraemon '}};
-    var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': {c1: ' doraemon '}};
-    caro.trimObjVal(arg); // {'aa': 'caro', 'bb': 'pika', 'cc': {c1: ' doraemon '}};
-    caro.trimObjVal(arg2, true); // {'aa': 'caro', 'bb': 'pika', 'cc': {c1: 'doraemon'}};
+    var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
+    var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
+    var caro.trimByObjKey(arg, ['aa','cc']); // {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
+    var caro.trimByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
 ```
 - **keysInObj(obj [keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
@@ -642,10 +642,10 @@ caro.isArr(['caro']); // true
 ```javascript
     var arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
     var r = caro.getKeysInObj(arg); // [ 'a', 'b', 'c' ] - 取得第一層的 key
-    var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] // 取到第二層的 key
+    var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] - 取到第二層的 key
     var r3 = caro.getKeysInObj(arg, 0); // [ 'a', 'b', 'c', 'd', 'e', 'f' ] - 取得所有層級的 key
 ```
-- **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串(for 文字輸出用)**
+- **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串**
 ```javascript
     var arg = {
       a: 1, b: 2, c: function (a){

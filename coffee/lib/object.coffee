@@ -7,11 +7,11 @@ do ->
   self = caro
 
   ###*
-  # change obj string-value by key, will change-all if aKey is empty
+  # change object string-value by key, will change-all if aKey is empty
   # support-type: upper/lower/upperFirst
-  # @param {object} obj
+  # @param {object} object
   # @param {string} type=upper|lower|upperFirst support-type
-  # @param {string[]|[]} [keys] the assign-keys
+  # @param {string[]|string} [keys] the assign-keys
   # @returns {*}
   ###
   changeStrValByObjKey = (obj, type, keys) ->
@@ -19,8 +19,9 @@ do ->
       'upper'
       'lower'
       'upperFirst'
+      'trim'
     ]
-    r=obj
+    r = obj
     if !caro.isObj(obj) or aType.indexOf(type) < 0
       return obj
     keys = keys or caro.getKeysInObj(r)
@@ -38,6 +39,8 @@ do ->
           r[key] = caro.lowerStr(val, opt)
         when 'upperFirst'
           r[key] = caro.upperFirst(val, false)
+        when 'trim'
+          r[key] = caro.trimStr(val, false)
       return
     r
 
@@ -50,7 +53,7 @@ do ->
 
   ###*
   # get object-length
-  # @param {object} obj
+  # @param {object} object
   # @returns {Number}
   ###
   self.getObjLength = (obj) ->
@@ -85,8 +88,8 @@ do ->
 
   ###*
   # clone object, similar jQuery.clone
-  # @param {object} obj
-  # @param {boolean} [deep=false] if clone all under obj
+  # @param {object} object
+  # @param {boolean} [deep=false] if clone all under object
   # @returns {*}
   ###
   self.cloneObj = (arg, deep = false) ->
@@ -101,8 +104,8 @@ do ->
 
   ###*
   # replace key in object
-  # @param {object} obj
-  # @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
+  # @param {object} object
+  # @param {function({})} cb callback-function that include key, and return new-key if you want to replace
   # @returns {*}
   ###
   self.replaceObjKey = (obj, cb) ->
@@ -117,9 +120,9 @@ do ->
 
   ###*
   # replace value in object
-  # @param {object} obj
-  # @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
-  # @param {boolean} [deep=false] if deep-replace when element is obj
+  # @param {object} object
+  # @param {function({})} cb callback-function that include value, and return new-value if you want to replace
+  # @param {boolean} [deep=false] if deep-replace when element is object
   # @returns {*}
   ###
   self.replaceObjVal = (obj, cb, deep = false) ->
@@ -139,8 +142,8 @@ do ->
 
   ###*
   # upper-case value in object by key, will replace-all if key is empty
-  # @param {object} obj
-  # @param {string[]|[]} [keys] the assign-keys
+  # @param {object} object
+  # @param {string[]|string} [keys] the assign-keys
   # @returns {*}
   ###
   self.upperCaseByObjKey = (obj, keys) ->
@@ -148,8 +151,8 @@ do ->
 
   ###*
   # lower-case value in object by key, will replace-all if key is empty
-  # @param {object} obj
-  # @param {string[]|[]} [keys] the assign-keys
+  # @param {object} object
+  # @param {string[]|string} [keys] the assign-keys
   # @returns {*}
   ###
   self.lowerCaseByObjKey = (obj, keys) ->
@@ -157,80 +160,72 @@ do ->
 
   ###*
   # upper-case the first char of value in object by key, will replace-all if key is empty
-  # @param {object} obj
-  # @param {string[]|[]} [keys] the assign-keys
+  # @param {object} object
+  # @param {string[]|string} [keys] the assign-keys
   # @returns {*}
   ###
   self.upperFirstByObjKey = (obj, keys) ->
     changeStrValByObjKey obj, 'upperFirst', keys
 
   ###*
-  # @param {object} obj
-  # @param {boolean} [deep=false] if deep-replace when element is obj
+  # trim value in object by key, will replace-all if key is empty
+  # @param {object} object
+  # @param {string[]|string} [keys] the assign-keys
   # @returns {*}
   ###
-
-  self.trimObjVal = (obj, deep = false) ->
-    r = obj
-    caro.each r, (key, val) ->
-      if caro.isObjOrArr(val) and deep
-        r[key] = caro.trimObjVal(val, deep)
-      else if caro.isStr(val)
-        r[key] = val.trim()
-      return
-    r
+  self.trimByObjKey = (obj, keys) ->
+    changeStrValByObjKey obj, 'trim', keys
 
   ###*
-  # check if key exists in obj, will return false when key not exist,no matter that other-keys are
-  # @param {object} obj
+  # check if key exists in object, will return false when key not exist, no matter that other-keys are
+  # @param {object} object
   # @param {string[]|string} keys the keys that want to validate
   # @returns {boolean}
   ###
-
   self.keysInObj = (obj, keys) ->
-    if !caro.isObj(obj)
-      return false
+    return false if !caro.isObj(obj)
     pass = true
     keys = caro.splitStr(keys, ',')
     caro.each keys, (i, key) ->
       if !obj.hasOwnProperty(key)
         pass = false
         return false
-      true
+      return
     pass
 
   ###*
-  # get keys in obj, and get all if levelLimit = 0
-  # @param {object} obj
-  # @param {number} [levelLimit=1] the level of obj you want to get keys
+  # get keys in object, and get all if levelLimit = 0
+  # @param {object} object
+  # @param {number} [levelLimit=1] the level of object you want to get keys
   # @returns {Array}
   ###
-
   self.getKeysInObj = (obj, levelLimit) ->
-    arr = []
-    return arr if !caro.isObj(obj)
+    r = []
+    return r if !caro.isObj(obj)
     levelLimit = if caro.coverToInt(levelLimit, false) > -1 then levelLimit else 1
     levelCount = 0
     getKey = (obj) ->
       levelCount++
       caro.each obj, (key, val) ->
         return if levelLimit > 0 and levelCount > levelLimit
-        arr.push key
+        r.push key
         if caro.isObj(val)
           getKey val
         return
       levelCount--
       return
     getKey obj
-    arr
+    r
 
   ###*
-  # @param {object} obj
+  # covert to string if element is function in object
+  # @param {object} object
   # @param {boolean} [replaceWrap=true] if replace \r\n
   ###
 
   self.coverFnToStrInObj = (obj, replaceWrap = true) ->
-    caro.each obj, (key, val) ->
+    r = obj
+    caro.each r, (key, val) ->
       if caro.isObjOrArr(val)
         caro.coverFnToStrInObj(val)
       else if caro.isFn(val)
@@ -240,8 +235,8 @@ do ->
         else
           fnStr = fnStr.replace(/[\r]\s*/g, '\r ');
           fnStr = fnStr.replace(/[\n]\s*/g, '\n ');
-        obj[key] = fnStr
+        r[key] = fnStr
       return
-    obj
+    r
 
   return

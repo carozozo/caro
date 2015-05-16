@@ -8,9 +8,9 @@
   self = caro;
 
   /**
-   * for-loop the arg and callback of key/val
+   * for-loop the arg and callback of key/value
    * @param {*} arg
-   * @param {function} cb callback-fn for each key & val
+   * @param {function} cb callback-function for each key & value
    */
   self.each = function(arg, cb) {
     var isArr, key, val;
@@ -27,9 +27,9 @@
   };
 
   /**
-    * for-loop the arg and callback of int-key/val
+    * for-loop the arg and callback of int-key/value
     * @param arg
-    * @param {function} cb callback-fn for each key & val
+    * @param {function} cb callback-function for each key & value
    */
   self.eachArgs = function(arg, cb) {
     var i;

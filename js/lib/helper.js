@@ -10,7 +10,7 @@
   self = caro;
 
   /**
-   * check if arg is bool | str | num
+   * check if arg is boolean | string | number
    * @param {...} arg
    * @returns {boolean}
    */
@@ -66,8 +66,8 @@
   };
 
   /**
-   * check all argument in arr by check-function, get false if check-function return false
-   * @param {[]} arr
+   * check all argument in array by check-function, get false if check-function return false
+   * @param {[]} array
    * @param {function} checkFn
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
    * @returns {boolean}
@@ -131,8 +131,8 @@
   };
 
   /**
-   * get arguments, and return as arr
-   * @param args should be arguments (obj with numeric-key)
+   * get arguments, and return as array
+   * @param args should be arguments (object with numeric-key)
    * @returns {Array}
    */
   self.getArgumentsAsArr = function(args) {
@@ -146,7 +146,7 @@
 
   /**
    * format to money type like 1,000.00
-   * @param {string|number} str
+   * @param {string|number} arg
    * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
    * @param {object} [opt]
    * @param {number} [opt.float=0]
@@ -203,7 +203,7 @@
   };
 
   /**
-   * cover to arr
+   * cover to array
    * @param arg
    * @returns {*}
    */
@@ -215,9 +215,9 @@
   };
 
   /**
-   * cover to str, will return '' if force!=false
+   * cover to string, will return '' if force!=false
    * @param arg
-   * @param {boolean} [force=true] if return str
+   * @param {boolean} [force=true] if return string
    * @returns {*}
    */
   self.coverToStr = function(arg, force) {
@@ -314,7 +314,7 @@
   };
 
   /**
-   * cover to obj, will return {} if force!=false
+   * cover to object, will return {} if force!=false
    * @param arg
    * @param {boolean} [force=true] if return object
    * @returns {*}

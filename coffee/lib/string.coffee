@@ -76,20 +76,20 @@ do ->
     text
 
   ###*
-  # check str if ("true" | not-empty) / ("false" | empty) and covert to boolean
-  # @param {string} str
+  # check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
+  # @param {string} string
   # @returns {boolean}
   ###
 
   self.strToBool = (str) ->
     return false if !caro.isStr(str) or !str
     str = str.toLowerCase()
-    # return false when str='false', otherwise return true
+    # return false when string='false', otherwise return true
     str != 'false'
 
   ###*
   # check if charts has in head of string
-  # @param str
+  # @param string
   # @param str2
   # @returns {*}
   ###
@@ -100,7 +100,7 @@ do ->
 
   ###*
   # add the head to string if not exist
-  # @param {string} str
+  # @param {string} string
   # @param {string} addStr
   # @returns {*}
   ###
@@ -111,7 +111,7 @@ do ->
 
   ###*
   # check if charts has in tail of string
-  # @param str
+  # @param string
   # @param str2
   # @returns {*}
   ###
@@ -125,7 +125,7 @@ do ->
 
   ###*
   # add the tail to string if not exist
-  # @param {string} str
+  # @param {string} string
   # @param {string} addStr
   # @returns {*}
   ###
@@ -136,7 +136,7 @@ do ->
 
   ###*
   # replace \r\n | \r | \n to <br/>
-  # @param {string} str
+  # @param {string} string
   # @returns {*|string}
   ###
 
@@ -150,7 +150,7 @@ do ->
 
   ###*
   # replace the <br/> to \n
-  # @param {string} str
+  # @param {string} string
   # @returns {*|string}
   ###
 
@@ -162,7 +162,7 @@ do ->
 
   ###*
   # split to array by '\r\n' | '\n' | '\r'
-  # @param {string} str
+  # @param {string} string
   # @returns {*}
   ###
 
@@ -178,7 +178,7 @@ do ->
 
   ###*
   # escape RegExp
-  # @param {string} str
+  # @param {string} string
   # @returns {*|string}
   ###
 
@@ -188,8 +188,8 @@ do ->
     str.replace /([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1'
 
   ###*
-  # replace all find in str
-  # @param {string} str
+  # replace all find in string
+  # @param {string} string
   # @param {string} find
   # @param {string} replace
   # @returns {*|string}
@@ -206,7 +206,7 @@ do ->
 
   ###*
   # e.g. ThisIsWord -> This Is Word
-  # @param {string} str
+  # @param {string} string
   # @returns {string}
   ###
 
@@ -228,11 +228,11 @@ do ->
     aStr.join ''
 
   ###*
-  # @param {string} str
+  # @param {string} string
   # @param {object} [opt]
   # @param {number} [opt.start] the start-index you want to uppercase
   # @param {number} [opt.end] the end-index you want to uppercase
-  # @param {boolean} [opt.force] if force cover to str
+  # @param {boolean} [opt.force] if force cover to string
   # @returns {*}
   ###
 
@@ -240,8 +240,8 @@ do ->
     changeCase str, 'upperCase', opt
 
   ###*
-  # @param {string} str
-  # @param {boolean} [force] if force cover to str
+  # @param {string} string
+  # @param {boolean} [force] if force cover to string
   # @returns {*}
   ###
 
@@ -253,11 +253,11 @@ do ->
     caro.upperStr str, opt
 
   ###*
-  # @param {string} str
+  # @param {string} string
   # @param {object} [opt]
   # @param {number} [opt.start] the start-index you want to lowercase
   # @param {number} [opt.end] the end-index you want to lowercase
-  # @param {boolean} [opt.force] if force cover to str
+  # @param {boolean} [opt.force] if force cover to string
   # @returns {*}
   ###
 
@@ -265,8 +265,8 @@ do ->
     changeCase str, 'toLowerCase', opt
 
   ###*
-  # @param {string} str
-  # @param {boolean} [force=true] if force cover to str
+  # @param {string} string
+  # @param {boolean} [force=true] if force cover to string
   # @returns {}
   ###
 
@@ -278,9 +278,9 @@ do ->
     str.trim()
 
   ###*
-  # @param {string} str
+  # @param {string} string
   # @param {string|string[]} splitter
-  # @param {boolean} [force=true] if force cover to str
+  # @param {boolean} [force=true] if force cover to string
   # @returns {*}
   ###
 
@@ -305,7 +305,7 @@ do ->
         return
     return str if !caro.isStr(mainSplit)
     # replace all splitter to mainSplitter
-    # e.g. str='caro.huang, is handsome'; splitter=['.', ',']; => str='caro,huang, is handsome'
+    # e.g. string='caro.huang, is handsome'; splitter=['.', ',']; => string='caro,huang, is handsome'
     caro.each splitter, (i, eachSplit) ->
       return if !caro.isStr(eachSplit)
       str = caro.replaceAll(str, eachSplit, mainSplit)
@@ -313,7 +313,7 @@ do ->
     str.split mainSplit
 
   ###*
-  # serialize obj-arguments to url
+  # serialize object-arguments to url
   # @param {string} url
   # @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
   # @param {boolean} [coverEmpty=false] if cover when value is empty

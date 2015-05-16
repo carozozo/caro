@@ -8,16 +8,16 @@
   self = caro;
 
   /**
-   * change obj string-value by key, will change-all if aKey is empty
+   * change object string-value by key, will change-all if aKey is empty
    * support-type: upper/lower/upperFirst
-   * @param {object} obj
+   * @param {object} object
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
   changeStrValByObjKey = function(obj, type, keys) {
     var aType, r;
-    aType = ['upper', 'lower', 'upperFirst'];
+    aType = ['upper', 'lower', 'upperFirst', 'trim'];
     r = obj;
     if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
       return obj;
@@ -42,6 +42,9 @@
           break;
         case 'upperFirst':
           r[key] = caro.upperFirst(val, false);
+          break;
+        case 'trim':
+          r[key] = caro.trimStr(val, false);
       }
     });
     return r;
@@ -56,7 +59,7 @@
 
   /**
    * get object-length
-   * @param {object} obj
+   * @param {object} object
    * @returns {Number}
    */
   self.getObjLength = function(obj) {
@@ -110,8 +113,8 @@
 
   /**
    * clone object, similar jQuery.clone
-   * @param {object} obj
-   * @param {boolean} [deep=false] if clone all under obj
+   * @param {object} object
+   * @param {boolean} [deep=false] if clone all under object
    * @returns {*}
    */
   self.cloneObj = function(arg, deep) {
@@ -134,8 +137,8 @@
 
   /**
    * replace key in object
-   * @param {object} obj
-   * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
+   * @param {object} object
+   * @param {function({})} cb callback-function that include key, and return new-key if you want to replace
    * @returns {*}
    */
   self.replaceObjKey = function(obj, cb) {
@@ -154,9 +157,9 @@
 
   /**
    * replace value in object
-   * @param {object} obj
-   * @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
-   * @param {boolean} [deep=false] if deep-replace when element is obj
+   * @param {object} object
+   * @param {function({})} cb callback-function that include value, and return new-value if you want to replace
+   * @param {boolean} [deep=false] if deep-replace when element is object
    * @returns {*}
    */
   self.replaceObjVal = function(obj, cb, deep) {
@@ -184,7 +187,7 @@
 
   /**
    * upper-case value in object by key, will replace-all if key is empty
-   * @param {object} obj
+   * @param {object} object
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
@@ -194,7 +197,7 @@
 
   /**
    * lower-case value in object by key, will replace-all if key is empty
-   * @param {object} obj
+   * @param {object} object
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
@@ -204,7 +207,7 @@
 
   /**
    * upper-case the first char of value in object by key, will replace-all if key is empty
-   * @param {object} obj
+   * @param {object} object
    * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
@@ -213,29 +216,18 @@
   };
 
   /**
-   * @param {object} obj
-   * @param {boolean} [deep=false] if deep-replace when element is obj
+   * trim value in object by key, will replace-all if key is empty
+   * @param {object} object
+   * @param {string[]|[]} [keys] the assign-keys
    * @returns {*}
    */
-  self.trimObjVal = function(obj, deep) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    r = obj;
-    caro.each(r, function(key, val) {
-      if (caro.isObjOrArr(val) && deep) {
-        r[key] = caro.trimObjVal(val, deep);
-      } else if (caro.isStr(val)) {
-        r[key] = val.trim();
-      }
-    });
-    return r;
+  self.trimByObjKey = function(obj, keys) {
+    return changeStrValByObjKey(obj, 'trim', keys);
   };
 
   /**
-   * check if key exists in obj, will return false when key not exist,no matter that other-keys are
-   * @param {object} obj
+   * check if key exists in object, will return false when key not exist, no matter that other-keys are
+   * @param {object} object
    * @param {string[]|string} keys the keys that want to validate
    * @returns {boolean}
    */
@@ -251,22 +243,21 @@
         pass = false;
         return false;
       }
-      return true;
     });
     return pass;
   };
 
   /**
-   * get keys in obj, and get all if levelLimit = 0
-   * @param {object} obj
-   * @param {number} [levelLimit=1] the level of obj you want to get keys
+   * get keys in object, and get all if levelLimit = 0
+   * @param {object} object
+   * @param {number} [levelLimit=1] the level of object you want to get keys
    * @returns {Array}
    */
   self.getKeysInObj = function(obj, levelLimit) {
-    var arr, getKey, levelCount;
-    arr = [];
+    var getKey, levelCount, r;
+    r = [];
     if (!caro.isObj(obj)) {
-      return arr;
+      return r;
     }
     levelLimit = caro.coverToInt(levelLimit, false) > -1 ? levelLimit : 1;
     levelCount = 0;
@@ -276,7 +267,7 @@
         if (levelLimit > 0 && levelCount > levelLimit) {
           return;
         }
-        arr.push(key);
+        r.push(key);
         if (caro.isObj(val)) {
           getKey(val);
         }
@@ -284,18 +275,21 @@
       levelCount--;
     };
     getKey(obj);
-    return arr;
+    return r;
   };
 
   /**
-   * @param {object} obj
+   * covert to string if element is function in object
+   * @param {object} object
    * @param {boolean} [replaceWrap=true] if replace \r\n
    */
   self.coverFnToStrInObj = function(obj, replaceWrap) {
+    var r;
     if (replaceWrap == null) {
       replaceWrap = true;
     }
-    caro.each(obj, function(key, val) {
+    r = obj;
+    caro.each(r, function(key, val) {
       var fnStr;
       if (caro.isObjOrArr(val)) {
         caro.coverFnToStrInObj(val);
@@ -307,9 +301,9 @@
           fnStr = fnStr.replace(/[\r]\s*/g, '\r ');
           fnStr = fnStr.replace(/[\n]\s*/g, '\n ');
         }
-        obj[key] = fnStr;
+        r[key] = fnStr;
       }
     });
-    return obj;
+    return r;
   };
 })();
