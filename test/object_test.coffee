@@ -19,13 +19,16 @@ describe 'Object', ->
     arg = [1, 2, 3];
     arg2 = [4, 5, 6];
     caro.extendObj(arg, arg2)
-    arg.should.be.eql [ 1, 2, 3, 4, 5, 6 ]
+    arg.should.be.eql [1, 2, 3, 4, 5, 6]
 
   it 'cloneObj', ->
-    arg = {a: 1, b: 2};
+    arg = {a: 1, b: 2, c: {c1: 1}};
     r = caro.cloneObj(arg);
+    r2 = caro.cloneObj(arg, true);
     arg.a = 3
-    r.should.be.eql {a: 1, b: 2}
+    arg.c.c1 = 3
+    r.should.be.eql { a: 1, b: 2, c: { c1: 3 } }
+    r2.should.be.eql { a: 1, b: 2, c: { c1: 1 } }
 
   it 'replaceObjKey', ->
     arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}}
