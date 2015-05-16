@@ -10791,13 +10791,12 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
-  var combineMsg, doConsole, self;
+  var colors, combineMsg, doConsole, self;
   if (!caro.isNode) {
     return;
   }
   self = caro;
-  require('colors');
+  colors = require('colors');
   combineMsg = function(msg, variable) {
     msg = caro.coverToStr(msg);
     if (caro.isUndef(variable)) {
@@ -10845,6 +10844,7 @@
       return;
     }
     doConsole(arguments, 'yellow');
+    this.isOdd = true;
   };
 
   /**
@@ -10859,6 +10859,7 @@
       return;
     }
     doConsole(arguments, 'red');
+    this.isOdd = true;
   };
 })();
 
@@ -10868,7 +10869,6 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
   var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnDateTimeStr, self;
   if (caro.nMoment == null) {
     return;
@@ -10898,19 +10898,20 @@
   };
 
   /**
-   * @return {string}
-   */
-  self.getDefaultLocale = function() {
-    return defLocale;
-  };
-
-  /**
-   * if set default locale first, then use formatDateTime(), will return format type by it
+   * set default locale
    * @param {string} locale
    */
   self.setDefaultLocale = function(locale) {
     locale = coverLocale(locale);
     defLocale = locale;
+  };
+
+  /**
+   * set default locale
+   * @return {string}
+   */
+  self.getDefaultLocale = function() {
+    return defLocale;
   };
 
   /**
@@ -11077,9 +11078,8 @@
    * @returns {*}
    */
   self.isSameDateTime = function(dateTime, targetDateTime, unit) {
-    var oDateTime, oDateTime2;
+    var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
-    oDateTime2 = getDateTimeObj(targetDateTime);
     return oDateTime.isSame(targetDateTime, unit);
   };
 
@@ -11123,7 +11123,9 @@
    */
   self.getDateTimeDiff = function(dateTime1, dateTime2, unit, withFloat) {
     var oDateTime1, oDateTime2;
-    withFloat = withFloat === true;
+    if (withFloat == null) {
+      withFloat = false;
+    }
     oDateTime1 = getDateTimeObj(dateTime1);
     oDateTime2 = getDateTimeObj(dateTime2);
     return oDateTime1.diff(oDateTime2, unit, withFloat);
@@ -11136,7 +11138,6 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
   var fileSizeUnits1, fileSizeUnits2, getFileSize, nFs, self;
   if (!caro.isNode) {
     return;
@@ -11166,8 +11167,12 @@
    */
   self.readFileCaro = function(path, encoding, flag) {
     var e;
-    encoding = encoding || 'utf8';
-    flag = flag || null;
+    if (encoding == null) {
+      encoding = 'utf8';
+    }
+    if (flag == null) {
+      flag = null;
+    }
     try {
       return nFs.readFileSync(path, {
         encoding: encoding,
@@ -11189,8 +11194,12 @@
    */
   self.writeFileCaro = function(path, data, encoding, flag) {
     var e;
-    encoding = encoding || 'utf8';
-    flag = flag || null;
+    if (encoding == null) {
+      encoding = 'utf8';
+    }
+    if (flag == null) {
+      flag = null;
+    }
     try {
       nFs.writeFileSync(path, data, {
         encoding: encoding,
@@ -11210,12 +11219,14 @@
   self.deleteFile = function(path) {
     var pass;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    caro.each(arguments, function(i, arg) {
       var e;
       try {
+        arg = caro.normalizePath(arg);
         nFs.unlinkSync(arg);
       } catch (_error) {
         e = _error;
+        console.error(e);
         pass = false;
       }
     });
@@ -12342,7 +12353,7 @@
   /**
    * change object string-value by key, will change-all if aKey is empty
    * support-type: upper/lower/upperFirst
-   * @param {object} object
+   * @param {object} obj
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
@@ -12391,7 +12402,7 @@
 
   /**
    * get object-length
-   * @param {object} object
+   * @param {object} obj
    * @returns {Number}
    */
   self.getObjLength = function(obj) {
@@ -12445,7 +12456,7 @@
 
   /**
    * clone object, similar jQuery.clone
-   * @param {object} object
+   * @param {object} obj
    * @param {boolean} [deep=false] if clone all under object
    * @returns {*}
    */
@@ -12469,7 +12480,7 @@
 
   /**
    * replace key in object
-   * @param {object} object
+   * @param {object} obj
    * @param {function({})} cb callback-function that include key, and return new-key if you want to replace
    * @returns {*}
    */
@@ -12489,7 +12500,7 @@
 
   /**
    * replace value in object
-   * @param {object} object
+   * @param {object} obj
    * @param {function({})} cb callback-function that include value, and return new-value if you want to replace
    * @param {boolean} [deep=false] if deep-replace when element is object
    * @returns {*}
@@ -12519,7 +12530,7 @@
 
   /**
    * upper-case value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -12529,7 +12540,7 @@
 
   /**
    * lower-case value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -12539,7 +12550,7 @@
 
   /**
    * upper-case the first char of value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -12549,7 +12560,7 @@
 
   /**
    * trim value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -12559,7 +12570,7 @@
 
   /**
    * check if key exists in object, will return false when key not exist, no matter that other-keys are
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} keys the keys that want to validate
    * @returns {boolean}
    */
@@ -12581,7 +12592,7 @@
 
   /**
    * get keys in object, and get all if levelLimit = 0
-   * @param {object} object
+   * @param {object} obj
    * @param {number} [levelLimit=1] the level of object you want to get keys
    * @returns {Array}
    */
@@ -12612,7 +12623,7 @@
 
   /**
    * covert to string if element is function in object
-   * @param {object} object
+   * @param {object} obj
    * @param {boolean} [replaceWrap=true] if replace \r\n
    */
   self.coverFnToStrInObj = function(obj, replaceWrap) {

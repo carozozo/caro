@@ -10,7 +10,7 @@
   /**
    * change object string-value by key, will change-all if aKey is empty
    * support-type: upper/lower/upperFirst
-   * @param {object} object
+   * @param {object} obj
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
@@ -59,7 +59,7 @@
 
   /**
    * get object-length
-   * @param {object} object
+   * @param {object} obj
    * @returns {Number}
    */
   self.getObjLength = function(obj) {
@@ -113,7 +113,7 @@
 
   /**
    * clone object, similar jQuery.clone
-   * @param {object} object
+   * @param {object} obj
    * @param {boolean} [deep=false] if clone all under object
    * @returns {*}
    */
@@ -137,7 +137,7 @@
 
   /**
    * replace key in object
-   * @param {object} object
+   * @param {object} obj
    * @param {function({})} cb callback-function that include key, and return new-key if you want to replace
    * @returns {*}
    */
@@ -157,7 +157,7 @@
 
   /**
    * replace value in object
-   * @param {object} object
+   * @param {object} obj
    * @param {function({})} cb callback-function that include value, and return new-value if you want to replace
    * @param {boolean} [deep=false] if deep-replace when element is object
    * @returns {*}
@@ -187,7 +187,7 @@
 
   /**
    * upper-case value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -197,7 +197,7 @@
 
   /**
    * lower-case value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -207,7 +207,7 @@
 
   /**
    * upper-case the first char of value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -217,7 +217,7 @@
 
   /**
    * trim value in object by key, will replace-all if key is empty
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} [keys] the assign-keys
    * @returns {*}
    */
@@ -227,7 +227,7 @@
 
   /**
    * check if key exists in object, will return false when key not exist, no matter that other-keys are
-   * @param {object} object
+   * @param {object} obj
    * @param {string[]|string} keys the keys that want to validate
    * @returns {boolean}
    */
@@ -249,7 +249,7 @@
 
   /**
    * get keys in object, and get all if levelLimit = 0
-   * @param {object} object
+   * @param {object} obj
    * @param {number} [levelLimit=1] the level of object you want to get keys
    * @returns {Array}
    */
@@ -280,7 +280,7 @@
 
   /**
    * covert to string if element is function in object
-   * @param {object} object
+   * @param {object} obj
    * @param {boolean} [replaceWrap=true] if replace \r\n
    */
   self.coverFnToStrInObj = function(obj, replaceWrap) {

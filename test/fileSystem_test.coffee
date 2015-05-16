@@ -6,10 +6,10 @@ describe 'FileSystem', ->
 
   it 'writeFileCaro', ->
     data = caro.readFileCaro(__dirname + '/test.html');
-    r = caro.writeFileCaro(__dirname + '/test.html', data);
+    r = caro.writeFileCaro(__dirname + '/\/test2.html', data);
     r.should.be.a('boolean')
 
-  it 'deleteFile', ->
+  it.only 'deleteFile', ->
     r = caro.deleteFile('./1.js', __dirname + '/2.js');
     r.should.be.a('boolean')
 

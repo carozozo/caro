@@ -95,7 +95,7 @@ caro.isArr(['caro']); // true
 ### ★Console
 [Back to Index](#index)  
 (由 [color](https://www.npmjs.com/package/colors) 延伸)  
-- **log(msg, variable) - 輸出有顏色的 console 訊息**
+- **log(msg, variable) - 輸出 console 訊息**
 ```javascript
     caro.log('1', undefined);
     caro.log();
@@ -143,6 +143,7 @@ caro.isArr(['caro']); // true
 - **formatNow(formatType [locale]) - 取得現在的時間並格式化**
 ```javascript
     var r = caro.formatNow('date');
+    var r2 = caro.formatNow('date', 'zh-cn');
 ```
 - **addDateTime(dateTime, amount, unit [formatType]) - 增加時間**
 ```javascript
@@ -152,8 +153,8 @@ caro.isArr(['caro']); // true
 ```
 - **subtractDateTime(dateTime, amount, unit [formatType]) - 減少時間**
 ```javascript
-    var t = '2015-06-30 12:34:56';
-    var r = caro.addDateTime(t, 3, 'h'); // '2015-01-01 9:34'
+    var t = '2015-01-01 12:34:56';
+    var r = caro.addDateTime(t, 3, 'h', 'YYYY-MM-DD h:mm'); // '2015-01-01 9:34'
     var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2014/12/29'
 ```
 - **startOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的開始**
@@ -203,7 +204,7 @@ caro.isArr(['caro']); // true
     var t = '2015-01-01';
     var t2 = '2013-01-21';
     var t3 = '2015-01-21';
-    var r = caro.isBetweenDateTime(t, t2, t3); // true
+    var r = caro.isBetweenDateTime(t, t2, t3); // true (t2 <= t <= t3)
     var r2 = caro.isBetweenDateTime(t, t3, t2); // false (因為 t 沒有比 t3 大) 
 ```
 - **isValidDateTime(dateTime) - 檢查日期格式是否正確**
@@ -559,7 +560,7 @@ caro.isArr(['caro']); // true
 [Back to Index](#index)
 - **getObjLength(obj) - 取得 obj 長度(element 數量)**
 ```javascript
-    var arg = ['a' ,'b', ''c];
+    var arg = ['a' ,'b', 'c'];
     var r = caro.getObjLength(arg); // 3    
 ```
 - **extendObj([deep=false], obj...) - 合併至第1個 obj**

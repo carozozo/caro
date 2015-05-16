@@ -165,7 +165,6 @@ do ->
   # @param {...[]} arr
   # @returns {boolean}
   ###
-
   self.hasEmptyInArr = (arr) ->
     hasEmpty = false
     checkVal = (arr) ->

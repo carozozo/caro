@@ -4,13 +4,12 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
-  var combineMsg, doConsole, self;
+  var colors, combineMsg, doConsole, self;
   if (!caro.isNode) {
     return;
   }
   self = caro;
-  require('colors');
+  colors = require('colors');
   combineMsg = function(msg, variable) {
     msg = caro.coverToStr(msg);
     if (caro.isUndef(variable)) {
@@ -58,6 +57,7 @@
       return;
     }
     doConsole(arguments, 'yellow');
+    this.isOdd = true;
   };
 
   /**
@@ -72,5 +72,6 @@
       return;
     }
     doConsole(arguments, 'red');
+    this.isOdd = true;
   };
 })();
