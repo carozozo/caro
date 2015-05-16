@@ -571,7 +571,41 @@ caro.isArr(['caro']); // true
     var arg = ['a' ,'b', ''c];
     var r = caro.getObjLength(arg); // 3    
 ```
+- **extend([deep=false], obj...) - 合併至第1個 obj**
+```javascript
+    var arg = {a: {a1: 1}};
+    var arg2 = {a: {a1: 1}};
+    var arg3 = {a: {a1: 2}, b: 2, c: {c1: 1}};
+    caro.extend(arg, arg3); // {a: {a1: 1}, b: 2, c: {c1: 1}}
+    caro.extend(true, arg2, arg3); // { a: { a1: 2 }, b: 2, c: { c1: 1 } }
+
+    var arg = [1, 2, 3];
+    var arg2 = [4, 5, 6];
+    caro.extend(arg, arg2) // [ 1, 2, 3, 4, 5, 6 ]
+```
+- **clone(obj) - 複製 obj**
+```javascript
+    var arg = {a: 1, b: 2};
+    var r = caro.clone(arg);
+    arg.a = 3
+    console.log arg // { a: 3, b: 2 }
+    console.log r // { a: 1, b: 2 }
+```
+- **extendObj(obj1, obj2 [deep=false]) - 將 obj2 合併至 obj1**
+- **✪Will replaced by Object.extend✪**
+```javascript
+    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
+    var arg2 = ['a', 'b', 'c'];
+    var r = caro.extendObj(arg, arg2);
+    var r2 = caro.extendObj(arg, arg2, true);
+    var r3 = caro.extendObj(arg2, arg);
+    arg.cc.c1 = 5;
+    console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
+    console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
+    console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
+``` 
 - **cloneObj(obj) - 複製 obj**
+- **✪Will replaced by Object.clone✪**
 ```javascript
     var arg = ['a', 'b', 'c'];
     var arg2 = {'a': 1, 'b': 2};
@@ -586,18 +620,6 @@ caro.isArr(['caro']); // true
     console.log(r3); // [ 'a', 'b', 'c' ] - r3 裡面的值不會跟著 arg 而改變
     console.log(r4); // { a: 1, b: 2 } - r4 裡面的值不會跟著 arg2 而改變
 ```
-- **extendObj(obj1, obj2 [deep=false]) - 將 obj2 合併至 obj1**
-```javascript
-    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
-    var arg2 = ['a', 'b', 'c'];
-    var r = caro.extendObj(arg, arg2);
-    var r2 = caro.extendObj(arg, arg2, true);
-    var r3 = caro.extendObj(arg2, arg);
-    arg.cc.c1 = 5;
-    console.log(r); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 5 } }
-    console.log(r2); // { '0': 'a', '1': 'b', '2': 'c', aa: 1, bb: 2, cc: { c1: 3 } }
-    console.log(r3); // [ 'a', 'b', 'c', 1, 2, { c1: 5 } ]
-```    
 - **replaceObjKey(obj, replaceFn [clone=false]) - 轉換 obj 中的 key**
 ```javascript
     var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};

@@ -3,7 +3,6 @@
 # @namespace caro
 # @author Caro.Huang
 ###
-
 do ->
   self = caro
 
