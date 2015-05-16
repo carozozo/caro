@@ -12345,19 +12345,15 @@
    * @param {object} obj
    * @param {string} type=upper|lower|upperFirst support-type
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  changeStrValByObjKey = function(obj, type, keys, clone) {
+  changeStrValByObjKey = function(obj, type, keys) {
     var aType, r;
-    if (clone == null) {
-      clone = false;
-    }
     aType = ['upper', 'lower', 'upperFirst'];
+    r = obj;
     if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
       return obj;
     }
-    r = clone ? caro.cloneObj(obj) : obj;
     keys = keys || caro.getKeysInObj(r);
     keys = caro.splitStr(keys, ',');
     caro.each(keys, function(i, key) {
@@ -12391,6 +12387,7 @@
   };
 
   /**
+   * get object-length
    * @param {object} obj
    * @returns {Number}
    */
@@ -12399,7 +12396,7 @@
   };
 
   /**
-   * extend obj similar jQuery.extend
+   * extend object, similar jQuery.extend
    * @param {boolean} [deep=false] extend-recursive
    * @param {object...|array...} arg
    * @returns {*}
@@ -12444,7 +12441,7 @@
   };
 
   /**
-   * clone obj
+   * clone object, similar jQuery.clone
    * @param {object} obj
    * @param {boolean} [deep=false] if clone all under obj
    * @returns {*}
@@ -12471,42 +12468,35 @@
    * replace key in object
    * @param {object} obj
    * @param {function({})} cb callback-fn that include key, and return new-key if you want to replace
-   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.replaceObjKey = function(obj, cb, clone) {
-    var objRet;
-    if (clone == null) {
-      clone = false;
-    }
-    objRet = obj;
-    if (clone) {
-      objRet = caro.cloneObj(obj);
-    }
-    caro.each(objRet, function(key, val) {
+  self.replaceObjKey = function(obj, cb) {
+    var r;
+    r = obj;
+    caro.each(r, function(key, val) {
       var newKey;
       newKey = caro.executeIfFn(cb, key);
       if (newKey) {
-        objRet[newKey] = val;
-        delete objRet[key];
+        r[newKey] = val;
+        delete r[key];
       }
     });
-    return objRet;
+    return r;
   };
 
   /**
+   * replace value in object
    * @param {object} obj
    * @param {function({})} cb callback-fn that include value, and return new-value if you want to replace
-   * @param {object} [opt]
-   * @param {boolean} [opt.deep=false] if deep-replace when element is obj
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [deep=false] if deep-replace when element is obj
    * @returns {*}
    */
-  self.replaceObjVal = function(obj, cb, opt) {
-    var clone, coverObjVal, deep, oClone;
-    opt = caro.coverToObj(opt);
-    deep = opt.deep === true;
-    clone = opt.clone === true;
+  self.replaceObjVal = function(obj, cb, deep) {
+    var coverObjVal, r;
+    if (deep == null) {
+      deep = false;
+    }
+    r = obj;
     coverObjVal = function(o) {
       caro.each(o, function(key, val) {
         var newVal;
@@ -12520,57 +12510,54 @@
         }
       });
     };
-    oClone = clone ? caro.cloneObj(obj) : obj;
-    coverObjVal(oClone);
-    return oClone;
+    coverObjVal(r);
+    return r;
   };
 
   /**
+   * upper-case value in object by key, will replace-all if key is empty
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.upperCaseByObjKey = function(obj, keys, clone) {
-    return changeStrValByObjKey(obj, 'upper', keys, clone);
+  self.upperCaseByObjKey = function(obj, keys) {
+    return changeStrValByObjKey(obj, 'upper', keys);
   };
 
   /**
+   * lower-case value in object by key, will replace-all if key is empty
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.lowerCaseByObjKey = function(obj, keys, clone) {
-    return changeStrValByObjKey(obj, 'lower', keys, clone);
+  self.lowerCaseByObjKey = function(obj, keys) {
+    return changeStrValByObjKey(obj, 'lower', keys);
   };
 
   /**
+   * upper-case the first char of value in object by key, will replace-all if key is empty
    * @param {object} obj
    * @param {string[]|[]} [keys] the assign-keys
-   * @param {boolean} [clone=false] if clone for not replacing original
    * @returns {*}
    */
-  self.upperFirstByObjKey = function(obj, keys, clone) {
-    return changeStrValByObjKey(obj, 'upperFirst', keys, clone);
+  self.upperFirstByObjKey = function(obj, keys) {
+    return changeStrValByObjKey(obj, 'upperFirst', keys);
   };
 
   /**
    * @param {object} obj
-   * @param {object} [opt]
-   * @param {boolean} [opt.deep=true] if deep-replace when element is obj
-   * @param {boolean} [opt.clone=false] if clone for not replacing original
+   * @param {boolean} [deep=false] if deep-replace when element is obj
    * @returns {*}
    */
-  self.trimObjVal = function(obj, opt) {
-    var clone, deep, r;
-    opt = caro.coverToObj(opt);
-    deep = opt.deep !== false;
-    clone = opt.clone === true;
-    r = clone ? caro.cloneObj(obj) : obj;
+  self.trimObjVal = function(obj, deep) {
+    var r;
+    if (deep == null) {
+      deep = false;
+    }
+    r = obj;
     caro.each(r, function(key, val) {
       if (caro.isObjOrArr(val) && deep) {
-        r[key] = caro.trimObjVal(val, opt);
+        r[key] = caro.trimObjVal(val, deep);
       } else if (caro.isStr(val)) {
         r[key] = val.trim();
       }
