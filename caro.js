@@ -1,4 +1,4 @@
-/*! caro - v0.4.15 - 2015-05-16 */
+/*! caro - v0.4.16 - 2015-05-17 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11390,7 +11390,6 @@
         }
       });
     };
-    console.log('cb=', cb);
     readDir(path, countLevel);
   };
 

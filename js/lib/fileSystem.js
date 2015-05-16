@@ -256,7 +256,6 @@
         }
       });
     };
-    console.log('cb=', cb);
     readDir(path, countLevel);
   };
 
