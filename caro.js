@@ -11253,36 +11253,9 @@
   };
 
   /**
-   * delete file
-   * @param {...string} path
-   * @param {function} cb the callback-function for each path
-   * @returns {boolean}
-   */
-  self.deleteFile = function(path, cb) {
-    var aPath, args, pass;
-    pass = true;
-    args = getArgs(arguments);
-    aPath = args.str;
-    cb = args.cb[0];
-    caro.each(aPath, function(i, path) {
-      var e;
-      try {
-        nFs.unlinkSync(path);
-        caro.executeIfFn(cb, false, path);
-      } catch (_error) {
-        e = _error;
-        showErr(e);
-        pass = false;
-        caro.executeIfFn(cb, e, path);
-      }
-    });
-    return pass;
-  };
-
-  /**
    * check if empty-folder, return false if anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function for each path
+   * @param {function} [cb] the callback-function for each path
    * @returns {boolean}
    */
   self.isEmptyDir = function(path, cb) {
@@ -11402,7 +11375,7 @@
   /**
    * create dir recursively, will create folder if path not exists
    * @param {...string} path
-   * @param {function} cb the callback-function for each path
+   * @param {function} [cb] the callback-function for each path
    * @returns {*|string}
    */
   self.createDir = function(path, cb) {
@@ -11440,68 +11413,9 @@
   };
 
   /**
-   * delete folder recursively
-   * @param {...string} path
-   * @param {function} cb the callback-function for each path
-   * @param {boolean} [force=false] force-delete even not empty
-   * @returns {boolean}
-   */
-  self.deleteDir = function(path, cb, force) {
-    var aPath, argAndCb, deleteFileOrDir, pass, tryAndCatchErr;
-    pass = true;
-    argAndCb = getArgs(arguments);
-    aPath = argAndCb.str;
-    cb = argAndCb.cb[0];
-    force = argAndCb.bool[0];
-    tryAndCatchErr = function(fn) {
-      var e;
-      try {
-        fn();
-        caro.executeIfFn(cb, false, path);
-      } catch (_error) {
-        e = _error;
-        showErr(e);
-        pass = false;
-        caro.executeIfFn(cb, e, path);
-      }
-    };
-    deleteFileOrDir = function(path) {
-      if (caro.isFsFile(path) && force) {
-        tryAndCatchErr(function() {
-          return nFs.unlinkSync(path);
-        });
-        return;
-      }
-      if (caro.isFsDir(path)) {
-        tryAndCatchErr(function() {
-          var files;
-          files = nFs.readdirSync(path);
-          caro.each(files, function(i, file) {
-            var subPath;
-            subPath = caro.normalizePath(path, file);
-            deleteFileOrDir(subPath);
-          });
-        });
-      }
-      if (caro.isEmptyDir(path, function(e) {
-        pass = false;
-        return caro.executeIfFn(cb, e, path);
-      })) {
-        tryAndCatchErr(function() {
-          return nFs.rmdirSync(path);
-        });
-      }
-    };
-    caro.each(aPath, function(i, dirPath) {
-      return deleteFileOrDir(dirPath);
-    });
-    return pass;
-  };
-
-  /**
    * check file if exists, return false when anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function for each path
+   * @param {function} [cb] the callback-function for each path
    * @returns {*}
    */
   self.fsExists = function(path, cb) {
@@ -11530,7 +11444,7 @@
   /**
    * check if folder, return false when anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function for each path
+   * @param {function} [cb] the callback-function for each path
    * @returns {*}
    */
   self.isFsDir = function(path, cb) {
@@ -11558,7 +11472,7 @@
   /**
    * check if file, return false when anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function for each path
+   * @param {function} [cb] the callback-function for each path
    * @returns {*}
    */
   self.isFsFile = function(path) {
@@ -11585,7 +11499,7 @@
 
   /**
    * check if symbolic link, return false when anyone is false
-   * @param {function} cb the callback-function for each path
+   * @param {function} [cb] the callback-function for each path
    * @param {...string} path
    * @returns {*}
    */
@@ -11631,35 +11545,59 @@
   };
 
   /**
-   * delete file or dir or link, return false delete failed
+   * delete file/folder recursively
    * @param {...string} path
-   * @param {boolean} [force=false]
+   * @param {function} [cb] the callback-function for each path
+   * @param {boolean} [force=false] force-delete even not empty
    * @returns {boolean}
    */
-  self.deleteFs = function(path, force) {
-    var aPath, e, pass;
-    if (force == null) {
-      force = false;
-    }
+  self.deleteFs = function(path, cb, force) {
+    var aPath, argAndCb, deleteFileOrDir, err, pass, tryAndCatchErr;
+    err = [];
     pass = true;
-    aPath = [];
-    try {
-      caro.each(aPath, function(i, path) {
-        if (caro.isFsDir(path)) {
-          if (!caro.deleteDir(path, force)) {
-            pass = false;
-          }
-          return;
-        }
-        if (!caro.deleteFile(path)) {
-          pass = false;
-        }
+    argAndCb = getArgs(arguments);
+    aPath = argAndCb.str;
+    cb = argAndCb.cb[0];
+    force = argAndCb.bool[0];
+    tryAndCatchErr = function(fn) {
+      var e;
+      try {
+        fn();
+      } catch (_error) {
+        e = _error;
+        showErr(e);
+        pass = false;
+        err.push(e);
+      }
+    };
+    deleteFileOrDir = function(path) {
+      if (caro.isFsFile(path) && force) {
+        tryAndCatchErr(function() {
+          return nFs.unlinkSync(path);
+        });
+        return;
+      }
+      if (caro.isFsDir(path)) {
+        tryAndCatchErr(function() {
+          var files;
+          files = nFs.readdirSync(path);
+          caro.each(files, function(i, file) {
+            var subPath;
+            subPath = caro.normalizePath(path, file);
+            deleteFileOrDir(subPath);
+          });
+        });
+      }
+      tryAndCatchErr(function() {
+        return nFs.rmdirSync(path);
       });
-    } catch (_error) {
-      e = _error;
-      showErr(e);
-      pass = false;
-    }
+      return err;
+    };
+    caro.each(aPath, function(i, dirPath) {
+      err = [];
+      err = deleteFileOrDir(dirPath);
+      return caro.executeIfFn(cb, err, dirPath);
+    });
     return pass;
   };
 

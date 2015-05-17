@@ -96,33 +96,11 @@ do ->
       showErr(e)
     false
 
-  ###*
-  # delete file
-  # @param {...string} path
-  # @param {function} cb the callback-function for each path
-  # @returns {boolean}
-  ###
-  self.deleteFile = (path, cb) ->
-    pass = true
-    args = getArgs(arguments)
-    aPath = args.str
-    cb = args.cb[0]
-    caro.each aPath, (i, path) ->
-      try
-        nFs.unlinkSync path
-        caro.executeIfFn(cb, false, path)
-      catch e
-        showErr(e)
-        pass = false
-        caro.executeIfFn(cb, e, path)
-      return
-    pass
-
   # DIR --
   ###*
   # check if empty-folder, return false if anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function for each path
+  # @param {function} [cb] the callback-function for each path
   # @returns {boolean}
   ###
   self.isEmptyDir = (path, cb) ->
@@ -214,7 +192,7 @@ do ->
   ###*
   # create dir recursively, will create folder if path not exists
   # @param {...string} path
-  # @param {function} cb the callback-function for each path
+  # @param {function} [cb] the callback-function for each path
   # @returns {*|string}
   ###
   self.createDir = (path, cb) ->
@@ -244,60 +222,11 @@ do ->
       createDir(dirPath)
     pass
 
-  ###*
-  # delete folder recursively
-  # @param {...string} path
-  # @param {function} cb the callback-function for each path
-  # @param {boolean} [force=false] force-delete even not empty
-  # @returns {boolean}
-  ###
-  self.deleteDir = (path, cb, force) ->
-    pass = true
-    argAndCb = getArgs(arguments)
-    aPath = argAndCb.str
-    cb = argAndCb.cb[0]
-    force = argAndCb.bool[0]
-    tryAndCatchErr = (fn)->
-      try
-        fn()
-        caro.executeIfFn(cb, false, path)
-      catch e
-        showErr(e)
-        pass = false
-        caro.executeIfFn(cb, e, path)
-      return
-    deleteFileOrDir = (path) ->
-      if caro.isFsFile(path) and force
-        tryAndCatchErr(->
-          nFs.unlinkSync(path)
-        )
-        return
-      if caro.isFsDir(path)
-        tryAndCatchErr(->
-          files = nFs.readdirSync(path)
-          caro.each files, (i, file) ->
-            subPath = caro.normalizePath(path, file)
-            deleteFileOrDir(subPath)
-            return
-          return
-        )
-      if caro.isEmptyDir(path, (e) ->
-        pass = false
-        caro.executeIfFn(cb, e, path)
-      )
-        tryAndCatchErr(->
-          nFs.rmdirSync(path)
-        )
-      return
-    caro.each aPath, (i, dirPath) ->
-      deleteFileOrDir(dirPath)
-    pass
-
   # COMMON --
   ###*
   # check file if exists, return false when anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function for each path
+  # @param {function} [cb] the callback-function for each path
   # @returns {*}
   ###
   self.fsExists = (path, cb) ->
@@ -320,7 +249,7 @@ do ->
   ###*
   # check if folder, return false when anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function for each path
+  # @param {function} [cb] the callback-function for each path
   # @returns {*}
   ###
   self.isFsDir = (path, cb) ->
@@ -343,7 +272,7 @@ do ->
   ###*
   # check if file, return false when anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function for each path
+  # @param {function} [cb] the callback-function for each path
   # @returns {*}
   ###
   self.isFsFile = (path) ->
@@ -365,7 +294,7 @@ do ->
 
   ###*
   # check if symbolic link, return false when anyone is false
-  # @param {function} cb the callback-function for each path
+  # @param {function} [cb] the callback-function for each path
   # @param {...string} path
   # @returns {*}
   ###
@@ -386,12 +315,10 @@ do ->
       return
     pass
 
-  # TODO next-check
   ###*
   # @param {string} path
   # @returns {string}
   ###
-
   self.getFileType = (path) ->
     r = ''
     if caro.isFsDir(path)
@@ -403,29 +330,53 @@ do ->
     r
 
   ###*
-  # delete file or dir or link, return false delete failed
+  # delete file/folder recursively
   # @param {...string} path
-  # @param {boolean} [force=false]
+  # @param {function} [cb] the callback-function for each path
+  # @param {boolean} [force=false] force-delete even not empty
   # @returns {boolean}
   ###
-
-  self.deleteFs = (path, force = false) ->
+  self.deleteFs = (path, cb, force) ->
+    err = []
     pass = true
-    aPath = []
-    try
-      caro.each aPath, (i, path) ->
-        if caro.isFsDir(path)
-          if !caro.deleteDir(path, force)
-            pass = false
-          return
-        if !caro.deleteFile(path)
-          pass = false
+    argAndCb = getArgs(arguments)
+    aPath = argAndCb.str
+    cb = argAndCb.cb[0]
+    force = argAndCb.bool[0]
+    tryAndCatchErr = (fn)->
+      try
+        fn()
+      catch e
+        showErr(e)
+        pass = false
+        err.push e
+      return
+    deleteFileOrDir = (path) ->
+      if caro.isFsFile(path) and force
+        tryAndCatchErr(->
+          nFs.unlinkSync(path)
+        )
         return
-    catch e
-      showErr(e)
-      pass = false
+      if caro.isFsDir(path)
+        tryAndCatchErr(->
+          files = nFs.readdirSync(path)
+          caro.each files, (i, file) ->
+            subPath = caro.normalizePath(path, file)
+            deleteFileOrDir(subPath)
+            return
+          return
+        )
+      tryAndCatchErr(->
+        nFs.rmdirSync(path)
+      )
+      err
+    caro.each aPath, (i, dirPath) ->
+      err = [] # reset err in each path
+      err = deleteFileOrDir(dirPath)
+      caro.executeIfFn(cb, err, dirPath)
     pass
 
+  # TODO  next check
   ###*
   # @param {string|...[]} path the file-path, you can also set as [path,newPath]
   # @param {string|...[]} newPath the new-path, you can also set as [path,newPath]
