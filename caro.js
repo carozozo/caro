@@ -1,4 +1,4 @@
-/*! caro - v0.4.16 - 2015-05-17 */
+/*! caro - v0.4.17 - 2015-05-17 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11440,7 +11440,7 @@
 
   /**
    * delete folder recursively
-   * @param {string} path
+   * @param {...string} path
    * @param {function} cb the callback-function when catch error
    * @param {boolean} [force=false] force-delete even not empty
    * @returns {boolean}

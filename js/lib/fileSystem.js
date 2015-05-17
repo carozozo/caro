@@ -306,7 +306,7 @@
 
   /**
    * delete folder recursively
-   * @param {string} path
+   * @param {...string} path
    * @param {function} cb the callback-function when catch error
    * @param {boolean} [force=false] force-delete even not empty
    * @returns {boolean}
