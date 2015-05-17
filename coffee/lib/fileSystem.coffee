@@ -29,16 +29,26 @@ do ->
   traceMode = false
   showErr = (e) ->
     console.error(e) if traceMode
-  getArgsAndCb = (args) ->
-    r = []
-    cb = null
+  getArgs = (args) ->
+    aStr = []
+    aCb = []
+    aBool = []
     caro.each args, (i, arg) ->
       if caro.isFn(arg)
-        cb = arg
+        aCb.push arg
         return
-      r.push arg
+      if caro.isBool(arg)
+        aBool.push arg
+        return
+      if caro.isStr(arg)
+        aStr.push arg
+        return
       return
-    [r, cb]
+    {
+    str: aStr
+    cb: aCb
+    bool: aBool
+    }
   getFileSize = (path) ->
     status = caro.getFsStat(path)
     return status.size if status
@@ -94,12 +104,12 @@ do ->
   ###
   self.deleteFile = (path, cb) ->
     pass = true
-    argAndCb = getArgsAndCb(arguments)
-    r = argAndCb[0]
-    cb = argAndCb[1]
-    caro.each r, (i, arg) ->
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
+    caro.each aPath, (i, path) ->
       try
-        nFs.unlinkSync arg
+        nFs.unlinkSync path
       catch e
         showErr(e)
         caro.executeIfFn(cb, e)
@@ -116,16 +126,17 @@ do ->
   ###
   self.isEmptyDir = (path, cb) ->
     pass = true
-    argAndCb = getArgsAndCb(arguments)
-    r = argAndCb[0]
-    cb = argAndCb[1]
-    caro.each r, (i, arg) ->
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
+    caro.each aPath, (i, path) ->
       try
-        count = 0
-        caro.readDirCb arg, ->
-          count++
-          return
-        if count > 0
+#        count = 0
+        count=nFs.readdirSync(path)
+#        caro.readDirCb path, ->
+#          count++
+#          return
+        if count.length > 0
           pass = false
           return false
         return
@@ -162,18 +173,19 @@ do ->
       r
     pushFile = (oFileInfo) ->
       extendName = oFileInfo.extendName
-      if getByExtend and getByExtend.indexOf(extendName) < 0
-        return
+      return if getByExtend and getByExtend.indexOf(extendName) < 0
       cb false, oFileInfo
       return
     readDir = (rootPath, level) ->
+      if maxLevel > 0 and level >= maxLevel
+        return
+      console.log 'readDir 開始, rootPath=',rootPath
       try
         files = nFs.readdirSync(rootPath)
       catch e
+        console.log '抓到錯誤, rootPath=',rootPath
         showErr(e)
         cb e
-      if maxLevel > 0 and level >= maxLevel
-        return
       level++
       caro.each files, (i, basename) ->
         filename = caro.getFileName(basename, false)
@@ -215,9 +227,9 @@ do ->
   ###
   self.createDir = (path, cb) ->
     pass = true
-    argAndCb = getArgsAndCb(arguments)
-    r = argAndCb[0]
-    cb = argAndCb[1]
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
     createDir = (dirPath)->
       subPath = ''
       aPath = caro.splitStr(dirPath, [
@@ -235,7 +247,7 @@ do ->
           caro.executeIfFn(cb, e)
           showErr(e)
         return
-    caro.each r, (i, dirPath) ->
+    caro.each aPath, (i, dirPath) ->
       createDir(dirPath)
     pass
 
