@@ -212,19 +212,17 @@
       if (getByExtend && getByExtend.indexOf(extendName) < 0) {
         return;
       }
-      cb(false, oFileInfo);
+      return cb(false, oFileInfo);
     };
     readDir = function(rootPath, level) {
       var e, files;
       if (maxLevel > 0 && level >= maxLevel) {
         return;
       }
-      console.log('readDir 開始, rootPath=', rootPath);
       try {
         files = nFs.readdirSync(rootPath);
       } catch (_error) {
         e = _error;
-        console.log('抓到錯誤, rootPath=', rootPath);
         showErr(e);
         cb(e);
       }
@@ -252,14 +250,14 @@
         };
         if (caro.isFsDir(filePath)) {
           if (getDir) {
-            pushFile(oFileInfo);
+            return pushFile(oFileInfo);
           }
           readDir(filePath, level);
           return;
         }
         if (caro.isFsFile(filePath)) {
           if (getFile) {
-            pushFile(oFileInfo);
+            return pushFile(oFileInfo);
           }
         }
       });
@@ -309,44 +307,57 @@
   /**
    * delete folder recursively
    * @param {string} path
+   * @param {function} cb the callback-function when catch error
    * @param {boolean} [force=false] force-delete even not empty
    * @returns {boolean}
    */
-  self.deleteDir = function(path, force) {
-    var deleteUnderDir, pass;
-    if (!caro.isFsDir(path)) {
-      return false;
-    }
-    path = caro.normalizePath(path);
-    force = force === true;
+  self.deleteDir = function(path, cb, force) {
+    var aPath, argAndCb, deleteFileOrDir, pass, tryAndCatchErr;
     pass = true;
-    deleteUnderDir = function(rootPath) {
-      caro.readDirCb(rootPath, function(oFilInfo) {
-        var e, filePath;
-        filePath = oFilInfo.filePath;
-        if (!force) {
-          return;
-        }
-        if (caro.isFsDir(filePath)) {
-          deleteUnderDir(filePath);
-          try {
-            nFs.rmdirSync(filePath);
-          } catch (_error) {
-            e = _error;
-            showErr(e);
-            pass = false;
-          }
-          return;
-        }
-        if (!caro.deleteFile(filePath)) {
-          pass = false;
-        }
-      });
+    argAndCb = getArgs(arguments);
+    aPath = argAndCb.str;
+    cb = argAndCb.cb[0];
+    force = argAndCb.bool[0];
+    tryAndCatchErr = function(fn) {
+      var e;
+      try {
+        fn();
+      } catch (_error) {
+        e = _error;
+        pass = false;
+        caro.executeIfFn(cb, e);
+      }
     };
-    deleteUnderDir(path);
-    if (caro.isEmptyDir(path)) {
-      nFs.rmdirSync(path);
-    }
+    deleteFileOrDir = function(path) {
+      if (caro.isFsFile(path) && force) {
+        tryAndCatchErr(function() {
+          return nFs.unlinkSync(path);
+        });
+        return;
+      }
+      if (caro.isFsDir(path)) {
+        tryAndCatchErr(function() {
+          var files;
+          files = nFs.readdirSync(path);
+          caro.each(files, function(i, file) {
+            var subPath;
+            subPath = caro.normalizePath(path, file);
+            deleteFileOrDir(subPath);
+          });
+        });
+      }
+      if (caro.isEmptyDir(path, function(e) {
+        pass = false;
+        return caro.executeIfFn(cb, e);
+      })) {
+        tryAndCatchErr(function() {
+          return nFs.rmdirSync(path);
+        });
+      }
+    };
+    caro.each(aPath, function(i, dirPath) {
+      return deleteFileOrDir(dirPath);
+    });
     return pass;
   };
 
