@@ -110,10 +110,11 @@ do ->
     caro.each aPath, (i, path) ->
       try
         nFs.unlinkSync path
+        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e)
+        caro.executeIfFn(cb, e, path)
       return
     pass
 
@@ -132,14 +133,12 @@ do ->
     caro.each aPath, (i, path) ->
       try
         count = nFs.readdirSync(path)
-        if count.length > 0
-          pass = false
-          return false
-        return
+        pass = false if count.length > 0
+        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e)
+        caro.executeIfFn(cb, e, path)
       return
     pass
 
@@ -235,10 +234,11 @@ do ->
         return if exists
         try
           nFs.mkdirSync subPath
+          caro.executeIfFn(cb, false, subPath)
         catch e
           showErr(e)
           pass = false
-          caro.executeIfFn(cb, e)
+          caro.executeIfFn(cb, e, subPath)
         return
     caro.each aPath, (i, dirPath) ->
       createDir(dirPath)
@@ -260,10 +260,11 @@ do ->
     tryAndCatchErr = (fn)->
       try
         fn()
+        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e)
+        caro.executeIfFn(cb, e, path)
       return
     deleteFileOrDir = (path) ->
       if caro.isFsFile(path) and force
@@ -282,7 +283,7 @@ do ->
         )
       if caro.isEmptyDir(path, (e) ->
         pass = false
-        caro.executeIfFn(cb, e)
+        caro.executeIfFn(cb, e, path)
       )
         tryAndCatchErr(->
           nFs.rmdirSync(path)
@@ -312,30 +313,34 @@ do ->
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e)
-      true
+        caro.executeIfFn(cb, e, path)
+      return
     pass
 
-  # TODO next-check
   ###*
   # check if folder, return false when anyone is false
   # @param {...string} path
+  # @param {function} cb the callback-function when catch error
   # @returns {*}
   ###
-
-  self.isFsDir = (path) ->
+  self.isFsDir = (path, cb) ->
     pass = true
-    caro.eachArgs arguments, (i, arg) ->
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
+    caro.each aPath, (i, path) ->
       try
-        stat = caro.getFsStat(arg)
-        pass = stat.isDirectory()
+        stat = caro.getFsStat(path)
+        pass and pass = stat.isDirectory()
+        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        return false
-      true
+        caro.executeIfFn(cb, e, path)
+      return
     pass
-
+    
+  # TODO next-check
   ###*
   # @param {...string} path
   # @returns {*}

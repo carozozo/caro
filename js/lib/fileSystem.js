@@ -134,11 +134,12 @@
       var e;
       try {
         nFs.unlinkSync(path);
+        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e);
+        caro.executeIfFn(cb, e, path);
       }
     });
     return pass;
@@ -162,14 +163,13 @@
         count = nFs.readdirSync(path);
         if (count.length > 0) {
           pass = false;
-          return false;
         }
-        return;
+        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e);
+        caro.executeIfFn(cb, e, path);
       }
     });
     return pass;
@@ -290,11 +290,12 @@
         }
         try {
           nFs.mkdirSync(subPath);
+          caro.executeIfFn(cb, false, subPath);
         } catch (_error) {
           e = _error;
           showErr(e);
           pass = false;
-          caro.executeIfFn(cb, e);
+          caro.executeIfFn(cb, e, subPath);
         }
       });
     };
@@ -322,11 +323,12 @@
       var e;
       try {
         fn();
+        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e);
+        caro.executeIfFn(cb, e, path);
       }
     };
     deleteFileOrDir = function(path) {
@@ -349,7 +351,7 @@
       }
       if (caro.isEmptyDir(path, function(e) {
         pass = false;
-        return caro.executeIfFn(cb, e);
+        return caro.executeIfFn(cb, e, path);
       })) {
         tryAndCatchErr(function() {
           return nFs.rmdirSync(path);
@@ -365,6 +367,7 @@
   /**
    * check file if exists, return false when anyone is false
    * @param {...string} path
+   * @param {function} cb the callback-function when catch error
    * @returns {*}
    */
   self.fsExists = function(path, cb) {
@@ -384,9 +387,8 @@
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e);
+        caro.executeIfFn(cb, e, path);
       }
-      return true;
     });
     return pass;
   };
@@ -394,23 +396,27 @@
   /**
    * check if folder, return false when anyone is false
    * @param {...string} path
+   * @param {function} cb the callback-function when catch error
    * @returns {*}
    */
-  self.isFsDir = function(path) {
-    var pass;
+  self.isFsDir = function(path, cb) {
+    var aPath, args, pass;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    args = getArgs(arguments);
+    aPath = args.str;
+    cb = args.cb[0];
+    caro.each(aPath, function(i, path) {
       var e, stat;
       try {
-        stat = caro.getFsStat(arg);
-        pass = stat.isDirectory();
+        stat = caro.getFsStat(path);
+        pass && (pass = stat.isDirectory());
+        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        return false;
+        caro.executeIfFn(cb, e, path);
       }
-      return true;
     });
     return pass;
   };

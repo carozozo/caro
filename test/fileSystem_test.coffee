@@ -53,11 +53,11 @@ describe 'FileSystem', ->
     r.should.be.a('boolean')
 
   it 'isFsDir', ->
-    r = caro.isFsDir('./a');
+    r = caro.isFsDir('./a','c', (e, path) ->
+    );
     r.should.be.a('boolean')
 
   it 'isFsFile', ->
-    caro.setTrace(false);
     r = caro.isFsFile('./caro');
     r.should.be.a('boolean')
 
