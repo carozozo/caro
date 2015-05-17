@@ -49,6 +49,9 @@ do ->
     cb: aCb
     bool: aBool
     }
+  coverToFalseIfEmptyArr = (arr) ->
+    return false if arr.length < 1
+    arr
   getFileSize = (path) ->
     status = caro.getFsStat(path)
     return status.size if status
@@ -196,6 +199,7 @@ do ->
   # @returns {*|string}
   ###
   self.createDir = (path, cb) ->
+    err = []
     pass = true
     args = getArgs(arguments)
     aPath = args.str
@@ -212,14 +216,17 @@ do ->
         return if exists
         try
           nFs.mkdirSync subPath
-          caro.executeIfFn(cb, false, subPath)
         catch e
           showErr(e)
           pass = false
-          caro.executeIfFn(cb, e, subPath)
+          err.push e
         return
+      err
     caro.each aPath, (i, dirPath) ->
-      createDir(dirPath)
+      err = []  # reset err in each path
+      err = createDir(dirPath)
+      err = coverToFalseIfEmptyArr(err)
+      caro.executeIfFn(cb, err, dirPath)
     pass
 
   # COMMON --
@@ -373,6 +380,7 @@ do ->
     caro.each aPath, (i, dirPath) ->
       err = [] # reset err in each path
       err = deleteFileOrDir(dirPath)
+      err = coverToFalseIfEmptyArr(err)
       caro.executeIfFn(cb, err, dirPath)
     pass
 

@@ -1,4 +1,4 @@
-/*! caro - v0.4.18 - 2015-05-17 */
+/*! caro - v0.4.19 - 2015-05-17 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11379,7 +11379,8 @@
    * @returns {*|string}
    */
   self.createDir = function(path, cb) {
-    var aPath, args, createDir, pass;
+    var aPath, args, createDir, err, pass;
+    err = [];
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
@@ -11388,7 +11389,7 @@
       var subPath;
       subPath = '';
       aPath = caro.splitStr(dirPath, ['\\', '/']);
-      return caro.each(aPath, function(i, eachDir) {
+      caro.each(aPath, function(i, eachDir) {
         var e, exists;
         subPath = caro.normalizePath(subPath, eachDir);
         exists = caro.fsExists(subPath);
@@ -11397,17 +11398,22 @@
         }
         try {
           nFs.mkdirSync(subPath);
-          caro.executeIfFn(cb, false, subPath);
         } catch (_error) {
           e = _error;
           showErr(e);
           pass = false;
-          caro.executeIfFn(cb, e, subPath);
+          err.push(e);
         }
       });
+      return err;
     };
     caro.each(aPath, function(i, dirPath) {
-      return createDir(dirPath);
+      err = [];
+      err = createDir(dirPath);
+      if (err.length < 1) {
+        err = false;
+      }
+      return caro.executeIfFn(cb, err, dirPath);
     });
     return pass;
   };
@@ -11596,6 +11602,9 @@
     caro.each(aPath, function(i, dirPath) {
       err = [];
       err = deleteFileOrDir(dirPath);
+      if (err.length < 1) {
+        err = false;
+      }
       return caro.executeIfFn(cb, err, dirPath);
     });
     return pass;
