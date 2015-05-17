@@ -30,8 +30,8 @@ describe 'FileSystem', ->
       });
 
   it 'createDir', ->
-    r = caro.createDir('a', (e) ->
-#      console.log e
+    r = caro.createDir('1/a', '2',
+      (e, path) ->
     );
     r.should.be.a('boolean')
 

@@ -243,9 +243,10 @@ caro.isArr(['caro']); // true
 ```
 - **isEmptyDir(path... [cb]) - 判斷是否為空資料夾，其中一個不是資料夾或不是空的則回傳 false**
 ```javascript
-    var r = caro.isEmptyDir('/1', '/2', function (err, path){
+    var r = caro.isEmptyDir('/1'); // boolean
+    var r2 = caro.isEmptyDir('/1', '/2', function (err, path){
         // catch error and path
-    });
+    }); // boolean
 ```
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
@@ -272,38 +273,38 @@ caro.isArr(['caro']); // true
 - **createDir(path... [cb]) - 新增資料夾，失敗則回傳 false**
 ```javascript
     // 假設 src 底下沒有 lib 資料夾
-    var r = caro.createDir('./src/lib/coffee'); // 會產生 src/lib 和 src/lib/coffee 資料夾
+    var r = caro.createDir('./src/lib/coffee'); // boolean (will try to create /src/lib, /src/lib/coffee)
     var r2 = caro.createDir('./\/test','test2/sub_test', function (err, path){
         // catch error and path
-    });
+    }); // boolean
 ```
 - **fsExists(path... [cb]) - 判斷檔案/資料夾是否存在，其中一個不存在則回傳 false**
 ```javascript
-    var r = caro.fsExists('./a', './caro.js');
-    var 2 = caro.fsExists('a', 'b', function(err, path){
+    var r = caro.fsExists('./a', './caro.js'); // boolean
+    var r2 = caro.fsExists('a', 'b', function(err, path){
         // catch error and path
-    });
+    }); // boolean
 ```
 - **isFsDir(path... [cb]) - 判斷是否為資料夾，其中一個不是資料夾或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsDir('./a','./caro.js');
+    var r = caro.isFsDir('./a','./caro.js'); // boolean
     var 2 = caro.isFsDir('a', 'b', function(err, path){
         // catch error and path
-    });
+    }); // boolean
 ```
 - **isFsFile(path...) - 判斷是否為檔案，其中一個不是檔案或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsFile('./a','./caro.js');
+    var r = caro.isFsFile('./a','./caro.js'); // boolean
     var 2 = caro.isFsFile('a', 'b', function(err, path){
         // catch error and path
-    });
+    }); // boolean
 ```
 - **isFsSymlink(path...) - 判斷是否為 symbolic link，其中一個不是 symbolic link 或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsSymlink('./a','./caro.js');
+    var r = caro.isFsSymlink('./a','./caro.js'); // boolean
     var 2 = caro.isFsSymlink('a', 'b', function(err, path){
         // catch error and path
-    });
+    }); // boolean
 ```
 - **getFileType(path) - 取得檔案類型**
 ```javascript
@@ -311,10 +312,10 @@ caro.isArr(['caro']); // true
 ```
 - **deleteFs(path... [force=false]) - 刪除檔案及資料夾，其中一個刪除失敗或不存在則回傳 false**
 ```javascript
-    var r = caro.getFileType('./1.js','./2.lnk');
+    var r = caro.getFileType('./1.js','./2.lnk'); // boolean
     var r = caro.getFileType('./test','./1.js','./2.lnk', function(e, path){
         // catch error and path
-    }, true); // force-delete if possible (for folder)
+    }, true);  // boolean (force-delete if possible for folder)
 ```
 - **renameFs(path , newPath  [force=false]) - 檔案移動更名**
 ```javascript
