@@ -13,12 +13,6 @@ describe 'FileSystem', ->
     r = caro.writeFileCaro(__dirname + '/\/test2.html', data);
     r.should.be.a('boolean')
 
-  it 'deleteFile', ->
-    r = caro.deleteFile('./1.js', __dirname + '/\/test2.html', (e) ->
-# do something when catch error
-    );
-    r.should.be.a('boolean')
-
   it 'isEmptyDir', ->
     r = caro.isEmptyDir(__dirname + '/1', __dirname + '/2', (e) ->
 # do something when catch error
@@ -41,19 +35,13 @@ describe 'FileSystem', ->
     );
     r.should.be.a('boolean')
 
-  it 'deleteDir', ->
-    r = caro.deleteDir('a', 'b',
-      (e) ->
-    , true);
-    r.should.be.a('boolean')
-
   it 'fsExists', ->
     r = caro.fsExists('./a/b', 'c', (e, path) ->
     );
     r.should.be.a('boolean')
 
   it 'isFsDir', ->
-    r = caro.isFsDir('./a','c', (e, path) ->
+    r = caro.isFsDir('./a', 'c', (e, path) ->
     );
     r.should.be.a('boolean')
 
@@ -62,18 +50,22 @@ describe 'FileSystem', ->
     );
     r.should.be.a('boolean')
 
-  ity 'isFsSymlink', ->
+  it 'isFsSymlink', ->
     r = caro.isFsSymlink('./caro', (e, path) ->
     );
     r.should.be.a('boolean')
 
   it 'getFileType', ->
     r = caro.getFileType('./caro');
-    r.should.be.string
+    r2 = caro.getFileType('./caro.js');
+    r.should.eq ''
+    r2.should.eq 'file'
 
   it 'deleteFs', ->
-    r = caro.getFileType('./src', './1.js', './2.lnk', true);
-    r.should.be.a('string')
+    r = caro.deleteFs('./src', './1.js', './2.lnk',
+      (e, path) ->
+    , true);
+    r.should.be.a('boolean')
 
   it 'renameFs', ->
     r = caro.renameFs('./a', './b/c', true);
