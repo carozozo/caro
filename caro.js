@@ -1,4 +1,4 @@
-/*! caro - v0.4.17 - 2015-05-17 */
+/*! caro - v0.4.18 - 2015-05-17 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
