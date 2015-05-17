@@ -125,7 +125,7 @@
       } catch (_error) {
         e = _error;
         showErr(e);
-        cb(e);
+        caro.executeIfFn(cb, e);
         pass = false;
       }
     });
@@ -159,7 +159,7 @@
       } catch (_error) {
         e = _error;
         showErr(e);
-        cb(e);
+        caro.executeIfFn(cb, e);
         pass = false;
       }
     });
@@ -179,9 +179,6 @@
    */
   self.readDirCb = function(path, cb, opt) {
     var countLevel, getByExtend, getDir, getFile, maxLevel, pushFile, readDir;
-    if (cb == null) {
-      cb = null;
-    }
     if (opt == null) {
       opt = {};
     }
@@ -261,29 +258,44 @@
 
   /**
    * create dir recursively, will create folder if path not exists
-   * @param {string} path
+   * @param {...string} path
    * @returns {*|string}
    */
-  self.createDir = function(path) {
-    var aPath, e, subPath;
-    path = caro.normalizePath(path);
-    aPath = caro.splitStr(path, ['\\', '/']);
-    subPath = '';
-    try {
-      caro.each(aPath, function(i, eachDir) {
-        var exists;
+  self.createDir = function(path, cb) {
+    var argAndCb, createDir, pass, r;
+    pass = true;
+    argAndCb = getArgsAndCb(arguments);
+    r = argAndCb[0];
+    cb = argAndCb[1];
+    console.log('r=', r);
+    console.log('cb=', cb);
+    createDir = function(dirPath) {
+      var aPath, subPath;
+      subPath = '';
+      aPath = caro.splitStr(dirPath, ['\\', '/']);
+      return caro.each(aPath, function(i, eachDir) {
+        var e, exists;
         subPath = caro.normalizePath(subPath, eachDir);
+        console.log('subPAth=', subPath);
         exists = caro.fsExists(subPath);
-        if (!exists) {
+        if (exists) {
+          return;
+        }
+        try {
           nFs.mkdirSync(subPath);
+        } catch (_error) {
+          e = _error;
+          pass = false;
+          console.log('@@');
+          caro.executeIfFn(cb, e);
+          showErr(e);
         }
       });
-    } catch (_error) {
-      e = _error;
-      showErr(e);
-      return false;
-    }
-    return true;
+    };
+    caro.each(r, function(i, dirPath) {
+      return createDir(dirPath);
+    });
+    return pass;
   };
 
   /**

@@ -36,8 +36,10 @@ describe 'FileSystem', ->
         getByExtend: false
       });
 
-  it 'createDir', ->
-    r = caro.createDir('./src');
+  it.only 'createDir', ->
+    r = caro.createDir('a', (e) ->
+      console.log e
+    );
     r.should.be.a('boolean')
 
   it 'deleteDir', ->

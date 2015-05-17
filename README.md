@@ -248,11 +248,11 @@ caro.isArr(['caro']); // true
         console.log(e);
     }); // 只要其中一個刪除失敗，回傳 false 
 ```
-- **isEmptyDir(path...) - 判斷是否為空資料夾**
+- **isEmptyDir(path... [cb]) - 判斷是否為空資料夾**
 ```javascript
     var r = caro.isEmptyDir('/1', '/2', function (e){
         console.log(e);
-    }); / 只要其中一個不是資料夾或不是空的，回傳 false
+    }); // 只要其中一個不是資料夾或不是空的，回傳 false
 ```
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
@@ -276,10 +276,13 @@ caro.isArr(['caro']); // true
         getByExtend: false // 指定要讀取的檔案類型， e.g. 'js,html' => 只讀取 .js/.html 檔
     });
 ```
-- **createDir(path) - 新增資料夾**
+- **createDir(path... [cb]) - 新增資料夾**
 ```javascript
     // 假設 src 底下沒有 lib 資料夾
     var r = caro.createDir('./src/lib/coffee'); // 會產生 src/lib 和 src/lib/coffee 資料夾，失敗則回傳 false
+    var r2 = caro.createDir('./\/test','test2/sub_test', (e) ->
+      console.log(e);
+    );
 ```
 - **deleteDir(path [force=false]) - 刪除資料夾**
 ```javascript
