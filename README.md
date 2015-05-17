@@ -241,18 +241,19 @@ caro.isArr(['caro']); // true
     var data = caro.readFileCaro('./test.html');
     var r = caro.writeFileCaro('./test.html', data);
 ```
-- **deleteFile(path... [cb]) - 刪除檔案**
+- **deleteFile(path... [cb]) - 刪除檔案，其中一個刪除失敗則回傳 false**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_fs_unlinksync_path
-    var r = caro.deleteFile('1.js', '2.js', function (e){
-        // catch error
-    }); // 只要其中一個刪除失敗，回傳 false 
+    var r = caro.deleteFile('1.js')
+    var r2 = caro.deleteFile('1.js', '2.js', function (err, path){
+        // catch error and path
+    }); 
 ```
-- **isEmptyDir(path... [cb]) - 判斷是否為空資料夾**
+- **isEmptyDir(path... [cb]) - 判斷是否為空資料夾，其中一個不是資料夾或不是空的則回傳 false**
 ```javascript
-    var r = caro.isEmptyDir('/1', '/2', function (e){
-        // catch error
-    }); // 只要其中一個不是資料夾或不是空的，回傳 false
+    var r = caro.isEmptyDir('/1', '/2', function (err, path){
+        // catch error and path
+    });
 ```
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
@@ -280,31 +281,34 @@ caro.isArr(['caro']); // true
 ```javascript
     // 假設 src 底下沒有 lib 資料夾
     var r = caro.createDir('./src/lib/coffee'); // 會產生 src/lib 和 src/lib/coffee 資料夾
-    var r2 = caro.createDir('./\/test','test2/sub_test', function (e){
-      // catch error
+    var r2 = caro.createDir('./\/test','test2/sub_test', function (err, path){
+        // catch error and path
     });
 ```
 - **deleteDir(path [cb] [force=false]) - 刪除資料夾，失敗則回傳 false**
 ```javascript
     var r = caro.createDir('./src'); // 如果 /src 底下有檔案，則不刪除
-    var r2 = caro.createDir('./test', 'test2', function (e){
+    var r2 = caro.createDir('./test', 'test2', function (err, path){
       // catch error
     }, true); // 強制刪除資料夾
 ```
-- **fsExists(path... [cb]) - 判斷檔案/資料夾是否存在**
+- **fsExists(path... [cb]) - 判斷檔案/資料夾是否存在，其中一個不存在則回傳 false**
 ```javascript
-    var r = caro.fsExists('./a', './caro.js'); // 其中一個不存在則回傳 false
-    var 2 = caro.fsExists('a', 'b', function(e, path){
-        // get path that not exists
-    }); // 其中一個不存在則回傳 false
+    var r = caro.fsExists('./a', './caro.js');
+    var 2 = caro.fsExists('a', 'b', function(err, path){
+        // catch error and path
+    });
 ```
-- **isFsDir(path...) - 判斷是否為資料夾**
+- **isFsDir(path... [cb]) - 判斷是否為資料夾，其中一個不是資料夾或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsDir('./a','./caro.js'); // 其中一個不是資料夾或不存在則回傳 false
+    var r = caro.isFsDir('./a','./caro.js');
+    var 2 = caro.isFsDir('a', 'b', function(err, path){
+        // catch error and path
+    });
 ```
-- **isFsFile(path...) - 判斷是否為檔案**
+- **isFsFile(path...) - 判斷是否為檔案，其中一個不是檔案或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsDir('./a','./caro.js'); // 其中一個不是檔案或不存在則回傳 false
+    var r = caro.isFsDir('./a','./caro.js');
 ```
 - **isFsSymlink(path...) - 判斷是否為 symbolic link**
 ```javascript
