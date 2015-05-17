@@ -39,7 +39,6 @@ do ->
       r.push arg
       return
     [r, cb]
-
   getFileSize = (path) ->
     status = caro.getFsStat(path)
     return status.size if status
@@ -103,7 +102,7 @@ do ->
         nFs.unlinkSync arg
       catch e
         showErr(e)
-        cb(e)
+        caro.executeIfFn(cb, e)
         pass = false
       return
     pass
@@ -132,7 +131,7 @@ do ->
         return
       catch e
         showErr(e)
-        cb(e)
+        caro.executeIfFn(cb, e)
         pass = false
       return
     pass
@@ -148,7 +147,7 @@ do ->
   # @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
   # @returns {*}
   ###
-  self.readDirCb = (path, cb = null, opt = {}) ->
+  self.readDirCb = (path, cb, opt = {}) ->
     countLevel = 0
     maxLevel = if opt.maxLevel then parseInt(opt.maxLevel, 10) else 1
     getDir = opt.getDir != false
@@ -208,33 +207,39 @@ do ->
     readDir path, countLevel
     return
 
-  # TODO next-check
   ###*
   # create dir recursively, will create folder if path not exists
-  # @param {string} path
+  # @param {...string} path
+  # @param {function} cb the callback-function when catch error
   # @returns {*|string}
   ###
-
-  self.createDir = (path) ->
-    path = caro.normalizePath(path)
-    # [\\] for windows, [/] for linux
-    aPath = caro.splitStr(path, [
-      '\\'
-      '/'
-    ])
-    subPath = ''
-    try
-      caro.each aPath, (i, eachDir) ->
+  self.createDir = (path, cb) ->
+    pass = true
+    argAndCb = getArgsAndCb(arguments)
+    r = argAndCb[0]
+    cb = argAndCb[1]
+    createDir = (dirPath)->
+      subPath = ''
+      aPath = caro.splitStr(dirPath, [
+        '\\' # for windows
+        '/' # for linux
+      ])
+      caro.each aPath, (i, eachDir)->
         subPath = caro.normalizePath(subPath, eachDir)
         exists = caro.fsExists(subPath)
-        if !exists
+        return if exists
+        try
           nFs.mkdirSync subPath
+        catch e
+          pass = false
+          caro.executeIfFn(cb, e)
+          showErr(e)
         return
-    catch e
-      showErr(e)
-      return false
-    true
+    caro.each r, (i, dirPath) ->
+      createDir(dirPath)
+    pass
 
+  # TODO next-check
   ###*
   # delete folder recursively
   # @param {string} path
