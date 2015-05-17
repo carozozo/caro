@@ -11271,8 +11271,8 @@
       } catch (_error) {
         e = _error;
         showErr(e);
-        caro.executeIfFn(cb, e);
         pass = false;
+        caro.executeIfFn(cb, e);
       }
     });
     return pass;
@@ -11302,8 +11302,8 @@
       } catch (_error) {
         e = _error;
         showErr(e);
-        caro.executeIfFn(cb, e);
         pass = false;
+        caro.executeIfFn(cb, e);
       }
     });
     return pass;
@@ -11426,9 +11426,9 @@
           nFs.mkdirSync(subPath);
         } catch (_error) {
           e = _error;
+          showErr(e);
           pass = false;
           caro.executeIfFn(cb, e);
-          showErr(e);
         }
       });
     };
@@ -11458,6 +11458,7 @@
         fn();
       } catch (_error) {
         e = _error;
+        showErr(e);
         pass = false;
         caro.executeIfFn(cb, e);
       }
@@ -11500,21 +11501,24 @@
    * @param {...string} path
    * @returns {*}
    */
-  self.fsExists = function(path) {
-    var pass;
+  self.fsExists = function(path, cb) {
+    var aPath, args, pass;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    args = getArgs(arguments);
+    aPath = args.str;
+    cb = args.cb[0];
+    caro.each(aPath, function(i, path) {
       var e;
       try {
-        if (!nFs.existsSync(arg)) {
+        if (!nFs.existsSync(path)) {
           pass = false;
-          return false;
+          caro.executeIfFn(cb, false, path);
         }
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        return false;
+        caro.executeIfFn(cb, e);
       }
       return true;
     });

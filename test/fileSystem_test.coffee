@@ -47,11 +47,17 @@ describe 'FileSystem', ->
     , true);
     r.should.be.a('boolean')
 
+  it 'fsExists', ->
+    r = caro.fsExists('./a/b', 'c', (e, path) ->
+    );
+    r.should.be.a('boolean')
+
   it 'isFsDir', ->
     r = caro.isFsDir('./a');
     r.should.be.a('boolean')
 
   it 'isFsFile', ->
+    caro.setTrace(false);
     r = caro.isFsFile('./caro');
     r.should.be.a('boolean')
 
