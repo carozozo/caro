@@ -112,8 +112,8 @@ do ->
         nFs.unlinkSync path
       catch e
         showErr(e)
-        caro.executeIfFn(cb, e)
         pass = false
+        caro.executeIfFn(cb, e)
       return
     pass
 
@@ -138,8 +138,8 @@ do ->
         return
       catch e
         showErr(e)
-        caro.executeIfFn(cb, e)
         pass = false
+        caro.executeIfFn(cb, e)
       return
     pass
 
@@ -236,15 +236,14 @@ do ->
         try
           nFs.mkdirSync subPath
         catch e
+          showErr(e)
           pass = false
           caro.executeIfFn(cb, e)
-          showErr(e)
         return
     caro.each aPath, (i, dirPath) ->
       createDir(dirPath)
     pass
 
-  # TODO next-check
   ###*
   # delete folder recursively
   # @param {...string} path
@@ -262,6 +261,7 @@ do ->
       try
         fn()
       catch e
+        showErr(e)
         pass = false
         caro.executeIfFn(cb, e)
       return
@@ -288,59 +288,35 @@ do ->
           nFs.rmdirSync(path)
         )
       return
-
     caro.each aPath, (i, dirPath) ->
       deleteFileOrDir(dirPath)
     pass
 
-  #    path = caro.normalizePath(path)
-  #    force = force == true
-  #    pass = true
-  #    deleteUnderDir = (rootPath) ->
-  #      caro.readDirCb rootPath, (oFilInfo) ->
-  #        filePath = oFilInfo.filePath
-  #        if !force
-  #          return
-  #        if caro.isFsDir(filePath)
-  #          deleteUnderDir filePath
-  #          try
-  #            nFs.rmdirSync filePath
-  #          catch e
-  #            showErr(e)
-  #            pass = false
-  #          return
-  #        if !caro.deleteFile(filePath)
-  #          pass = false
-  #        return
-  #      return
-  #
-  #    deleteUnderDir path
-  #    if caro.isEmptyDir(path)
-  #      nFs.rmdirSync path
-  #    pass
-
   # COMMON --
-
   ###*
   # check file if exists, return false when anyone is false
   # @param {...string} path
+  # @param {function} cb the callback-function when catch error
   # @returns {*}
   ###
-
-  self.fsExists = (path) ->
+  self.fsExists = (path, cb) ->
     pass = true
-    caro.eachArgs arguments, (i, arg) ->
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
+    caro.each aPath, (i, path) ->
       try
-        if !nFs.existsSync(arg)
+        if !nFs.existsSync(path)
           pass = false
-          return false
+          caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        return false
+        caro.executeIfFn(cb, e)
       true
     pass
 
+  # TODO next-check
   ###*
   # check if folder, return false when anyone is false
   # @param {...string} path

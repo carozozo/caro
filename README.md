@@ -284,16 +284,19 @@ caro.isArr(['caro']); // true
       // catch error
     });
 ```
-- **deleteDir(path [force=false]) - 刪除資料夾，失敗則回傳 false**
+- **deleteDir(path [cb] [force=false]) - 刪除資料夾，失敗則回傳 false**
 ```javascript
     var r = caro.createDir('./src'); // 如果 /src 底下有檔案，則不刪除
     var r2 = caro.createDir('./test', 'test2', function (e){
       // catch error
     }, true); // 強制刪除資料夾
 ```
-- **fsExists(path...) - 判斷檔案/資料夾是否存在**
+- **fsExists(path... [cb]) - 判斷檔案/資料夾是否存在**
 ```javascript
-    var r = caro.fsExists('./a','./caro.js'); // 其中一個不存在則回傳 false
+    var r = caro.fsExists('./a', './caro.js'); // 其中一個不存在則回傳 false
+    var 2 = caro.fsExists('a', 'b', function(e, path){
+        // get path that not exists
+    }); // 其中一個不存在則回傳 false
 ```
 - **isFsDir(path...) - 判斷是否為資料夾**
 ```javascript
