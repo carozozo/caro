@@ -31,11 +31,12 @@ do ->
     console.error(e) if traceMode
   getArgs = (args) ->
     aStr = []
-    aCb = []
+    aFn = []
     aBool = []
+    aArr = []
     caro.each args, (i, arg) ->
       if caro.isFn(arg)
-        aCb.push arg
+        aFn.push arg
         return
       if caro.isBool(arg)
         aBool.push arg
@@ -43,12 +44,14 @@ do ->
       if caro.isStr(arg)
         aStr.push arg
         return
+      if caro.isArr(arg)
+        aArr.push arg
+        return
       return
-    {
-    str: aStr
-    cb: aCb
+    fn: aFn
     bool: aBool
-    }
+    str: aStr
+    arr: aArr
   coverToFalseIfEmptyArr = (arr) ->
     return false if arr.length < 1
     arr
@@ -110,7 +113,7 @@ do ->
     pass = true
     args = getArgs(arguments)
     aPath = args.str
-    cb = args.cb[0]
+    cb = args.fn[0]
     caro.each aPath, (i, path) ->
       try
         count = nFs.readdirSync(path)
@@ -203,7 +206,7 @@ do ->
     pass = true
     args = getArgs(arguments)
     aPath = args.str
-    cb = args.cb[0]
+    cb = args.fn[0]
     createDir = (dirPath)->
       subPath = ''
       aPath = caro.splitStr(dirPath, [
@@ -223,7 +226,7 @@ do ->
         return
       err
     caro.each aPath, (i, dirPath) ->
-      err = []  # reset err in each path
+      err = [] # reset err in each path
       err = createDir(dirPath)
       err = coverToFalseIfEmptyArr(err)
       caro.executeIfFn(cb, err, dirPath)
@@ -240,16 +243,16 @@ do ->
     pass = true
     args = getArgs(arguments)
     aPath = args.str
-    cb = args.cb[0]
+    cb = args.fn[0]
     caro.each aPath, (i, path) ->
+      err = false
       try
-        if !nFs.existsSync(path)
-          pass = false
-          caro.executeIfFn(cb, false, path)
+        pass = false if !nFs.existsSync(path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e, path)
+        err = e
+      caro.executeIfFn(cb, err, path)
       return
     pass
 
@@ -263,16 +266,17 @@ do ->
     pass = true
     args = getArgs(arguments)
     aPath = args.str
-    cb = args.cb[0]
+    cb = args.fn[0]
     caro.each aPath, (i, path) ->
+      err = false
       try
         stat = caro.getFsStat(path)
         pass and pass = stat.isDirectory()
-        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e, path)
+        err = e
+      caro.executeIfFn(cb, err, path)
       return
     pass
 
@@ -286,16 +290,17 @@ do ->
     pass = true
     args = getArgs(arguments)
     aPath = args.str
-    cb = args.cb[0]
+    cb = args.fn[0]
     caro.each aPath, (i, path) ->
+      err = false
       try
         stat = caro.getFsStat(path)
         pass and pass = stat.isFile()
-        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e, path)
+        err = e
+      caro.executeIfFn(cb, err, path)
       return
     pass
 
@@ -309,16 +314,17 @@ do ->
     pass = true
     args = getArgs(arguments)
     aPath = args.str
-    cb = args.cb[0]
+    cb = args.fn[0]
     caro.each aPath, (i, path) ->
+      err = false
       try
         stat = caro.getFsStat(path)
         pass and pass = stat.isSymbolicLink()
-        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        caro.executeIfFn(cb, e, path)
+        err = e
+      caro.executeIfFn(cb, err, path)
       return
     pass
 
@@ -346,10 +352,10 @@ do ->
   self.deleteFs = (path, cb, force) ->
     err = []
     pass = true
-    argAndCb = getArgs(arguments)
-    aPath = argAndCb.str
-    cb = argAndCb.cb[0]
-    force = argAndCb.bool[0]
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.fn[0]
+    force = args.bool[0]
     tryAndCatchErr = (fn)->
       try
         fn()
@@ -384,30 +390,29 @@ do ->
       caro.executeIfFn(cb, err, dirPath)
     pass
 
-  # TODO  next check
   ###*
   # @param {string|...[]} path the file-path, you can also set as [path,newPath]
   # @param {string|...[]} newPath the new-path, you can also set as [path,newPath]
-  # @param {boolean} [force] will create folder if there is no path for newPath
+  # @param {function} [cb] the callback-function for each path
+  # @param {boolean} [force=false] will create folder if there is no path for newPath
   # @returns {boolean}
   ###
-
-  self.renameFs = (path, newPath, force = false) ->
+  self.renameFs = (path, newPath, cb, force = false) ->
     pass = true
-    aPath = []
-    if caro.isStr(path, newPath)
-      aPath.push [
-        path
-        newPath
-      ]
-    caro.eachArgs arguments, (i, arg) ->
-      if caro.isArr(arg)
-        aPath.push arg
-      if caro.isBool(arg)
-        force = arg
-      return
+    aPathMap = []
+    args = getArgs(arguments)
+    cb = args.fn[0]
+    force = args.bool[0]
+    aPathMap = do ->
+      if caro.isStr(path, newPath)
+        return [
+          path
+          newPath
+        ]
+      args.arr
     # e.g. aPath=[[path, path2],[path3, path4]]
-    caro.each aPath, (i, pathMap) ->
+    caro.each aPathMap, (i, pathMap) ->
+      err = false
       path1 = pathMap[0]
       path2 = pathMap[1]
       try
@@ -415,14 +420,15 @@ do ->
           dirPath2 = caro.getDirPath(path2)
           caro.createDir dirPath2
         nFs.renameSync path1, path2
-        if !caro.fsExists(path2)
-          pass = false
       catch e
         showErr(e)
         pass = false
+        err = e
+      caro.executeIfFn(cb, err, path1, path2)
       return
     pass
 
+  # TODO  next check
   ###*
   # get file stat
   # @param {string} path

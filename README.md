@@ -288,21 +288,21 @@ caro.isArr(['caro']); // true
 - **isFsDir(path... [cb]) - 判斷是否為資料夾，其中一個不是資料夾或不存在則回傳 false**
 ```javascript
     var r = caro.isFsDir('./a','./caro.js'); // boolean
-    var 2 = caro.isFsDir('a', 'b', function(err, path){
+    var r2 = caro.isFsDir('a', 'b', function(err, path){
         // catch error and path
     }); // boolean
 ```
 - **isFsFile(path...) - 判斷是否為檔案，其中一個不是檔案或不存在則回傳 false**
 ```javascript
     var r = caro.isFsFile('./a','./caro.js'); // boolean
-    var 2 = caro.isFsFile('a', 'b', function(err, path){
+    var r2 = caro.isFsFile('a', 'b', function(err, path){
         // catch error and path
     }); // boolean
 ```
 - **isFsSymlink(path...) - 判斷是否為 symbolic link，其中一個不是 symbolic link 或不存在則回傳 false**
 ```javascript
     var r = caro.isFsSymlink('./a','./caro.js'); // boolean
-    var 2 = caro.isFsSymlink('a', 'b', function(err, path){
+    var r2 = caro.isFsSymlink('a', 'b', function(err, path){
         // catch error and path
     }); // boolean
 ```
@@ -313,14 +313,16 @@ caro.isArr(['caro']); // true
 - **deleteFs(path... [force=false]) - 刪除檔案及資料夾，其中一個刪除失敗或不存在則回傳 false**
 ```javascript
     var r = caro.getFileType('./1.js','./2.lnk'); // boolean
-    var r = caro.getFileType('./test','./1.js','./2.lnk', function(e, path){
+    var r2 = caro.getFileType('./test','./1.js','./2.lnk', function(e, path){
         // catch error and path
     }, true);  // boolean (force-delete if possible for folder)
 ```
-- **renameFs(path , newPath  [force=false]) - 檔案移動更名**
+- **renameFs(path , newPath  [cb] [force=false]) - 檔案移動更名，失敗則回傳 false**
 ```javascript
-    r = caro.renameFs('./a', './b/c', true); // a 移到 /b 底下並更名為 c
-    r2 = caro.renameFs(['1.js', '2.js'], ['3.js', '4.js']); // 1.js 更名為 2.js，3.js 更名為 4.js
+    r = caro.renameFs('./a', './b/c', true); // bool
+    r2 = caro.renameFs(['1.js', 'a/2.js'], ['3.js', '4.js'], function(err, path1, path2){
+        // catch error and path
+    }, true); // boolean (force-create folder for path2 if possible)
 ```
 - **getFsStat(path , newPath  [type='l']) - 取得檔案資訊**
 ```javascript

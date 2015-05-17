@@ -19,13 +19,14 @@
     }
   };
   getArgs = function(args) {
-    var aBool, aCb, aStr;
+    var aArr, aBool, aFn, aStr;
     aStr = [];
-    aCb = [];
+    aFn = [];
     aBool = [];
+    aArr = [];
     caro.each(args, function(i, arg) {
       if (caro.isFn(arg)) {
-        aCb.push(arg);
+        aFn.push(arg);
         return;
       }
       if (caro.isBool(arg)) {
@@ -36,11 +37,16 @@
         aStr.push(arg);
         return;
       }
+      if (caro.isArr(arg)) {
+        aArr.push(arg);
+        return;
+      }
     });
     return {
+      fn: aFn,
+      bool: aBool,
       str: aStr,
-      cb: aCb,
-      bool: aBool
+      arr: aArr
     };
   };
   coverToFalseIfEmptyArr = function(arr) {
@@ -135,7 +141,7 @@
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
-    cb = args.cb[0];
+    cb = args.fn[0];
     caro.each(aPath, function(i, path) {
       var count, e;
       try {
@@ -256,7 +262,7 @@
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
-    cb = args.cb[0];
+    cb = args.fn[0];
     createDir = function(dirPath) {
       var subPath;
       subPath = '';
@@ -299,20 +305,21 @@
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
-    cb = args.cb[0];
+    cb = args.fn[0];
     caro.each(aPath, function(i, path) {
-      var e;
+      var e, err;
+      err = false;
       try {
         if (!nFs.existsSync(path)) {
           pass = false;
-          caro.executeIfFn(cb, false, path);
         }
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e, path);
+        err = e;
       }
+      caro.executeIfFn(cb, err, path);
     });
     return pass;
   };
@@ -328,19 +335,20 @@
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
-    cb = args.cb[0];
+    cb = args.fn[0];
     caro.each(aPath, function(i, path) {
-      var e, stat;
+      var e, err, stat;
+      err = false;
       try {
         stat = caro.getFsStat(path);
         pass && (pass = stat.isDirectory());
-        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e, path);
+        err = e;
       }
+      caro.executeIfFn(cb, err, path);
     });
     return pass;
   };
@@ -356,19 +364,20 @@
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
-    cb = args.cb[0];
+    cb = args.fn[0];
     caro.each(aPath, function(i, path) {
-      var e, stat;
+      var e, err, stat;
+      err = false;
       try {
         stat = caro.getFsStat(path);
         pass && (pass = stat.isFile());
-        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e, path);
+        err = e;
       }
+      caro.executeIfFn(cb, err, path);
     });
     return pass;
   };
@@ -384,19 +393,20 @@
     pass = true;
     args = getArgs(arguments);
     aPath = args.str;
-    cb = args.cb[0];
+    cb = args.fn[0];
     caro.each(aPath, function(i, path) {
-      var e, stat;
+      var e, err, stat;
+      err = false;
       try {
         stat = caro.getFsStat(path);
         pass && (pass = stat.isSymbolicLink());
-        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        caro.executeIfFn(cb, e, path);
+        err = e;
       }
+      caro.executeIfFn(cb, err, path);
     });
     return pass;
   };
@@ -428,13 +438,13 @@
    * @returns {boolean}
    */
   self.deleteFs = function(path, cb, force) {
-    var aPath, argAndCb, deleteFileOrDir, err, pass, tryAndCatchErr;
+    var aPath, args, deleteFileOrDir, err, pass, tryAndCatchErr;
     err = [];
     pass = true;
-    argAndCb = getArgs(arguments);
-    aPath = argAndCb.str;
-    cb = argAndCb.cb[0];
-    force = argAndCb.bool[0];
+    args = getArgs(arguments);
+    aPath = args.str;
+    cb = args.fn[0];
+    force = args.bool[0];
     tryAndCatchErr = function(fn) {
       var e;
       try {
@@ -481,29 +491,29 @@
   /**
    * @param {string|...[]} path the file-path, you can also set as [path,newPath]
    * @param {string|...[]} newPath the new-path, you can also set as [path,newPath]
-   * @param {boolean} [force] will create folder if there is no path for newPath
+   * @param {function} [cb] the callback-function for each path
+   * @param {boolean} [force=false] will create folder if there is no path for newPath
    * @returns {boolean}
    */
-  self.renameFs = function(path, newPath, force) {
-    var aPath, pass;
+  self.renameFs = function(path, newPath, cb, force) {
+    var aPathMap, args, pass;
     if (force == null) {
       force = false;
     }
     pass = true;
-    aPath = [];
-    if (caro.isStr(path, newPath)) {
-      aPath.push([path, newPath]);
-    }
-    caro.eachArgs(arguments, function(i, arg) {
-      if (caro.isArr(arg)) {
-        aPath.push(arg);
+    aPathMap = [];
+    args = getArgs(arguments);
+    cb = args.fn[0];
+    force = args.bool[0];
+    aPathMap = (function() {
+      if (caro.isStr(path, newPath)) {
+        return [path, newPath];
       }
-      if (caro.isBool(arg)) {
-        force = arg;
-      }
-    });
-    caro.each(aPath, function(i, pathMap) {
-      var dirPath2, e, path1, path2;
+      return args.arr;
+    })();
+    caro.each(aPathMap, function(i, pathMap) {
+      var dirPath2, e, err, path1, path2;
+      err = false;
       path1 = pathMap[0];
       path2 = pathMap[1];
       try {
@@ -512,14 +522,13 @@
           caro.createDir(dirPath2);
         }
         nFs.renameSync(path1, path2);
-        if (!caro.fsExists(path2)) {
-          pass = false;
-        }
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
+        err = e;
       }
+      caro.executeIfFn(cb, err, path1, path2);
     });
     return pass;
   };
