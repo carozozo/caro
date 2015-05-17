@@ -1,4 +1,4 @@
-/*! caro - v0.4.19 - 2015-05-17 */
+/*! caro - v0.4.20 - 2015-05-17 */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -11138,7 +11138,7 @@
  * @author Caro.Huang
  */
 (function() {
-  var fileSizeUnits1, fileSizeUnits2, getArgs, getFileSize, nFs, self, showErr, traceMode;
+  var coverToFalseIfEmptyArr, fileSizeUnits1, fileSizeUnits2, getArgs, getFileSize, nFs, self, showErr, traceMode;
   if (!caro.isNode) {
     return;
   }
@@ -11176,6 +11176,12 @@
       cb: aCb,
       bool: aBool
     };
+  };
+  coverToFalseIfEmptyArr = function(arr) {
+    if (arr.length < 1) {
+      return false;
+    }
+    return arr;
   };
   getFileSize = function(path) {
     var status;
@@ -11410,9 +11416,7 @@
     caro.each(aPath, function(i, dirPath) {
       err = [];
       err = createDir(dirPath);
-      if (err.length < 1) {
-        err = false;
-      }
+      err = coverToFalseIfEmptyArr(err);
       return caro.executeIfFn(cb, err, dirPath);
     });
     return pass;
@@ -11602,9 +11606,7 @@
     caro.each(aPath, function(i, dirPath) {
       err = [];
       err = deleteFileOrDir(dirPath);
-      if (err.length < 1) {
-        err = false;
-      }
+      err = coverToFalseIfEmptyArr(err);
       return caro.executeIfFn(cb, err, dirPath);
     });
     return pass;
