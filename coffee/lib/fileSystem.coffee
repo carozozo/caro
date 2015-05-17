@@ -131,11 +131,7 @@ do ->
     cb = args.cb[0]
     caro.each aPath, (i, path) ->
       try
-#        count = 0
-        count=nFs.readdirSync(path)
-#        caro.readDirCb path, ->
-#          count++
-#          return
+        count = nFs.readdirSync(path)
         if count.length > 0
           pass = false
           return false
@@ -175,15 +171,12 @@ do ->
       extendName = oFileInfo.extendName
       return if getByExtend and getByExtend.indexOf(extendName) < 0
       cb false, oFileInfo
-      return
     readDir = (rootPath, level) ->
       if maxLevel > 0 and level >= maxLevel
         return
-      console.log 'readDir 開始, rootPath=',rootPath
       try
         files = nFs.readdirSync(rootPath)
       catch e
-        console.log '抓到錯誤, rootPath=',rootPath
         showErr(e)
         cb e
       level++
@@ -208,12 +201,12 @@ do ->
           index: i
         if caro.isFsDir(filePath)
           if getDir
-            pushFile oFileInfo
+            return pushFile oFileInfo
           readDir filePath, level
           return
         if caro.isFsFile(filePath)
           if getFile
-            pushFile oFileInfo
+            return pushFile oFileInfo
         return
       return
     readDir path, countLevel
@@ -254,39 +247,77 @@ do ->
   # TODO next-check
   ###*
   # delete folder recursively
-  # @param {string} path
+  # @param {...string} path
+  # @param {function} cb the callback-function when catch error
   # @param {boolean} [force=false] force-delete even not empty
   # @returns {boolean}
   ###
-
-  self.deleteDir = (path, force) ->
-    if !caro.isFsDir(path)
-      return false
-    path = caro.normalizePath(path)
-    force = force == true
+  self.deleteDir = (path, cb, force) ->
     pass = true
-    deleteUnderDir = (rootPath) ->
-      caro.readDirCb rootPath, (oFilInfo) ->
-        filePath = oFilInfo.filePath
-        if !force
-          return
-        if caro.isFsDir(filePath)
-          deleteUnderDir filePath
-          try
-            nFs.rmdirSync filePath
-          catch e
-            showErr(e)
-            pass = false
-          return
-        if !caro.deleteFile(filePath)
-          pass = false
+    argAndCb = getArgs(arguments)
+    aPath = argAndCb.str
+    cb = argAndCb.cb[0]
+    force = argAndCb.bool[0]
+    tryAndCatchErr = (fn)->
+      try
+        fn()
+      catch e
+        pass = false
+        caro.executeIfFn(cb, e)
+      return
+    deleteFileOrDir = (path) ->
+      if caro.isFsFile(path) and force
+        tryAndCatchErr(->
+          nFs.unlinkSync(path)
+        )
         return
+      if caro.isFsDir(path)
+        tryAndCatchErr(->
+          files = nFs.readdirSync(path)
+          caro.each files, (i, file) ->
+            subPath = caro.normalizePath(path, file)
+            deleteFileOrDir(subPath)
+            return
+          return
+        )
+      if caro.isEmptyDir(path, (e) ->
+        pass = false
+        caro.executeIfFn(cb, e)
+      )
+        tryAndCatchErr(->
+          nFs.rmdirSync(path)
+        )
       return
 
-    deleteUnderDir path
-    if caro.isEmptyDir(path)
-      nFs.rmdirSync path
+    caro.each aPath, (i, dirPath) ->
+      deleteFileOrDir(dirPath)
     pass
+
+  #    path = caro.normalizePath(path)
+  #    force = force == true
+  #    pass = true
+  #    deleteUnderDir = (rootPath) ->
+  #      caro.readDirCb rootPath, (oFilInfo) ->
+  #        filePath = oFilInfo.filePath
+  #        if !force
+  #          return
+  #        if caro.isFsDir(filePath)
+  #          deleteUnderDir filePath
+  #          try
+  #            nFs.rmdirSync filePath
+  #          catch e
+  #            showErr(e)
+  #            pass = false
+  #          return
+  #        if !caro.deleteFile(filePath)
+  #          pass = false
+  #        return
+  #      return
+  #
+  #    deleteUnderDir path
+  #    if caro.isEmptyDir(path)
+  #      nFs.rmdirSync path
+  #    pass
 
   # COMMON --
 

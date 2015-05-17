@@ -28,7 +28,6 @@ describe 'FileSystem', ->
   it 'readDirCb', ->
     caro.readDirCb('../src',
       (err, oFileInfo) ->
-# do something when catch error
     , {
         maxLevel: 1
         getDir: true
@@ -36,14 +35,16 @@ describe 'FileSystem', ->
         getByExtend: false
       });
 
-  it.only 'createDir', ->
+  it 'createDir', ->
     r = caro.createDir('a', (e) ->
-      console.log e
+#      console.log e
     );
     r.should.be.a('boolean')
 
   it 'deleteDir', ->
-    r = caro.deleteDir('./a');
+    r = caro.deleteDir('a', 'b',
+      (e) ->
+    , true);
     r.should.be.a('boolean')
 
   it 'isFsDir', ->
