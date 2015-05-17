@@ -11255,7 +11255,7 @@
   /**
    * delete file
    * @param {...string} path
-   * @param {function} cb the callback-function when catch error
+   * @param {function} cb the callback-function for each path
    * @returns {boolean}
    */
   self.deleteFile = function(path, cb) {
@@ -11282,7 +11282,7 @@
   /**
    * check if empty-folder, return false if anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function when catch error
+   * @param {function} cb the callback-function for each path
    * @returns {boolean}
    */
   self.isEmptyDir = function(path, cb) {
@@ -11402,7 +11402,7 @@
   /**
    * create dir recursively, will create folder if path not exists
    * @param {...string} path
-   * @param {function} cb the callback-function when catch error
+   * @param {function} cb the callback-function for each path
    * @returns {*|string}
    */
   self.createDir = function(path, cb) {
@@ -11442,7 +11442,7 @@
   /**
    * delete folder recursively
    * @param {...string} path
-   * @param {function} cb the callback-function when catch error
+   * @param {function} cb the callback-function for each path
    * @param {boolean} [force=false] force-delete even not empty
    * @returns {boolean}
    */
@@ -11501,7 +11501,7 @@
   /**
    * check file if exists, return false when anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function when catch error
+   * @param {function} cb the callback-function for each path
    * @returns {*}
    */
   self.fsExists = function(path, cb) {
@@ -11530,7 +11530,7 @@
   /**
    * check if folder, return false when anyone is false
    * @param {...string} path
-   * @param {function} cb the callback-function when catch error
+   * @param {function} cb the callback-function for each path
    * @returns {*}
    */
   self.isFsDir = function(path, cb) {
@@ -11556,48 +11556,57 @@
   };
 
   /**
+   * check if file, return false when anyone is false
    * @param {...string} path
+   * @param {function} cb the callback-function for each path
    * @returns {*}
    */
   self.isFsFile = function(path) {
-    var pass;
+    var aPath, args, cb, pass;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    args = getArgs(arguments);
+    aPath = args.str;
+    cb = args.cb[0];
+    caro.each(aPath, function(i, path) {
       var e, stat;
       try {
-        stat = caro.getFsStat(arg);
-        pass = stat.isFile();
+        stat = caro.getFsStat(path);
+        pass && (pass = stat.isFile());
+        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        return false;
+        caro.executeIfFn(cb, e, path);
       }
-      return true;
     });
     return pass;
   };
 
   /**
-   * check if symbolic link
+   * check if symbolic link, return false when anyone is false
+   * @param {function} cb the callback-function for each path
    * @param {...string} path
    * @returns {*}
    */
   self.isFsSymlink = function(path) {
-    var pass;
+    var aPath, args, cb, pass;
     pass = true;
-    caro.eachArgs(arguments, function(i, arg) {
+    args = getArgs(arguments);
+    aPath = args.str;
+    cb = args.cb[0];
+    caro.each(aPath, function(i, path) {
       var e, stat;
       try {
-        stat = caro.getFsStat(arg);
-        pass = stat.isSymbolicLink();
+        stat = caro.getFsStat(path);
+        pass && (pass = stat.isSymbolicLink());
+        caro.executeIfFn(cb, false, path);
       } catch (_error) {
         e = _error;
         showErr(e);
         pass = false;
-        return false;
+        caro.executeIfFn(cb, e, path);
       }
-      return true;
     });
     return pass;
   };

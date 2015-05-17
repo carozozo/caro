@@ -308,11 +308,17 @@ caro.isArr(['caro']); // true
 ```
 - **isFsFile(path...) - 判斷是否為檔案，其中一個不是檔案或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsDir('./a','./caro.js');
+    var r = caro.isFsFile('./a','./caro.js');
+    var 2 = caro.isFsFile('a', 'b', function(err, path){
+        // catch error and path
+    });
 ```
-- **isFsSymlink(path...) - 判斷是否為 symbolic link**
+- **isFsSymlink(path...) - 判斷是否為 symbolic link，其中一個不是symbolic link 或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsSymlink('./a','./caro.js'); // 其中一個不是symbolic link 或不存在則回傳 false
+    var r = caro.isFsSymlink('./a','./caro.js');
+    var 2 = caro.isFsSymlink('a', 'b', function(err, path){
+        // catch error and path
+    });
 ```
 - **getFileType(path) - 取得檔案類型**
 ```javascript

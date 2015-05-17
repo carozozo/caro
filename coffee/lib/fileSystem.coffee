@@ -99,7 +99,7 @@ do ->
   ###*
   # delete file
   # @param {...string} path
-  # @param {function} cb the callback-function when catch error
+  # @param {function} cb the callback-function for each path
   # @returns {boolean}
   ###
   self.deleteFile = (path, cb) ->
@@ -122,7 +122,7 @@ do ->
   ###*
   # check if empty-folder, return false if anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function when catch error
+  # @param {function} cb the callback-function for each path
   # @returns {boolean}
   ###
   self.isEmptyDir = (path, cb) ->
@@ -214,7 +214,7 @@ do ->
   ###*
   # create dir recursively, will create folder if path not exists
   # @param {...string} path
-  # @param {function} cb the callback-function when catch error
+  # @param {function} cb the callback-function for each path
   # @returns {*|string}
   ###
   self.createDir = (path, cb) ->
@@ -247,7 +247,7 @@ do ->
   ###*
   # delete folder recursively
   # @param {...string} path
-  # @param {function} cb the callback-function when catch error
+  # @param {function} cb the callback-function for each path
   # @param {boolean} [force=false] force-delete even not empty
   # @returns {boolean}
   ###
@@ -297,7 +297,7 @@ do ->
   ###*
   # check file if exists, return false when anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function when catch error
+  # @param {function} cb the callback-function for each path
   # @returns {*}
   ###
   self.fsExists = (path, cb) ->
@@ -320,7 +320,7 @@ do ->
   ###*
   # check if folder, return false when anyone is false
   # @param {...string} path
-  # @param {function} cb the callback-function when catch error
+  # @param {function} cb the callback-function for each path
   # @returns {*}
   ###
   self.isFsDir = (path, cb) ->
@@ -339,45 +339,54 @@ do ->
         caro.executeIfFn(cb, e, path)
       return
     pass
-    
-  # TODO next-check
+
   ###*
+  # check if file, return false when anyone is false
   # @param {...string} path
+  # @param {function} cb the callback-function for each path
   # @returns {*}
   ###
-
   self.isFsFile = (path) ->
     pass = true
-    caro.eachArgs arguments, (i, arg) ->
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
+    caro.each aPath, (i, path) ->
       try
-        stat = caro.getFsStat(arg)
-        pass = stat.isFile()
+        stat = caro.getFsStat(path)
+        pass and pass = stat.isFile()
+        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        return false
-      true
+        caro.executeIfFn(cb, e, path)
+      return
     pass
 
   ###*
-  # check if symbolic link
+  # check if symbolic link, return false when anyone is false
+  # @param {function} cb the callback-function for each path
   # @param {...string} path
   # @returns {*}
   ###
-
   self.isFsSymlink = (path) ->
     pass = true
-    caro.eachArgs arguments, (i, arg) ->
+    args = getArgs(arguments)
+    aPath = args.str
+    cb = args.cb[0]
+    caro.each aPath, (i, path) ->
       try
-        stat = caro.getFsStat(arg)
-        pass = stat.isSymbolicLink()
+        stat = caro.getFsStat(path)
+        pass and pass = stat.isSymbolicLink()
+        caro.executeIfFn(cb, false, path)
       catch e
         showErr(e)
         pass = false
-        return false
-      true
+        caro.executeIfFn(cb, e, path)
+      return
     pass
 
+  # TODO next-check
   ###*
   # @param {string} path
   # @returns {string}

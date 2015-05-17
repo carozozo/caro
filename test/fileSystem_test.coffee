@@ -58,11 +58,13 @@ describe 'FileSystem', ->
     r.should.be.a('boolean')
 
   it 'isFsFile', ->
-    r = caro.isFsFile('./caro');
+    r = caro.isFsFile('./caro', (e, path) ->
+    );
     r.should.be.a('boolean')
 
-  it 'isFsSymlink', ->
-    r = caro.isFsSymlink('./caro');
+  ity 'isFsSymlink', ->
+    r = caro.isFsSymlink('./caro', (e, path) ->
+    );
     r.should.be.a('boolean')
 
   it 'getFileType', ->
