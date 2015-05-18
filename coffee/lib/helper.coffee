@@ -271,7 +271,7 @@ do ->
       )
       return r
     # 未來可以新增 TypeCheck.isObjJson
-    if  caro.nValidator? and caro.nValidator.isJSON(arg)
+    if caro.isJson(arg)
       r = JSON.parse(arg)
       return r if caro.isObj(r)
     if force
@@ -300,7 +300,7 @@ do ->
       json = JSON.stringify(arg, replacer, space)
     else
       json = JSON.stringify(arg, replacer)
-    if caro.nValidator? and caro.nValidator.isJSON(json) or !force
+    if caro.isJson(json) or !force
       return json
     ''
 

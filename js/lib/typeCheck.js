@@ -90,6 +90,26 @@
    * @param {...} arg
    * @returns {*}
    */
+  self.isJson = function(arg) {
+    var pass;
+    pass = true;
+    caro.each(arguments, function(i, arg) {
+      var e;
+      try {
+        JSON.parse(arg);
+      } catch (_error) {
+        e = _error;
+        pass = false;
+        return false;
+      }
+    });
+    return pass;
+  };
+
+  /**
+   * @param {...} arg
+   * @returns {*}
+   */
   self.isUndef = function(arg) {
     return checkType(arguments, 'undefined');
   };
