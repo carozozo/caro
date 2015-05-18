@@ -33,8 +33,7 @@ caro.isArr(['caro']); // true
 
 ### Array
 [Back to Index](#index)
-- **sortArr(arr [sort=true [clone=false]]) - 陣列排序**
-#### Will remove [clone] soon
+- **sortArr(arr [sort=true [clone=false]]) - 陣列排序(Will remove [clone] soon)**
 ```javascript
     arg = [1, 3, 2, null]; 
     arg2 = [1, 3, 2, null];
@@ -45,8 +44,7 @@ caro.isArr(['caro']); // true
     console.log r // [ 3, 2, 1, null ]
     console.log r2 // [ null, 1, 2, 3 ]
 ```
-- **sortByObjKey(arr, key [sort=true] [clone=false]) - 如果陣列中的值是物件，則可指定物件的 key 值排序**
-#### Will remove [clone] soon
+- **sortByObjKey(arr, key [sort=true] [clone=false]) - 則可指定物件的 key 值排序(Will remove [clone] soon)**
 ```javascript
     var obj = {index: 0, name: 'caro'};
     var obj2 = {index: 1, name: 'huang'};
@@ -461,7 +459,7 @@ caro.isArr(['caro']); // true
 ```
 - **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
 ```javascript
-    var r = caro.coverToFixed('3.4345', 2); // 3.44
+    var r = caro.coverToFixed('3.4355', 2); // 3.44
     var r2 = caro.coverToFixed(undefined, 3); // 0
     var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
 ```
