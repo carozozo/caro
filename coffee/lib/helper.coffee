@@ -6,16 +6,13 @@
 do ->
   self = caro
 
-  # TODO  next check
   ###*
   # check if arg is boolean | string | number
   # @param {...} arg
   # @returns {boolean}
   ###
-
   self.isBasicVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-# return false if arg is not bool | string | num
       !(!caro.isBool(arg) and !caro.isStr(arg) and !caro.isNum(arg))
 
   ###*
@@ -23,15 +20,13 @@ do ->
   # @param {...} arg
   # @returns {boolean}
   ###
-
   self.isEmptyVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      if caro.isObj(arg)
-        return caro.getObjLength(arg) < 1
-      if caro.isArr(arg)
-        return arg.length < 1
+      return caro.getObjLength(arg) < 1 if caro.isObj(arg)
+      return arg.length < 1 if caro.isArr(arg)
       !arg and arg != 0 and arg != false
 
+  # TODO  next check
   ###*
   # check if value is true | 'true' | 1
   # @param {...} arg

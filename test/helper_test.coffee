@@ -6,7 +6,7 @@ describe 'Helper', ->
     r.should.be.true
     r2.should.be.false
 
-  it 'isEmptyVal', ->
+  it.only 'isEmptyVal', ->
     r = caro.isEmptyVal({}, [], null, '', undefined);
     r2 = caro.isEmptyVal('null');
     r.should.be.true
