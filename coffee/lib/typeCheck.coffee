@@ -83,6 +83,22 @@ do ->
   # @returns {*}
   ###
 
+  self.isJson = (arg) ->
+    pass = true
+    caro.each arguments, (i, arg) ->
+      try
+        JSON.parse(arg);
+      catch e
+        pass = false;
+        return false
+      return
+    pass
+
+  ###*
+  # @param {...} arg
+  # @returns {*}
+  ###
+
   self.isUndef = (arg) ->
     checkType arguments, 'undefined'
 
@@ -95,7 +111,7 @@ do ->
     if !checkType(arguments, 'object')
       return false
     caro.checkIfPassCb arguments, (val) ->
-      # Note: array and null is object in js
+# Note: array and null is object in js
       !caro.isNull(val) and !caro.isArr(val)
 
   ###*
@@ -106,7 +122,7 @@ do ->
   self.isObjOrArr = (arg) ->
     return false if !checkType(arguments, 'object')
     caro.checkIfPassCb arguments, (val) ->
-      # Note: null is object in js
+# Note: null is object in js
       !caro.isNull(val)
 
   ###*

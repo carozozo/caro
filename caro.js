@@ -12123,7 +12123,7 @@
       });
       return r;
     }
-    if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
+    if (caro.isJson(arg)) {
       r = JSON.parse(arg);
       if (caro.isObj(r)) {
         return r;
@@ -12159,7 +12159,7 @@
     } else {
       json = JSON.stringify(arg, replacer);
     }
-    if ((caro.nValidator != null) && caro.nValidator.isJSON(json) || !force) {
+    if (caro.isJson(json) || !force) {
       return json;
     }
     return '';
@@ -13323,6 +13323,26 @@
     return caro.checkIfPassCb(arguments, function(val) {
       return val === null;
     });
+  };
+
+  /**
+   * @param {...} arg
+   * @returns {*}
+   */
+  self.isJson = function(arg) {
+    var pass;
+    pass = true;
+    caro.each(arguments, function(i, arg) {
+      var e;
+      try {
+        JSON.parse(arg);
+      } catch (_error) {
+        e = _error;
+        pass = false;
+        return false;
+      }
+    });
+    return pass;
   };
 
   /**

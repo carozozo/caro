@@ -334,7 +334,7 @@
       });
       return r;
     }
-    if ((caro.nValidator != null) && caro.nValidator.isJSON(arg)) {
+    if (caro.isJson(arg)) {
       r = JSON.parse(arg);
       if (caro.isObj(r)) {
         return r;
@@ -370,7 +370,7 @@
     } else {
       json = JSON.stringify(arg, replacer);
     }
-    if ((caro.nValidator != null) && caro.nValidator.isJSON(json) || !force) {
+    if (caro.isJson(json) || !force) {
       return json;
     }
     return '';
