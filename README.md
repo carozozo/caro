@@ -5,8 +5,8 @@ JavaScript / Node.js 通用函式 by caro
 
 ### In Html
 ```html
-<!- https://www.npmjs.com/package/moment ->
-<script src="/js/moment-with-locale.js"></script> <!- if you want to use DateTime ->
+<!-- http://momentjs.com/ -->
+<script src="/js/moment-with-locale.js"></script> <!-- if you want to use DateTime -->
 <script src="/js/caro.js"></script>
 ```
 
