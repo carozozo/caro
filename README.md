@@ -347,17 +347,13 @@ caro.isArr(['caro']); // true
 [Back to Index](#index)
 - **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
 ```javascript
-    var arg = 1, arg2 = '', arg3 = false;
-    var arg4 = {};
-    var r = caro.isBasicVal(arg, arg2, arg3); // true
-    var r2 = caro.isBasicVal(arg4); // false
+    var r = caro.isBasicVal(1, '', false); // true
+    var r2 = caro.isBasicVal({}); // false
 ```
 - **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
 ```javascript
-    var arg = 0, arg2 = false;
-    var arg3 = {}, arg4 = [], arg5 = null, arg6 = '';
-    var r = caro.isEmptyVal(arg, arg2); // false
-    var r2 = caro.isEmptyVal(arg3, arg4, arg5, arg6, undefined); // true
+    var r = caro.isEmptyVal(0, {a:1}); // false
+    var r2 = caro.isEmptyVal({}, [], null, '', undefined); // true
 ```
 - **isTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
 ```javascript
