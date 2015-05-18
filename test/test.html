@@ -1,11 +1,12 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="../dependencies/moment-with-locales-min.js"></script>
     <script src="../caro.js"></script>
     <script>
-        console.log('caro=',caro);
-        console.log('caro=',caro.nMoment().format('YYYY mm DD'));
-        console.log('caro=',caro.nValidator.isInt('3333'));
+        console.log('caro=', caro);
+        console.log('moment =', caro.nMoment().format('YYYY mm DD'));
+        console.log('caro DateTime =', caro.formatDateTime(null, 'YYYY mm DD'));
     </script>
 </head>
 <body>
