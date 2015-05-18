@@ -34,6 +34,7 @@ do ->
     aFn = []
     aBool = []
     aArr = []
+    aNum = []
     caro.each args, (i, arg) ->
       if caro.isFn(arg)
         aFn.push arg
@@ -47,11 +48,15 @@ do ->
       if caro.isArr(arg)
         aArr.push arg
         return
+      if caro.isNum(arg)
+        aNum.push arg
+        return
       return
     fn: aFn
     bool: aBool
     str: aStr
     arr: aArr
+    num: aNum
   coverToFalseIfEmptyArr = (arr) ->
     return false if arr.length < 1
     arr
@@ -428,14 +433,12 @@ do ->
       return
     pass
 
-  # TODO  next check
   ###*
   # get file stat
   # @param {string} path
   # @param {string} [type=l] s = statSync, l = lstatSync, f = fstatSync
   # @returns {*}
   ###
-
   self.getFsStat = (path, type = 'l') ->
     stat = null
     aType = [
@@ -464,29 +467,31 @@ do ->
   # @param {string} [unit] the file-size unit
   # @returns {}
   ###
-
   self.getFsSize = (path, fixed = 1, unit) ->
     bytes = getFileSize(path)
-    if bytes == null
-      return bytes
+    return bytes if bytes == null
+    args = caro.getArgumentsAsArr(arguments)
+    args.shift()
+    args = getArgs(args)
+    fixed = caro.coverToInt(args.num[0])
+    fixed = if fixed > -1 then fixed else 1
+    unit = args.str[0]
     si = true
-    unit = caro.upperStr(unit)
+    unit = caro.upperFirst(unit) # e.g. 'mib' -> 'Mib'
+    unit = caro.upperStr(unit,{start:-1}) # e.g. 'Mib' -> 'MiB'
     index1 = fileSizeUnits1.indexOf(unit)
     index2 = fileSizeUnits2.indexOf(unit)
-    if index2 > -1
-      si = false
-    thresh = if si then 1000 else 1024
+    si = false if index2 > -1
     index = if si then index1 else index2
+    return bytes if index < 0
     count = 0
-    if index < 0
-      return bytes
-    loop
+    thresh = if si then 1000 else 1024
+    while count < index
       bytes /= thresh
       ++count
-      unless count < index
-        break
-    bytes.toFixed fixed
+    caro.coverToNum(bytes.toFixed(fixed))
 
+  # TODO  next check
   ###*
   # get file size for human-reading
   # @param {number|string} path file-path or bytes

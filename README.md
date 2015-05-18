@@ -324,16 +324,16 @@ caro.isArr(['caro']); // true
         // catch error and path
     }, true); // boolean (force-create folder for path2 if possible)
 ```
-- **getFsStat(path , newPath  [type='l']) - 取得檔案資訊**
+- **getFsStat(path [type='l']) - 取得檔案資訊**
 ```javascript
     // https://nodejs.org/api/fs.html#fs_class_fs_stats
-    var r = caro.getFsStat('./caro.js');
+    var r = caro.getFsStat('./caro.js','l'); // l=lsataSync, f=fstatSync, s=statSync
 ```
-- **getFsSize(path[fixed] [unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
+- **getFsSize(path [fixed] [unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
 ```javascript
     var r = caro.getFsSize('./caro.js'); // e.g. 439078
     var r2 = caro.getFsSize('./caro.js', 'mb'); // e.g. 439 
-    var r3 = caro.getFsSize(123000, 'mb'); // 100
+    var r3 = caro.getFsSize(123000, 5, 'gib'); // 0.1173
 ```
 - **humanFeSize(bytes [fixed=1] [si=false]) - 將檔案大小轉為易讀格式**
 ```javascript
