@@ -1,5 +1,5 @@
 do ->
-describe.only 'FileSystem', ->
+describe 'FileSystem', ->
   it 'setTrace', ->
     r = caro.setTrace(false);
     r.should.be.a('boolean')
@@ -89,7 +89,7 @@ describe.only 'FileSystem', ->
     it 'getFsSize', ->
       r = caro.getFsSize('./caro.js');
       r2 = caro.getFsSize('./caro.js', 'mb');
-      r3 = caro.getFsSize(123000, 'mb');
+      r3 = caro.getFsSize(123000.00,5, 'gib');
       r.should.be.a('number')
       r2.should.be.a('number')
       r3.should.be.a('number')

@@ -11153,11 +11153,12 @@
     }
   };
   getArgs = function(args) {
-    var aArr, aBool, aFn, aStr;
+    var aArr, aBool, aFn, aNum, aStr;
     aStr = [];
     aFn = [];
     aBool = [];
     aArr = [];
+    aNum = [];
     caro.each(args, function(i, arg) {
       if (caro.isFn(arg)) {
         aFn.push(arg);
@@ -11175,12 +11176,17 @@
         aArr.push(arg);
         return;
       }
+      if (caro.isNum(arg)) {
+        aNum.push(arg);
+        return;
+      }
     });
     return {
       fn: aFn,
       bool: aBool,
       str: aStr,
-      arr: aArr
+      arr: aArr,
+      num: aNum
     };
   };
   coverToFalseIfEmptyArr = function(arr) {
@@ -11708,7 +11714,7 @@
    * @returns {}
    */
   self.getFsSize = function(path, fixed, unit) {
-    var bytes, count, index, index1, index2, si, thresh;
+    var args, bytes, count, index, index1, index2, si, thresh;
     if (fixed == null) {
       fixed = 1;
     }
@@ -11716,27 +11722,33 @@
     if (bytes === null) {
       return bytes;
     }
+    args = caro.getArgumentsAsArr(arguments);
+    args.shift();
+    args = getArgs(args);
+    fixed = caro.coverToInt(args.num[0]);
+    fixed = fixed > -1 ? fixed : 1;
+    unit = args.str[0];
     si = true;
-    unit = caro.upperStr(unit);
+    unit = caro.upperFirst(unit);
+    unit = caro.upperStr(unit, {
+      start: -1
+    });
     index1 = fileSizeUnits1.indexOf(unit);
     index2 = fileSizeUnits2.indexOf(unit);
     if (index2 > -1) {
       si = false;
     }
-    thresh = si ? 1000 : 1024;
     index = si ? index1 : index2;
-    count = 0;
     if (index < 0) {
       return bytes;
     }
-    while (true) {
+    count = 0;
+    thresh = si ? 1000 : 1024;
+    while (count < index) {
       bytes /= thresh;
       ++count;
-      if (!(count < index)) {
-        break;
-      }
     }
-    return bytes.toFixed(fixed);
+    return caro.coverToNum(bytes.toFixed(fixed));
   };
 
   /**
