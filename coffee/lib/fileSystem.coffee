@@ -478,7 +478,7 @@ do ->
     unit = args.str[0]
     si = true
     unit = caro.upperFirst(unit) # e.g. 'mib' -> 'Mib'
-    unit = caro.upperStr(unit,{start:-1}) # e.g. 'Mib' -> 'MiB'
+    unit = caro.upperStr(unit, {start: -1}) # e.g. 'Mib' -> 'MiB'
     index1 = fileSizeUnits1.indexOf(unit)
     index2 = fileSizeUnits2.indexOf(unit)
     si = false if index2 > -1
@@ -491,7 +491,6 @@ do ->
       ++count
     caro.coverToNum(bytes.toFixed(fixed))
 
-  # TODO  next check
   ###*
   # get file size for human-reading
   # @param {number|string} path file-path or bytes
@@ -499,21 +498,16 @@ do ->
   # @param {boolean} [si=true] size-type, true decimal, false as binary
   # @returns {string}
   ###
-
   self.humanFeSize = (path, fixed = 1, si = true) ->
     bytes = getFileSize(path)
-    if bytes == null
-      return bytes
+    return bytes if bytes == null
     thresh = if si then 1000 else 1024
-    if bytes < thresh
-      return bytes + ' B'
+    return bytes + ' B' if bytes < thresh
     aUnit = if si then fileSizeUnits1 else fileSizeUnits2
     u = -1
-    loop
+    while bytes >= thresh
       bytes /= thresh
       ++u
-      unless bytes >= thresh
-        break
-    bytes.toFixed(fixed) + ' ' + aUnit[u]
+    caro.coverToFixed(bytes, fixed) + ' ' + aUnit[u]
 
   return

@@ -3,11 +3,10 @@
 # @namespace caro
 # @author Caro.Huang
 ###
-
 do ->
-  'use strict'
   self = caro
 
+  # TODO  next check
   ###*
   # check if arg is boolean | string | number
   # @param {...} arg
