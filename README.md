@@ -452,13 +452,6 @@ caro.isArr(['caro']); // true
     var r2 = caro.coverToInt(arg2, false); // 'a'
     var r3 = caro.coverToInt(arg3); // 0
 ```
-- **coverToFloat(arg [force=true]) - 將變數轉為 float**
-```javascript
-    var arg = '123.6', arg2 = 'a', arg3 = null;
-    var r = caro.coverToInt(arg); // 123.6
-    var r2 = caro.coverToInt(arg2, false); // 'a'
-    var r3 = caro.coverToInt(arg3); // 0
-```
 - **coverToNum(arg [force=true]) - 將變數轉為 number**
 ```javascript
     var arg = '123.45', arg2 = {};
