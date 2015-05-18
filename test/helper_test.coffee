@@ -108,6 +108,14 @@ describe 'Helper', ->
     r2.should.eq(0)
     r3.should.eq('caro')
 
+  it 'coverToFixed', ->
+    r = caro.coverToFixed('3.4355', 2)
+    r2 = caro.coverToFixed(undefined, 3)
+    r3 = caro.coverToFixed('caro', 3, false)
+    r.should.eq(3.44)
+    r2.should.eq(0)
+    r3.should.eq('caro')
+
   it 'coverToObj', ->
     r = caro.coverToObj('3.4')
     r2 = caro.coverToObj(null)

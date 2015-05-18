@@ -261,7 +261,7 @@
   /**
    * cover to int, will return 0 if force!=false
    * @param arg
-   * @param {boolean} [force=true] if return int
+   * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
   self.coverToInt = function(arg, force) {
@@ -279,7 +279,7 @@
   /**
    * cover to float, will return 0 if force!=false
    * @param arg
-   * @param {boolean} [force=true] if return int
+   * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
   self.coverToFloat = function(arg, force) {
@@ -297,7 +297,7 @@
   /**
    * cover to num,, will return 0 if force not false
    * @param arg
-   * @param {boolean} [force=true]  if return num
+   * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
   self.coverToNum = function(arg, force) {
@@ -309,8 +309,30 @@
     if (caro.isEmptyVal(int) && !force) {
       return arg;
     }
-    int = int || 0;
-    return int;
+    return int || 0;
+  };
+
+  /**
+   * cover to fixed-number
+   * @param arg
+   * @param {boolean} [force=true] if return 0 when it's NaN
+   * @returns {*}
+   */
+  self.coverToFixed = function(arg, dec, force) {
+    var r;
+    if (force == null) {
+      force = true;
+    }
+    dec = dec || 0;
+    r = caro.coverToStr(arg);
+    if (arg % 1) {
+      r = r.replace(/5$/, '6');
+    }
+    r = Number((+r).toFixed(dec));
+    if (!force) {
+      return arg;
+    }
+    return r || 0;
   };
 
   /**
