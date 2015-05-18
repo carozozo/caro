@@ -1,4 +1,4 @@
-/*! caro - v0.5.0 - 2015-05-19 */
+/*! caro - v0.5.1 - 2015-05-19 */
 (function(g) {
   'use strict';
   var caro;
@@ -1589,24 +1589,6 @@
       return arg;
     }
     return int || 0;
-  };
-
-  /**
-   * cover to float, will return 0 if force!=false
-   * @param arg
-   * @param {boolean} [force=true] if return 0 when it's NaN
-   * @returns {*}
-   */
-  self.coverToFloat = function(arg, force) {
-    var float;
-    if (force == null) {
-      force = true;
-    }
-    float = parseFloat(arg);
-    if (caro.isEmptyVal(float) && !force) {
-      return arg;
-    }
-    return float || 0;
   };
 
   /**
