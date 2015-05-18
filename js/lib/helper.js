@@ -277,24 +277,6 @@
   };
 
   /**
-   * cover to float, will return 0 if force!=false
-   * @param arg
-   * @param {boolean} [force=true] if return 0 when it's NaN
-   * @returns {*}
-   */
-  self.coverToFloat = function(arg, force) {
-    var float;
-    if (force == null) {
-      force = true;
-    }
-    float = parseFloat(arg);
-    if (caro.isEmptyVal(float) && !force) {
-      return arg;
-    }
-    return float || 0;
-  };
-
-  /**
    * cover to num,, will return 0 if force not false
    * @param arg
    * @param {boolean} [force=true] if return 0 when it's NaN
