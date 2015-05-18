@@ -92,14 +92,6 @@ describe 'Helper', ->
     r2.should.eq(0)
     should.equal(r3, null);
 
-  it 'coverToFloat', ->
-    r = caro.coverToFloat('3.6')
-    r2 = caro.coverToFloat('caro')
-    r3 = caro.coverToFloat(null, false)
-    r.should.eq(3.6)
-    r2.should.eq(0)
-    should.equal(r3, null);
-
   it 'coverToNum', ->
     r = caro.coverToNum('3.4')
     r2 = caro.coverToNum('caro')

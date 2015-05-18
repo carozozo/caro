@@ -229,18 +229,6 @@ do ->
     int or 0
 
   ###*
-  # cover to float, will return 0 if force!=false
-  # @param arg
-  # @param {boolean} [force=true] if return 0 when it's NaN
-  # @returns {*}
-  ###
-
-  self.coverToFloat = (arg, force = true) ->
-    float = parseFloat(arg)
-    return arg if caro.isEmptyVal(float) and !force
-    float or 0
-
-  ###*
   # cover to num,, will return 0 if force not false
   # @param arg
   # @param {boolean} [force=true] if return 0 when it's NaN
