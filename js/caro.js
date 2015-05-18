@@ -15,13 +15,9 @@
 (function() {
   if (caro.isNode) {
     caro.nMoment = require('moment');
-    caro.nValidator = require('validator');
   } else {
     if (typeof moment !== "undefined" && moment !== null) {
       caro.nMoment = moment;
-    }
-    if (typeof validator !== "undefined" && validator !== null) {
-      caro.nValidator = validator;
     }
   }
 })();

@@ -13,10 +13,10 @@ do ->
     # https://www.npmjs.com/package/moment
     caro.nMoment = require 'moment'
     # https://www.npmjs.com/package/validator
-    caro.nValidator = require 'validator'
+    # caro.nValidator = require 'validator'
   else
     if moment?
       caro.nMoment = moment
-    if validator?
-      caro.nValidator = validator
+#    if validator?
+#      caro.nValidator = validator
   return

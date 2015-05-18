@@ -6,8 +6,12 @@
     "name": "Caro.Huang",
     "email": "carozozo@yahoo.com.tw"
   },
-  "main": "caro.js",
-  "files": ["caro.js", "caro.min.js"],
+  "main": "caro.min.js",
+  "files": [
+    "caro.js",
+    "caro.min.js",
+    "dependencies"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/carozozo/caro"
@@ -27,7 +31,8 @@
     "type check"
   ],
   "dependencies": {
-    "colors": "~1.1.0"
+    "colors": "~1.1.0",
+    "moment": "~2.10.3"
   },
   "devDependencies": {
     "coffee-script": "1.9.2",
@@ -38,8 +43,6 @@
     "grunt-contrib-nodeunit": "~0.4.0",
     "grunt-mocha-test": "~0.12.7",
     "mocha": "~2.2.4",
-    "moment": "~2.10.3",
-    "chai": "~2.3.0",
-    "validator": "~3.39.0"
+    "chai": "~2.3.0"
   }
 }

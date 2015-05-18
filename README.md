@@ -5,6 +5,8 @@ JavaScript / Node.js 通用函式 by caro
 
 ### In Html
 ```html
+<!- https://www.npmjs.com/package/moment ->
+<script src="/js/moment-with-locale.js"></script> <!- if you want to use DateTime ->
 <script src="/js/caro.js"></script>
 ```
 
@@ -907,6 +909,12 @@ caro.isArr(['caro']); // true
     var arg2 = {};
     var r = caro.isNull(arg); // true
     var r2 = caro.isNull(arg, arg2); // false
+```
+- **isJson(arg...) - 判斷是否為 JSON，當其中一個參數不符合時，回傳 false**
+```javascript
+    r = caro.isJson(null); // true
+    r2 = caro.isJson('caro'); // false
+    r3 = caro.isJson(123, '{"a":1}') // true
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript
