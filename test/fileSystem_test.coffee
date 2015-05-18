@@ -97,7 +97,7 @@ describe 'FileSystem', ->
     it 'humanFeSize', ->
       r = caro.humanFeSize('./caro.js', 'ededed', undefined);
       r2 = caro.humanFeSize('./caro.js', 3);
-      r3 = caro.humanFeSize(10000000.456, 2, false);
+      r3 = caro.humanFeSize(10000000, 2, false);
       r.should.be.a('string')
       r2.should.be.a('string')
-      r3.should.be.a('string')
+      r3.should.be.eq('9.54 MiB')

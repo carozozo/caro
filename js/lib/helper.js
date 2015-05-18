@@ -5,7 +5,6 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
   var self;
   self = caro;
 

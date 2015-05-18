@@ -329,7 +329,7 @@ caro.isArr(['caro']); // true
     // https://nodejs.org/api/fs.html#fs_class_fs_stats
     var r = caro.getFsStat('./caro.js','l'); // l=lsataSync, f=fstatSync, s=statSync
 ```
-- **getFsSize(path [fixed] [unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
+- **getFsSize(path [fixed=1] [unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
 ```javascript
     var r = caro.getFsSize('./caro.js'); // e.g. 439078
     var r2 = caro.getFsSize('./caro.js', 'mb'); // e.g. 439 
@@ -338,9 +338,9 @@ caro.isArr(['caro']); // true
 - **humanFeSize(bytes [fixed=1] [si=false]) - 將檔案大小轉為易讀格式**
 ```javascript
     // http://en.wikipedia.org/wiki/File_size
-    r = caro.humanFeSize('./caro.js'); // '439.1 KB' (預設計算到小數第1位)
-    r2 = caro.humanFeSize('./caro.js', 3); // '439.078 KB'
-    r3 = caro.humanFeSize(10000000.456, 2, false); // '9.54 MiB'
+    r = caro.humanFeSize('./caro.js'); // e.g. '439.1 KB'
+    r2 = caro.humanFeSize('./caro.js', 3); // e.g. '439.078 KB'
+    r3 = caro.humanFeSize(10000000, 2, false); // '9.54 MiB'
 ```
 
 ### Helper

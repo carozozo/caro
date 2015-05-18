@@ -642,13 +642,10 @@
     }
     aUnit = si ? fileSizeUnits1 : fileSizeUnits2;
     u = -1;
-    while (true) {
+    while (bytes >= thresh) {
       bytes /= thresh;
       ++u;
-      if (!(bytes >= thresh)) {
-        break;
-      }
     }
-    return bytes.toFixed(fixed) + ' ' + aUnit[u];
+    return caro.coverToFixed(bytes, fixed) + ' ' + aUnit[u];
   };
 })();
