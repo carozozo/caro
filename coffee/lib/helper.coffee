@@ -219,7 +219,7 @@ do ->
   ###*
   # cover to int, will return 0 if force!=false
   # @param arg
-  # @param {boolean} [force=true] if return int
+  # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
 
@@ -231,7 +231,7 @@ do ->
   ###*
   # cover to float, will return 0 if force!=false
   # @param arg
-  # @param {boolean} [force=true] if return int
+  # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
 
@@ -243,16 +243,29 @@ do ->
   ###*
   # cover to num,, will return 0 if force not false
   # @param arg
-  # @param {boolean} [force=true]  if return num
+  # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
 
   self.coverToNum = (arg, force = true) ->
     int = parseFloat(arg)
-    if caro.isEmptyVal(int) and !force
-      return arg
-    int = int or 0
-    int
+    return arg if caro.isEmptyVal(int) and !force
+    int or 0
+
+  ###*
+  # cover to fixed-number
+  # @param arg
+  # @param {boolean} [force=true] if return 0 when it's NaN
+  # @returns {*}
+  ###
+
+  self.coverToFixed = (arg, dec, force = true) ->
+    dec = dec || 0;
+    r = caro.coverToStr(arg);
+    r = r.replace(/5$/, '6') if(arg % 1)
+    r = Number((+r).toFixed(dec))
+    return arg if !force
+    r or 0
 
   ###*
   # cover to object, will return {} if force!=false

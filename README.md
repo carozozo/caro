@@ -466,6 +466,12 @@ caro.isArr(['caro']); // true
     var r2 = caro.coverToNum(arg2, false); // {}
     var r3 = caro.coverToNum(undefined); // 0
 ```
+- **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
+```javascript
+    var r = caro.coverToFixed('3.4345', 2); // 3.44
+    var r2 = caro.coverToFixed(undefined, 3); // 0
+    var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
+```
 - **coverToObj(arg [force=true]) - 將變數轉為 object**
 ```javascript
     var arg = {}, arg2 = 123, arg3 = '{"a":1}';
