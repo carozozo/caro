@@ -26,13 +26,11 @@ do ->
       return arg.length < 1 if caro.isArr(arg)
       !arg and arg != 0 and arg != false
 
-  # TODO  next check
   ###*
   # check if value is true | 'true' | 1
   # @param {...} arg
   # @returns {boolean}
   ###
-
   self.isTrue = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
       if caro.isStr(arg)
@@ -44,7 +42,6 @@ do ->
   # @param arg
   # @returns {boolean}
   ###
-
   self.isFalse = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
       if caro.isStr(arg)
@@ -58,7 +55,6 @@ do ->
   # @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
   # @returns {boolean}
   ###
-
   self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
     if !Array.isArray(arr) and typeof arr != 'object' or arr == null or !caro.isFn(checkFn)
       return false
@@ -68,7 +64,7 @@ do ->
       if needAllPass and result == false or !needAllPass and result == true
         needAllPass = !needAllPass
         return false
-      true
+      return
     needAllPass
 
   ###*
@@ -77,7 +73,6 @@ do ->
   # @param {...*} args function-arguments
   # @returns {*}
   ###
-
   self.executeIfFn = (fn, args) ->
     otherArgs = []
     r = undefined
@@ -96,7 +91,6 @@ do ->
   # @param {*} fn
   # @returns {string|*|String}
   ###
-
   self.getFnName = (fn) ->
     if !caro.isFn(fn)
       return null
@@ -110,7 +104,6 @@ do ->
   # @param args should be arguments (object with numeric-key)
   # @returns {Array}
   ###
-
   self.getArgumentsAsArr = (args) ->
     r = []
     caro.each args, (i, val) ->
@@ -118,6 +111,7 @@ do ->
       return
     r
 
+  # TODO  next check
   ###*
   # format to money type like 1,000.00
   # @param {string|number} arg

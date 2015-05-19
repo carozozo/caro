@@ -369,7 +369,7 @@ caro.isArr(['caro']); // true
     var r = caro.isFalse(arg, arg2, arg3); // true
     var r2 = caro.isFalse(arg3, arg4); // false
 ```
-- **checkIfPassCb((arr, checkFn, needAllPass) - 回傳 checkFn 的執行結果**
+- **checkIfPassCb((arr, checkFn [needAllPass=true]) - 回傳 checkFn 的執行結果**
 ```javascript
     var arg = [1, 2, 3];
     // 完全比對，相當於 (1===1 && 2===1 && 3===1)
@@ -402,7 +402,7 @@ caro.isArr(['caro']); // true
 - **getArgumentsAsArr(fn) - 將 arguments 轉為陣列**
 ```javascript
     var fn = function (a, b) {
-        var args = caro.getArgumentsAsArr(arguments); // args = [1, 2]
+        var args = caro.getArgumentsAsArr(arguments); // [1, 2]
     };
     fn(1, 2);
 ```
