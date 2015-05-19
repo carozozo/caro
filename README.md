@@ -33,27 +33,22 @@ caro.isArr(['caro']); // true
 
 ### Array
 [Back to Index](#index)
-- **sortArr(arr [sort=true [clone=false]]) - 陣列排序(Will remove [clone] soon)**
+- **sortArr(arr [sort=true]) - 陣列排序**
 ```javascript
-    arg = [1, 3, 2, null]; 
-    arg2 = [1, 3, 2, null];
-    r = caro.sortArr(arg, false);
-    r2 = caro.sortArr(arg2, true, true);
-    console.log arg // [ 3, 2, 1, null ]
-    console.log arg2 // [ 1, 3, 2, null ] - 不受排序影響
-    console.log r // [ 3, 2, 1, null ]
-    console.log r2 // [ null, 1, 2, 3 ]
+    var r = caro.sortArr([1, 3, 2, null]); // [ null, 1, 2, 3 ]
+    var r2 = caro.sortArr([1, 3, 2, null], false); // [ 3, 2, 1, null ]
 ```
-- **sortByObjKey(arr, key [sort=true] [clone=false]) - 則可指定物件的 key 值排序(Will remove [clone] soon)**
+- **sortByObjKey(arr, key [sort=true]) - 則可指定物件的 key 值排序**
 ```javascript
     var obj = {index: 0, name: 'caro'};
     var obj2 = {index: 1, name: 'huang'};
     var obj3 = {index: 2, name: 'zozo'};
     var arr = [obj, obj3, obj2];
-    var r = caro.sortByObjKey(arr, 'index', true, true); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
-    var r2 = caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
+    caro.sortByObjKey(arr, 'index'); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
+    var arr2 = [obj, obj3, obj2];
+    caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
 ```
-- **sumOfArr(arr [force]) - 加總陣列中的數字**
+- **sumOfArr(arr [force=false]) - 加總陣列中的數字**
 ```javascript
     var arr = [1, 2, '5', null, {}];
     var r = caro.sumOfArr(arr); // 3
