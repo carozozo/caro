@@ -2,15 +2,17 @@
 # Log
 # @author Caro.Huang
 ###
-
+# TODO next check
 do ->
   return if !caro.isNode
   self = caro
   logPath = ''
   extendName = '.log'
+  traceMode = false
+  showErr = (e) ->
+    console.error(e) if traceMode
 
   normalizeLogPath = (path) ->
-    path = caro.coverToStr(path)
     path = caro.normalizePath(logPath, path)
     caro.addTail path, extendName
 
@@ -20,7 +22,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.setLogRoot = (path=logPath) ->
+  self.setLogRoot = (path = logPath) ->
     path = caro.coverToStr(path)
     path = caro.normalizePath(path)
     if caro.createDir(path)
@@ -42,7 +44,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.setLogExtendName = (name=extendName) ->
+  self.setLogExtendName = (name = extendName) ->
     name = caro.coverToStr(name)
     return false if !name
     name = caro.addHead(name, '.')
@@ -82,7 +84,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.writeLog = (path, data='') ->
+  self.writeLog = (path, data = '') ->
     path = normalizeLogPath(path)
     try
       size = caro.getFsSize(path)
@@ -106,7 +108,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.updateLog = (path, data, opt={}) ->
+  self.updateLog = (path, data, opt = {}) ->
     originData = caro.readLog(path)
     wrap = '\r\n'
     ifWrap = true
@@ -138,7 +140,7 @@ do ->
   # @returns {boolean}
   ###
 
-  self.updateLogWithDayFileName = (path, data, opt={}) ->
+  self.updateLogWithDayFileName = (path, data, opt = {}) ->
     today = caro.formatNow('YYYYMMDD')
     dateFirst = if opt.dateFirst != false then true else false
     if dateFirst
