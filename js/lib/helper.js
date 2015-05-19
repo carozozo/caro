@@ -29,7 +29,7 @@
       if (caro.isObj(arg)) {
         return caro.getObjLength(arg) < 1;
       }
-      if (caro.isObjOrArr(arg)) {
+      if (caro.isArr(arg)) {
         return arg.length < 1;
       }
       return !arg && arg !== 0 && arg !== false;
@@ -85,7 +85,6 @@
         needAllPass = !needAllPass;
         return false;
       }
-      return true;
     });
     return needAllPass;
   };
@@ -183,7 +182,7 @@
       case 'int':
         float = 0;
     }
-    arg = caro.coverToFloat(arg);
+    arg = caro.coverToNum(arg);
     arg = caro.coverToStr(arg);
     aStr = caro.splitStr(arg, '.');
     iStr = aStr[0];
