@@ -4,43 +4,38 @@
 # @author Caro.Huang
 ###
 do ->
-  # TODO will remove options-clone
   self = caro
 
   ###*
   # sort array
   # @param {[]} arr
   # @param {boolean} [sort=true] if sort by ASC
-  # @param {boolean} [clone=false] if clone for not change original-array
   # @returns {*}
   ###
-  self.sortArr = (arr, sort = true, clone = false) ->
+  self.sortArr = (arr, sort = true) ->
     return arr if !caro.isArr(arr)
-    r = if clone == false then arr else caro.cloneObj(arr);
-    r.sort (a, b) ->
+    arr.sort (a, b) ->
       if sort
         return if a < b then -1 else if a > b then 1 else 0
       if a > b then -1 else if a < b then 1 else 0
-    r
+    arr
 
   ###*
   # sort array by key if value is object
   # @param {[]} arr
   # @param {string} key
   # @param {boolean} [sort=true] if sort by ASC
-  # @param {boolean} [clone=false] if clone for not change original-array
   # @returns {*}
   ###
-  self.sortByObjKey = (arr, key, sort = true, clone = false) ->
+  self.sortByObjKey = (arr, key, sort = true) ->
     return arr if !caro.isArr(arr)
-    r = if clone == false then arr else caro.cloneObj(arr);
-    r.sort (a, b) ->
+    arr.sort (a, b) ->
       order1 = a[key] or 0
       order2 = b[key] or 0
       if sort
         return if order1 < order2 then -1 else if order1 > order2 then 1 else 0
       if order1 > order2 then -1 else if order1 < order2 then 1 else 0
-    r
+    arr
 
   ###*
   # get sum of value in array
@@ -130,7 +125,6 @@ do ->
       r.push val if r.indexOf(val) < 0
       return
     arr = r
-    arr
 
   ###*
   # push value into array if not exists

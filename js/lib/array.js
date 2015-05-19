@@ -12,22 +12,16 @@
    * sort array
    * @param {[]} arr
    * @param {boolean} [sort=true] if sort by ASC
-   * @param {boolean} [clone=false] if clone for not change original-array
    * @returns {*}
    */
-  self.sortArr = function(arr, sort, clone) {
-    var r;
+  self.sortArr = function(arr, sort) {
     if (sort == null) {
       sort = true;
-    }
-    if (clone == null) {
-      clone = false;
     }
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = clone === false ? arr : caro.cloneObj(arr);
-    r.sort(function(a, b) {
+    arr.sort(function(a, b) {
       if (sort) {
         if (a < b) {
           return -1;
@@ -45,7 +39,7 @@
         return 0;
       }
     });
-    return r;
+    return arr;
   };
 
   /**
@@ -53,22 +47,16 @@
    * @param {[]} arr
    * @param {string} key
    * @param {boolean} [sort=true] if sort by ASC
-   * @param {boolean} [clone=false] if clone for not change original-array
    * @returns {*}
    */
-  self.sortByObjKey = function(arr, key, sort, clone) {
-    var r;
+  self.sortByObjKey = function(arr, key, sort) {
     if (sort == null) {
       sort = true;
-    }
-    if (clone == null) {
-      clone = false;
     }
     if (!caro.isArr(arr)) {
       return arr;
     }
-    r = clone === false ? arr : caro.cloneObj(arr);
-    r.sort(function(a, b) {
+    arr.sort(function(a, b) {
       var order1, order2;
       order1 = a[key] || 0;
       order2 = b[key] || 0;
@@ -89,7 +77,7 @@
         return 0;
       }
     });
-    return r;
+    return arr;
   };
 
   /**
@@ -212,8 +200,7 @@
         r.push(val);
       }
     });
-    arr = r;
-    return arr;
+    return arr = r;
   };
 
   /**
