@@ -6,7 +6,7 @@ describe 'Helper', ->
     r.should.be.true
     r2.should.be.false
 
-  it.only 'isEmptyVal', ->
+  it 'isEmptyVal', ->
     r = caro.isEmptyVal({}, [], null, '', undefined);
     r2 = caro.isEmptyVal('null');
     r.should.be.true
@@ -33,11 +33,13 @@ describe 'Helper', ->
     r.should.be.false
     r2.should.be.true
 
-  it 'checkIfPassCb', ->
+  it 'executeIfFn', ->
     arg = (i)->
       ++i
     r = caro.executeIfFn(arg, 12)
+    r2 = caro.executeIfFn(null)
     r.should.eq 13
+    should.equal r2, undefined
 
   it 'getFnName', ->
     arg = (i)->
@@ -48,7 +50,9 @@ describe 'Helper', ->
   it 'getArgumentsAsArr', ->
     fn = (a, b) ->
       args = caro.getArgumentsAsArr(arguments);
-      args.should.be.instanceof(Array)
+      args.should.be.an.Array
+      args[0].should.eq 1
+      args[1].should.eq 2
     fn(1, 2);
 
   it 'formatMoney', ->
