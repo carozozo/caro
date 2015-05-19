@@ -75,12 +75,12 @@
     if (needAllPass == null) {
       needAllPass = true;
     }
-    if (!Array.isArray(arr) && typeof arr !== 'object' || arr === null || !caro.isFn(checkFn)) {
+    if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFn(checkFn)) {
       return false;
     }
     caro.each(arr, function(i, arg) {
       var result;
-      result = caro.executeIfFn(checkFn, arg);
+      result = checkFn(arg);
       if (needAllPass && result === false || !needAllPass && result === true) {
         needAllPass = !needAllPass;
         return false;
@@ -322,7 +322,7 @@
    * @returns {*}
    */
   self.coverToObj = function(arg, force) {
-    var r;
+    var e, r;
     if (force == null) {
       force = true;
     }
@@ -336,11 +336,13 @@
       });
       return r;
     }
-    if (caro.isJson(arg)) {
+    try {
       r = JSON.parse(arg);
       if (caro.isObj(r)) {
         return r;
       }
+    } catch (_error) {
+      e = _error;
     }
     if (!force) {
       return arg;
@@ -368,7 +370,6 @@
     } else {
       json = JSON.stringify(arg, replacer);
     }
-    console.log('json=', json);
     if (caro.isJson(json)) {
       return json;
     }

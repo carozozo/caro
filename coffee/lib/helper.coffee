@@ -56,10 +56,9 @@ do ->
   # @returns {boolean}
   ###
   self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
-    if !Array.isArray(arr) and typeof arr != 'object' or arr == null or !caro.isFn(checkFn)
-      return false
+    return false if !Array.isArray(arr) and typeof arr != 'object' or !caro.isFn(checkFn)
     caro.each arr, (i, arg) ->
-      result = caro.executeIfFn(checkFn, arg)
+      result = checkFn(arg)
       # need all pass, but result is false || no-need all pass, and result is true
       if needAllPass and result == false or !needAllPass and result == true
         needAllPass = !needAllPass
@@ -185,7 +184,7 @@ do ->
       return ''
     if caro.isObj(arg)
       if force
-        # cover fn to string first, and not replace \r\n
+# cover fn to string first, and not replace \r\n
         caro.coverFnToStrInObj arg, false
         # after cover to json, replace \\r\\n to wrap
         arg = caro.coverToJson(arg)
@@ -248,10 +247,10 @@ do ->
         r[i] = val
       )
       return r
-    # 未來可以新增 TypeCheck.isObjJson
-    if caro.isJson(arg)
+    try
       r = JSON.parse(arg)
       return r if caro.isObj(r)
+    catch e
     return arg if !force
     {}
 
@@ -274,7 +273,6 @@ do ->
       json = JSON.stringify(arg, replacer, space)
     else
       json = JSON.stringify(arg, replacer)
-    console.log 'json=',json
     return json if caro.isJson(json)
     return arg if !force
     ''

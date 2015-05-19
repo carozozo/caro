@@ -116,7 +116,6 @@ describe 'Helper', ->
     r = caro.coverToObj('3.4')
     r2 = caro.coverToObj('{"a":3}')
     r3 = caro.coverToObj('caro', false)
-    console.log r2
     r.should.eql({})
     r2.should.eql({a: 3})
     r3.should.eq('caro')

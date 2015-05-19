@@ -80,7 +80,7 @@ do ->
 
   ###*
   # @param {...} arg
-  # @returns {*}
+  # @returns {boolean}
   ###
 
   self.isJson = (arg) ->
@@ -93,6 +93,21 @@ do ->
         return false
       return
     pass
+
+  ###*
+  # check if argument is object-like JSON
+  # @param {...} arg
+  # @returns {boolean}
+  ###
+
+  self.isObjJson = (arg) ->
+    caro.checkIfPassCb arguments, (val) ->
+      try
+        r = JSON.parse(val);
+        return caro.isObj(r)
+      catch e
+        return false
+
 
   ###*
   # @param {...} arg
