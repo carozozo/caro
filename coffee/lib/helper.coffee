@@ -111,7 +111,6 @@ do ->
       return
     r
 
-  # TODO  next check
   ###*
   # format to money type like 1,000.00
   # @param {string|number} arg
@@ -123,7 +122,6 @@ do ->
   # @param [opt.prefix]
   # @returns {string}
   ###
-
   self.formatMoney = (arg, type, opt) ->
     r = []
     caro.eachArgs arguments, (i, arg) ->
@@ -144,7 +142,7 @@ do ->
         prefix = '$'
       when 'int'
         float = 0
-    arg = caro.coverToFloat(arg)
+    arg = caro.coverToNum(arg)
     arg = caro.coverToStr(arg)
     aStr = caro.splitStr(arg, '.')
     iStr = aStr[0]
@@ -164,10 +162,8 @@ do ->
   # @param arg
   # @returns {*}
   ###
-
   self.coverToArr = (arg) ->
-    if caro.isArr(arg)
-      return arg
+    return arg if caro.isArr(arg)
     [arg]
 
   ###*
@@ -176,7 +172,6 @@ do ->
   # @param {boolean} [force=true] if return string
   # @returns {*}
   ###
-
   self.coverToStr = (arg, force = true) ->
     if caro.isStr(arg)
       return arg
@@ -200,16 +195,16 @@ do ->
       return ''
     if caro.isFn(arg.toString)
       return arg.toString()
-    if force
-      return ''
+    return '' if force
     arg
 
   ###*
-  # cover to int, will return 0 if force!=false
+  # cover to integer, will return 0
   # @param arg
   # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
+  # TODO  next check
 
   self.coverToInt = (arg, force = true) ->
     int = parseInt(arg)
@@ -224,9 +219,9 @@ do ->
   ###
 
   self.coverToNum = (arg, force = true) ->
-    int = parseFloat(arg)
-    return arg if caro.isEmptyVal(int) and !force
-    int or 0
+    num = parseFloat(arg)
+    return arg if caro.isEmptyVal(num) and !force
+    num or 0
 
   ###*
   # cover to fixed-number
