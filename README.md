@@ -105,13 +105,13 @@ caro.isArr(['caro']); // true
     caro.log(function(){
     });
 ```
-- **log2(msg, variable) - 輸出有顏色的 console 訊息**
+- **log2(msg, variable) - 輸出 console 訊息**
 ```javascript
     caro.log2(undefined);
     caro.log2('1', undefined);
     caro.log2('2', {});
 ```
-- **log3(msg, variable) - 輸出有顏色的 console 訊息**
+- **log3(msg, variable) - 輸出 console 訊息**
 ```javascript
     caro.log3(undefined, 'test');
     caro.log3('1', undefined);
@@ -901,6 +901,12 @@ caro.isArr(['caro']); // true
     r = caro.isJson(null); // true
     r2 = caro.isJson('caro'); // false
     r3 = caro.isJson(123, '{"a":1}') // true
+```
+- **isObjJson(arg...) - 先判斷是否為 JSON，再判斷是否為 object 格式，當其中一個參數不符合時，回傳 false**
+```javascript
+    r = caro.isObjJson('{"a": 1}'); // true
+    r2 = caro.isObjJson('{"a": function(){}}'); // false
+    r3 = caro.isObjJson('{"a": 1}', {b: 2}) // false
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript
