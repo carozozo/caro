@@ -262,7 +262,6 @@ do ->
   # @param {space=4} [opt.space] the space for easy-reading after cover to JSON
   # @returns {*}
   ###
-
   self.coverToJson = (arg, opt) ->
     json = ''
     opt = caro.coverToObj(opt)
