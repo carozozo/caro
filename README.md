@@ -425,32 +425,26 @@ caro.isArr(['caro']); // true
 ```
 - **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
 ```javascript
-    var arg = [3, 2, 1];
-    var arg2 = null;
-    var r = caro.coverToArr(arg); // [ 3, 2, 1 ]
-    var r2 = caro.coverToArr(arg2); // [ null ]
+    var r = caro.coverToArr([3, 2, 1]); // [3, 2, 1]
+    var r2 = caro.coverToArr(null); // [ null ]
 ```
 - **coverToStr(arg [force=true]) - 將變數轉為 string**
 ```javascript
-    var arg = function () {};
-    var arg2 = {a: 2}, arg3 = null, arg4 = ['caro',1];
-    var r = caro.coverToStr(arg); // 'function () {}'
-    var r2 = caro.coverToStr(arg2); // '{a: 2}'
-    var r3 = caro.coverToStr(arg3); // 'null'
-    var r4 = caro.coverToStr(arg3); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
+    var r = caro.coverToStr(function () {}); // 'function () {}'
+    var r2 = caro.coverToStr({a: 2}); // '{a: 2}'
+    var r3 = caro.coverToStr(null); // 'null'
+    var r4 = caro.coverToStr(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
 ```
 - **coverToInt(arg [force=true]) - 將變數轉為 integer**
 ```javascript
-    var arg = '123.6', arg2 = 'a', arg3 = null;
-    var r = caro.coverToInt(arg); // 123
-    var r2 = caro.coverToInt(arg2, false); // 'a'
-    var r3 = caro.coverToInt(arg3); // 0
+    var r = caro.coverToInt('123.6'); // 123
+    var r2 = caro.coverToInt('a', false); // 'a'
+    var r3 = caro.coverToInt(null); // 0
 ```
 - **coverToNum(arg [force=true]) - 將變數轉為 number**
 ```javascript
-    var arg = '123.45', arg2 = {};
-    var r = caro.coverToNum(arg); // 123.45
-    var r2 = caro.coverToNum(arg2, false); // {}
+    var r = caro.coverToNum('123.45'); // 123.45
+    var r2 = caro.coverToNum({}, false); // {}
     var r3 = caro.coverToNum(undefined); // 0
 ```
 - **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
@@ -461,10 +455,9 @@ caro.isArr(['caro']); // true
 ```
 - **coverToObj(arg [force=true]) - 將變數轉為 object**
 ```javascript
-    var arg = {}, arg2 = 123, arg3 = '{"a":1}';
-    var r = caro.coverToObj(arg); // {}
-    var r2 = caro.coverToObj(arg2, false); // 123
-    var r3 = caro.coverToObj(arg3); // {a:1}
+    var r = caro.coverToObj({}); // {}
+    var r2 = caro.coverToObj(123, false); // 123
+    var r3 = caro.coverToObj('{"a":1}'); // {a: 1}
     var r4 = caro.coverToObj(undefined); // {}
 ```
 - **coverToJson(arg [opt]) - 將變數轉為 JSON**
@@ -472,9 +465,9 @@ caro.isArr(['caro']); // true
     var arg = [0, 1, 2];
     var replacer = function (key, val) {
         if (key === '') {
-            return val;
+            return val; // [0, 1, 2]
         }
-        return val + 2;
+        return val + 2; // 0 + 2 ,1 + 2, 2 + 2
     };
     var r = caro.coverToJson(arg, {
         force: false, // 是否強制轉為 JSON 格式

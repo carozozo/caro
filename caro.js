@@ -1562,14 +1562,14 @@
     if (caro.isFn(arg.toString)) {
       return arg.toString();
     }
-    if (force) {
-      return '';
+    if (!force) {
+      return arg;
     }
-    return arg;
+    return '';
   };
 
   /**
-   * cover to int, will return 0 if force!=false
+   * cover to integer
    * @param arg
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
@@ -1580,28 +1580,28 @@
       force = true;
     }
     int = parseInt(arg);
-    if (caro.isEmptyVal(int) && !force) {
+    if (!force) {
       return arg;
     }
     return int || 0;
   };
 
   /**
-   * cover to num,, will return 0 if force not false
+   * cover to number
    * @param arg
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
   self.coverToNum = function(arg, force) {
-    var int;
+    var num;
     if (force == null) {
       force = true;
     }
-    int = parseFloat(arg);
-    if (caro.isEmptyVal(int) && !force) {
+    num = parseFloat(arg);
+    if (!force) {
       return arg;
     }
-    return int || 0;
+    return num || 0;
   };
 
   /**
@@ -1628,9 +1628,9 @@
   };
 
   /**
-   * cover to object, will return {} if force!=false
+   * cover to object
    * @param arg
-   * @param {boolean} [force=true] if return object
+   * @param {boolean} [force=true] if return {} when cover-failed, otherwise return original-argument
    * @returns {*}
    */
   self.coverToObj = function(arg, force) {
@@ -1654,10 +1654,10 @@
         return r;
       }
     }
-    if (force) {
-      return {};
+    if (!force) {
+      return arg;
     }
-    return arg;
+    return {};
   };
 
   /**
@@ -1670,22 +1670,22 @@
    */
   self.coverToJson = function(arg, opt) {
     var force, json, replacer, space;
-    force = true;
-    replacer = null;
-    space = 4;
     json = '';
-    if (opt) {
-      force = opt.force !== false;
-      replacer = opt.replacer || replacer;
-      space = opt.space !== void 0 ? opt.space : space;
-    }
+    opt = caro.coverToObj(opt);
+    force = opt.force !== false;
+    replacer = opt.replacer || null;
+    space = opt.space != null ? opt.space : 4;
     if (space) {
       json = JSON.stringify(arg, replacer, space);
     } else {
       json = JSON.stringify(arg, replacer);
     }
-    if (caro.isJson(json) || !force) {
+    console.log('json=', json);
+    if (caro.isJson(json)) {
       return json;
+    }
+    if (!force) {
+      return arg;
     }
     return '';
   };
