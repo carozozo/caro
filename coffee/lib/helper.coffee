@@ -185,7 +185,7 @@ do ->
       return ''
     if caro.isObj(arg)
       if force
-# cover fn to string first, and not replace \r\n
+        # cover fn to string first, and not replace \r\n
         caro.coverFnToStrInObj arg, false
         # after cover to json, replace \\r\\n to wrap
         arg = caro.coverToJson(arg)
@@ -193,34 +193,30 @@ do ->
         arg = caro.replaceAll(arg, '\\n', '\n')
         return arg
       return ''
-    if caro.isFn(arg.toString)
-      return arg.toString()
-    return '' if force
-    arg
+    return arg.toString() if caro.isFn(arg.toString)
+    return arg if !force
+    ''
 
   ###*
-  # cover to integer, will return 0
+  # cover to integer
   # @param arg
   # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
-  # TODO  next check
-
   self.coverToInt = (arg, force = true) ->
     int = parseInt(arg)
-    return arg if caro.isEmptyVal(int) and !force
+    return arg if !force
     int or 0
 
   ###*
-  # cover to num,, will return 0 if force not false
+  # cover to number
   # @param arg
   # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
-
   self.coverToNum = (arg, force = true) ->
     num = parseFloat(arg)
-    return arg if caro.isEmptyVal(num) and !force
+    return arg if !force
     num or 0
 
   ###*
@@ -229,7 +225,6 @@ do ->
   # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
-
   self.coverToFixed = (arg, dec, force = true) ->
     dec = dec || 0;
     r = caro.coverToStr(arg);
@@ -239,12 +234,11 @@ do ->
     r or 0
 
   ###*
-  # cover to object, will return {} if force!=false
+  # cover to object
   # @param arg
-  # @param {boolean} [force=true] if return object
+  # @param {boolean} [force=true] if return {} when cover-failed, otherwise return original-argument
   # @returns {*}
   ###
-
   self.coverToObj = (arg, force = true) ->
     if caro.isObj(arg)
       return arg
@@ -258,9 +252,8 @@ do ->
     if caro.isJson(arg)
       r = JSON.parse(arg)
       return r if caro.isObj(r)
-    if force
-      return {}
-    arg
+    return arg if !force
+    {}
 
   ###*
   # @param arg
@@ -272,20 +265,18 @@ do ->
   ###
 
   self.coverToJson = (arg, opt) ->
-    force = true
-    replacer = null
-    space = 4
     json = ''
-    if opt
-      force = opt.force != false
-      replacer = opt.replacer or replacer
-      space = if opt.space != undefined then opt.space else space
+    opt = caro.coverToObj(opt)
+    force = opt.force != false
+    replacer = opt.replacer or null
+    space = if opt.space? then opt.space else 4
     if space
       json = JSON.stringify(arg, replacer, space)
     else
       json = JSON.stringify(arg, replacer)
-    if caro.isJson(json) or !force
-      return json
+    console.log 'json=',json
+    return json if caro.isJson(json)
+    return arg if !force
     ''
 
   return

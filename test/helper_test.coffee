@@ -114,16 +114,28 @@ describe 'Helper', ->
 
   it 'coverToObj', ->
     r = caro.coverToObj('3.4')
-    r2 = caro.coverToObj(null)
+    r2 = caro.coverToObj('{"a":3}')
     r3 = caro.coverToObj('caro', false)
+    console.log r2
     r.should.eql({})
-    r2.should.eql({})
+    r2.should.eql({a: 3})
     r3.should.eq('caro')
 
   it 'coverToJson', ->
     r = caro.coverToJson(3.4)
-    r2 = caro.coverToJson(null)
-    r3 = caro.coverToJson('caro', false)
+    r2 = caro.coverToJson({
+      a: 3
+      b: 5
+    }, {
+      replacer: (key, val) ->
+        return val if (key == '')
+        return val + 1
+      space: 0
+      force: false
+    })
+    r3 = caro.coverToJson(undefined, {
+      force: false
+    })
     r.should.eq('3.4')
-    r2.should.eql('null')
-    r3.should.eq('"caro"')
+    r2.should.eq('{"a":4,"b":6}')
+    should.equal(r3, undefined)
