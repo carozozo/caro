@@ -2,10 +2,8 @@
 # Path
 # @author Caro.Huang
 ###
-
 do ->
-  if !caro.isNode
-    return
+  return if !caro.isNode
   self = caro
   nPath = require('path')
   absolutePath = if typeof __dirname != 'undefined' then __dirname else ''
@@ -15,34 +13,38 @@ do ->
   # @param path
   # @returns {String}
   ###
-
   self.setAbsolutePath = (path) ->
-    path = caro.coverToStr(path)
+    return false if !caro.isStr(path)
     absolutePath = caro.normalizePath path
-    absolutePath
 
   ###*
   # get absolute root path
   # @returns {String}
   ###
-
   self.getAbsolutePath = ->
     absolutePath
+
+  ###*
+    # @param {...} path
+    # @returns {string|*}
+    ###
+  self.normalizePath = (path) ->
+    args = caro.getArgumentsAsArr(arguments)
+    nPath.join.apply nPath, args
 
   ###*
   # check if path contain absolute root path
   # @param {*...} path
   # @returns {boolean}
   ###
-
   self.isFullPath = (path) ->
     pass = true
-    caro.eachArgs(arguments, (i, val)->
+    caro.each(arguments, (i, val) ->
       val = caro.normalizePath(val)
       if val.indexOf(absolutePath) != 0
         pass = false
         return false
-      return true
+      return
     )
     pass
 
@@ -51,7 +53,6 @@ do ->
   # @param {string} path
   # @returns {string}
   ###
-
   self.getDirPath = (path) ->
     nPath.dirname path
 
@@ -61,7 +62,6 @@ do ->
   # @param {boolean} [getFull=true] return basename if true
   # @returns {*}
   ###
-
   self.getFileName = (path, getFull = true) ->
     if !getFull
       extendName = caro.getExtendName(path)
@@ -75,32 +75,19 @@ do ->
   # @param {boolean} [withDot=true]
   # @returns {*}
   ###
-
   self.getExtendName = (path, withDot = true) ->
     extendName = nPath.extname(path)
-    if !withDot
-      extendName = extendName.replace('.', '')
+    extendName = extendName.replace('.', '') if !withDot
     extendName
-
-  ###*
-  # @param {...} path
-  # @returns {string|*}
-  ###
-
-  self.normalizePath = (path) ->
-    args = caro.getArgumentsAsArr(arguments)
-    nPath.join.apply nPath, args
 
   ###*
   # auto add server root-path if not exist
   # @param {...} path
   # @returns {*|string}
   ###
-
   self.coverToFullPath = (path) ->
     path = caro.normalizePath.apply(this, arguments)
-    if !caro.isFullPath(path)
-      path = nPath.join(absolutePath, path)
+    path = nPath.join(absolutePath, path) if !caro.isFullPath(path)
     path
 
   return

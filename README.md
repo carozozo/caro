@@ -678,7 +678,12 @@ caro.isArr(['caro']); // true
     caro.setAbsolutePath('/path/from/root');
     var r = caro.getAbsolutePath(); // '/path/from/root'
 ```
-- **isFullPath(path) - 確認是否為絕對路徑**
+- **normalizePath(path...) - 正規化路徑**
+```javascript
+    var r = caro.normalizePath('path//seems/not/exists'); // 'path/seems/not/exists'
+    var r2 = caro.normalizePath('path', '\exists'); // 'path/exists'
+```
+- **isFullPath(path...) - 確認是否為絕對路徑**
 ```javascript
     caro.setAbsolutePath('/path/root');
     var r = caro.isFullPath('/path/root/caro.js'); // true
@@ -699,11 +704,6 @@ caro.isArr(['caro']); // true
 ```javascript
     var r = caro.getExtendName('caro.js'); // '.js'
     var r2 = caro.getExtendName('caro.js.bk', false); // 'bk'
-```
-- **normalizePath(path...) - 正規化路徑**
-```javascript
-    var r = caro.normalizePath('path//seems/not/exists'); // 'path/seems/not/exists'
-    var r2 = caro.normalizePath('path', '\exists'); // 'path/exists'
 ```
 - **coverToFullPath(path) - 轉為絕對路徑**
 ```javascript

@@ -2011,35 +2011,36 @@
    * @returns {*}
    */
   self.extendObj = function(deep, arg) {
-    var firstArg;
+    var r;
     if (deep == null) {
       deep = false;
     }
+    r = null;
     if (!caro.isBool(deep)) {
-      firstArg = deep;
+      r = deep;
       deep = false;
     }
     caro.eachArgs(arguments, function(key, arg) {
       var results, val;
-      if (!firstArg && caro.isObjOrArr(arg)) {
-        firstArg = arg;
+      if (!r && caro.isObjOrArr(arg)) {
+        r = arg;
         return true;
       }
       results = [];
       for (key in arg) {
         val = arg[key];
-        if (caro.isObj(firstArg) && caro.keysInObj(firstArg, key) && !deep) {
+        if (caro.isObj(r) && caro.keysInObj(r, key) && !deep) {
           continue;
         }
-        results.push(pushValToObjOrArr(firstArg, key, val));
+        results.push(pushValToObjOrArr(r, key, val));
       }
       return results;
     });
-    return firstArg;
+    return r;
   };
 
   /**
-   * clone object, similar jQuery.clone
+   * clone object
    * @param {object} obj
    * @param {boolean} [deep=false] if clone all under object
    * @returns {*}
@@ -2255,9 +2256,10 @@
    * @returns {String}
    */
   self.setAbsolutePath = function(path) {
-    path = caro.coverToStr(path);
-    absolutePath = caro.normalizePath(path);
-    return absolutePath;
+    if (!caro.isStr(path)) {
+      return false;
+    }
+    return absolutePath = caro.normalizePath(path);
   };
 
   /**
@@ -2269,6 +2271,16 @@
   };
 
   /**
+     * @param {...} path
+     * @returns {string|*}
+   */
+  self.normalizePath = function(path) {
+    var args;
+    args = caro.getArgumentsAsArr(arguments);
+    return nPath.join.apply(nPath, args);
+  };
+
+  /**
    * check if path contain absolute root path
    * @param {*...} path
    * @returns {boolean}
@@ -2276,13 +2288,12 @@
   self.isFullPath = function(path) {
     var pass;
     pass = true;
-    caro.eachArgs(arguments, function(i, val) {
+    caro.each(arguments, function(i, val) {
       val = caro.normalizePath(val);
       if (val.indexOf(absolutePath) !== 0) {
         pass = false;
         return false;
       }
-      return true;
     });
     return pass;
   };
@@ -2331,16 +2342,6 @@
       extendName = extendName.replace('.', '');
     }
     return extendName;
-  };
-
-  /**
-   * @param {...} path
-   * @returns {string|*}
-   */
-  self.normalizePath = function(path) {
-    var args;
-    args = caro.getArgumentsAsArr(arguments);
-    return nPath.join.apply(nPath, args);
   };
 
   /**

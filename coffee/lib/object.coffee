@@ -85,6 +85,7 @@ do ->
   # @returns {*}
   ###
   self.cloneObj = (arg, deep = false) ->
+    return arg if !caro.isObjOrArr(arg)
     r = if caro.isArr(arg) then [] else {}
     caro.extendObj(r, arg)
     if(deep)
