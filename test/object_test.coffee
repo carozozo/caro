@@ -3,7 +3,6 @@ describe 'Object', ->
   it 'getObjLength', ->
     arg = ['a', 'b', 'c']
     r = caro.getObjLength(arg);
-    #    console.log r
     r.should.eq 3
 
   it 'extendObj', ->
@@ -77,7 +76,7 @@ describe 'Object', ->
   it 'trimByObjKey', ->
     arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
     arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-    caro.trimByObjKey(arg, ['aa','cc']);
+    caro.trimByObjKey(arg, ['aa', 'cc']);
     caro.trimByObjKey(arg2);
     arg.should.eql {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
     arg2.should.eql {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
