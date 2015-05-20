@@ -741,10 +741,10 @@ caro.isArr(['caro']); // true
       exclude: 'A,B,C'
     }); // - will create uppercase-only, and without A/B/C
 ```
-- **strToBool(str) - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false**
+- **strToBool(str) - 如果是 'false' 或空字串，回傳 false，否則回傳 true**
 ```javascript
     var r = caro.strToBool('false'); // false
-    var r2 = caro.strToBool('True'); // true
+    var r2 = caro.strToBool('fAlse'); // false
     var r3 = caro.strToBool('123'); // true
     var r4 = caro.strToBool(''); // false
 ```

@@ -66,16 +66,13 @@ do ->
   self.random = (len, opt) ->
     text = ''
     chars = []
-    lower = true
-    upper = true
-    num = true
-    exclude = []
     len = if parseInt(len) then parseInt(len) else 1
-    if opt
-      lower = opt.lower != false
-      upper = opt.upper != false
-      num = opt.num != false
-      exclude = opt.exclude or exclude
+    opt = caro.coverToObj(opt)
+    lower = opt.lower != false
+    upper = opt.upper != false
+    num = opt.num != false
+    # cover to array if string
+    exclude = caro.splitStr(exclude, ',')
     if lower
       chars.push 'abcdefghijklmnopqrstuvwxyz'
     if upper
@@ -83,10 +80,8 @@ do ->
     if num
       chars.push '0123456789'
     chars = chars.join('')
-    # cover to array if string
-    exclude = caro.splitStr(exclude, ',')
     caro.each exclude, (i, excludeStr) ->
-      chars = caro.replaceAll(String(chars), excludeStr, '')
+      chars = caro.replaceAll(chars, excludeStr, '')
       return
     i = 0
     while i < len
@@ -99,9 +94,7 @@ do ->
   # @param {string} string
   # @returns {boolean}
   ###
-
   self.strToBool = (str) ->
-    return false if !caro.isStr(str) or !str
     str = str.toLowerCase()
     # return false when string='false', otherwise return true
     str != 'false'
