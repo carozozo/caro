@@ -1,7 +1,7 @@
 do ->
 describe 'FileSystem', ->
-  it 'setTrace', ->
-    r = caro.setTrace(false);
+  it 'setFsTrace', ->
+    r = caro.setFsTrace(false);
     r.should.be.a('boolean')
 
   describe.skip 'File', ->
