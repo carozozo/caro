@@ -77,21 +77,10 @@
     if (deep == null) {
       deep = false;
     }
-    firstArg = null;
-    caro.eachArgs(arguments, function(key, arg) {
-      if (key !== 0) {
-        return false;
-      }
-      if (caro.isBool(arg)) {
-        deep = arg;
-        return false;
-      }
-      if (caro.isObjOrArr(arg)) {
-        firstArg = arg;
-        deep = false;
-        return false;
-      }
-    });
+    if (!caro.isBool(deep)) {
+      firstArg = deep;
+      deep = false;
+    }
     caro.eachArgs(arguments, function(key, arg) {
       var results, val;
       if (!firstArg && caro.isObjOrArr(arg)) {

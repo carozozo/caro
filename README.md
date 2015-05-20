@@ -585,10 +585,9 @@ caro.isArr(['caro']); // true
     var arg = {a: 1, b: 2, c: {c1: 1}};
     var r = caro.cloneObj(arg);
     var r2 = caro.cloneObj(arg, true);
-    arg.a = 3
     arg.c.c1 = 3
-    console.log r // { a: 1, b: 2, c: { c1: 3 } }
-    console.log r2 // { a: 1, b: 2, c: { c1: 1 } } - 所有的值都不受 arg 影響
+    console.log(r) // { a: 1, b: 2, c: { c1: 3 } }
+    console.log(r2) // { a: 1, b: 2, c: { c1: 1 } } - 所有的值都不受 arg 影響
 ```
 - **replaceObjKey(obj, replaceFn) - 轉換 obj 中的 key**
 ```javascript

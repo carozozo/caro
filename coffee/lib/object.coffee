@@ -21,8 +21,7 @@ do ->
       'trim'
     ]
     r = obj
-    if !caro.isObj(obj) or aType.indexOf(type) < 0
-      return obj
+    return obj if !caro.isObj(obj) or aType.indexOf(type) < 0
     keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
     caro.each keys, (i, key) ->
@@ -65,34 +64,27 @@ do ->
   # @returns {*}
   ###
   self.extendObj = (deep = false, arg) ->
-    firstArg = null
-    caro.eachArgs arguments, (key, arg)->
-      return false if key != 0
-      if caro.isBool(arg)
-        deep = arg
-        return false
-      if caro.isObjOrArr(arg)
-        firstArg = arg
-        deep = false
-        return false
-    caro.eachArgs arguments, (key, arg)->
-      if !firstArg and caro.isObjOrArr(arg)
-        firstArg = arg
+    r = null
+    if !caro.isBool(deep)
+      r = deep
+      deep = false
+    caro.eachArgs arguments, (key, arg) ->
+      if !r and caro.isObjOrArr(arg)
+        r = arg
         return true
       for key, val of arg
-        if caro.isObj(firstArg) and caro.keysInObj(firstArg, key) and !deep
+        if caro.isObj(r) and caro.keysInObj(r, key) and !deep
           continue
-        pushValToObjOrArr(firstArg, key, val)
-    firstArg
+        pushValToObjOrArr(r, key, val)
+    r
 
   ###*
-  # clone object, similar jQuery.clone
+  # clone object
   # @param {object} obj
   # @param {boolean} [deep=false] if clone all under object
   # @returns {*}
   ###
   self.cloneObj = (arg, deep = false) ->
-    return arg if !caro.isObjOrArr(arg)
     r = if caro.isArr(arg) then [] else {}
     caro.extendObj(r, arg)
     if(deep)

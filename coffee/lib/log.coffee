@@ -107,7 +107,6 @@ do ->
   # @param {boolean} [opt.prepend=false] add data in front of origin-data
   # @returns {boolean}
   ###
-
   self.updateLog = (path, data, opt = {}) ->
     originData = caro.readLog(path)
     wrap = '\r\n'
@@ -139,7 +138,6 @@ do ->
   # @param {boolean} [opt.prepend=false] add data in front of origin-data
   # @returns {boolean}
   ###
-
   self.updateLogWithDayFileName = (path, data, opt = {}) ->
     today = caro.formatNow('YYYYMMDD')
     dateFirst = if opt.dateFirst != false then true else false
