@@ -1,4 +1,4 @@
-/*! caro - v0.5.6 - 2015-05-20 */
+/*! caro - v0.5.6 - 2015-05-21 */
 (function(g) {
   'use strict';
   var caro;
@@ -2390,11 +2390,41 @@
     }
     return r.join('');
   };
+
+  /**
+   * check if string is uppercase
+   * @param {...string} str
+   * @returns {boolean}
+   */
   self.isUpper = function(str) {
-    var upp;
-    str = caro.coverToStr(str, true);
-    upp = str.toUpperCase();
-    return upp === str;
+    var pass;
+    pass = true;
+    caro.checkIfPassCb(arguments, function(str) {
+      var upp;
+      upp = str.toUpperCase();
+      if (upp !== str) {
+        return pass = false;
+      }
+    });
+    return pass;
+  };
+
+  /**
+   * check if string is lowercase
+   * @param {string} str
+   * @returns {boolean}
+   */
+  self.isLower = function(str) {
+    var pass;
+    pass = true;
+    caro.checkIfPassCb(arguments, function(str) {
+      var low;
+      low = str.toLowerCase();
+      if (low !== str) {
+        return pass = false;
+      }
+    });
+    return pass;
   };
 
   /**

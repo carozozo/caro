@@ -150,9 +150,7 @@ do ->
       val instanceof RegExp
 
   ### -------------------- Node.js only -------------------- ###
-
-  if !caro.isNode
-    return
+  return if !caro.isNode
 
   ###*
   # @param {...} arg
