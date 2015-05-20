@@ -73,35 +73,36 @@
    * @returns {*}
    */
   self.extendObj = function(deep, arg) {
-    var firstArg;
+    var r;
     if (deep == null) {
       deep = false;
     }
+    r = null;
     if (!caro.isBool(deep)) {
-      firstArg = deep;
+      r = deep;
       deep = false;
     }
     caro.eachArgs(arguments, function(key, arg) {
       var results, val;
-      if (!firstArg && caro.isObjOrArr(arg)) {
-        firstArg = arg;
+      if (!r && caro.isObjOrArr(arg)) {
+        r = arg;
         return true;
       }
       results = [];
       for (key in arg) {
         val = arg[key];
-        if (caro.isObj(firstArg) && caro.keysInObj(firstArg, key) && !deep) {
+        if (caro.isObj(r) && caro.keysInObj(r, key) && !deep) {
           continue;
         }
-        results.push(pushValToObjOrArr(firstArg, key, val));
+        results.push(pushValToObjOrArr(r, key, val));
       }
       return results;
     });
-    return firstArg;
+    return r;
   };
 
   /**
-   * clone object, similar jQuery.clone
+   * clone object
    * @param {object} obj
    * @param {boolean} [deep=false] if clone all under object
    * @returns {*}

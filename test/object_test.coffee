@@ -24,7 +24,6 @@ describe 'Object', ->
     arg = {a: 1, b: 2, c: {c1: 1}};
     r = caro.cloneObj(arg);
     r2 = caro.cloneObj(arg, true);
-    arg.a = 3
     arg.c.c1 = 3
     r.should.be.eql {a: 1, b: 2, c: {c1: 3}}
     r2.should.be.eql {a: 1, b: 2, c: {c1: 1}}
