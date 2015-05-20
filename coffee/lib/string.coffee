@@ -2,10 +2,8 @@
 # String
 # @author Caro.Huang
 ###
-
 do ->
   self = caro
-
   changeCase = (str, type, opt) ->
     r = []
     aType = [
@@ -28,10 +26,32 @@ do ->
     else
       r.push str.slice(start)[type]()
     r.join ''
+
+  ###*
+  # check if string is uppercase
+  # @param {...string} str
+  # @returns {boolean}
+  ###
   self.isUpper = (str) ->
-    str = caro.coverToStr(str, true)
-    upp = str.toUpperCase()
-    upp == str
+    pass = true
+    caro.checkIfPassCb(arguments, (str)->
+      upp = str.toUpperCase()
+      pass = false if upp != str
+    )
+    pass
+
+  ###*
+  # check if string is lowercase
+  # @param {string} str
+  # @returns {boolean}
+  ###
+  self.isLower = (str) ->
+    pass = true
+    caro.checkIfPassCb(arguments, (str)->
+      low = str.toLowerCase()
+      pass = false if low != str
+    )
+    pass
 
   ###*
   # create random string
@@ -43,7 +63,6 @@ do ->
   # @param {string} [opt.exclude=[]] the charts that excluded
   # @returns {string}
   ###
-
   self.random = (len, opt) ->
     text = ''
     chars = []

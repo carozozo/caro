@@ -715,15 +715,31 @@ caro.isArr(['caro']); // true
 
 ### String
 [Back to Index](#index)
+- **isUpper(str...) - 判斷是否為大寫字串**
+```javascript
+    var r = caro.isUpper('CARO', 'SNOOPY'); // true
+    var r2 = caro.isUpper('caro', 'SNOOPY'); // false
+```
+- **isLower(str...) - 判斷是否為小寫字串**
+```javascript
+    var r = caro.isLower('Caro'); // false
+    var r2 = caro.isLower('caro', 'snoopy'); // true
+```
 - **random(len [opt]) - 產生隨機字串**
 ```javascript
     var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
     var r2 = caro.random(15, {
       lower: true
-      upper: false
+      upper: true
+      num: true
+      exclude: ''
+    }); // here is default options
+    var r3 = caro.random(15, {
+      lower: false
+      upper: true
       num: false
-      exclude: 'a,b,c,d,e,f,g,1,2,3,4'
-    }); // e.g. 'vhjryhtqwlivmso'
+      exclude: 'A,B,C'
+    }); // - will create uppercase-only, and without A/B/C
 ```
 - **strToBool(str) - 如果字串為 'true' 或不是空字串，回傳 true；如果是 'false' 或空字串，回傳 false**
 ```javascript
@@ -814,7 +830,7 @@ caro.isArr(['caro']); // true
       start: 0,
       end: null,
       force: true
-    }); // 'i am caro' - here is defaut options
+    }); // 'i am caro' - here is default options
     var r3 = caro.lowerStr('I AM CARO', {
       start: 5,
       end: null
