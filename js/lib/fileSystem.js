@@ -74,9 +74,10 @@
   };
 
   /**
-   * set trace-mode, will console.error when
+   * set trace-mode, will console.error when got exception
+   * @returns {boolean}
    */
-  self.setTrace = function(bool) {
+  self.setFsTrace = function(bool) {
     return traceMode = bool === true;
   };
 

@@ -4,17 +4,30 @@
  * @author Caro.Huang
  */
 (function() {
-  var extendName, logPath, normalizeLogPath, self;
+  var extendName, logPath, normalizeLogPath, self, showErr, traceMode;
   if (!caro.isNode) {
     return;
   }
   self = caro;
   logPath = '';
   extendName = '.log';
+  traceMode = false;
+  showErr = function(e) {
+    if (traceMode) {
+      return console.error(e);
+    }
+  };
   normalizeLogPath = function(path) {
-    path = caro.coverToStr(path);
     path = caro.normalizePath(logPath, path);
     return caro.addTail(path, extendName);
+  };
+
+  /**
+   * set trace-mode, will console.error when got exception
+   * @returns {boolean}
+   */
+  self.setLogTrace = function(bool) {
+    return traceMode = bool === true;
   };
 
   /**
@@ -84,7 +97,7 @@
       return caro.readFileCaro(path);
     } catch (_error) {
       e = _error;
-      console.error('caro.log', e);
+      showErr(e);
       return null;
     }
   };
@@ -113,7 +126,7 @@
       return caro.writeFileCaro(path, data);
     } catch (_error) {
       e = _error;
-      console.error('caro.log: ', e);
+      showErr(e);
     }
     return false;
   };

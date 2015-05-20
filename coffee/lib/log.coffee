@@ -2,7 +2,6 @@
 # Log
 # @author Caro.Huang
 ###
-# TODO next check
 do ->
   return if !caro.isNode
   self = caro
@@ -17,11 +16,17 @@ do ->
     caro.addTail path, extendName
 
   ###*
+  # set trace-mode, will console.error when got exception
+  # @returns {boolean}
+  ###
+  self.setLogTrace = (bool) ->
+    traceMode = bool == true
+
+  ###*
   # set the path that log placed
   # @param {string} path
   # @returns {boolean}
   ###
-
   self.setLogRoot = (path = logPath) ->
     path = caro.coverToStr(path)
     path = caro.normalizePath(path)
@@ -34,7 +39,6 @@ do ->
   # get the path that log placed
   # @returns {string}
   ###
-
   self.getLogRoot = () ->
     logPath
 
@@ -43,7 +47,6 @@ do ->
   # @param {string} name=.log
   # @returns {boolean}
   ###
-
   self.setLogExtendName = (name = extendName) ->
     name = caro.coverToStr(name)
     return false if !name
@@ -55,7 +58,6 @@ do ->
   # get the extend-name of log file
   # @return {string}
   ###
-
   self.getLogExtendName = () ->
     extendName
 
@@ -64,7 +66,6 @@ do ->
   # @param path
   # @returns {*}
   ###
-
   self.readLog = (path) ->
     path = normalizeLogPath(path)
     try
@@ -72,7 +73,7 @@ do ->
         return null
       return caro.readFileCaro(path)
     catch e
-      console.error 'caro.log', e
+      showErr(e)
       return null
     return
 
@@ -83,7 +84,6 @@ do ->
   # @param {*} [data='']
   # @returns {boolean}
   ###
-
   self.writeLog = (path, data = '') ->
     path = normalizeLogPath(path)
     try
@@ -95,7 +95,7 @@ do ->
       data = caro.coverToStr(data)
       return caro.writeFileCaro path, data
     catch e
-      console.error 'caro.log: ', e
+      showErr(e)
     false
 
   ###*
@@ -157,7 +157,6 @@ do ->
   # @param {boolean} [opt.prepend=false] add data in front of origin-data
   # @returns {boolean}
   ###
-
   self.traceLog = (data, opt) ->
     path = 'trace'
     caro.updateLog path, data, opt

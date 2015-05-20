@@ -2,9 +2,9 @@ do ->
 describe 'Path', ->
   it 'setAbsolutePath', ->
     r = caro.setAbsolutePath('/path/from/root');
-    r2 = caro.setAbsolutePath('/path2//from\root');
+    r2 = caro.setAbsolutePath('/path2//from\\root');
     r = r == '/path/from/root' || r == '\\path\\from\\root'
-    r2 = r2 == '/path/from\root' || r2 == '\\path2\\from\root'
+    r2 = r2 == '/path2/from\\root' || r2 == '\\path2\\from\\root'
     r.should.be.true
     r2.should.be.true
 
