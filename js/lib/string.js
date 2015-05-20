@@ -81,17 +81,12 @@
     var chars, exclude, i, lower, num, text, upper;
     text = '';
     chars = [];
-    lower = true;
-    upper = true;
-    num = true;
-    exclude = [];
     len = parseInt(len) ? parseInt(len) : 1;
-    if (opt) {
-      lower = opt.lower !== false;
-      upper = opt.upper !== false;
-      num = opt.num !== false;
-      exclude = opt.exclude || exclude;
-    }
+    opt = caro.coverToObj(opt);
+    lower = opt.lower !== false;
+    upper = opt.upper !== false;
+    num = opt.num !== false;
+    exclude = caro.splitStr(exclude, ',');
     if (lower) {
       chars.push('abcdefghijklmnopqrstuvwxyz');
     }
@@ -102,9 +97,8 @@
       chars.push('0123456789');
     }
     chars = chars.join('');
-    exclude = caro.splitStr(exclude, ',');
     caro.each(exclude, function(i, excludeStr) {
-      chars = caro.replaceAll(String(chars), excludeStr, '');
+      chars = caro.replaceAll(chars, excludeStr, '');
     });
     i = 0;
     while (i < len) {
@@ -120,9 +114,6 @@
    * @returns {boolean}
    */
   self.strToBool = function(str) {
-    if (!caro.isStr(str) || !str) {
-      return false;
-    }
     str = str.toLowerCase();
     return str !== 'false';
   };

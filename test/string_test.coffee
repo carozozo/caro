@@ -23,13 +23,13 @@ describe 'String', ->
     r.should.be.a('string')
     r2.should.be.a('string')
 
-  it 'strToBool', ->
+  it.only 'strToBool', ->
     r = caro.strToBool('false')
-    r2 = caro.strToBool('True')
+    r2 = caro.strToBool('FALSE')
     r3 = caro.strToBool('123')
     r4 = caro.strToBool('')
     r.should.be.false
-    r2.should.be.true
+    r2.should.be.false
     r3.should.be.true
     r4.should.be.false
 
