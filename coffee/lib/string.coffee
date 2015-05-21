@@ -91,43 +91,40 @@ do ->
 
   ###*
   # check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
-  # @param {string} string
+  # @param {string} str
   # @returns {boolean}
   ###
   self.strToBool = (str) ->
     str = str.toLowerCase()
-    # return false when string='false', otherwise return true
-    str != 'false'
+    # return false when string='false' or '', otherwise return true
+    str != '' and str != 'false'
 
   ###*
   # check if charts has in head of string
-  # @param string
-  # @param str2
+  # @param {string} str
+  # @param {string} str2
   # @returns {*}
   ###
-
   self.hasHead = (str, str2) ->
     return false if !caro.isStr(str, str2)
     str.indexOf(str2) == 0
 
   ###*
   # add the head to string if not exist
-  # @param {string} string
+  # @param {string} str
   # @param {string} addStr
   # @returns {*}
   ###
-
   self.addHead = (str, addStr) ->
     str = addStr + str if !caro.hasHead(str, addStr)
     str
 
   ###*
   # check if charts has in tail of string
-  # @param string
-  # @param str2
+  # @param {string} str
+  # @param {string} str2
   # @returns {*}
   ###
-
   self.hasTail = (str, str2) ->
     return false if !caro.isStr(str, str2)
     index = str.lastIndexOf(str2)
@@ -141,7 +138,6 @@ do ->
   # @param {string} addStr
   # @returns {*}
   ###
-
   self.addTail = (str, addStr) ->
     str += addStr if !caro.hasTail(str, addStr)
     str

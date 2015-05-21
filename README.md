@@ -758,7 +758,7 @@ caro.isArr(['caro']); // true
     var r = caro.addHead('moon', 'mo'); // 'moon'
     var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
 ```
-- **hasHead(str, str2) - 確認字串的結尾是否符合特定字串**
+- **hasTail(str, str2) - 確認字串的結尾是否符合特定字串**
 ```javascript
     var r = caro.hasTail('false', 'fa'); // false
     var r2 = caro.hasTail('false', 'se'); // true

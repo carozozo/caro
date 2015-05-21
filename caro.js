@@ -2470,18 +2470,18 @@
 
   /**
    * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
-   * @param {string} string
+   * @param {string} str
    * @returns {boolean}
    */
   self.strToBool = function(str) {
     str = str.toLowerCase();
-    return str !== 'false';
+    return str !== '' && str !== 'false';
   };
 
   /**
    * check if charts has in head of string
-   * @param string
-   * @param str2
+   * @param {string} str
+   * @param {string} str2
    * @returns {*}
    */
   self.hasHead = function(str, str2) {
@@ -2493,7 +2493,7 @@
 
   /**
    * add the head to string if not exist
-   * @param {string} string
+   * @param {string} str
    * @param {string} addStr
    * @returns {*}
    */
@@ -2506,8 +2506,8 @@
 
   /**
    * check if charts has in tail of string
-   * @param string
-   * @param str2
+   * @param {string} str
+   * @param {string} str2
    * @returns {*}
    */
   self.hasTail = function(str, str2) {

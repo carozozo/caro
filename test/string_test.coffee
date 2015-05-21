@@ -23,7 +23,7 @@ describe 'String', ->
     r.should.be.a('string')
     r2.should.be.a('string')
 
-  it.only 'strToBool', ->
+  it 'strToBool', ->
     r = caro.strToBool('false')
     r2 = caro.strToBool('FALSE')
     r3 = caro.strToBool('123')
