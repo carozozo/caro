@@ -926,6 +926,6 @@ caro.isArr(['caro']); // true
 ```
 - **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isObj( new Buffer(1)); // true
+    var r = caro.isObj(new Buffer(1)); // true
     var r2 = caro.isObj(null, {}); // false
 ```

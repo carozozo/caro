@@ -13,7 +13,6 @@ do ->
   # @returns {*}
   ###
   self.sortArr = (arr, sort = true) ->
-    return arr if !caro.isArr(arr)
     arr.sort (a, b) ->
       if sort
         return if a < b then -1 else if a > b then 1 else 0
@@ -28,7 +27,6 @@ do ->
   # @returns {*}
   ###
   self.sortByObjKey = (arr, key, sort = true) ->
-    return arr if !caro.isArr(arr)
     arr.sort (a, b) ->
       order1 = a[key] or 0
       order2 = b[key] or 0
@@ -45,7 +43,6 @@ do ->
   ###
   self.sumOfArr = (arr, force = false) ->
     sum = 0
-    return sum if !caro.isArr(arr)
     caro.each arr, (i, val) ->
       if caro.isNum(val)
         sum += val
@@ -61,7 +58,6 @@ do ->
   # @returns {*}
   ###
   self.removeByIndex = (arr, index) ->
-    return arr if !caro.isArr(arr)
     r = []
     aRemoveIndex = []
     checkIndexIfNeedRemove = (i) ->
@@ -91,7 +87,6 @@ do ->
   # @returns {*}
   ###
   self.removeByArrVal = (arr, val) ->
-    return arr if !caro.isArr(arr)
     r = []
     aRemoveVal = []
     checkValIfNeedRemove = (val) ->
@@ -119,7 +114,6 @@ do ->
   # @returns {*}
   ###
   self.removeDup = (arr) ->
-    return arr if !caro.isArr(arr)
     r = []
     caro.each arr, (i, val) ->
       r.push val if r.indexOf(val) < 0
@@ -133,7 +127,6 @@ do ->
   # @returns {*}
   ###
   self.pushNoDup = (arr, val) ->
-    return arr if !caro.isArr(arr)
     caro.eachArgs arguments, (i, val) ->
       return if i == 0 or arr.indexOf(val) > -1
       arr.push val
@@ -147,7 +140,6 @@ do ->
   # @returns {*}
   ###
   self.pushNoEmpty = (arr, val) ->
-    return arr if !caro.isArr(arr)
     caro.eachArgs arguments, (i, arg) ->
       if i == 0 or caro.isEmptyVal(arg)
         return
@@ -163,19 +155,16 @@ do ->
   self.hasEmptyInArr = (arr) ->
     hasEmpty = false
     checkVal = (arr) ->
-      if !caro.isArr(arr)
-        hasEmpty = true
-        return
       caro.each arr, (i, val) ->
         if caro.isEmptyVal(val)
           hasEmpty = true
           return false
-        true
+        return
       return
-    caro.eachArgs arguments, (i, arr) ->
+    caro.each arguments, (i, arr) ->
       return false if hasEmpty
       checkVal arr
-      true
+      return
     hasEmpty
 
   return
