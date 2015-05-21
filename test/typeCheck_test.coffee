@@ -84,7 +84,7 @@ describe 'TypeCheck', ->
     r.should.be.true
     r2.should.be.false
 
-  it.only 'isBuf', ->
+  it 'isBuf', ->
     r = caro.isBuf(new Buffer(1));
     r2 = caro.isBuf(null);
     r.should.be.true

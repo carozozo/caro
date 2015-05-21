@@ -18,9 +18,6 @@
     if (sort == null) {
       sort = true;
     }
-    if (!caro.isArr(arr)) {
-      return arr;
-    }
     arr.sort(function(a, b) {
       if (sort) {
         if (a < b) {
@@ -52,9 +49,6 @@
   self.sortByObjKey = function(arr, key, sort) {
     if (sort == null) {
       sort = true;
-    }
-    if (!caro.isArr(arr)) {
-      return arr;
     }
     arr.sort(function(a, b) {
       var order1, order2;
@@ -92,9 +86,6 @@
       force = false;
     }
     sum = 0;
-    if (!caro.isArr(arr)) {
-      return sum;
-    }
     caro.each(arr, function(i, val) {
       if (caro.isNum(val)) {
         sum += val;
@@ -114,9 +105,6 @@
    */
   self.removeByIndex = function(arr, index) {
     var aRemoveIndex, checkIndexIfNeedRemove, r;
-    if (!caro.isArr(arr)) {
-      return arr;
-    }
     r = [];
     aRemoveIndex = [];
     checkIndexIfNeedRemove = function(i) {
@@ -154,9 +142,6 @@
    */
   self.removeByArrVal = function(arr, val) {
     var aRemoveVal, checkValIfNeedRemove, r;
-    if (!caro.isArr(arr)) {
-      return arr;
-    }
     r = [];
     aRemoveVal = [];
     checkValIfNeedRemove = function(val) {
@@ -191,9 +176,6 @@
    */
   self.removeDup = function(arr) {
     var r;
-    if (!caro.isArr(arr)) {
-      return arr;
-    }
     r = [];
     caro.each(arr, function(i, val) {
       if (r.indexOf(val) < 0) {
@@ -210,9 +192,6 @@
    * @returns {*}
    */
   self.pushNoDup = function(arr, val) {
-    if (!caro.isArr(arr)) {
-      return arr;
-    }
     caro.eachArgs(arguments, function(i, val) {
       if (i === 0 || arr.indexOf(val) > -1) {
         return;
@@ -229,9 +208,6 @@
    * @returns {*}
    */
   self.pushNoEmpty = function(arr, val) {
-    if (!caro.isArr(arr)) {
-      return arr;
-    }
     caro.eachArgs(arguments, function(i, arg) {
       if (i === 0 || caro.isEmptyVal(arg)) {
         return;
@@ -250,24 +226,18 @@
     var checkVal, hasEmpty;
     hasEmpty = false;
     checkVal = function(arr) {
-      if (!caro.isArr(arr)) {
-        hasEmpty = true;
-        return;
-      }
       caro.each(arr, function(i, val) {
         if (caro.isEmptyVal(val)) {
           hasEmpty = true;
           return false;
         }
-        return true;
       });
     };
-    caro.eachArgs(arguments, function(i, arr) {
+    caro.each(arguments, function(i, arr) {
       if (hasEmpty) {
         return false;
       }
       checkVal(arr);
-      return true;
     });
     return hasEmpty;
   };
