@@ -844,7 +844,7 @@ caro.isArr(['caro']); // true
 ```javascript
     var r = caro.trimStr(' i am caro '); // 'i am caro'
     var r2 = caro.trimStr('Ai am caroA', 'A', true); // 'i am caroA'
-    var r3 = caro.trimStr('Ai am caroA', 'A', false); 'Ai am caro'
+    var r3 = caro.trimStr('Ai am caroA', 'A', false); // 'Ai am caro'
 ```
 - **splitStr(str [splitter]) - 將字串用指定的 splitter 分割為陣列**
 ```javascript
@@ -863,58 +863,45 @@ caro.isArr(['caro']); // true
 [Back to Index](#index)
 - **isBool(arg...) - 判斷是否為 boolean，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = false;
-    var arg2 = 'false';
-    var r = caro.isBool(arg); // true
-    var r2 = caro.isBool(arg, arg2); // false
+    var r = caro.isBool(false); // true
+    var r2 = caro.isBool(false, 'false'); // false
 ```
 - **isStr(arg...) - 判斷是否為 string，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = 'false';
-    var arg2 = true;
-    var r = caro.isStr(arg); // true
-    var r2 = caro.isStr(arg, arg2); // false
+    var r = caro.isStr('false'); // true
+    var r2 = caro.isStr(true, 'caro'); // false
 ```
 - **isFn(arg...) - 判斷是否為 function，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = function () {};
-    var arg2 = 1.3;
-    var r = caro.isFn(arg); // true
-    var r2 = caro.isFn(arg, arg2); // false
+    var r = caro.isFn(function () {}); // true
+    var r2 = caro.isFn(function () {}, 123); // false
 ```
 - **isNum(arg...) - 判斷是否為 number，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = 1;
-    var arg2 = '1';
-    var r = caro.isNum(arg); // true
-    var r2 = caro.isNum(arg, arg2); // false
+    var r = caro.isNum(1); // true
+    var r2 = caro.isNum(1, '1'); // false
 ```
 - **isInt(arg...) - 判斷是否為 integer，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = 1;
-    var arg2 = 1.3;
-    var r = caro.isInt(arg); // true
-    var r2 = caro.isInt(arg, arg2); // false
+    var r = caro.isInt(1); // true
+    var r2 = caro.isInt(1, 1.3); // false
 ```
 - **isArr(arg...) - 判斷是否為 array，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = [];
-    var arg2 = {};
-    var r = caro.isArr(arg); // true
-    var r2 = caro.isArr(arg, arg2); // false
+    var r = caro.isArr([]); // true
+    var r2 = caro.isArr([], {}); // false
 ```
 - **isNull(arg...) - 判斷是否為 null，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = null;
-    var arg2 = {};
-    var r = caro.isNull(arg); // true
-    var r2 = caro.isNull(arg, arg2); // false
+    var r = caro.isNull(null); // true
+    var r2 = caro.isNull(null, undefined); // false
 ```
 - **isJson(arg...) - 判斷是否為 JSON，當其中一個參數不符合時，回傳 false**
 ```javascript
     r = caro.isJson(null); // true
     r2 = caro.isJson('caro'); // false
     r3 = caro.isJson(123, '{"a":1}') // true
+    r4 = caro.isJson(123, '{"a":1, "b": function(){}}') // false
 ```
 - **isObjJson(arg...) - 先判斷是否為 JSON，再判斷是否為 object 格式，當其中一個參數不符合時，回傳 false**
 ```javascript
@@ -924,28 +911,21 @@ caro.isArr(['caro']); // true
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = {};
-    var arg2 = null;
-    var r = caro.isObj(arg); // true
-    var r2 = caro.isObj(arg, arg2); // false
+    var r = caro.isObj([]); // true
+    var r2 = caro.isObj([], {}); // false
 ```
 - **isObjOrArr(arg...) - 判斷是否為 object 或 array，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = {}, arg2 = [] ,arg3 = null;
-    var r = caro.isObjOrArr(arg); // true
-    var r2 = caro.isObjOrArr(arg, arg2); // false
+    var r = caro.isObjOrArr([], {}); // true
+    var r2 = caro.isObjOrArr([], null); // false
 ```
 - **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = /^foo(bar)?$/i;
-    var arg2 = '/[a-z]/g';
-    var r = caro.isRegExp(arg); // true
-    var r2 = caro.isRegExp(arg, arg2); // false
+    var r = caro.isRegExp(/^foo(bar)?$/i); // true
+    var r2 = caro.isRegExp('/[a-z]/g', '/[a-z]/i'); // false
 ```
 - **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var arg = new Buffer(1);
-    var arg2 = '';
-    var r = caro.isObj(arg); // true
-    var r2 = caro.isObj(arg, arg2); // false
+    var r = caro.isObj( new Buffer(1)); // true
+    var r2 = caro.isObj(null, {}); // false
 ```
