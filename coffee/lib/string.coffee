@@ -116,6 +116,7 @@ do ->
   # @returns {*}
   ###
   self.addHead = (str, addStr) ->
+    return str if !caro.isStr(str, addStr)
     str = addStr + str if !caro.hasHead(str, addStr)
     str
 
@@ -134,49 +135,43 @@ do ->
 
   ###*
   # add the tail to string if not exist
-  # @param {string} string
+  # @param {string} str
   # @param {string} addStr
   # @returns {*}
   ###
   self.addTail = (str, addStr) ->
+    return str if !caro.isStr(str, addStr)
     str += addStr if !caro.hasTail(str, addStr)
     str
 
   ###*
   # replace \r\n | \r | \n to <br/>
-  # @param {string} string
-  # @returns {*|string}
+  # @param {string} str
+  # @returns {string}
   ###
-
   self.wrapToBr = (str) ->
-    if !caro.isStr(str)
-      return str
+    return str if !caro.isStr(str)
     str = str.replace(/\r\n/g, '<br />')
     str = str.replace(/\n/g, '<br />')
     str = str.replace(/\r/g, '<br />')
     str
 
   ###*
-  # replace the <br/> to \n
-  # @param {string} string
-  # @returns {*|string}
+  # replace the <br /> to \n
+  # @param {string} str
+  # @returns {string}
   ###
-
   self.brToWrap = (str) ->
-    if !caro.isStr(str)
-      return str
     regex = /<br\s*[\/]?>/gi
     str.replace regex, '\n'
 
   ###*
   # split to array by '\r\n' | '\n' | '\r'
-  # @param {string} string
+  # @param {string} str
   # @returns {*}
   ###
-
   self.splitByWrap = (str) ->
-    if !caro.isStr(str)
-      return str
+    return str if !caro.isStr(str)
     aWrap = [
       '\r\n'
       '\r'
@@ -186,7 +181,7 @@ do ->
 
   ###*
   # escape RegExp
-  # @param {string} string
+  # @param {string} str
   # @returns {*|string}
   ###
 
@@ -197,7 +192,7 @@ do ->
 
   ###*
   # replace all find in string
-  # @param {string} string
+  # @param {string} str
   # @param {string} find
   # @param {string} replace
   # @returns {*|string}
@@ -214,7 +209,7 @@ do ->
 
   ###*
   # e.g. ThisIsWord -> This Is Word
-  # @param {string} string
+  # @param {string} str
   # @returns {string}
   ###
 
@@ -236,7 +231,7 @@ do ->
     aStr.join ''
 
   ###*
-  # @param {string} string
+  # @param {string} str
   # @param {object} [opt]
   # @param {number} [opt.start] the start-index you want to uppercase
   # @param {number} [opt.end] the end-index you want to uppercase
@@ -248,7 +243,7 @@ do ->
     changeCase str, 'upperCase', opt
 
   ###*
-  # @param {string} string
+  # @param {string} str
   # @param {boolean} [force] if force cover to string
   # @returns {*}
   ###
@@ -261,7 +256,7 @@ do ->
     caro.upperStr str, opt
 
   ###*
-  # @param {string} string
+  # @param {string} str
   # @param {object} [opt]
   # @param {number} [opt.start] the start-index you want to lowercase
   # @param {number} [opt.end] the end-index you want to lowercase
@@ -273,7 +268,7 @@ do ->
     changeCase str, 'toLowerCase', opt
 
   ###*
-  # @param {string} string
+  # @param {string} str
   # @param {boolean} [force=true] if force cover to string
   # @returns {}
   ###
@@ -286,7 +281,7 @@ do ->
     str.trim()
 
   ###*
-  # @param {string} string
+  # @param {string} str
   # @param {string|string[]} splitter
   # @param {boolean} [force=true] if force cover to string
   # @returns {*}
