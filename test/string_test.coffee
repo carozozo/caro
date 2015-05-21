@@ -138,9 +138,11 @@ describe 'String', ->
 
   it 'trimStr', ->
     r = caro.trimStr(' i am caro ');
-    r2 = caro.trimStr({}, false);
+    r2 = caro.trimStr('Ai am caroA', 'A', true);
+    r3 = caro.trimStr('Ai am caroA', 'A', false);
     r.should.eq 'i am caro'
-    r2.should.eql {}
+    r2.should.eq 'i am caroA'
+    r3.should.eq 'Ai am caro'
 
   it 'splitStr', ->
     r = caro.splitStr('i am caro', ' ');
