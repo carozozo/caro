@@ -147,10 +147,8 @@ describe 'String', ->
   it 'splitStr', ->
     r = caro.splitStr('i am caro', ' ');
     r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']);
-    r3 = caro.splitStr(null, ',', false);
     r.should.eql ['i', 'am', 'caro']
     r2.should.eql ['I', '', 'love', 'Snoopy', '!', '!']
-    should.equal(r3, null);
 
   it 'serializeUrl', ->
     arg = 'http://localhost';
