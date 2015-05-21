@@ -138,6 +138,9 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
+    if (!caro.isStr(str, addStr)) {
+      return str;
+    }
     if (!caro.hasHead(str, addStr)) {
       str = addStr + str;
     }
@@ -163,11 +166,14 @@
 
   /**
    * add the tail to string if not exist
-   * @param {string} string
+   * @param {string} str
    * @param {string} addStr
    * @returns {*}
    */
   self.addTail = function(str, addStr) {
+    if (!caro.isStr(str, addStr)) {
+      return str;
+    }
     if (!caro.hasTail(str, addStr)) {
       str += addStr;
     }
@@ -176,8 +182,8 @@
 
   /**
    * replace \r\n | \r | \n to <br/>
-   * @param {string} string
-   * @returns {*|string}
+   * @param {string} str
+   * @returns {string}
    */
   self.wrapToBr = function(str) {
     if (!caro.isStr(str)) {
@@ -190,22 +196,19 @@
   };
 
   /**
-   * replace the <br/> to \n
-   * @param {string} string
-   * @returns {*|string}
+   * replace the <br /> to \n
+   * @param {string} str
+   * @returns {string}
    */
   self.brToWrap = function(str) {
     var regex;
-    if (!caro.isStr(str)) {
-      return str;
-    }
     regex = /<br\s*[\/]?>/gi;
     return str.replace(regex, '\n');
   };
 
   /**
    * split to array by '\r\n' | '\n' | '\r'
-   * @param {string} string
+   * @param {string} str
    * @returns {*}
    */
   self.splitByWrap = function(str) {
@@ -219,7 +222,7 @@
 
   /**
    * escape RegExp
-   * @param {string} string
+   * @param {string} str
    * @returns {*|string}
    */
   self.escapeRegExp = function(str) {
@@ -231,7 +234,7 @@
 
   /**
    * replace all find in string
-   * @param {string} string
+   * @param {string} str
    * @param {string} find
    * @param {string} replace
    * @returns {*|string}
@@ -252,7 +255,7 @@
 
   /**
    * e.g. ThisIsWord -> This Is Word
-   * @param {string} string
+   * @param {string} str
    * @returns {string}
    */
   self.insertBlankBefUpper = function(str) {
@@ -276,7 +279,7 @@
   };
 
   /**
-   * @param {string} string
+   * @param {string} str
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to uppercase
    * @param {number} [opt.end] the end-index you want to uppercase
@@ -288,7 +291,7 @@
   };
 
   /**
-   * @param {string} string
+   * @param {string} str
    * @param {boolean} [force] if force cover to string
    * @returns {*}
    */
@@ -303,7 +306,7 @@
   };
 
   /**
-   * @param {string} string
+   * @param {string} str
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to lowercase
    * @param {number} [opt.end] the end-index you want to lowercase
@@ -315,7 +318,7 @@
   };
 
   /**
-   * @param {string} string
+   * @param {string} str
    * @param {boolean} [force=true] if force cover to string
    * @returns {}
    */
@@ -333,7 +336,7 @@
   };
 
   /**
-   * @param {string} string
+   * @param {string} str
    * @param {string|string[]} splitter
    * @param {boolean} [force=true] if force cover to string
    * @returns {*}

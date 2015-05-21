@@ -771,8 +771,8 @@ caro.isArr(['caro']); // true
 - **wrapToBr(str, addStr) - 將字串中的換行符號轉為 '\<br /\>'**
 ```javascript
     var r = caro.wrapToBr('''this is
-            wrap content.
-          '''); // 'this is<br />wrap content.'
+        wrap content.
+    '''); // 'this is<br />wrap content.'
 ```
 - **brToWrap(str, addStr) - 將字串中的 '\<br /\>' 轉為換行符號**
 ```javascript
@@ -781,11 +781,11 @@ caro.isArr(['caro']); // true
 - **splitByWrap(str) - 將字串以換行符號切割為陣列**
 ```javascript
     var r = caro.splitByWrap('''
-          I love
-          my mother
-          and
-          my father
-        '''); // [ 'I love', 'my mother', 'and', 'my father' ]
+        I love
+        my mother
+        and
+        my father
+    '''); // [ 'I love', 'my mother', 'and', 'my father' ]
 ```
 - **escapeRegExp(str) - 將字串中的特定符號轉為跳脫字元**
 ```javascript

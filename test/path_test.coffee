@@ -5,7 +5,7 @@ describe 'Path', ->
     r2 = caro.setAbsolutePath('/path2///from\\\\root');
     r3 = caro.setAbsolutePath({});
     r = r == '/path/from/root' || r == '\\path\\from\\root'
-    r2 = r2 == '/path2/from\\root' || r2 == '\\path2\\from\\root'
+    r2 = r2 == '/path2/from\\\\root' || r2 == '\\path2\\from\\root'
     r.should.be.true
     r2.should.be.true
     r3.should.be.false
