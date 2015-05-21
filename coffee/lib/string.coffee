@@ -220,6 +220,7 @@ do ->
     r.join ''
 
   ###*
+  # uppercase string
   # @param {string} str
   # @param {object} [opt]
   # @param {number} [opt.start] the start-index you want to uppercase
@@ -227,16 +228,15 @@ do ->
   # @param {boolean} [opt.force] if force cover to string
   # @returns {*}
   ###
-
   self.upperStr = (str, opt) ->
     changeCase str, 'upperCase', opt
 
   ###*
+  # uppercase first-chat in string
   # @param {string} str
   # @param {boolean} [force] if force cover to string
   # @returns {*}
   ###
-
   self.upperFirst = (str, force) ->
     opt =
       start: 0
@@ -245,6 +245,7 @@ do ->
     caro.upperStr str, opt
 
   ###*
+  # lowercase string
   # @param {string} str
   # @param {object} [opt]
   # @param {number} [opt.start] the start-index you want to lowercase
@@ -252,7 +253,6 @@ do ->
   # @param {boolean} [opt.force] if force cover to string
   # @returns {*}
   ###
-
   self.lowerStr = (str, opt) ->
     changeCase str, 'toLowerCase', opt
 

@@ -275,6 +275,7 @@
   };
 
   /**
+   * uppercase string
    * @param {string} str
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to uppercase
@@ -287,6 +288,7 @@
   };
 
   /**
+   * uppercase first-chat in string
    * @param {string} str
    * @param {boolean} [force] if force cover to string
    * @returns {*}
@@ -302,6 +304,7 @@
   };
 
   /**
+   * lowercase stirng
    * @param {string} str
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to lowercase
