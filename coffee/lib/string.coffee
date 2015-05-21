@@ -267,10 +267,10 @@ do ->
     return str if !caro.isStr(str)
     char = if caro.isStr(char) then char else ' '
     char = caro.escapeRegExp(char)
-    if side == true and side != false
+    if side == true or side != false
       regExpFirst = new RegExp('^' + char + '+')
       str = str.replace regExpFirst, ''
-    if side == false and side != true
+    if side == false or side != true
       regExpLast = new RegExp(char + '+$')
       str = str.replace regExpLast, ''
     str

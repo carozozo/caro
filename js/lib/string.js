@@ -320,6 +320,7 @@
    * trim string, you can set what you want you trim
    * @param {string} str
    * @param {string} [target=' '] the chars you want to trim
+   * @param {boolean} [side] the side of string, true is head, false is tail, otherwise is booth
    * @returns {}
    */
   self.trimStr = function(str, char, side) {
@@ -329,33 +330,15 @@
     }
     char = caro.isStr(char) ? char : ' ';
     char = caro.escapeRegExp(char);
-    if (side === void 0 || side === true) {
+    if (side === true || side !== false) {
       regExpFirst = new RegExp('^' + char + '+');
       str = str.replace(regExpFirst, '');
     }
-    if (side === void 0 || side === false) {
+    if (side === false || side !== true) {
       regExpLast = new RegExp(char + '+$');
       str = str.replace(regExpLast, '');
     }
     return str;
-  };
-
-  /**
-   * @param {string} str
-   * @param {boolean} [force=true] if force cover to string
-   * @returns {}
-   */
-  self.trimStr2 = function(str, force) {
-    if (force == null) {
-      force = true;
-    }
-    if (!caro.isStr(str)) {
-      if (!force) {
-        return str;
-      }
-      str = '';
-    }
-    return str.trim();
   };
 
   /**
