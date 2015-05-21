@@ -30,6 +30,9 @@
         return;
       }
       val = r[key];
+      if (!caro.isStr(val)) {
+        return;
+      }
       opt = {
         force: false
       };

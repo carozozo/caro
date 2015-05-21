@@ -846,11 +846,10 @@ caro.isArr(['caro']); // true
     var r2 = caro.trimStr('Ai am caroA', 'A', true); // 'i am caroA'
     var r3 = caro.trimStr('Ai am caroA', 'A', false); 'Ai am caro'
 ```
-- **splitStr(str [splitter] [force]) - 移除字串前後空白**
+- **splitStr(str [splitter]) - 將字串用指定的 splitter 分割為陣列**
 ```javascript
     var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
     var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
-    var r3 = caro.splitStr(null, ',',  false); // null
 ```
 - **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
 ```javascript

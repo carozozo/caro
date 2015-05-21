@@ -86,6 +86,7 @@
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;
+    exclude = opt.exclude || [];
     exclude = caro.splitStr(exclude, ',');
     if (lower) {
       chars.push('abcdefghijklmnopqrstuvwxyz');
@@ -325,9 +326,6 @@
    */
   self.trimStr = function(str, char, side) {
     var regExpFirst, regExpLast;
-    if (!caro.isStr(str)) {
-      return str;
-    }
     char = caro.isStr(char) ? char : ' ';
     char = caro.escapeRegExp(char);
     if (side === true || side !== false) {
@@ -342,12 +340,12 @@
   };
 
   /**
+   * split string
    * @param {string} str
-   * @param {string|string[]} splitter
-   * @param {boolean} [force=true] if force cover to string
+   * @param {string|string[]} splitter it should be string-array or string
    * @returns {*}
    */
-  self.splitStr = function(str, splitter, force) {
+  self.splitStr = function(str, splitter) {
     var mainSplit;
     if (caro.isArr(str)) {
       return str;
@@ -356,13 +354,6 @@
       return [];
     }
     splitter = caro.coverToArr(splitter);
-    force = force !== false;
-    if (!caro.isStr(str)) {
-      if (!force) {
-        return str;
-      }
-      return [];
-    }
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
       caro.each(splitter, function(j, eachSplit) {
@@ -392,7 +383,7 @@
   /**
    * serialize object-arguments to url
    * @param {string} url
-   * @param {object} oArgs the argument you want to cover (e.g. {a:1,b:2})
+   * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
    * @param {boolean} [coverEmpty=false] if cover when value is empty
    * @returns {*}
    */
@@ -403,8 +394,6 @@
     }
     count = 0;
     aArgs = ['?'];
-    url = caro.coverToStr(url);
-    oArgs = caro.coverToObj(oArgs);
     caro.each(oArgs, function(key, val) {
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {

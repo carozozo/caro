@@ -25,9 +25,9 @@ do ->
     keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
     caro.each keys, (i, key) ->
-      if !caro.keysInObj(r, key)
-        return
+      return if !caro.keysInObj(r, key)
       val = r[key]
+      return if !caro.isStr(val)
       opt =
         force: false
       switch type
