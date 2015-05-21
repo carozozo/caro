@@ -5,7 +5,6 @@
  * @author Caro.Huang
  */
 (function() {
-  'use strict';
   var checkType, self;
   self = caro;
   checkType = function(args, type) {
@@ -20,6 +19,7 @@
   };
 
   /**
+   * check if boolean, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -28,6 +28,7 @@
   };
 
   /**
+   * check if string, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -36,6 +37,7 @@
   };
 
   /**
+   * check if function, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -44,6 +46,16 @@
   };
 
   /**
+   * check if undefined, return false is one of them not match
+   * @param {...} arg
+   * @returns {*}
+   */
+  self.isUndef = function(arg) {
+    return checkType(arguments, 'undefined');
+  };
+
+  /**
+   * check if number, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -52,13 +64,11 @@
   };
 
   /**
+   * check if integer, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
   self.isInt = function(arg) {
-    if (!checkType.apply(null, arguments)) {
-      return false;
-    }
     return caro.checkIfPassCb(arguments, function(val) {
       var int;
       int = parseInt(val);
@@ -67,6 +77,7 @@
   };
 
   /**
+   * check if array, return false is one of them not match
    * @param {...} arg
    * @returns {*}
    */
@@ -77,6 +88,7 @@
   };
 
   /**
+   * check if null, return false is one of them not match
    * @param {...} arg
    * @returns {*}
    */
@@ -87,6 +99,7 @@
   };
 
   /**
+   * check if JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -107,7 +120,7 @@
   };
 
   /**
-   * check if argument is object-like JSON
+   * check if argument is object-like JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -125,14 +138,7 @@
   };
 
   /**
-   * @param {...} arg
-   * @returns {*}
-   */
-  self.isUndef = function(arg) {
-    return checkType(arguments, 'undefined');
-  };
-
-  /**
+   * check if object, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -146,6 +152,7 @@
   };
 
   /**
+   * check if object or array, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -159,6 +166,7 @@
   };
 
   /**
+   * check if RegExp, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
@@ -174,6 +182,7 @@
   }
 
   /**
+   * check if Buffer, return false is one of them not match
    * @param {...} arg
    * @returns {Boolean}
    */
