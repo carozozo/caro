@@ -184,7 +184,6 @@ do ->
   # @param {string} str
   # @returns {*|string}
   ###
-
   self.escapeRegExp = (str) ->
     if !caro.isStr(str)
       return str
@@ -197,7 +196,6 @@ do ->
   # @param {string} replace
   # @returns {*|string}
   ###
-
   self.replaceAll = (str, find, replace) ->
     isRegExp = caro.isRegExp(find)
     return str if !caro.isStr(str, find, replace) and !isRegExp
@@ -212,23 +210,14 @@ do ->
   # @param {string} str
   # @returns {string}
   ###
-
   self.insertBlankBefUpper = (str) ->
-    if !caro.isStr(str)
-      return str
-    indexCount = 0
+    return str if !caro.isStr(str)
+    r = []
     aStr = str.split('')
-    aStrClone = caro.cloneObj(aStr)
-    caro.each aStrClone, (i, char) ->
-      isUpper = caro.isUpper(char)
-      if indexCount > 0 and isUpper
-# add ' ' before upper-char
-        aStr.splice indexCount, 0, ' '
-        # aStr length + 1 after add ' ', so indexCount++;
-        indexCount++
-      indexCount++
-      return
-    aStr.join ''
+    caro.each aStr, (i, val) ->
+      r.push ' ' if i > 0 and caro.isUpper(val)
+      r.push val
+    r.join ''
 
   ###*
   # @param {string} str
