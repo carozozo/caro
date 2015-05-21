@@ -259,23 +259,19 @@
    * @returns {string}
    */
   self.insertBlankBefUpper = function(str) {
-    var aStr, aStrClone, indexCount;
+    var aStr, r;
     if (!caro.isStr(str)) {
       return str;
     }
-    indexCount = 0;
+    r = [];
     aStr = str.split('');
-    aStrClone = caro.cloneObj(aStr);
-    caro.each(aStrClone, function(i, char) {
-      var isUpper;
-      isUpper = caro.isUpper(char);
-      if (indexCount > 0 && isUpper) {
-        aStr.splice(indexCount, 0, ' ');
-        indexCount++;
+    caro.each(aStr, function(i, val) {
+      if (i > 0 && caro.isUpper(val)) {
+        r.push(' ');
       }
-      indexCount++;
+      return r.push(val);
     });
-    return aStr.join('');
+    return r.join('');
   };
 
   /**
