@@ -2,7 +2,6 @@
 # Loop
 # @author Caro.Huang
 ###
-
 do ->
   self = caro
 

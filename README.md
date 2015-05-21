@@ -27,7 +27,7 @@ caro.isArr(['caro']); // true
 
 ##### (★ only support Node.js | ☆ some support Node.js)
 
-**[Array](#array)** | **★[Console](#console)** | **[DateTime](#datetime)** | **★[FileSystem](#filesystem)**
+**[Array](#array)** | **[Console](#console)** | **[DateTime](#datetime)** | **★[FileSystem](#filesystem)**
 | **[Helper](#helper)** | **★[Log](#log)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
 | **[String](#string)** | **☆[TypeCheck](#typecheck)**
 
@@ -89,28 +89,26 @@ caro.isArr(['caro']); // true
    var r2 = caro.hasEmptyInArr(arr, arr2); // true
 ```
 
-### ★Console
-[Back to Index](#index)  
-(由 [color](https://www.npmjs.com/package/colors) 延伸)  
+### Console
+[Back to Index](#index)
 - **log(msg, variable) - 輸出 console 訊息**
 ```javascript
-    caro.log('1', undefined);
-    caro.log();
-    caro.log('2', {});
-    caro.log(function(){
-    });
+    caro.log('1', undefined); // '1undefined'
+    caro.log(); // ''
+    caro.log(2, {a: 1}); // '2{"a": 1}'
+    caro.log(function(a){return a;}); // 'function(a){return a;}'
 ```
 - **log2(msg, variable) - 輸出 console 訊息**
 ```javascript
-    caro.log2(undefined);
-    caro.log2('1', undefined);
-    caro.log2('2', {});
+    caro.log2(undefined); // 'undefined'
+    caro.log2('1', undefined); // '1undefined'
+    caro.log2('2', {}); // '2{}'
 ```
 - **log3(msg, variable) - 輸出 console 訊息**
 ```javascript
-    caro.log3(undefined, 'test');
-    caro.log3('1', undefined);
-    caro.log3('2', null);
+    caro.log3(2, {a: 1}); // '2{"a": 1}'
+    caro.log3('1', undefined); // '1undefined'
+    caro.log3('2', null); // '2null'
 ```
 
 ### DateTime

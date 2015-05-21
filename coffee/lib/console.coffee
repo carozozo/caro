@@ -3,12 +3,13 @@
 # @author Caro.Huang
 ###
 do ->
-  return if !caro.isNode
   self = caro
   # https://www.npmjs.org/package/colors
-  require 'colors'
+  colors = if caro.isNode then require 'colors' else null
 
   combineMsg = (msg, variable) ->
+    msg = caro.cloneObj(msg)
+    variable = caro.cloneObj(variable)
     msg = caro.coverToStr(msg)
     variable = '' if caro.isUndef(variable)
     variable = caro.coverToStr(variable)
@@ -16,12 +17,12 @@ do ->
     msg
 
   doConsole = (args, color) ->
-    if caro.getObjLength(args) <= 0
-      return console.log()
+    return console.log() if caro.getObjLength(args) <= 0
     msg = args[0]
     variable = args[1]
     msg = combineMsg(msg, variable)
-    console.log msg[color]
+    msg = msg[color] if colors
+    console.log msg
     return
 
   ###*
