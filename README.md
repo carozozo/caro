@@ -1,7 +1,7 @@
 # Caro.js
-JavaScript / Node.js 通用函式 by caro
+General libraries for JavaScript / Node.js by Caro
 
-## 安裝及使用
+## Install and Usage
 
 ### In Html
 ```html
