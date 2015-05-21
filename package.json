@@ -1,7 +1,7 @@
 {
   "name": "caro",
   "version": "0.5.10",
-  "description": "通用函式 by Caro",
+  "description": "The common-libraries for fast-coding on JavaScript / Node.js",
   "author": {
     "name": "Caro.Huang",
     "email": "carozozo@yahoo.com.tw"
