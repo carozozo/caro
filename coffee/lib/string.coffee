@@ -257,17 +257,23 @@ do ->
     changeCase str, 'toLowerCase', opt
 
   ###*
+  # trim string, you can set what you want you trim
   # @param {string} str
-  # @param {boolean} [force=true] if force cover to string
+  # @param {string} [target=' '] the chars you want to trim
+  # @param {boolean} [side] the side of string, true is head, false is tail, otherwise is booth
   # @returns {}
   ###
-
-  self.trimStr = (str, force = true) ->
-    if !caro.isStr(str)
-      if !force
-        return str
-      str = ''
-    str.trim()
+  self.trimStr = (str, char, side) ->
+    return str if !caro.isStr(str)
+    char = if caro.isStr(char) then char else ' '
+    char = caro.escapeRegExp(char)
+    if side == true and side != false
+      regExpFirst = new RegExp('^' + char + '+')
+      str = str.replace regExpFirst, ''
+    if side == false and side != true
+      regExpLast = new RegExp(char + '+$')
+      str = str.replace regExpLast, ''
+    str
 
   ###*
   # @param {string} str

@@ -2664,7 +2664,7 @@
   };
 
   /**
-   * lowercase stirng
+   * lowercase string
    * @param {string} str
    * @param {object} [opt]
    * @param {number} [opt.start] the start-index you want to lowercase
@@ -2677,11 +2677,35 @@
   };
 
   /**
+   * trim string, you can set what you want you trim
+   * @param {string} str
+   * @param {string} [target=' '] the chars you want to trim
+   * @returns {}
+   */
+  self.trimStr = function(str, char, side) {
+    var regExpFirst, regExpLast;
+    if (!caro.isStr(str)) {
+      return str;
+    }
+    char = caro.isStr(char) ? char : ' ';
+    char = caro.escapeRegExp(char);
+    if (side === void 0 || side === true) {
+      regExpFirst = new RegExp('^' + char + '+');
+      str = str.replace(regExpFirst, '');
+    }
+    if (side === void 0 || side === false) {
+      regExpLast = new RegExp(char + '+$');
+      str = str.replace(regExpLast, '');
+    }
+    return str;
+  };
+
+  /**
    * @param {string} str
    * @param {boolean} [force=true] if force cover to string
    * @returns {}
    */
-  self.trimStr = function(str, force) {
+  self.trimStr2 = function(str, force) {
     if (force == null) {
       force = true;
     }

@@ -840,10 +840,11 @@ caro.isArr(['caro']); // true
       end: 6
     }); 'I AM cARO'
 ```
-- **trimStr(str [force=true]) - 移除字串前後空白**
+- **trimStr(str [char=' '] [side]) - 移除字串前後空白或特定的字串**
 ```javascript
     var r = caro.trimStr(' i am caro '); // 'i am caro'
-    var r2 = caro.trimStr({}, false); // {}
+    var r2 = caro.trimStr('Ai am caroA', 'A', true); // 'i am caroA'
+    var r3 = caro.trimStr('Ai am caroA', 'A', false); 'Ai am caro'
 ```
 - **splitStr(str [splitter] [force]) - 移除字串前後空白**
 ```javascript
