@@ -4,13 +4,12 @@
  * @author Caro.Huang
  */
 (function() {
-  var combineMsg, doConsole, self;
-  if (!caro.isNode) {
-    return;
-  }
+  var colors, combineMsg, doConsole, self;
   self = caro;
-  require('colors');
+  colors = caro.isNode ? require('colors') : null;
   combineMsg = function(msg, variable) {
+    msg = caro.cloneObj(msg);
+    variable = caro.cloneObj(variable);
     msg = caro.coverToStr(msg);
     if (caro.isUndef(variable)) {
       variable = '';
@@ -27,7 +26,10 @@
     msg = args[0];
     variable = args[1];
     msg = combineMsg(msg, variable);
-    console.log(msg[color]);
+    if (colors) {
+      msg = msg[color];
+    }
+    console.log(msg);
   };
 
   /**
