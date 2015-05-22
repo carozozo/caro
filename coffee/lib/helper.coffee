@@ -156,8 +156,7 @@ do ->
   # @returns {*}
   ###
   self.coverToStr = (arg, force = true) ->
-    if caro.isStr(arg)
-      return arg
+    return arg if caro.isStr(arg)
     if arg == undefined
       if force
         return 'undefined'
@@ -223,8 +222,7 @@ do ->
   # @returns {*}
   ###
   self.coverToObj = (arg, force = true) ->
-    if caro.isObj(arg)
-      return arg
+    return arg if caro.isObj(arg)
     if caro.isArr(arg)
       r = {}
       caro.each(arg, (i, val) ->
