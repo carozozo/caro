@@ -1370,13 +1370,12 @@
     otherArgs = [];
     r = void 0;
     caro.eachArgs(arguments, function(i, arg) {
-      if (i === 0 && caro.isFn(arg)) {
-        fn = arg;
+      if (i < 1) {
         return;
       }
       otherArgs.push(arg);
     });
-    if (fn) {
+    if (caro.isFn(fn)) {
       r = fn.apply(fn, otherArgs);
     }
     return r;

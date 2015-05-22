@@ -34,7 +34,7 @@ describe 'Helper', ->
     r2.should.be.true
 
   it 'executeIfFn', ->
-    arg = (i)->
+    arg = (i) ->
       ++i
     r = caro.executeIfFn(arg, 12)
     r2 = caro.executeIfFn(null)
