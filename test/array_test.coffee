@@ -36,9 +36,9 @@ describe 'Array', ->
     arr = [1, 2, 3, 4];
     arr2 = [1, 2, 3, 4, 5];
     r = caro.removeByIndex arr, 0, 2
-    r2 = caro.removeByIndex arr2, true, 0
+    r2 = caro.removeByIndex arr2, 1, 3, 4
     r.should.eql [2, 4]
-    r2.should.eql [2, 3, 4, 5]
+    r2.should.eql [1, 3]
 
   it 'removeByArrVal', ->
     arr = [1, undefined, 3, undefined, null, 4]

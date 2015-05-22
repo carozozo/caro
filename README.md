@@ -56,10 +56,7 @@ caro.isArr(['caro']); // true
 ```
 - **removeByIndex(arr, index...) - 依 index 移除陣列中的元素**
 ```javascript
-    var arr = [1, 2, 3, 4];
-    var arr2 = [1, 2, 3, 4, 5];
-    var r = caro.removeByIndex(arr, 0, 2); // [ 2, 4 ]
-    var r2 = caro.removeByIndex(arr2, 0); // [ 2, 3, 4, 5 ]
+    var r = caro.removeByIndex([1, 2, 3, 4], 0, 2); // [ 2, 4 ]
 ```
 - **removeByArrVal(arr, val...) - 依 value 移除陣列中的元素**
 ```javascript
