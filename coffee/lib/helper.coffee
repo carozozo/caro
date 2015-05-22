@@ -88,23 +88,10 @@ do ->
   # @returns {string|*|String}
   ###
   self.getFnName = (fn) ->
-    if !caro.isFn(fn)
-      return null
+    return null if !caro.isFn(fn)
     r = fn.toString()
     r = r.substr('function '.length)
     r = r.substr(0, r.indexOf('('))
-    r
-
-  ###*
-  # get arguments, and return as array
-  # @param args should be arguments (object with numeric-key)
-  # @returns {Array}
-  ###
-  self.getArgumentsAsArr = (args) ->
-    r = []
-    caro.each args, (i, val) ->
-      r.push val
-      return
     r
 
   ###*

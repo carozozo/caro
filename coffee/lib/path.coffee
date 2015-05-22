@@ -29,7 +29,7 @@ do ->
     # @returns {string|*}
     ###
   self.normalizePath = (path) ->
-    args = caro.getArgumentsAsArr(arguments)
+    args = caro.objToArr(arguments)
     nPath.join.apply nPath, args
 
   ###*

@@ -393,13 +393,6 @@ caro.isArr(['caro']); // true
     var r = caro.getFnName(arg); // ''
     var r2 = caro.getFnName(arg2); // 'isFn'
 ```
-- **getArgumentsAsArr(fn) - 將 arguments 轉為陣列**
-```javascript
-    var fn = function (a, b) {
-        var args = caro.getArgumentsAsArr(arguments); // [1, 2]
-    };
-    fn(1, 2);
-```
 - **formatMoney(str [type | opt]) - 轉換為錢幣格式**
 ```javascript
     var arg = null;
@@ -664,7 +657,13 @@ caro.isArr(['caro']); // true
     r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
     r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
 ```
-
+- **getArgumentsAsArr(fn) - 將物件轉為陣列**
+```javascript
+    var fn = function (a, b) {
+        var args = caro.objToArr(arguments); // [1, 2]
+    };
+    fn(1, 2);
+```
 ### ★Path
 [Back to Index](#index)
 - **setAbsolutePath(path) - 定義絕對路徑根目錄**

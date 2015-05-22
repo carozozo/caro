@@ -47,14 +47,6 @@ describe 'Helper', ->
     r = caro.getFnName(arg)
     r.should.be.a('string')
 
-  it 'getArgumentsAsArr', ->
-    fn = (a, b) ->
-      args = caro.getArgumentsAsArr(arguments);
-      args.should.be.an.Array
-      args[0].should.eq 1
-      args[1].should.eq 2
-    fn(1, 2);
-
   it 'formatMoney', ->
     arg = null;
     arg2 = '12003000.923';

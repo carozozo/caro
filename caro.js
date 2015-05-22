@@ -1206,7 +1206,7 @@
     if (bytes === null) {
       return bytes;
     }
-    args = caro.getArgumentsAsArr(arguments);
+    args = caro.objToArr(arguments);
     args.shift();
     args = getArgs(args);
     fixed = caro.coverToInt(args.num[0]);
@@ -1394,20 +1394,6 @@
     r = fn.toString();
     r = r.substr('function '.length);
     r = r.substr(0, r.indexOf('('));
-    return r;
-  };
-
-  /**
-   * get arguments, and return as array
-   * @param args should be arguments (object with numeric-key)
-   * @returns {Array}
-   */
-  self.getArgumentsAsArr = function(args) {
-    var r;
-    r = [];
-    caro.each(args, function(i, val) {
-      r.push(val);
-    });
     return r;
   };
 
@@ -2206,6 +2192,20 @@
     });
     return r;
   };
+
+  /**
+   * cover object to array
+   * @param {...object} obj
+   * @returns {Array}
+   */
+  self.objToArr = function(obj) {
+    var r;
+    r = [];
+    caro.each(obj, function(i, val) {
+      r.push(val);
+    });
+    return r;
+  };
 })();
 
 
@@ -2248,7 +2248,7 @@
    */
   self.normalizePath = function(path) {
     var args;
-    args = caro.getArgumentsAsArr(arguments);
+    args = caro.objToArr(arguments);
     return nPath.join.apply(nPath, args);
   };
 

@@ -230,4 +230,16 @@ do ->
       return
     r
 
+  ###*
+  # cover object to array
+  # @param {...object} obj
+  # @returns {Array}
+  ###
+  self.objToArr = (obj) ->
+    r = []
+    caro.each obj, (i, val) ->
+      r.push val
+      return
+    r
+
   return

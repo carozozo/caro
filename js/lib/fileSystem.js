@@ -587,7 +587,7 @@
     if (bytes === null) {
       return bytes;
     }
-    args = caro.getArgumentsAsArr(arguments);
+    args = caro.objToArr(arguments);
     args.shift();
     args = getArgs(args);
     fixed = caro.coverToInt(args.num[0]);
