@@ -74,26 +74,13 @@ do ->
   # @returns {*}
   ###
   self.removeByArrVal = (arr, val) ->
+    args = caro.objToArr(arguments)
+    args.shift()
     r = []
-    aRemoveVal = []
-    checkValIfNeedRemove = (val) ->
-      needRemove = false
-      caro.each aRemoveVal, (j, removeIndex) ->
-        if val == removeIndex
-          needRemove = true
-        return
-      needRemove
-    # collect the index that want to remove
-    caro.eachArgs arguments, (i, arg) ->
-      return if i == 0
-      aRemoveVal.push arg
-      return
     caro.each arr, (i, val) ->
-      if !checkValIfNeedRemove(val)
-        r.push val
+      r.push val if args.indexOf(val) < 0
       return
     arr = r
-    r
 
   ###*
   # remove duplicate-value in array
