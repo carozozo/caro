@@ -76,13 +76,10 @@ do ->
     otherArgs = []
     r = undefined
     caro.eachArgs arguments, (i, arg) ->
-      if i == 0 and caro.isFn(arg)
-        fn = arg
-        return
+      return if i < 1
       otherArgs.push arg
       return
-    if fn
-      r = fn.apply(fn, otherArgs)
+    r = fn.apply(fn, otherArgs) if caro.isFn(fn)
     r
 
   ###*
