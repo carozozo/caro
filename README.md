@@ -529,6 +529,16 @@ caro.isArr(['caro']); // true
 
 ### ★Loop
 [Back to Index](#index)
+- **loop(fn, start=0, end=0, step=1) - 執行迴圈**
+```javascript
+    caro.loop(function (i){
+        // i = 10,9,...0
+    }, 10, 0);
+    caro.loop(function (i){
+        if(i > 5) return false
+        // i = 1,3,5
+    }, 1, 10, 2);
+```
 - **each(arg, cb) - 遍歷 arr/obj 中的 key 和 val， 並代入 callback-function**
 ```javascript
     caro.each(['a', 'b', 'c'], function (key, val){
