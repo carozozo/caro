@@ -80,10 +80,16 @@ caro.isArr(['caro']); // true
 ```
 - **hasEmptyInArr(arr...) - 判斷陣列中是否有空值**
 ```javascript
-   var arr = [1, 2, 3];
-   var arr2 = [1, 2, ''];
-   var r = caro.hasEmptyInArr(arr); // false
-   var r2 = caro.hasEmptyInArr(arr, arr2); // true
+   var r = caro.hasEmptyInArr([1, 2, 3]); // false
+   var r2 = caro.hasEmptyInArr([1, 2, ''], ['caro']); // true
+```
+- **removeEmptyInArr(arr) - 移除陣列中的空值**
+```javascript
+  r = caro.removeEmptyInArr([1, '', null, 'caro']); // [1, 'caro']
+```
+- **basicArr(arr) - 只保留陣列中的基本值 (boolean 或 string 或 number)**
+```javascript
+  r = caro.basicArr([1, {a: 1}, null, 'caro']); // [1, 'caro']
 ```
 
 ### Console
@@ -336,7 +342,7 @@ caro.isArr(['caro']); // true
 
 ### Helper
 [Back to Index](#index)
-- **isBasicVal(arg...) - 判斷是否為 boolean 或 string 或 number**
+- **isBasicVal(arg...) - 判斷是否為基本值 (boolean 或 string 或 number)**
 ```javascript
     var r = caro.isBasicVal(1, '', false); // true
     var r2 = caro.isBasicVal({}); // false

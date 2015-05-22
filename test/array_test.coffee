@@ -67,3 +67,11 @@ describe 'Array', ->
     r2 = caro.hasEmptyInArr(arr, arr2);
     r.should.be.false
     r2.should.be.true
+
+  it 'removeEmptyInArr', ->
+    r = caro.removeEmptyInArr([1, '', null, 'caro']);
+    r.should.be.eql [1, 'caro']
+
+  it 'basicArr', ->
+    r = caro.basicArr([1, {a: 1}, 'caro']);
+    r.should.be.eql [1, 'caro']
