@@ -137,15 +137,15 @@ do ->
   # @param {string} path
   # @param {function(object)} [cb] cb with file-info
   # @param {object} [opt]
-  # @param {number} [opt.maxLevel=1] the dir-level you want to read, get all-level when 0
+  # @param {number} [opt.maxLayer=1] the dir-layer you want to read, get all-layer when 0
   # @param {boolean} [opt.getDir=true] if return dir-path
   # @param {boolean} [opt.getFile=true] if return file-path
   # @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
   # @returns {*}
   ###
   self.readDirCb = (path, cb, opt = {}) ->
-    countLevel = 0
-    maxLevel = if opt.maxLevel then parseInt(opt.maxLevel, 10) else 1
+    countLayer = 0
+    maxLayer = if opt.maxLayer? then parseInt(opt.maxLayer, 10) else 1
     getDir = opt.getDir != false
     getFile = opt.getFile != false
     getByExtend = do ->
@@ -160,15 +160,15 @@ do ->
       extendName = oFileInfo.extendName
       return if getByExtend and getByExtend.indexOf(extendName) < 0
       cb false, oFileInfo
-    readDir = (rootPath, level) ->
-      if maxLevel > 0 and level >= maxLevel
+    readDir = (rootPath, layer) ->
+      if maxLayer > 0 and layer >= maxLayer
         return
       try
         files = nFs.readdirSync(rootPath)
       catch e
         showErr(e)
         cb e
-      level++
+      layer++
       caro.each files, (i, basename) ->
         filename = caro.getFileName(basename, false)
         extendName = caro.getExtendName(basename)
@@ -186,19 +186,16 @@ do ->
           fullPath: fullPath
           fullDirPath: fullDirPath
           fileType: fileType
-          level: level - 1
+          layer: layer - 1
           index: i
         if caro.isFsDir(filePath)
-          if getDir
-            return pushFile oFileInfo
-          readDir filePath, level
+          return false if getDir and pushFile(oFileInfo) == false
+          readDir filePath, layer
           return
-        if caro.isFsFile(filePath)
-          if getFile
-            return pushFile oFileInfo
+        return false if caro.isFsFile(filePath) and getFile and pushFile(oFileInfo) == false
         return
       return
-    readDir path, countLevel
+    readDir path, countLayer
     return
 
   ###*

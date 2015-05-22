@@ -1,10 +1,10 @@
 do ->
-describe 'FileSystem', ->
+describe.skip 'FileSystem', ->
   it 'setFsTrace', ->
     r = caro.setFsTrace(false);
     r.should.be.a('boolean')
 
-  describe.skip 'File', ->
+  describe 'File', ->
     it 'readFileCaro', ->
     r = caro.readFileCaro(__dirname + '/test.html');
     r.should.be.string
@@ -14,7 +14,7 @@ describe 'FileSystem', ->
       r = caro.writeFileCaro(__dirname + '/\/test2.html', data);
       r.should.be.a('boolean')
 
-  describe.skip 'Dir', ->
+  describe 'Dir', ->
     it 'isEmptyDir', ->
       r = caro.isEmptyDir(__dirname + '/1', __dirname + '/2',
         (e) ->
@@ -22,10 +22,11 @@ describe 'FileSystem', ->
       r.should.be.a('boolean')
 
     it 'readDirCb', ->
-      caro.readDirCb('../src',
+      caro.readDirCb('js',
         (err, oFileInfo) ->
+          console.log oFileInfo.filename
       , {
-          maxLevel: 1
+          maxLayer: 1
           getDir: true
           getFile: true
           getByExtend: false

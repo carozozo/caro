@@ -244,6 +244,7 @@ caro.isArr(['caro']); // true
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
     caro.readDirCb('../src', function(err, oFileInfo) {
+        // you can stop call-back by return false
         console.log(oFileInfo); // 檔案訊息(Object) 
         console.log(oFileInfo.filename);
         // filename 檔名
@@ -254,10 +255,10 @@ caro.isArr(['caro']); // true
         // fullPAth 檔案絕對路徑
         // fullDirPath 資料夾絕對路徑
         // fileType 檔案類型
-        // level 檔案在資料夾底下的第 level 層
+        // layer 檔案在資料夾底下的第 layer 層
         // index 檔案在所屬的資料夾的第 index 個
      }, {
-        maxLevel: 1, // 要讀取該資料夾底下的層級，設0則讀取全部
+        maxLayer: 1, // 要讀取該資料夾底下的層級，設 0 則讀取全部
         getDir: true, // 是否讀取資料夾
         getFile: true, // 是否讀取檔案
         getByExtend: false // 指定要讀取的檔案類型， e.g. 'js,html' => 只讀取 .js/.html 檔
