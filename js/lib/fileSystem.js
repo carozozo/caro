@@ -172,19 +172,19 @@
    * @param {string} path
    * @param {function(object)} [cb] cb with file-info
    * @param {object} [opt]
-   * @param {number} [opt.maxLevel=1] the dir-level you want to read, get all-level when 0
+   * @param {number} [opt.maxLayer=1] the dir-layer you want to read, get all-layer when 0
    * @param {boolean} [opt.getDir=true] if return dir-path
    * @param {boolean} [opt.getFile=true] if return file-path
    * @param {boolean|string|[]} [opt.getByExtend=false] if set as string, will only return files including same extend-name
    * @returns {*}
    */
   self.readDirCb = function(path, cb, opt) {
-    var countLevel, getByExtend, getDir, getFile, maxLevel, pushFile, readDir;
+    var countLayer, getByExtend, getDir, getFile, maxLayer, pushFile, readDir;
     if (opt == null) {
       opt = {};
     }
-    countLevel = 0;
-    maxLevel = opt.maxLevel ? parseInt(opt.maxLevel, 10) : 1;
+    countLayer = 0;
+    maxLayer = opt.maxLayer != null ? parseInt(opt.maxLayer, 10) : 1;
     getDir = opt.getDir !== false;
     getFile = opt.getFile !== false;
     getByExtend = (function() {
@@ -206,9 +206,9 @@
       }
       return cb(false, oFileInfo);
     };
-    readDir = function(rootPath, level) {
+    readDir = function(rootPath, layer) {
       var e, files;
-      if (maxLevel > 0 && level >= maxLevel) {
+      if (maxLayer > 0 && layer >= maxLayer) {
         return;
       }
       try {
@@ -218,7 +218,7 @@
         showErr(e);
         cb(e);
       }
-      level++;
+      layer++;
       caro.each(files, function(i, basename) {
         var dirPath, extendName, filePath, fileType, filename, fullDirPath, fullPath, oFileInfo;
         filename = caro.getFileName(basename, false);
@@ -237,24 +237,22 @@
           fullPath: fullPath,
           fullDirPath: fullDirPath,
           fileType: fileType,
-          level: level - 1,
+          layer: layer - 1,
           index: i
         };
         if (caro.isFsDir(filePath)) {
-          if (getDir) {
-            return pushFile(oFileInfo);
+          if (getDir && pushFile(oFileInfo) === false) {
+            return false;
           }
-          readDir(filePath, level);
+          readDir(filePath, layer);
           return;
         }
-        if (caro.isFsFile(filePath)) {
-          if (getFile) {
-            return pushFile(oFileInfo);
-          }
+        if (caro.isFsFile(filePath) && getFile && pushFile(oFileInfo) === false) {
+          return false;
         }
       });
     };
-    readDir(path, countLevel);
+    readDir(path, countLayer);
   };
 
   /**
