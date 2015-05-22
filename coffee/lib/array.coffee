@@ -58,27 +58,14 @@ do ->
   # @returns {*}
   ###
   self.removeByIndex = (arr, index) ->
-    r = []
-    aRemoveIndex = []
-    checkIndexIfNeedRemove = (i) ->
-      needRemove = false
-      caro.each aRemoveIndex, (j, removeIndex) ->
-        if i == removeIndex
-          needRemove = true
-          return false
-      needRemove
-    # collect the index that want to remove
-    caro.eachArgs arguments, (i, arg) ->
+    count = 0
+    caro.eachArgs(arguments, (i, index)->
       return if i == 0
-      arg = parseInt(arg)
-      aRemoveIndex.push arg
-      return
-    caro.each arr, (i, val) ->
-      if !checkIndexIfNeedRemove(i)
-        r.push val
-      return
-    arr = r
-    r
+      index -= count
+      arr.splice(index, 1)
+      count++
+    )
+    arr
 
   ###*
   # remove the item from array by value

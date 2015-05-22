@@ -104,33 +104,18 @@
    * @returns {*}
    */
   self.removeByIndex = function(arr, index) {
-    var aRemoveIndex, checkIndexIfNeedRemove, r;
+    var count, r;
     r = [];
-    aRemoveIndex = [];
-    checkIndexIfNeedRemove = function(i) {
-      var needRemove;
-      needRemove = false;
-      caro.each(aRemoveIndex, function(j, removeIndex) {
-        if (i === removeIndex) {
-          needRemove = true;
-          return false;
-        }
-      });
-      return needRemove;
-    };
-    caro.eachArgs(arguments, function(i, arg) {
+    count = 0;
+    caro.eachArgs(arguments, function(i, index) {
       if (i === 0) {
         return;
       }
-      arg = parseInt(arg);
-      aRemoveIndex.push(arg);
+      index -= count;
+      arr.splice(index, 1);
+      return count++;
     });
-    caro.each(arr, function(i, val) {
-      if (!checkIndexIfNeedRemove(i)) {
-        r.push(val);
-      }
-    });
-    arr = r;
+    return arr;
     return r;
   };
 
