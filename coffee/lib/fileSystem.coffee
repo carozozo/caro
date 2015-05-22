@@ -468,7 +468,7 @@ do ->
   self.getFsSize = (path, fixed = 1, unit) ->
     bytes = getFileSize(path)
     return bytes if bytes == null
-    args = caro.getArgumentsAsArr(arguments)
+    args = caro.objToArr(arguments)
     args.shift()
     args = getArgs(args)
     fixed = caro.coverToInt(args.num[0])

@@ -128,20 +128,6 @@
   };
 
   /**
-   * get arguments, and return as array
-   * @param args should be arguments (object with numeric-key)
-   * @returns {Array}
-   */
-  self.getArgumentsAsArr = function(args) {
-    var r;
-    r = [];
-    caro.each(args, function(i, val) {
-      r.push(val);
-    });
-    return r;
-  };
-
-  /**
    * format to money type like 1,000.00
    * @param {string|number} arg
    * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work

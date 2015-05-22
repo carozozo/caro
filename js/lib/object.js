@@ -299,4 +299,18 @@
     });
     return r;
   };
+
+  /**
+   * cover object to array
+   * @param {...object} obj
+   * @returns {Array}
+   */
+  self.objToArr = function(obj) {
+    var r;
+    r = [];
+    caro.each(obj, function(i, val) {
+      r.push(val);
+    });
+    return r;
+  };
 })();

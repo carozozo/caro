@@ -38,7 +38,7 @@
    */
   self.normalizePath = function(path) {
     var args;
-    args = caro.getArgumentsAsArr(arguments);
+    args = caro.objToArr(arguments);
     return nPath.join.apply(nPath, args);
   };
 
