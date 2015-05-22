@@ -104,8 +104,7 @@
    * @returns {*}
    */
   self.removeByIndex = function(arr, index) {
-    var count, r;
-    r = [];
+    var count;
     count = 0;
     caro.eachArgs(arguments, function(i, index) {
       if (i === 0) {
@@ -116,7 +115,6 @@
       return count++;
     });
     return arr;
-    return r;
   };
 
   /**
@@ -126,7 +124,18 @@
    * @returns {*}
    */
   self.removeByArrVal = function(arr, val) {
-    var aRemoveVal, checkValIfNeedRemove, r;
+    var aRemoveVal, args, checkValIfNeedRemove, r;
+    args = caro.objToArr(arguments);
+    args.shift();
+    r = [];
+    caro.each(arr, function(i, val) {
+      if (args.indexOf(val) < 0) {
+        r.push(val);
+      }
+      console.log(r);
+    });
+    console.log('@=', r);
+    return;
     r = [];
     aRemoveVal = [];
     checkValIfNeedRemove = function(val) {
