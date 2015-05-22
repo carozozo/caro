@@ -149,7 +149,7 @@
    * @returns {*}
    */
   self.removeByArrVal = function(arr, val) {
-    var aRemoveVal, args, checkValIfNeedRemove, r;
+    var args, r;
     args = caro.objToArr(arguments);
     args.shift();
     r = [];
@@ -157,35 +157,8 @@
       if (args.indexOf(val) < 0) {
         r.push(val);
       }
-      console.log(r);
     });
-    console.log('@=', r);
-    return;
-    r = [];
-    aRemoveVal = [];
-    checkValIfNeedRemove = function(val) {
-      var needRemove;
-      needRemove = false;
-      caro.each(aRemoveVal, function(j, removeIndex) {
-        if (val === removeIndex) {
-          needRemove = true;
-        }
-      });
-      return needRemove;
-    };
-    caro.eachArgs(arguments, function(i, arg) {
-      if (i === 0) {
-        return;
-      }
-      aRemoveVal.push(arg);
-    });
-    caro.each(arr, function(i, val) {
-      if (!checkValIfNeedRemove(val)) {
-        r.push(val);
-      }
-    });
-    arr = r;
-    return r;
+    return arr = r;
   };
 
   /**
