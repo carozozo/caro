@@ -10,7 +10,7 @@ do ->
   # sort array
   # @param {[]} arr
   # @param {boolean} [sort=true] if sort by ASC
-  # @returns {*}
+  # @returns {array}
   ###
   self.sortArr = (arr, sort = true) ->
     arr.sort (a, b) ->
@@ -24,7 +24,7 @@ do ->
   # @param {[]} arr
   # @param {string} key
   # @param {boolean} [sort=true] if sort by ASC
-  # @returns {*}
+  # @returns {array}
   ###
   self.sortByObjKey = (arr, key, sort = true) ->
     arr.sort (a, b) ->
@@ -55,7 +55,7 @@ do ->
   # remove item from array by index
   # @param {[]} arr
   # @param {...number} index
-  # @returns {*}
+  # @returns {array}
   ###
   self.removeByIndex = (arr, index) ->
     count = 0
@@ -71,7 +71,7 @@ do ->
   # remove the item from array by value
   # @param {[]} arr
   # @param {...*} value
-  # @returns {*}
+  # @returns {array}
   ###
   self.removeByArrVal = (arr, val) ->
     args = caro.objToArr(arguments)
@@ -85,7 +85,7 @@ do ->
   ###*
   # remove duplicate-value in array
   # @param {[]} arr
-  # @returns {*}
+  # @returns {array}
   ###
   self.removeDup = (arr) ->
     r = []
@@ -98,7 +98,7 @@ do ->
   # push value into array if not exists
   # @param {[]} arr
   # @param {...*} value
-  # @returns {*}
+  # @returns {array}
   ###
   self.pushNoDup = (arr, val) ->
     caro.eachArgs arguments, (i, val) ->
@@ -111,7 +111,7 @@ do ->
   # will not push to array if value is empty
   # @param {[]} arr
   # @param {...*} value
-  # @returns {*}
+  # @returns {array}
   ###
   self.pushNoEmpty = (arr, val) ->
     caro.eachArgs arguments, (i, arg) ->
@@ -140,5 +140,29 @@ do ->
       checkVal arr
       return
     hasEmpty
+
+  ###*
+  # remove empty-value in array
+  # @param {[]} arr
+  # @returns {array}
+  ###
+  self.removeEmptyInArr = (arr) ->
+    r = []
+    caro.each arr, (i, val) ->
+      r.push(val) if !caro.isEmptyVal(val)
+      return
+    arr = r
+
+  ###*
+  # only keep basic-value in array
+  # @param {[]} arr
+  # @returns {array}
+  ###
+  self.basicArr = (arr) ->
+    r = []
+    caro.each arr, (i, val) ->
+      r.push(val) if caro.isBasicVal(val)
+      return
+    arr = r
 
   return

@@ -1,4 +1,4 @@
-/*! caro - v0.5.13 - 2015-05-23 */
+/*! caro - v0.5.14 - 2015-05-23 */
 (function(g) {
   'use strict';
   var caro;
@@ -37,7 +37,7 @@
    * sort array
    * @param {[]} arr
    * @param {boolean} [sort=true] if sort by ASC
-   * @returns {*}
+   * @returns {array}
    */
   self.sortArr = function(arr, sort) {
     if (sort == null) {
@@ -69,7 +69,7 @@
    * @param {[]} arr
    * @param {string} key
    * @param {boolean} [sort=true] if sort by ASC
-   * @returns {*}
+   * @returns {array}
    */
   self.sortByObjKey = function(arr, key, sort) {
     if (sort == null) {
@@ -126,7 +126,7 @@
    * remove item from array by index
    * @param {[]} arr
    * @param {...number} index
-   * @returns {*}
+   * @returns {array}
    */
   self.removeByIndex = function(arr, index) {
     var count;
@@ -146,7 +146,7 @@
    * remove the item from array by value
    * @param {[]} arr
    * @param {...*} value
-   * @returns {*}
+   * @returns {array}
    */
   self.removeByArrVal = function(arr, val) {
     var args, r;
@@ -164,7 +164,7 @@
   /**
    * remove duplicate-value in array
    * @param {[]} arr
-   * @returns {*}
+   * @returns {array}
    */
   self.removeDup = function(arr) {
     var r;
@@ -181,7 +181,7 @@
    * push value into array if not exists
    * @param {[]} arr
    * @param {...*} value
-   * @returns {*}
+   * @returns {array}
    */
   self.pushNoDup = function(arr, val) {
     caro.eachArgs(arguments, function(i, val) {
@@ -197,7 +197,7 @@
    * will not push to array if value is empty
    * @param {[]} arr
    * @param {...*} value
-   * @returns {*}
+   * @returns {array}
    */
   self.pushNoEmpty = function(arr, val) {
     caro.eachArgs(arguments, function(i, arg) {
@@ -232,6 +232,38 @@
       checkVal(arr);
     });
     return hasEmpty;
+  };
+
+  /**
+   * remove empty-value in array
+   * @param {[]} arr
+   * @returns {array}
+   */
+  self.removeEmptyInArr = function(arr) {
+    var r;
+    r = [];
+    caro.each(arr, function(i, val) {
+      if (!caro.isEmptyVal(val)) {
+        r.push(val);
+      }
+    });
+    return arr = r;
+  };
+
+  /**
+   * only keep basic-value in array
+   * @param {[]} arr
+   * @returns {array}
+   */
+  self.basicArr = function(arr) {
+    var r;
+    r = [];
+    caro.each(arr, function(i, val) {
+      if (caro.isBasicVal(val)) {
+        r.push(val);
+      }
+    });
+    return arr = r;
   };
 })();
 
