@@ -1,30 +1,5 @@
 do ->
 describe 'Array', ->
-  it 'sortArr', ->
-    r = caro.sortArr([1, 3, 2, null]);
-    r2 = caro.sortArr([1, 3, 2, null], false);
-    r.should.be.eql [null, 1, 2, 3]
-    r2.should.be.eql [3, 2, 1, null]
-
-  it 'sortByObjKey', ->
-    obj = {index: 0, name: 'caro'}
-    obj2 = {index: 1, name: 'huang'}
-    obj3 = {index: 2, name: 'zozo'}
-    arr = [obj, obj3, obj2]
-    arr2 = [obj, obj3, obj2]
-    r = caro.sortByObjKey(arr, 'index')
-    r2 = caro.sortByObjKey(arr2, 'index', false)
-    r.should.eql [
-      {index: 0, name: 'caro'}
-      {index: 1, name: 'huang'}
-      {index: 2, name: 'zozo'}
-    ]
-    r2.should.eql [
-      {index: 2, name: 'zozo'},
-      {index: 1, name: 'huang'},
-      {index: 0, name: 'caro'}
-    ]
-
   it 'sumOfArr', ->
     arr = [1, 2, '5', null, {}]
     r = caro.sumOfArr arr
