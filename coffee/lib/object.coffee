@@ -69,7 +69,7 @@ do ->
       r = deep
       deep = false
     caro.eachArgs arguments, (key, arg) ->
-      if !r and caro.isObjOrArr(arg)
+      if !r and caro.isObject(arg)
         r = arg
         return true
       for key, val of arg
@@ -85,7 +85,7 @@ do ->
   # @returns {*}
   ###
   self.cloneObj = (arg, deep = false) ->
-    return arg if !caro.isObjOrArr(arg)
+    return arg if !caro.isObject(arg)
     r = if caro.isArray(arg) then [] else {}
     caro.extendObj(r, arg)
     if(deep)
@@ -217,7 +217,7 @@ do ->
   self.coverFnToStrInObj = (obj, replaceWrap = true) ->
     r = obj
     caro.each r, (key, val) ->
-      if caro.isObjOrArr(val)
+      if caro.isPlainObject(val)
         caro.coverFnToStrInObj(val)
       else if caro.isFunction(val)
         fnStr = val.toString()

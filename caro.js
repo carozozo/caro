@@ -2007,7 +2007,7 @@
     }
     caro.eachArgs(arguments, function(key, arg) {
       var results, val;
-      if (!r && caro.isObjOrArr(arg)) {
+      if (!r && caro.isObject(arg)) {
         r = arg;
         return true;
       }
@@ -2035,7 +2035,7 @@
     if (deep == null) {
       deep = false;
     }
-    if (!caro.isObjOrArr(arg)) {
+    if (!caro.isObject(arg)) {
       return arg;
     }
     r = caro.isArray(arg) ? [] : {};
@@ -2204,7 +2204,7 @@
     r = obj;
     caro.each(r, function(key, val) {
       var fnStr;
-      if (caro.isObjOrArr(val)) {
+      if (caro.isPlainObject(val)) {
         caro.coverFnToStrInObj(val);
       } else if (caro.isFunction(val)) {
         fnStr = val.toString();
@@ -2828,16 +2828,14 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      var e, r;
-      try {
-        r = JSON.parse(val);
-        return caro.isObj(r);
-      } catch (_error) {
-        e = _error;
-        return false;
-      }
-    });
+    var e, r;
+    try {
+      r = JSON.parse(arg);
+      return caro.isObj(r);
+    } catch (_error) {
+      e = _error;
+    }
+    return false;
   };
 
   /**
@@ -2851,20 +2849,6 @@
     }
     return caro.checkIfPassCb(arguments, function(val) {
       return !caro.isNull(val) && !caro.isArray(val);
-    });
-  };
-
-  /**
-   * check if object or array, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isObjOrArr = function(arg) {
-    if (!checkType(arguments, 'object')) {
-      return false;
-    }
-    return caro.checkIfPassCb(arguments, function(val) {
-      return !caro.isNull(val);
     });
   };
 

@@ -54,16 +54,14 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      var e, r;
-      try {
-        r = JSON.parse(val);
-        return caro.isObj(r);
-      } catch (_error) {
-        e = _error;
-        return false;
-      }
-    });
+    var e, r;
+    try {
+      r = JSON.parse(arg);
+      return caro.isObj(r);
+    } catch (_error) {
+      e = _error;
+    }
+    return false;
   };
 
   /**
@@ -77,20 +75,6 @@
     }
     return caro.checkIfPassCb(arguments, function(val) {
       return !caro.isNull(val) && !caro.isArray(val);
-    });
-  };
-
-  /**
-   * check if object or array, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isObjOrArr = function(arg) {
-    if (!checkType(arguments, 'object')) {
-      return false;
-    }
-    return caro.checkIfPassCb(arguments, function(val) {
-      return !caro.isNull(val);
     });
   };
 
