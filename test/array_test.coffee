@@ -7,11 +7,6 @@ describe 'Array', ->
     r.should.equal 3
     r2.should.equal 11
 
-  it 'removeDup', ->
-    arr = [1, 5, {}, 5, undefined, null, {}, null];
-    r = caro.removeDup(arr);
-    r.should.eql [1, 5, {}, undefined, null, {}]
-
   it 'pushNoDup', ->
     arr = [1, 2, 3];
     r = caro.pushNoDup(arr, 1, 3, {}, {}, 3);
