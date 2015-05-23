@@ -14,7 +14,7 @@ do ->
   # @returns {String}
   ###
   self.setAbsolutePath = (path) ->
-    return false if !caro.isStr(path)
+    return false if !caro.isString(path)
     absolutePath = caro.normalizePath path
 
   ###*

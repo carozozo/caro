@@ -27,7 +27,7 @@ do ->
     caro.each keys, (i, key) ->
       return if !caro.keysInObj(r, key)
       val = r[key]
-      return if !caro.isStr(val)
+      return if !caro.isString(val)
       opt =
         force: false
       switch type

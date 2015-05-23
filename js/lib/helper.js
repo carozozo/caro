@@ -15,7 +15,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      return !(!caro.isBoolean(arg) && !caro.isStr(arg) && !caro.isNum(arg));
+      return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNum(arg));
     });
   };
 
@@ -43,7 +43,7 @@
    */
   self.isTrue = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         arg = arg.toLowerCase();
       }
       return arg === true || arg === 'true' || arg === 1;
@@ -57,7 +57,7 @@
    */
   self.isFalse = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         arg = arg.toLowerCase();
       }
       return arg === false || arg === 'false' || arg === 0;
@@ -148,15 +148,15 @@
       if (caro.isObj(arg)) {
         return opt = arg;
       }
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         return type = arg;
       }
     });
     opt = caro.coverToObj(opt);
     float = Math.abs(caro.coverToInt(opt.float));
-    decimal = caro.isStr(opt.decimal) ? opt.decimal : '.';
-    separated = caro.isStr(opt.separated) ? opt.separated : ',';
-    prefix = caro.isStr(opt.prefix) ? opt.prefix : '';
+    decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
+    separated = caro.isString(opt.separated) ? opt.separated : ',';
+    prefix = caro.isString(opt.prefix) ? opt.prefix : '';
     forceFloat = opt.forceFloat === true;
     s = arg < 0 ? '-' : '';
     switch (type) {
@@ -207,7 +207,7 @@
     if (force == null) {
       force = true;
     }
-    if (caro.isStr(arg)) {
+    if (caro.isString(arg)) {
       return arg;
     }
     if (arg === void 0) {

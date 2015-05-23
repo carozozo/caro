@@ -30,7 +30,7 @@
         return;
       }
       val = r[key];
-      if (!caro.isStr(val)) {
+      if (!caro.isString(val)) {
         return;
       }
       opt = {

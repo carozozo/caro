@@ -13,7 +13,7 @@ do ->
   ###
   self.isBasicVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      !(!caro.isBoolean(arg) and !caro.isStr(arg) and !caro.isNum(arg))
+      !(!caro.isBoolean(arg) and !caro.isString(arg) and !caro.isNum(arg))
 
   ###*
   # check if value is empty ( {} | [] | null | '' | undefined )
@@ -33,7 +33,7 @@ do ->
   ###
   self.isTrue = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      if caro.isStr(arg)
+      if caro.isString(arg)
         arg = arg.toLowerCase()
       arg == true or arg == 'true' or arg == 1
 
@@ -44,7 +44,7 @@ do ->
   ###
   self.isFalse = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      if caro.isStr(arg)
+      if caro.isString(arg)
         arg = arg.toLowerCase()
       arg == false or arg == 'false' or arg == 0
 
@@ -110,13 +110,13 @@ do ->
     caro.eachArgs arguments, (i, arg) ->
       return if i == 0
       return opt = arg if caro.isObj(arg)
-      return type = arg if caro.isStr(arg)
+      return type = arg if caro.isString(arg)
       return
     opt = caro.coverToObj(opt);
     float = Math.abs(caro.coverToInt(opt.float))
-    decimal = if caro.isStr(opt.decimal) then opt.decimal else '.'
-    separated = if caro.isStr(opt.separated) then opt.separated else ','
-    prefix = if caro.isStr(opt.prefix) then opt.prefix else ''
+    decimal = if caro.isString(opt.decimal) then opt.decimal else '.'
+    separated = if caro.isString(opt.separated) then opt.separated else ','
+    prefix = if caro.isString(opt.prefix) then opt.prefix else ''
     forceFloat = opt.forceFloat == true
     s = if arg < 0 then '-' else ''
     switch type
@@ -156,7 +156,7 @@ do ->
   # @returns {*}
   ###
   self.coverToStr = (arg, force = true) ->
-    return arg if caro.isStr(arg)
+    return arg if caro.isString(arg)
     if arg == undefined
       if force
         return 'undefined'

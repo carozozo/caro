@@ -643,7 +643,7 @@
         aBool.push(arg);
         return;
       }
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         aStr.push(arg);
         return;
       }
@@ -1120,7 +1120,7 @@
     cb = args.fn[0];
     force = args.bool[0];
     aPathMap = (function() {
-      if (caro.isStr(path, newPath)) {
+      if (caro.isString(path) && caro.isString(newPath)) {
         return [path, newPath];
       }
       return args.arr;
@@ -1275,7 +1275,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      return !(!caro.isBoolean(arg) && !caro.isStr(arg) && !caro.isNum(arg));
+      return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNum(arg));
     });
   };
 
@@ -1303,7 +1303,7 @@
    */
   self.isTrue = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         arg = arg.toLowerCase();
       }
       return arg === true || arg === 'true' || arg === 1;
@@ -1317,7 +1317,7 @@
    */
   self.isFalse = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         arg = arg.toLowerCase();
       }
       return arg === false || arg === 'false' || arg === 0;
@@ -1408,15 +1408,15 @@
       if (caro.isObj(arg)) {
         return opt = arg;
       }
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         return type = arg;
       }
     });
     opt = caro.coverToObj(opt);
     float = Math.abs(caro.coverToInt(opt.float));
-    decimal = caro.isStr(opt.decimal) ? opt.decimal : '.';
-    separated = caro.isStr(opt.separated) ? opt.separated : ',';
-    prefix = caro.isStr(opt.prefix) ? opt.prefix : '';
+    decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
+    separated = caro.isString(opt.separated) ? opt.separated : ',';
+    prefix = caro.isString(opt.prefix) ? opt.prefix : '';
     forceFloat = opt.forceFloat === true;
     s = arg < 0 ? '-' : '';
     switch (type) {
@@ -1467,7 +1467,7 @@
     if (force == null) {
       force = true;
     }
-    if (caro.isStr(arg)) {
+    if (caro.isString(arg)) {
       return arg;
     }
     if (arg === void 0) {
@@ -1950,7 +1950,7 @@
         return;
       }
       val = r[key];
-      if (!caro.isStr(val)) {
+      if (!caro.isString(val)) {
         return;
       }
       opt = {
@@ -2255,7 +2255,7 @@
    * @returns {String}
    */
   self.setAbsolutePath = function(path) {
-    if (!caro.isStr(path)) {
+    if (!caro.isString(path)) {
       return false;
     }
     return absolutePath = caro.normalizePath(path);
@@ -2373,7 +2373,7 @@
     start = caro.coverToInt(opt.start);
     end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
     force = opt.force !== false;
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       if (!force) {
         return str;
       }
@@ -2485,7 +2485,7 @@
    * @returns {*}
    */
   self.hasHead = function(str, str2) {
-    if (!caro.isStr(str, str2)) {
+    if (!caro.isString(str)) {
       return false;
     }
     return str.indexOf(str2) === 0;
@@ -2498,7 +2498,7 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (!caro.isStr(str, addStr)) {
+    if (!caro.isString(str)) {
       return str;
     }
     if (!caro.hasHead(str, addStr)) {
@@ -2515,7 +2515,7 @@
    */
   self.hasTail = function(str, str2) {
     var index, strLength, strLength2;
-    if (!caro.isStr(str, str2)) {
+    if (!caro.isString(str)) {
       return false;
     }
     index = str.lastIndexOf(str2);
@@ -2531,7 +2531,7 @@
    * @returns {*}
    */
   self.addTail = function(str, addStr) {
-    if (!caro.isStr(str, addStr)) {
+    if (!caro.isString(str)) {
       return str;
     }
     if (!caro.hasTail(str, addStr)) {
@@ -2546,7 +2546,7 @@
    * @returns {string}
    */
   self.wrapToBr = function(str) {
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     str = str.replace(/\r\n/g, '<br />');
@@ -2573,7 +2573,7 @@
    */
   self.splitByWrap = function(str) {
     var aWrap;
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     aWrap = ['\r\n', '\r', '\n'];
@@ -2586,7 +2586,7 @@
    * @returns {*|string}
    */
   self.escapeRegExp = function(str) {
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
@@ -2602,7 +2602,7 @@
   self.replaceAll = function(str, find, replace) {
     var isRegExp, regex;
     isRegExp = caro.isRegExp(find);
-    if (!caro.isStr(str, find, replace) && !isRegExp) {
+    if (!caro.isString(str, find, replace) && !isRegExp) {
       return str;
     }
     regex = find;
@@ -2620,7 +2620,7 @@
    */
   self.insertBlankBefUpper = function(str) {
     var aStr, r;
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     r = [];
@@ -2685,7 +2685,7 @@
    */
   self.trimStr = function(str, char, side) {
     var regExpFirst, regExpLast;
-    char = caro.isStr(char) ? char : ' ';
+    char = caro.isString(char) ? char : ' ';
     char = caro.escapeRegExp(char);
     if (side === true || side !== false) {
       regExpFirst = new RegExp('^' + char + '+');
@@ -2716,7 +2716,7 @@
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
       caro.each(splitter, function(j, eachSplit) {
-        if (!caro.isStr(eachSplit)) {
+        if (!caro.isString(eachSplit)) {
           return;
         }
         if (mainSplit < 2) {
@@ -2727,11 +2727,11 @@
         }
       });
     }
-    if (!caro.isStr(mainSplit)) {
+    if (!caro.isString(mainSplit)) {
       return str;
     }
     caro.each(splitter, function(i, eachSplit) {
-      if (!caro.isStr(eachSplit)) {
+      if (!caro.isString(eachSplit)) {
         return;
       }
       str = caro.replaceAll(str, eachSplit, mainSplit);
@@ -2790,15 +2790,6 @@
       }
     });
     return pass;
-  };
-
-  /**
-   * check if string, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isStr = function(arg) {
-    return checkType(arguments, 'string');
   };
 
   /**

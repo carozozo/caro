@@ -1,11 +1,5 @@
 do ->
 describe 'TypeCheck', ->
-  it 'isStr', ->
-    r = caro.isStr('caro');
-    r2 = caro.isStr(undefined, 'caro');
-    r.should.be.true;
-    r2.should.be.false;
-
   it 'isFn', ->
     r = caro.isFn(->);
     r2 = caro.isFn(undefined, ->);
