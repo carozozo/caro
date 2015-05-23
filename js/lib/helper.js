@@ -26,7 +26,7 @@
    */
   self.isEmptyVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isObj(arg)) {
+      if (caro.isObject(arg)) {
         return caro.getObjLength(arg) < 1;
       }
       if (caro.isArray(arg)) {
@@ -145,7 +145,7 @@
       if (i === 0) {
         return;
       }
-      if (caro.isObj(arg)) {
+      if (caro.isObject(arg)) {
         return opt = arg;
       }
       if (caro.isString(arg)) {
@@ -198,47 +198,12 @@
   };
 
   /**
-   * cover to string, will return '' if force!=false
+   * cover to string
    * @param arg
-   * @param {boolean} [force=true] if return string
    * @returns {*}
    */
-  self.coverToStr = function(arg, force) {
-    if (force == null) {
-      force = true;
-    }
-    if (caro.isString(arg)) {
-      return arg;
-    }
-    if (arg === void 0) {
-      if (force) {
-        return 'undefined';
-      }
-      return '';
-    }
-    if (arg === null) {
-      if (force) {
-        return 'null';
-      }
-      return '';
-    }
-    if (caro.isObj(arg)) {
-      if (force) {
-        caro.coverFnToStrInObj(arg, false);
-        arg = caro.coverToJson(arg);
-        arg = caro.replaceAll(arg, '\\r', '\r');
-        arg = caro.replaceAll(arg, '\\n', '\n');
-        return arg;
-      }
-      return '';
-    }
-    if (caro.isFunction(arg.toString)) {
-      return arg.toString();
-    }
-    if (!force) {
-      return arg;
-    }
-    return '';
+  self.coverToStr = function(arg) {
+    return String(arg);
   };
 
   /**
@@ -311,7 +276,7 @@
     if (force == null) {
       force = true;
     }
-    if (caro.isObj(arg)) {
+    if (caro.isObject(arg)) {
       return arg;
     }
     if (caro.isArray(arg)) {
@@ -323,7 +288,7 @@
     }
     try {
       r = JSON.parse(arg);
-      if (caro.isObj(r)) {
+      if (caro.isObject(r)) {
         return r;
       }
     } catch (_error) {

@@ -57,25 +57,11 @@
     var e, r;
     try {
       r = JSON.parse(arg);
-      return caro.isObj(r);
+      return caro.isObject(r);
     } catch (_error) {
       e = _error;
     }
     return false;
-  };
-
-  /**
-   * check if object, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isObj = function(arg) {
-    if (!checkType(arguments, 'object')) {
-      return false;
-    }
-    return caro.checkIfPassCb(arguments, function(val) {
-      return !caro.isNull(val) && !caro.isArray(val);
-    });
   };
 
   /**

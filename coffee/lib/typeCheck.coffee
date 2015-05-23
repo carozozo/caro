@@ -44,20 +44,9 @@ do ->
   self.isObjJson = (arg) ->
     try
       r = JSON.parse(arg);
-      return caro.isObj(r)
+      return caro.isObject(r)
     catch e
     false
-
-  ###*
-  # check if object, return false is one of them not match
-  # @param {...} arg
-  # @returns {boolean}
-  ###
-  self.isObj = (arg) ->
-    if !checkType(arguments, 'object')
-      return false
-    caro.checkIfPassCb arguments, (val) ->
-      !caro.isNull(val) and !caro.isArray(val)
 
   ###*
   # check if RegExp, return false is one of them not match

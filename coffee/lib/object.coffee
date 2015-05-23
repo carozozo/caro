@@ -21,7 +21,7 @@ do ->
       'trim'
     ]
     r = obj
-    return obj if !caro.isObj(obj) or aType.indexOf(type) < 0
+    return obj if !caro.isObject(obj) or aType.indexOf(type) < 0
     keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
     caro.each keys, (i, key) ->
@@ -45,7 +45,7 @@ do ->
   pushValToObjOrArr = (arg, key, val) ->
     if caro.isArray(arg)
       arg.push(val)
-    else if caro.isObj(arg)
+    else if caro.isObject(arg)
       arg[key] = val
     return
 
@@ -73,7 +73,7 @@ do ->
         r = arg
         return true
       for key, val of arg
-        if caro.isObj(r) and caro.keysInObj(r, key) and !deep
+        if caro.isObject(val) and caro.keysInObj(r, key) and !deep
           continue
         pushValToObjOrArr(r, key, val)
     r
@@ -121,7 +121,7 @@ do ->
     r = obj
     coverObjVal = (o) ->
       caro.each o, (key, val) ->
-        if caro.isObj(val) and deep
+        if caro.isObject(val) and deep
           coverObjVal val
           return
         newVal = caro.executeIfFn(cb, val)
@@ -175,7 +175,7 @@ do ->
   # @returns {boolean}
   ###
   self.keysInObj = (obj, keys) ->
-    return false if !caro.isObj(obj)
+    return false if !caro.isObject(obj)
     pass = true
     keys = caro.splitStr(keys, ',')
     caro.each keys, (i, key) ->
@@ -193,7 +193,7 @@ do ->
   ###
   self.getKeysInObj = (obj, levelLimit) ->
     r = []
-    return r if !caro.isObj(obj)
+    return r if !caro.isObject(obj)
     levelLimit = if caro.coverToInt(levelLimit, false) > -1 then levelLimit else 1
     levelCount = 0
     getKey = (obj) ->
@@ -201,7 +201,7 @@ do ->
       caro.each obj, (key, val) ->
         return if levelLimit > 0 and levelCount > levelLimit
         r.push key
-        if caro.isObj(val)
+        if caro.isObject(val)
           getKey val
         return
       levelCount--
