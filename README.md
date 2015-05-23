@@ -35,83 +35,83 @@ caro.isArr(['caro']); // true
 [Back to Index](#index)
 - **sortArr(arr [sort=true]) - 陣列排序**
 ```javascript
-    var r = caro.sortArr([1, 3, 2, null]); // [ null, 1, 2, 3 ]
-    var r2 = caro.sortArr([1, 3, 2, null], false); // [ 3, 2, 1, null ]
+var r = caro.sortArr([1, 3, 2, null]); // [ null, 1, 2, 3 ]
+var r2 = caro.sortArr([1, 3, 2, null], false); // [ 3, 2, 1, null ]
 ```
 - **sortByObjKey(arr, key [sort=true]) - 則可指定物件的 key 值排序**
 ```javascript
-    var obj = {index: 0, name: 'caro'};
-    var obj2 = {index: 1, name: 'huang'};
-    var obj3 = {index: 2, name: 'zozo'};
-    var arr = [obj, obj3, obj2];
-    caro.sortByObjKey(arr, 'index'); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
-    var arr2 = [obj, obj3, obj2];
-    caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
+var obj = {index: 0, name: 'caro'};
+var obj2 = {index: 1, name: 'huang'};
+var obj3 = {index: 2, name: 'zozo'};
+var arr = [obj, obj3, obj2];
+caro.sortByObjKey(arr, 'index'); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
+var arr2 = [obj, obj3, obj2];
+caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
 ```
 - **sumOfArr(arr [force=false]) - 加總陣列中的數字**
 ```javascript
-    var arr = [1, 2, '5', null, {}];
-    var r = caro.sumOfArr(arr); // 3
-    var r2 = caro.sumOfArr(arr, true); // 11
+var arr = [1, 2, '5', null, {}];
+var r = caro.sumOfArr(arr); // 3
+var r2 = caro.sumOfArr(arr, true); // 11
 ```
 - **removeByIndex(arr, index...) - 依 index 移除陣列中的元素**
 ```javascript
-    var r = caro.removeByIndex([1, 2, 3, 4], 0, 2); // [ 2, 4 ]
+var r = caro.removeByIndex([1, 2, 3, 4], 0, 2); // [ 2, 4 ]
 ```
 - **removeByArrVal(arr, val...) - 依 value 移除陣列中的元素**
 ```javascript
-    var arr = [1, undefined, 3, undefined, null, 4];
-    var r = caro.removeByArrVal(arr, undefined, null); // [ 1, 3, 4 ]
+var arr = [1, undefined, 3, undefined, null, 4];
+var r = caro.removeByArrVal(arr, undefined, null); // [ 1, 3, 4 ]
 ```
 - **removeDup(arr) - 移除陣列中重覆的值**
 ```javascript
-   var arr = [1, 5, {}, 5, undefined, null, {}, null];
-   var r = caro.removeDup(arr); // [ 1, 5, {}, undefined, null, {} ]
+var arr = [1, 5, {}, 5, undefined, null, {}, null];
+var r = caro.removeDup(arr); // [ 1, 5, {}, undefined, null, {} ]
 ```
 - **pushNoDup(arr, val...) - 不重覆 push 值至陣列**
 ```javascript
-   var arr = [1, 2, 3];
-   var r = caro.pushNoDup(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
+var arr = [1, 2, 3];
+var r = caro.pushNoDup(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
 ```
 - **pushNoEmpty(arr, val...) - 如果值不為空值，才會 push 至陣列**
 ```javascript
-   var arr = [1, 2, 3];
-   var r = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
+var arr = [1, 2, 3];
+var r = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
 ```
 - **hasEmptyInArr(arr...) - 判斷陣列中是否有空值**
 ```javascript
-   var r = caro.hasEmptyInArr([1, 2, 3]); // false
-   var r2 = caro.hasEmptyInArr([1, 2, ''], ['caro']); // true
+var r = caro.hasEmptyInArr([1, 2, 3]); // false
+var r2 = caro.hasEmptyInArr([1, 2, ''], ['caro']); // true
 ```
 - **removeEmptyInArr(arr) - 移除陣列中的空值**
 ```javascript
-  r = caro.removeEmptyInArr([1, '', null, 'caro']); // [1, 'caro']
+var r = caro.removeEmptyInArr([1, '', null, 'caro']); // [1, 'caro']
 ```
 - **basicArr(arr) - 只保留陣列中的基本值 (boolean 或 string 或 number)**
 ```javascript
-  r = caro.basicArr([1, {a: 1}, null, 'caro']); // [1, 'caro']
+var r = caro.basicArr([1, {a: 1}, null, 'caro']); // [1, 'caro']
 ```
 
 ### Console
 [Back to Index](#index)
 - **log(msg, variable) - 輸出 console 訊息**
 ```javascript
-    caro.log('1', undefined); // '1undefined'
-    caro.log(); // ''
-    caro.log(2, {a: 1}); // '2{"a": 1}'
-    caro.log(function(a){return a;}); // 'function(a){return a;}'
+caro.log('1', undefined); // '1undefined'
+caro.log(); // ''
+caro.log(2, {a: 1}); // '2{"a": 1}'
+caro.log(function(a){return a;}); // 'function(a){return a;}'
 ```
 - **log2(msg, variable) - 輸出 console 訊息**
 ```javascript
-    caro.log2(undefined); // 'undefined'
-    caro.log2('1', undefined); // '1undefined'
-    caro.log2('2', {}); // '2{}'
+caro.log2(undefined); // 'undefined'
+caro.log2('1', undefined); // '1undefined'
+caro.log2('2', {}); // '2{}'
 ```
 - **log3(msg, variable) - 輸出 console 訊息**
 ```javascript
-    caro.log3(2, {a: 1}); // '2{"a": 1}'
-    caro.log3('1', undefined); // '1undefined'
-    caro.log3('2', null); // '2null'
+caro.log3(2, {a: 1}); // '2{"a": 1}'
+caro.log3('1', undefined); // '1undefined'
+caro.log3('2', null); // '2null'
 ```
 
 ### DateTime
@@ -119,824 +119,822 @@ caro.isArr(['caro']); // true
 (由 [moment](https://www.npmjs.com/package/moment) 延伸，可透過 caro.nMoment 使用 moment)
 - **getDefaultLocale(locale) - 取得目前預設的語系(en)**
 ```javascript
-    caro.getDefaultLocale(); // 'en'
+caro.getDefaultLocale(); // 'en'
 ```
 - **setDefaultLocale(locale) - 設定預設的國家語系**
 ```javascript
-    caro.setDefaultLocale('zh-tw');
+caro.setDefaultLocale('zh-tw');
 ```
 - **addDateTimeFormatType(shorthandFormat, formatType [locale]) - 自定時間格式**
 ```javascript
-    caro.addDateTimeShortFormat('date', 'YYYY MM DD');
-    caro.addDateTimeShortFormat('date2', 'YYYY/MM/DD');
+caro.addDateTimeShortFormat('date', 'YYYY MM DD');
+caro.addDateTimeShortFormat('date2', 'YYYY/MM/DD');
 ```
 - **formatDateTime(dateTime, shorthandFormat | formatType [locale]) - 時間格式化**
 ```javascript
-    caro.setDefaultLocale('zh-tw');
-    caro.addDateTimeShortFormat('date', 'LLLL');
-    caro.addDateTimeShortFormat('date2', 'L');
-    var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00分
-    var r2 = caro.formatDateTime('2015-06-30', 'date2'); // 2015年6月30日
+caro.setDefaultLocale('zh-tw');
+caro.addDateTimeShortFormat('date', 'LLLL');
+caro.addDateTimeShortFormat('date2', 'L');
+var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00分
+var r2 = caro.formatDateTime('2015-06-30', 'date2'); // 2015年6月30日
 ```
 - **formatNow(formatType [locale]) - 取得現在的時間並格式化**
 ```javascript
-    var r = caro.formatNow('date');
-    var r2 = caro.formatNow('date', 'zh-cn');
+var r = caro.formatNow('date');
+var r2 = caro.formatNow('date', 'zh-cn');
 ```
 - **addDateTime(dateTime, amount, unit [formatType]) - 增加時間**
 ```javascript
-    var t = '2015-06-30 12:34:56';
-    var r = caro.addDateTime(t, 3, 'h'); // '2015-06-30T15:34:56+08:00'
-    var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2015/07/03'
+var t = '2015-06-30 12:34:56';
+var r = caro.addDateTime(t, 3, 'h'); // '2015-06-30T15:34:56+08:00'
+var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2015/07/03'
 ```
 - **subtractDateTime(dateTime, amount, unit [formatType]) - 減少時間**
 ```javascript
-    var t = '2015-01-01 12:34:56';
-    var r = caro.addDateTime(t, 3, 'h', 'YYYY-MM-DD h:mm'); // '2015-01-01 9:34'
-    var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2014/12/29'
+var t = '2015-01-01 12:34:56';
+var r = caro.addDateTime(t, 3, 'h', 'YYYY-MM-DD h:mm'); // '2015-01-01 9:34'
+var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2014/12/29'
 ```
 - **startOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的開始**
 ```javascript
-    var t = '2015-08-21 12:34:56';
-    var r = caro.startOfDateTime(t, 'Y'); // '2015-01-01T00:00:00+08:00'
-    var r2 = caro.startOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 12:00:00'
+var t = '2015-08-21 12:34:56';
+var r = caro.startOfDateTime(t, 'Y'); // '2015-01-01T00:00:00+08:00'
+var r2 = caro.startOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 12:00:00'
 ```
 - **endOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的結束**
 ```javascript
-    caro.setDefaultLocale('en');
-    var t = '2015-08-21 12:34:56';
-    var r = caro.endOfDateTime(t, 'Y'); // '2015-12-31T23:59:59+08:00'
-    var r2 = caro.endOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 11:59:59'
+caro.setDefaultLocale('en');
+var t = '2015-08-21 12:34:56';
+var r = caro.endOfDateTime(t, 'Y'); // '2015-12-31T23:59:59+08:00'
+var r2 = caro.endOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 11:59:59'
 ```
 - **getUtc(dateTime [formatType]) - 取得指定時間單位的 UTC 時間**
 ```javascript
-    var t = '2015-02-21'
-    var r = caro.getUtc(t); // '2015-02-20T16:00:00+00:00'
+var t = '2015-02-21'
+var r = caro.getUtc(t); // '2015-02-20T16:00:00+00:00'
 ```
 - **isBeforeDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」是否在「目標時間」之前**
 ```javascript
-    var t = '2015-01-01';
-    var t2 = '2020-01-01';
-    var t3 = '2010-01-01';
-    var r = caro.isBeforeDateTime(t, t2); // true
-    var r2 = caro.isBeforeDateTime(t, t3); // false
+var t = '2015-01-01';
+var t2 = '2020-01-01';
+var t3 = '2010-01-01';
+var r = caro.isBeforeDateTime(t, t2); // true
+var r2 = caro.isBeforeDateTime(t, t3); // false
 ```
 - **isAfterDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」是否在「目標時間」之後**
 ```javascript
-    var t = '2015-01-01 12:00:00';
-    var t2 = '2015-01-01 13:00:00';
-    var t3 = '2010-01-01';
-    var r = caro.isAfterDateTime(t, t2); // false
-    var r2 = caro.isAfterDateTime(t, t3); // true
+var t = '2015-01-01 12:00:00';
+var t2 = '2015-01-01 13:00:00';
+var t3 = '2010-01-01';
+var r = caro.isAfterDateTime(t, t2); // false
+var r2 = caro.isAfterDateTime(t, t3); // true
 ```
 - **isSameDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」和「目標時間」是否相同**
 ```javascript
-    var t = '2015-01-01';
-    var t2 = '2015-01-21';
-    var t3 = '2013-01-21';
-    var r = caro.isSameDateTime(t, t2, 'year'); // true
-    var r2 = caro.isSameDateTime(t2, t3, 'month'); // false (因為 year 不同)
+var t = '2015-01-01';
+var t2 = '2015-01-21';
+var t3 = '2013-01-21';
+var r = caro.isSameDateTime(t, t2, 'year'); // true
+var r2 = caro.isSameDateTime(t2, t3, 'month'); // false (因為 year 不同)
 ```
 - **isBetweenDateTime(dateTime, dateTime1, dateTime2 [unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
 ```javascript
-    var t = '2015-01-01';
-    var t2 = '2013-01-21';
-    var t3 = '2015-01-21';
-    var r = caro.isBetweenDateTime(t, t2, t3); // true (t2 <= t <= t3)
-    var r2 = caro.isBetweenDateTime(t, t3, t2); // false (因為 t 沒有比 t3 大) 
+var t = '2015-01-01';
+var t2 = '2013-01-21';
+var t3 = '2015-01-21';
+var r = caro.isBetweenDateTime(t, t2, t3); // true (t2 <= t <= t3)
+var r2 = caro.isBetweenDateTime(t, t3, t2); // false (因為 t 沒有比 t3 大) 
 ```
 - **isValidDateTime(dateTime) - 檢查日期格式是否正確**
 ```javascript
-    var t = '2015-01-01';
-    var t2 = '2013-01-32';
-    var r = caro.isValidDateTime(t); // true
-    var r2 = caro.isValidDateTime(t2); // false
+var t = '2015-01-01';
+var t2 = '2013-01-32';
+var r = caro.isValidDateTime(t); // true
+var r2 = caro.isValidDateTime(t2); // false
 ```
 - **getDateTimeDiff(dateTime1, dateTime2 [unit] [withFloat]) - 取得日期間的差**
 ```javascript
-    var t = '2015-01-01';
-    var t2 = '2013-01-31';
-    var r = caro.getDateTimeDiff(t, t2); // 60480000000 
-    var r2 = caro.getDateTimeDiff(t, t2, 'month'); // 23
+var t = '2015-01-01';
+var t2 = '2013-01-31';
+var r = caro.getDateTimeDiff(t, t2); // 60480000000 
+var r2 = caro.getDateTimeDiff(t, t2, 'month'); // 23
 ```
 
 ### ★FileSystem
 [Back to Index](#index)
 - **setFsTrace(bool) - 設定檔案操作發生錯誤時，是否顯示 console.error (default=false)**
 ```javascript
-    caro.setFsTrace(true);
+caro.setFsTrace(true);
 ```
 - **readFileCaro(path [encoding='utf8'] [flag=null]) - 讀取檔案內容**
 ```javascript
-    // https://nodejs.org/api/fs.html#fs_fs_readfilesync_filename_options
-    r = caro.readFileCaro('./test.html');
+// https://nodejs.org/api/fs.html#fs_fs_readfilesync_filename_options
+var r = caro.readFileCaro('./test.html');
 ```
 - **writeFileCaro(path, data [encoding='utf8'] [flag=null]) - 寫入檔案內容，失敗則回傳 false**
 ```javascript
-    // https://nodejs.org/api/fs.html#fs_fs_writefilesync_filename_data_options
-    var data = caro.readFileCaro('./test.html');
-    var r = caro.writeFileCaro('./test.html', data);
+// https://nodejs.org/api/fs.html#fs_fs_writefilesync_filename_data_options
+var data = caro.readFileCaro('./test.html');
+var r = caro.writeFileCaro('./test.html', data);
 ```
 - **isEmptyDir(path... [cb]) - 判斷是否為空資料夾，其中一個不是資料夾或不是空的則回傳 false**
 ```javascript
-    var r = caro.isEmptyDir('/1'); // boolean
-    var r2 = caro.isEmptyDir('/1', '/2', function (err, path){
-        // catch error and path
-    }); // boolean
+var r = caro.isEmptyDir('/1'); // boolean
+var r2 = caro.isEmptyDir('/1', '/2', function (err, path){
+    // catch error and path
+}); // boolean
 ```
 - **readDirCb(path, cb [opt]) - 取得資料夾內容**
 ```javascript
-    caro.readDirCb('../src', function(err, oFileInfo) {
-        // you can stop call-back by return false
-        console.log(oFileInfo); // 檔案訊息(Object) 
-        console.log(oFileInfo.filename);
-        // filename 檔名
-        // extendName 副檔名
-        // basename 全檔名
-        // filePath 檔案相對路徑
-        // dirPath 資料夾相對路徑
-        // fullPAth 檔案絕對路徑
-        // fullDirPath 資料夾絕對路徑
-        // fileType 檔案類型
-        // layer 檔案在資料夾底下的第 layer 層
-        // index 檔案在所屬的資料夾的第 index 個
-     }, {
-        maxLayer: 1, // 要讀取該資料夾底下的層級，設 0 則讀取全部
-        getDir: true, // 是否讀取資料夾
-        getFile: true, // 是否讀取檔案
-        getByExtend: false // 指定要讀取的檔案類型， e.g. 'js,html' => 只讀取 .js/.html 檔
-    });
+caro.readDirCb('../src', function(err, oFileInfo) {
+    // you can stop call-back by return false
+    console.log(oFileInfo); // 檔案訊息(Object) 
+    console.log(oFileInfo.filename);
+    // filename 檔名
+    // extendName 副檔名
+    // basename 全檔名
+    // filePath 檔案相對路徑
+    // dirPath 資料夾相對路徑
+    // fullPAth 檔案絕對路徑
+    // fullDirPath 資料夾絕對路徑
+    // fileType 檔案類型
+    // layer 檔案在資料夾底下的第 layer 層
+    // index 檔案在所屬的資料夾的第 index 個
+ }, {
+    maxLayer: 1, // 要讀取該資料夾底下的層級，設 0 則讀取全部
+    getDir: true, // 是否讀取資料夾
+    getFile: true, // 是否讀取檔案
+    getByExtend: false // 指定要讀取的檔案類型， e.g. 'js,html' => 只讀取 .js/.html 檔
+});
 ```
 - **createDir(path... [cb]) - 新增資料夾，失敗則回傳 false**
 ```javascript
-    // 假設 src 底下沒有 lib 資料夾
-    var r = caro.createDir('./src/lib/coffee'); // boolean (will try to create /src/lib, /src/lib/coffee)
-    var r2 = caro.createDir('./\/test','test2/sub_test', function (err, path){
-        // catch error and path
-    }); // boolean
+// 假設 src 底下沒有 lib 資料夾
+var r = caro.createDir('./src/lib/coffee'); // boolean (will try to create /src/lib, /src/lib/coffee)
+var r2 = caro.createDir('./\/test','test2/sub_test', function (err, path){
+    // catch error and path
+}); // boolean
 ```
 - **fsExists(path... [cb]) - 判斷檔案/資料夾是否存在，其中一個不存在則回傳 false**
 ```javascript
-    var r = caro.fsExists('./a', './caro.js'); // boolean
-    var r2 = caro.fsExists('a', 'b', function(err, path){
-        // catch error and path
-    }); // boolean
+var r = caro.fsExists('./a', './caro.js'); // boolean
+var r2 = caro.fsExists('a', 'b', function(err, path){
+    // catch error and path
+}); // boolean
 ```
 - **isFsDir(path... [cb]) - 判斷是否為資料夾，其中一個不是資料夾或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsDir('./a','./caro.js'); // boolean
-    var r2 = caro.isFsDir('a', 'b', function(err, path){
-        // catch error and path
-    }); // boolean
+var r = caro.isFsDir('./a','./caro.js'); // boolean
+var r2 = caro.isFsDir('a', 'b', function(err, path){
+    // catch error and path
+}); // boolean
 ```
 - **isFsFile(path...) - 判斷是否為檔案，其中一個不是檔案或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsFile('./a','./caro.js'); // boolean
-    var r2 = caro.isFsFile('a', 'b', function(err, path){
-        // catch error and path
-    }); // boolean
+var r = caro.isFsFile('./a','./caro.js'); // boolean
+var r2 = caro.isFsFile('a', 'b', function(err, path){
+    // catch error and path
+}); // boolean
 ```
 - **isFsSymlink(path...) - 判斷是否為 symbolic link，其中一個不是 symbolic link 或不存在則回傳 false**
 ```javascript
-    var r = caro.isFsSymlink('./a','./caro.js'); // boolean
-    var r2 = caro.isFsSymlink('a', 'b', function(err, path){
-        // catch error and path
-    }); // boolean
+var r = caro.isFsSymlink('./a','./caro.js'); // boolean
+var r2 = caro.isFsSymlink('a', 'b', function(err, path){
+    // catch error and path
+}); // boolean
 ```
 - **getFileType(path) - 取得檔案類型**
 ```javascript
-    var r = caro.getFileType('./caro.js'); // dir/file/link，不知道類型則為 ''
+var r = caro.getFileType('./caro.js'); // dir/file/link，不知道類型則為 ''
 ```
 - **deleteFs(path... [force=false]) - 刪除檔案及資料夾，其中一個刪除失敗或不存在則回傳 false**
 ```javascript
-    var r = caro.getFileType('./1.js','./2.lnk'); // boolean
-    var r2 = caro.getFileType('./test','./1.js','./2.lnk', function(e, path){
-        // catch error and path
-    }, true);  // boolean (force-delete if possible for folder)
+var r = caro.getFileType('./1.js','./2.lnk'); // boolean
+var r2 = caro.getFileType('./test','./1.js','./2.lnk', function(e, path){
+    // catch error and path
+}, true);  // boolean (force-delete if possible for folder)
 ```
 - **renameFs(path , newPath  [cb] [force=false]) - 檔案移動更名，失敗則回傳 false**
 ```javascript
-    r = caro.renameFs('./a', './b/c', true); // bool
-    r2 = caro.renameFs(['1.js', 'a/2.js'], ['3.js', '4.js'], function(err, path1, path2){
-        // catch error and path
-    }, true); // boolean (force-create folder for path2 if possible)
+r = caro.renameFs('./a', './b/c', true); // bool
+r2 = caro.renameFs(['1.js', 'a/2.js'], ['3.js', '4.js'], function(err, path1, path2){
+    // catch error and path
+}, true); // boolean (force-create folder for path2 if possible)
 ```
 - **getFsStat(path [type='l']) - 取得檔案資訊**
 ```javascript
-    // https://nodejs.org/api/fs.html#fs_class_fs_stats
-    var r = caro.getFsStat('./caro.js','l'); // l=lsataSync, f=fstatSync, s=statSync
+// https://nodejs.org/api/fs.html#fs_class_fs_stats
+var r = caro.getFsStat('./caro.js','l'); // l=lsataSync, f=fstatSync, s=statSync
 ```
 - **getFsSize(path [fixed=1] [unit]) - 取得檔案大小(bytes)，或指定以「特定單位」回傳(KB/MB.../KiB/Mib....)**
 ```javascript
-    var r = caro.getFsSize('./caro.js'); // e.g. 439078
-    var r2 = caro.getFsSize('./caro.js', 'mb'); // e.g. 439 
-    var r3 = caro.getFsSize(123000, 5, 'gib'); // 0.1173
+var r = caro.getFsSize('./caro.js'); // e.g. 439078
+var r2 = caro.getFsSize('./caro.js', 'mb'); // e.g. 439 
+var r3 = caro.getFsSize(123000, 5, 'gib'); // 0.1173
 ```
 - **humanFeSize(bytes [fixed=1] [si=false]) - 將檔案大小轉為易讀格式**
 ```javascript
-    // http://en.wikipedia.org/wiki/File_size
-    r = caro.humanFeSize('./caro.js'); // e.g. '439.1 KB'
-    r2 = caro.humanFeSize('./caro.js', 3); // e.g. '439.078 KB'
-    r3 = caro.humanFeSize(10000000, 2, false); // '9.54 MiB'
+// http://en.wikipedia.org/wiki/File_size
+var r = caro.humanFeSize('./caro.js'); // e.g. '439.1 KB'
+var r2 = caro.humanFeSize('./caro.js', 3); // e.g. '439.078 KB'
+var r3 = caro.humanFeSize(10000000, 2, false); // '9.54 MiB'
 ```
 
 ### Helper
 [Back to Index](#index)
 - **isBasicVal(arg...) - 判斷是否為基本值 (boolean 或 string 或 number)**
 ```javascript
-    var r = caro.isBasicVal(1, '', false); // true
-    var r2 = caro.isBasicVal({}); // false
+var r = caro.isBasicVal(1, '', false); // true
+var r2 = caro.isBasicVal({}); // false
 ```
 - **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
 ```javascript
-    var r = caro.isEmptyVal(0, {a:1}); // false
-    var r2 = caro.isEmptyVal({}, [], null, '', undefined); // true
+var r = caro.isEmptyVal(0, {a:1}); // false
+var r2 = caro.isEmptyVal({}, [], null, '', undefined); // true
 ```
 - **isTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
 ```javascript
-    var arg = true, arg2 = 'True', arg3 = 1;
-    var arg4 = false;
-    var r = caro.isTrue(arg, arg2, arg3); // true
-    var r2 = caro.isTrue(arg3, arg4); // false
+var arg = true, arg2 = 'True', arg3 = 1;
+var arg4 = false;
+var r = caro.isTrue(arg, arg2, arg3); // true
+var r2 = caro.isTrue(arg3, arg4); // false
 ```
 - **isFalse(arg...) - 判斷是否為 false 或 'false' 或 0**
 ```javascript
-    var arg = false, arg2 = 'false', arg3 = 0;
-    var arg4 = true;
-    var r = caro.isFalse(arg, arg2, arg3); // true
-    var r2 = caro.isFalse(arg3, arg4); // false
+var arg = false, arg2 = 'false', arg3 = 0;
+var arg4 = true;
+var r = caro.isFalse(arg, arg2, arg3); // true
+var r2 = caro.isFalse(arg3, arg4); // false
 ```
 - **checkIfPassCb((arr, checkFn [needAllPass=true]) - 回傳 checkFn 的執行結果**
 ```javascript
-    var arg = [1, 2, 3];
-    // 完全比對，相當於 (1===1 && 2===1 && 3===1)
-    var r = caro.checkIfPassCb(arg, function (val) {
-        return val === 1;
-    }); // false
-    // 不完全比對，相當於 (1===1 || 2===1 || 3===1)
-    var r2 = caro.checkIfPassCb(arg, function (val) {
-        return val === 1;
-    }, false); // true
+var arg = [1, 2, 3];
+// 完全比對，相當於 (1===1 && 2===1 && 3===1)
+var r = caro.checkIfPassCb(arg, function (val) {
+    return val === 1;
+}); // false
+// 不完全比對，相當於 (1===1 || 2===1 || 3===1)
+var r2 = caro.checkIfPassCb(arg, function (val) {
+    return val === 1;
+}, false); // true
 ```
 - **executeIfFn(fn [arg...]) - 如果是 function 的話則執行**
 ```javascript
-    var arg = function (i) {
-        return ++i;
-    };
-    var arg2 = null;
-    var r = caro.executeIfFn(arg, 12); // 13
-    var r2 = caro.executeIfFn(arg2); // undefined
+var arg = function (i) {
+    return ++i;
+};
+var arg2 = null;
+var r = caro.executeIfFn(arg, 12); // 13
+var r2 = caro.executeIfFn(arg2); // undefined
 ```
 - **getFnName(fn) - 取得 function 名稱**
 ```javascript
-    var arg = function (i) {
-        return ++i;
-    };
-    var arg2 = function isFn(){};
-    var r = caro.getFnName(arg); // ''
-    var r2 = caro.getFnName(arg2); // 'isFn'
+var arg = function (i) {
+    return ++i;
+};
+var arg2 = function isFn(){};
+var r = caro.getFnName(arg); // ''
+var r2 = caro.getFnName(arg2); // 'isFn'
 ```
 - **formatMoney(str [type | opt]) - 轉換為錢幣格式**
 ```javascript
-    var arg = null;
-    var arg2 = '12003000.923';
-    var arg3 = 12003000.923;
-    var r = caro.formatMoney(arg); // '0' 
-    var r2 = caro.formatMoney(arg2, 'int'); // '$12,003,000'
-    var r3 = caro.formatMoney(arg3, 'sInt');
-    var r4 = caro.formatMoney(arg3, {
-      float: 0, separated: ',',
-      decimal: '.', prefix: '',
-      forceFloat: false
-    }); // '12,003,000' - here is default options
-    var r5 = caro.formatMoney(arg3, {
-      float: 5, forceFloat: true
-    }); // '12,003,000.92300'
+var arg = null;
+var arg2 = '12003000.923';
+var arg3 = 12003000.923;
+var r = caro.formatMoney(arg); // '0' 
+var r2 = caro.formatMoney(arg2, 'int'); // '$12,003,000'
+var r3 = caro.formatMoney(arg3, 'sInt');
+var r4 = caro.formatMoney(arg3, {
+  float: 0, separated: ',',
+  decimal: '.', prefix: '',
+  forceFloat: false
+}); // '12,003,000' - here is default options
+var r5 = caro.formatMoney(arg3, {
+  float: 5, forceFloat: true
+}); // '12,003,000.92300'
 ```
 - **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
 ```javascript
-    var r = caro.coverToArr([3, 2, 1]); // [3, 2, 1]
-    var r2 = caro.coverToArr(null); // [ null ]
+var r = caro.coverToArr([3, 2, 1]); // [3, 2, 1]
+var r2 = caro.coverToArr(null); // [ null ]
 ```
 - **coverToStr(arg [force=true]) - 將變數轉為 string**
 ```javascript
-    var r = caro.coverToStr(function () {}); // 'function () {}'
-    var r2 = caro.coverToStr({a: 2}); // '{a: 2}'
-    var r3 = caro.coverToStr(null); // 'null'
-    var r4 = caro.coverToStr(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
+var r = caro.coverToStr(function () {}); // 'function () {}'
+var r2 = caro.coverToStr({a: 2}); // '{a: 2}'
+var r3 = caro.coverToStr(null); // 'null'
+var r4 = caro.coverToStr(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
 ```
 - **coverToInt(arg [force=true]) - 將變數轉為 integer**
 ```javascript
-    var r = caro.coverToInt('123.6'); // 123
-    var r2 = caro.coverToInt('a', false); // 'a'
-    var r3 = caro.coverToInt(null); // 0
+var r = caro.coverToInt('123.6'); // 123
+var r2 = caro.coverToInt('a', false); // 'a'
+var r3 = caro.coverToInt(null); // 0
 ```
 - **coverToNum(arg [force=true]) - 將變數轉為 number**
 ```javascript
-    var r = caro.coverToNum('123.45'); // 123.45
-    var r2 = caro.coverToNum({}, false); // {}
-    var r3 = caro.coverToNum(undefined); // 0
+var r = caro.coverToNum('123.45'); // 123.45
+var r2 = caro.coverToNum({}, false); // {}
+var r3 = caro.coverToNum(undefined); // 0
 ```
 - **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
 ```javascript
-    var r = caro.coverToFixed('3.4355', 2); // 3.44
-    var r2 = caro.coverToFixed(undefined, 3); // 0
-    var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
+var r = caro.coverToFixed('3.4355', 2); // 3.44
+var r2 = caro.coverToFixed(undefined, 3); // 0
+var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
 ```
 - **coverToObj(arg [force=true]) - 將變數轉為 object**
 ```javascript
-    var r = caro.coverToObj({}); // {}
-    var r2 = caro.coverToObj(123, false); // 123
-    var r3 = caro.coverToObj('{"a":1}'); // {a: 1}
-    var r4 = caro.coverToObj(undefined); // {}
+var r = caro.coverToObj({}); // {}
+var r2 = caro.coverToObj(123, false); // 123
+var r3 = caro.coverToObj('{"a":1}'); // {a: 1}
+var r4 = caro.coverToObj(undefined); // {}
 ```
 - **coverToJson(arg [opt]) - 將變數轉為 JSON**
 ```javascript
-    var arg = [0, 1, 2];
-    var replacer = function (key, val) {
-        if (key === '') {
-            return val; // [0, 1, 2]
-        }
-        return val + 2; // 0 + 2 ,1 + 2, 2 + 2
-    };
-    var r = caro.coverToJson(arg, {
-        force: false, // 是否強制轉為 JSON 格式
-        replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
-        space: 2 // 請參考 JSON.stringify 的參數 space
-    });
-    var r = caro.coverToJson(3.4); // '3.4'
-    var r2 = caro.coverToJson(null); // 'null'
-    var r3 = caro.coverToJson('caro', false); // '"caro"'    
+var arg = [0, 1, 2];
+var replacer = function (key, val) {
+    if (key === '') {
+        return val; // [0, 1, 2]
+    }
+    return val + 2; // 0 + 2 ,1 + 2, 2 + 2
+};
+var r = caro.coverToJson(arg, {
+    force: false, // 是否強制轉為 JSON 格式
+    replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
+    space: 2 // 請參考 JSON.stringify 的參數 space
+});
+var r = caro.coverToJson(3.4); // '3.4'
+var r2 = caro.coverToJson(null); // 'null'
+var r3 = caro.coverToJson('caro', false); // '"caro"'    
 ```
 
 ### ★Log
 [Back to Index](#index)
 - **setLogTrace(bool) - 設定log檔案操作發生錯誤時，是否顯示 console.error (default=false)**
 ```javascript
-    caro.setLogTrace(true);
+caro.setLogTrace(true);
 ```
 - **setLogRoot(path) - 設置 log 檔所要放的路徑**
 ```javascript
-    var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
+var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
 ```
 - **getLogRoot() - 取得 log 檔所在的路徑**
 ```javascript
-    var r = caro.getLogRoot(); // 資料夾路徑
+var r = caro.getLogRoot(); // 資料夾路徑
 ```
 - **setLogExtendName() - 設定 log 的副檔名(預設為 .log)**
 ```javascript
-    var r = caro.setLogExtendName('logger'); // true
-    var r2 = caro.setLogExtendName(''); // false
+var r = caro.setLogExtendName('logger'); // true
+var r2 = caro.setLogExtendName(''); // false
 ```
 - **getLogExtendName() - 取得 log 的副檔名(預設為 .log)**
 ```javascript
-    var r = caro.getLogExtendName(); // '.log'
+var r = caro.getLogExtendName(); // '.log'
 ```
 - **readLog(logPath) - 讀取 .log 檔**
 ```javascript
-    var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
+var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
 ```
 - **writeLog(logPath, data) - 寫入 .log 檔，如檔案已存在則覆寫**
 ```javascript
-    var r = caro.writeLog('test', {
-      name: 'Caro'
-      like: 'Snoopy'
-    }); // 檔案產生成功則回傳 true
+var r = caro.writeLog('test', {
+  name: 'Caro'
+  like: 'Snoopy'
+}); // 檔案產生成功則回傳 true
 ```
 - **updateLog(logPath, data [opt]) - 加入資料至 .log 檔，如檔案不存在則先產生檔案**
 ```javascript
-    var r = caro.writeLog('test', 'This is first log'); // true
-    var r2 = caro.writeLog('test', 'This is second log', {
-        ifWrap: true // 是否換行
-        prepend: false // 是否加到舊資料之前
-    }); // - here is default options  
+var r = caro.writeLog('test', 'This is first log'); // true
+var r2 = caro.writeLog('test', 'This is second log', {
+    ifWrap: true // 是否換行
+    prepend: false // 是否加到舊資料之前
+}); // - here is default options  
 ```
 - **updateLogWithDayFileName(logPath, data [opt]) - 產生/更新有今天日期名稱的 .log 檔**
 ```javascript
-    var r = caro.updateLogWithDayFileName('test', 'This is log with day', {
-        dateFirst: true // log 檔名中的日期是否顯示在前面
-        ifWrap: true // 是否換行
-        prepend: false // 是否加到舊資料之前
-    }); //  - here is default options
-    var r2 = caro.updateLogWithDayFileName('test', 'This is log with day', {
-        dateFirst: false
-    }); // 檔案產生成功則回傳 true， e.g. 檔名為 test_20151221.log
+var r = caro.updateLogWithDayFileName('test', 'This is log with day', {
+    dateFirst: true // log 檔名中的日期是否顯示在前面
+    ifWrap: true // 是否換行
+    prepend: false // 是否加到舊資料之前
+}); //  - here is default options
+var r2 = caro.updateLogWithDayFileName('test', 'This is log with day', {
+    dateFirst: false
+}); // 檔案產生成功則回傳 true， e.g. 檔名為 test_20151221.log
 ```
 - **traceLog( data [opt]) - 產生/更新 trace.log 檔**
 ```javascript
-    var r = caro.traceLog('This is log trace data', {
-        ifWrap: true // 是否換行
-        prepend: false // 是否加到舊資料之前
-    }); //  - here is default options
+var r = caro.traceLog('This is log trace data', {
+    ifWrap: true // 是否換行
+    prepend: false // 是否加到舊資料之前
+}); //  - here is default options
 ```
 
 ### ★Loop
 [Back to Index](#index)
 - **loop(fn, start=0, end=0, step=1) - 執行迴圈**
 ```javascript
-    caro.loop(function (i){
-        // i = 10,9,...0
-    }, 10, 0);
-    caro.loop(function (i){
-        if(i > 5) return false
-        // i = 1,3,5
-    }, 1, 10, 2);
+caro.loop(function (i){
+    // i = 10,9,...0
+}, 10, 0);
+caro.loop(function (i){
+    if(i > 5) return false
+    // i = 1,3,5
+}, 1, 10, 2);
 ```
 - **each(arg, cb) - 遍歷 arr/obj 中的 key 和 val， 並代入 callback-function**
 ```javascript
-    caro.each(['a', 'b', 'c'], function (key, val){
-      console.log(val);
-      if(val==='b') return false; // break
-    }); // console only print 'a', 'b' 
-    caro.each({a: 1, b: 2, c: 3}, function (key, val){
-      // key will be 'a', 'b', 'c'
-      // val will be 1, 2, 3
-    });
-    caro.each(null, function (key, val){
-    }); // do nothing
+caro.each(['a', 'b', 'c'], function (key, val){
+  console.log(val);
+  if(val==='b') return false; // break
+}); // console only print 'a', 'b' 
+caro.each({a: 1, b: 2, c: 3}, function (key, val){
+  // key will be 'a', 'b', 'c'
+  // val will be 1, 2, 3
+});
+caro.each(null, function (key, val){
+}); // do nothing
 ```
 - **eachArgs(fn) - 遍歷 arr/obj 中的 key 和 val ，將 key 轉為 int 之後代入 callback-fn**
 ```javascript
-    var fn = function (a, b, c) {
-        caro.eachArgs(arguments, function (key, val) {
-            // key will be 0, 1...
-            // val will be 'd', 'e', ...
-        });
-    };
-    fn('d','e', {});
+var fn = function (a, b, c) {
+    caro.eachArgs(arguments, function (key, val) {
+        // key will be 0, 1...
+        // val will be 'd', 'e', ...
+    });
+};
+fn('d','e', {});
 ```
 
 ### Object
 [Back to Index](#index)
 - **getObjLength(obj) - 取得 obj 長度(element 數量)**
 ```javascript
-    var arg = ['a' ,'b', 'c'];
-    var r = caro.getObjLength(arg); // 3    
+var arg = ['a' ,'b', 'c'];
+var r = caro.getObjLength(arg); // 3    
 ```
 - **extendObj([deep=false], obj...) - 合併至第1個 obj**
 ```javascript
-    var arg = {a: {a1: 1}};
-    var arg2 = {a: {a1: 1}};
-    var arg3 = {a: {a1: 2}, b: 2, c: {c1: 1}};
-    caro.extend(arg, arg3); // {a: {a1: 1}, b: 2, c: {c1: 1}}
-    caro.extend(true, arg2, arg3); // { a: { a1: 2 }, b: 2, c: { c1: 1 } }
-
-    var arg = [1, 2, 3];
-    var arg2 = [4, 5, 6];
-    caro.extend(arg, arg2) // [ 1, 2, 3, 4, 5, 6 ]
+var arg = {a: {a1: 1}};
+var arg2 = {a: {a1: 1}};
+var arg3 = {a: {a1: 2}, b: 2, c: {c1: 1}};
+caro.extend(arg, arg3); // {a: {a1: 1}, b: 2, c: {c1: 1}}
+caro.extend(true, arg2, arg3); // { a: { a1: 2 }, b: 2, c: { c1: 1 } }
+ var arg = [1, 2, 3];
+var arg2 = [4, 5, 6];
+caro.extend(arg, arg2) // [ 1, 2, 3, 4, 5, 6 ]
 ``` 
 - **cloneObj(obj) - 複製 obj**
 ```javascript
-    var arg = {a: 1, b: 2, c: {c1: 1}};
-    var r = caro.cloneObj(arg);
-    var r2 = caro.cloneObj(arg, true);
-    arg.c.c1 = 3
-    console.log(r) // { a: 1, b: 2, c: { c1: 3 } }
-    console.log(r2) // { a: 1, b: 2, c: { c1: 1 } } - 所有的值都不受 arg 影響
+var arg = {a: 1, b: 2, c: {c1: 1}};
+var r = caro.cloneObj(arg);
+var r2 = caro.cloneObj(arg, true);
+arg.c.c1 = 3
+console.log(r) // { a: 1, b: 2, c: { c1: 3 } }
+console.log(r2) // { a: 1, b: 2, c: { c1: 1 } } - 所有的值都不受 arg 影響
 ```
 - **replaceObjKey(obj, replaceFn) - 轉換 obj 中的 key**
 ```javascript
-    var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
-    caro.replaceObjKey(arg, function (key){
-      return 'dd' if key == 'cc'
-    });
-    console.log(arg); // { aa: 1, bb: 2, dd: { c1: 3 } }
+var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
+caro.replaceObjKey(arg, function (key){
+  return 'dd' if key == 'cc'
+});
+console.log(arg); // { aa: 1, bb: 2, dd: { c1: 3 } }
 ```
 - **replaceObjVal(obj, replaceFn [deep=false]) - 轉換 obj 中的 val**
 ```javascript
-    var arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
-    caro.replaceObjVal(arg, function (val){
-      return 1 if val == 4
-    }); // {aa: 1, bb: 2, cc: {c1: 4}}
-
-    arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
-    caro.replaceObjVal(arg, function (val){
-      return 1 if val == 4
-    }, true); // {aa: 1, bb: 2, cc: {c1: 1}}
+var arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
+caro.replaceObjVal(arg, function (val){
+  return 1 if val == 4
+}); // {aa: 1, bb: 2, cc: {c1: 4}}
+ arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
+caro.replaceObjVal(arg, function (val){
+  return 1 if val == 4
+}, true); // {aa: 1, bb: 2, cc: {c1: 1}}
 ```
 - **upperCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為大寫**
 ```javascript
-    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-    caro.upperCaseByObjKey(arg, 'aa,bb'); // {aa: 'CARO', bb: 'PIKA', cc: 'doraemon'}
-    caro.upperCaseByObjKey(arg2); // {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON'}
+var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+caro.upperCaseByObjKey(arg, 'aa,bb'); // {aa: 'CARO', bb: 'PIKA', cc: 'doraemon'}
+caro.upperCaseByObjKey(arg2); // {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON'}
 ```
 - **lowerCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為小寫**
 ```javascript
-    var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
-    var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
-    caro.lowerCaseByObjKey(arg, ['aa','bb']); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon'};
-    caro.lowerCaseByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
+var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
+caro.lowerCaseByObjKey(arg, ['aa','bb']); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon'};
+caro.lowerCaseByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
 ```
 - **upperFirstByObjKey(obj, [keys]) - 指定 key 將對應的 val 的第一個字母轉為大寫**
 ```javascript
-    var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-    var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-    caro.upperFirstByObjKey(arg, 'aa,bb'); // {aa: 'Caro', bb: 'Pika', cc: 'doraemon'};
-    var r = caro.upperFirstByObjKey(arg2, null, true); // {aa: 'Caro', bb: 'Pika', cc: 'Doraemon'}
+var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
+caro.upperFirstByObjKey(arg, 'aa,bb'); // {aa: 'Caro', bb: 'Pika', cc: 'doraemon'};
+var r = caro.upperFirstByObjKey(arg2, null, true); // {aa: 'Caro', bb: 'Pika', cc: 'Doraemon'}
 ```
 - **trimByObjKey(obj, [keys]) - obj 中 val 為 str 的值，去除頭尾空白**
 ```javascript
-    var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-    var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-    var caro.trimByObjKey(arg, ['aa','cc']); // {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
-    var caro.trimByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
+var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
+var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
+var caro.trimByObjKey(arg, ['aa','cc']); // {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
+var caro.trimByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
 ```
 - **keysInObj(obj [keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
-    var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
-    var r = caro.keysInObj(arg, 'aa,bb'); // true
-    var r2 = caro.keysInObj(arg, ['aa', 'ee']); // false
+var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
+var r = caro.keysInObj(arg, 'aa,bb'); // true
+var r2 = caro.keysInObj(arg, ['aa', 'ee']); // false
 ```
 - **getKeysInObj(obj [levelLimit]) - 取得 obj 中的 key**
 ```javascript
-    var arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
-    var r = caro.getKeysInObj(arg); // [ 'a', 'b', 'c' ] - 取得第一層的 key
-    var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] - 取到第二層的 key
-    var r3 = caro.getKeysInObj(arg, 0); // [ 'a', 'b', 'c', 'd', 'e', 'f' ] - 取得所有層級的 key
+var arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
+var r = caro.getKeysInObj(arg); // [ 'a', 'b', 'c' ] - 取得第一層的 key
+var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] - 取到第二層的 key
+var r3 = caro.getKeysInObj(arg, 0); // [ 'a', 'b', 'c', 'd', 'e', 'f' ] - 取得所有層級的 key
 ```
 - **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串**
 ```javascript
-    var arg = {
-      a: 1, b: 2, c: function (a){
-        return a
-      }
-    };
-    var arg2 = {
-      a: 1, b: 2, c: function (a){
-        return a
-      }
-    };
-    r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
-    r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
+var arg = {
+  a: 1, b: 2, c: function (a){
+    return a
+  }
+};
+var arg2 = {
+  a: 1, b: 2, c: function (a){
+    return a
+  }
+};
+r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
+r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
 ```
 - **getArgumentsAsArr(fn) - 將物件轉為陣列**
 ```javascript
-    var fn = function (a, b) {
-        var args = caro.objToArr(arguments); // [1, 2]
-    };
-    fn(1, 2);
+var fn = function (a, b) {
+    var args = caro.objToArr(arguments); // [1, 2]
+};
+fn(1, 2);
 ```
 ### ★Path
 [Back to Index](#index)
 - **setAbsolutePath(path) - 定義絕對路徑根目錄**
 ```javascript
-    var r = caro.setAbsolutePath('/path/from/root'); // '/path/from/root'
-    var r2 = caro.setAbsolutePath('/path2//from\root'); // '/path2/from\root'
+var r = caro.setAbsolutePath('/path/from/root'); // '/path/from/root'
+var r2 = caro.setAbsolutePath('/path2//from\root'); // '/path2/from\root'
 ```
 - **getAbsolutePath(path) - 取得絕對路徑根目錄**
 ```javascript
-    caro.setAbsolutePath('/path/from/root');
-    var r = caro.getAbsolutePath(); // '/path/from/root'
+caro.setAbsolutePath('/path/from/root');
+var r = caro.getAbsolutePath(); // '/path/from/root'
 ```
 - **normalizePath(path...) - 正規化路徑**
 ```javascript
-    var r = caro.normalizePath('path//seems/not/exists'); // 'path/seems/not/exists'
-    var r2 = caro.normalizePath('path', '\exists'); // 'path/exists'
+var r = caro.normalizePath('path//seems/not/exists'); // 'path/seems/not/exists'
+var r2 = caro.normalizePath('path', '\exists'); // 'path/exists'
 ```
 - **isFullPath(path...) - 確認是否為絕對路徑**
 ```javascript
-    caro.setAbsolutePath('/path/root');
-    var r = caro.isFullPath('/path/root/caro.js'); // true
-    var r2 = caro.isFullPath('/path/root/caro.js', '/path2'); // false
+caro.setAbsolutePath('/path/root');
+var r = caro.isFullPath('/path/root/caro.js'); // true
+var r2 = caro.isFullPath('/path/root/caro.js', '/path2'); // false
 ```
 - **getDirPath(path) - 取得所在的資料夾路徑**
 ```javascript
-    var r = caro.getDirPath('/path/from/root'); // '/path/from'
-    var r2 = caro.getDirPath('/path/from/root/caro.js'); // '/path/from/root'
+var r = caro.getDirPath('/path/from/root'); // '/path/from'
+var r2 = caro.getDirPath('/path/from/root/caro.js'); // '/path/from/root'
 ```
 - **getFileName(path [getFull=true]) - 取得檔案名稱**
 ```javascript
-    var r = caro.getFileName('/path/from/root'); // 'root'
-    var r2 = caro.getFileName('/path/from/root/caro.js'); // 'caro.js'
-    var r3 = caro.getFileName('/path/from/root/caro.js', false); // 'caro'
+var r = caro.getFileName('/path/from/root'); // 'root'
+var r2 = caro.getFileName('/path/from/root/caro.js'); // 'caro.js'
+var r3 = caro.getFileName('/path/from/root/caro.js', false); // 'caro'
 ```
 - **getExtendName(path [withDot=true]) - 取得附檔名**
 ```javascript
-    var r = caro.getExtendName('caro.js'); // '.js'
-    var r2 = caro.getExtendName('caro.js.bk', false); // 'bk'
+var r = caro.getExtendName('caro.js'); // '.js'
+var r2 = caro.getExtendName('caro.js.bk', false); // 'bk'
 ```
 - **coverToFullPath(path) - 轉為絕對路徑**
 ```javascript
-    caro.setAbsolutePath('/path/from/root');
-    var r = caro.coverToFullPath('caro.js');  // '/path/from/root/caro.js'
-    var r2 = caro.coverToFullPath('other', 'caro.js'); // '/path/from/root/other/caro.js'
-    var r3 = caro.coverToFullPath('/path/from/root/caro.js'); // '/path/from/root/caro.js'
+caro.setAbsolutePath('/path/from/root');
+var r = caro.coverToFullPath('caro.js');  // '/path/from/root/caro.js'
+var r2 = caro.coverToFullPath('other', 'caro.js'); // '/path/from/root/other/caro.js'
+var r3 = caro.coverToFullPath('/path/from/root/caro.js'); // '/path/from/root/caro.js'
 ```
 
 ### String
 [Back to Index](#index)
 - **isUpper(str...) - 判斷是否為大寫字串**
 ```javascript
-    var r = caro.isUpper('CARO', 'SNOOPY'); // true
-    var r2 = caro.isUpper('caro', 'SNOOPY'); // false
+var r = caro.isUpper('CARO', 'SNOOPY'); // true
+var r2 = caro.isUpper('caro', 'SNOOPY'); // false
 ```
 - **isLower(str...) - 判斷是否為小寫字串**
 ```javascript
-    var r = caro.isLower('Caro'); // false
-    var r2 = caro.isLower('caro', 'snoopy'); // true
+var r = caro.isLower('Caro'); // false
+var r2 = caro.isLower('caro', 'snoopy'); // true
 ```
 - **random(len [opt]) - 產生隨機字串**
 ```javascript
-    var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
-    var r2 = caro.random(15, {
-      lower: true
-      upper: true
-      num: true
-      exclude: ''
-    }); // here is default options
-    var r3 = caro.random(15, {
-      lower: false
-      upper: true
-      num: false
-      exclude: 'A,B,C'
-    }); // - will create uppercase-only, and without A/B/C
+var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
+var r2 = caro.random(15, {
+  lower: true
+  upper: true
+  num: true
+  exclude: ''
+}); // here is default options
+var r3 = caro.random(15, {
+  lower: false
+  upper: true
+  num: false
+  exclude: 'A,B,C'
+}); // - will create uppercase-only, and without A/B/C
 ```
 - **strToBool(str) - 如果是 'false' 或空字串，回傳 false，否則回傳 true**
 ```javascript
-    var r = caro.strToBool('false'); // false
-    var r2 = caro.strToBool('fAlse'); // false
-    var r3 = caro.strToBool('123'); // true
-    var r4 = caro.strToBool(''); // false
+var r = caro.strToBool('false'); // false
+var r2 = caro.strToBool('fAlse'); // false
+var r3 = caro.strToBool('123'); // true
+var r4 = caro.strToBool(''); // false
 ```
 - **hasHead(str, str2) - 確認字串的開頭是否符合特定字串**
 ```javascript
-    var r = caro.hasHead('false', 'fa'); // true
-    var r2 = caro.hasHead('false', 'se'); // false
+var r = caro.hasHead('false', 'fa'); // true
+var r2 = caro.hasHead('false', 'se'); // false
 ```
 - **addHead(str, addStr) - 在字串的開頭加上新字串(不重覆)**
 ```javascript
-    var r = caro.addHead('moon', 'mo'); // 'moon'
-    var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
+var r = caro.addHead('moon', 'mo'); // 'moon'
+var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
 ```
 - **hasTail(str, str2) - 確認字串的結尾是否符合特定字串**
 ```javascript
-    var r = caro.hasTail('false', 'fa'); // false
-    var r2 = caro.hasTail('false', 'se'); // true
+var r = caro.hasTail('false', 'fa'); // false
+var r2 = caro.hasTail('false', 'se'); // true
 ```
 - **addTail(str, addStr) - 在字串的尾巴加上新字串(不重覆)**
 ```javascript
-    var r = caro.addTail('moon', 'on'); // 'moon'
-    var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
+var r = caro.addTail('moon', 'on'); // 'moon'
+var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
 ```
 - **wrapToBr(str, addStr) - 將字串中的換行符號轉為 '\<br /\>'**
 ```javascript
-    var r = caro.wrapToBr('''this is
-        wrap content.
-    '''); // 'this is<br />wrap content.'
+var r = caro.wrapToBr('''this is
+    wrap content.
+'''); // 'this is<br />wrap content.'
 ```
 - **brToWrap(str, addStr) - 將字串中的 '\<br /\>' 轉為換行符號**
 ```javascript
-    var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
+var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
 ```
 - **splitByWrap(str) - 將字串以換行符號切割為陣列**
 ```javascript
-    var r = caro.splitByWrap('''
-        I love
-        my mother
-        and
-        my father
-    '''); // [ 'I love', 'my mother', 'and', 'my father' ]
+var r = caro.splitByWrap('''
+    I love
+    my mother
+    and
+    my father
+'''); // [ 'I love', 'my mother', 'and', 'my father' ]
 ```
 - **escapeRegExp(str) - 將字串中的特定符號轉為跳脫字元**
 ```javascript
-    var r = caro.escapeRegExp('I*am*{Caro}.'); // 'I\\*am\\*\\{Caro\\}\\.'
+var r = caro.escapeRegExp('I*am*{Caro}.'); // 'I\\*am\\*\\{Caro\\}\\.'
 ```
 - **replaceAll(str, find, replace) - 取代符合的字串**
 ```javascript
-    var r = caro.replaceAll('I*am*{Caro}.','*','-'); // 'I-am-{Caro}.'
-    var r2 = caro.replaceAll('I*am*{Caro}.',/\w/g,'-'); // '-*--*{----}.'
+var r = caro.replaceAll('I*am*{Caro}.','*','-'); // 'I-am-{Caro}.'
+var r2 = caro.replaceAll('I*am*{Caro}.',/\w/g,'-'); // '-*--*{----}.'
 ```
 - **insertBlankBefUpper(str) - 在大寫的字母前面加上空白**
 ```javascript
-    var r = caro.insertBlankBefUpper('IAmCaro'); // 'I Am Caro'
+var r = caro.insertBlankBefUpper('IAmCaro'); // 'I Am Caro'
 ```
 - **upperStr(str [opt]) - 將字串轉為大寫**
 ```javascript
-    var r = caro.upperStr('i am caro'); // 'I AM CARO'
-    var r2 = caro.upperStr('i am caro', {
-      start: 0,
-      end: null,
-      force: true
-    }); // 'I AM CARO' - here is default options
-    var r3 = caro.upperStr('i am caro', {
-      start: 5,
-      end: null
-    }); // 'i am CARO'
-    var r4 = caro.upperStr('i am caro', {
-      start: 5,
-      end: 6
-    }); // 'i am Caro'
+var r = caro.upperStr('i am caro'); // 'I AM CARO'
+var r2 = caro.upperStr('i am caro', {
+  start: 0,
+  end: null,
+  force: true
+}); // 'I AM CARO' - here is default options
+var r3 = caro.upperStr('i am caro', {
+  start: 5,
+  end: null
+}); // 'i am CARO'
+var r4 = caro.upperStr('i am caro', {
+  start: 5,
+  end: 6
+}); // 'i am Caro'
 ```
 - **upperFirst(str [force=true]) - 將第一個字母轉為大寫**
 ```javascript
-    var r = caro.upperFirst('I am Caro'); // 'I am caro'
-    var r2 = caro.upperFirst({}); // ''
-    var r3 = caro.upperFirst({}, false); // {}
+var r = caro.upperFirst('I am Caro'); // 'I am caro'
+var r2 = caro.upperFirst({}); // ''
+var r3 = caro.upperFirst({}, false); // {}
 ```
 - **lowerStr(str [opt]) - 將字串轉為小寫**
 ```javascript
-    var r = caro.lowerStr('I AM CARO'); // 'i am caro'
-    var r2 = caro.lowerStr('I AM CARO', {
-      start: 0,
-      end: null,
-      force: true
-    }); // 'i am caro' - here is default options
-    var r3 = caro.lowerStr('I AM CARO', {
-      start: 5,
-      end: null
-    }); // 'I AM caro'
-    var r4 = caro.lowerStr('I AM CARO', {
-      start: 5,
-      end: 6
-    }); 'I AM cARO'
+var r = caro.lowerStr('I AM CARO'); // 'i am caro'
+var r2 = caro.lowerStr('I AM CARO', {
+  start: 0,
+  end: null,
+  force: true
+}); // 'i am caro' - here is default options
+var r3 = caro.lowerStr('I AM CARO', {
+  start: 5,
+  end: null
+}); // 'I AM caro'
+var r4 = caro.lowerStr('I AM CARO', {
+  start: 5,
+  end: 6
+}); 'I AM cARO'
 ```
 - **trimStr(str [char=' '] [side]) - 移除字串前後空白或特定的字串**
 ```javascript
-    var r = caro.trimStr(' i am caro '); // 'i am caro'
-    var r2 = caro.trimStr('Ai am caroA', 'A', true); // 'i am caroA'
-    var r3 = caro.trimStr('Ai am caroA', 'A', false); // 'Ai am caro'
+var r = caro.trimStr(' i am caro '); // 'i am caro'
+var r2 = caro.trimStr('Ai am caroA', 'A', true); // 'i am caroA'
+var r3 = caro.trimStr('Ai am caroA', 'A', false); // 'Ai am caro'
 ```
 - **splitStr(str [splitter]) - 將字串用指定的 splitter 分割為陣列**
 ```javascript
-    var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
-    var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
+var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
+var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
 ```
 - **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
 ```javascript
-    var arg = 'http://localhost';
-    var obj = {a: 1, b: 2, c: null};
-    var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
-    var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
+var arg = 'http://localhost';
+var obj = {a: 1, b: 2, c: null};
+var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
+var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
 
 ### ☆TypeCheck
 [Back to Index](#index)
 - **isBool(arg...) - 判斷是否為 boolean，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isBool(false); // true
-    var r2 = caro.isBool(false, 'false'); // false
+var r = caro.isBool(false); // true
+var r2 = caro.isBool(false, 'false'); // false
 ```
 - **isStr(arg...) - 判斷是否為 string，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isStr('false'); // true
-    var r2 = caro.isStr(true, 'caro'); // false
+var r = caro.isStr('false'); // true
+var r2 = caro.isStr(true, 'caro'); // false
 ```
 - **isFn(arg...) - 判斷是否為 function，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isFn(function () {}); // true
-    var r2 = caro.isFn(function () {}, 123); // false
+var r = caro.isFn(function () {}); // true
+var r2 = caro.isFn(function () {}, 123); // false
 ```
 - **isNum(arg...) - 判斷是否為 number，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isNum(1); // true
-    var r2 = caro.isNum(1, '1'); // false
+var r = caro.isNum(1); // true
+var r2 = caro.isNum(1, '1'); // false
 ```
 - **isInt(arg...) - 判斷是否為 integer，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isInt(1); // true
-    var r2 = caro.isInt(1, 1.3); // false
+var r = caro.isInt(1); // true
+var r2 = caro.isInt(1, 1.3); // false
 ```
 - **isArr(arg...) - 判斷是否為 array，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isArr([]); // true
-    var r2 = caro.isArr([], {}); // false
+var r = caro.isArr([]); // true
+var r2 = caro.isArr([], {}); // false
 ```
 - **isNull(arg...) - 判斷是否為 null，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isNull(null); // true
-    var r2 = caro.isNull(null, undefined); // false
+var r = caro.isNull(null); // true
+var r2 = caro.isNull(null, undefined); // false
 ```
 - **isJson(arg...) - 判斷是否為 JSON，當其中一個參數不符合時，回傳 false**
 ```javascript
-    r = caro.isJson(null); // true
-    r2 = caro.isJson('caro'); // false
-    r3 = caro.isJson(123, '{"a":1}') // true
-    r4 = caro.isJson(123, '{"a":1, "b": function(){}}') // false
+var r = caro.isJson(null); // true
+var r2 = caro.isJson('caro'); // false
+var r3 = caro.isJson(123, '{"a":1}') // true
+var r4 = caro.isJson(123, '{"a":1, "b": function(){}}') // false
 ```
 - **isObjJson(arg...) - 先判斷是否為 JSON，再判斷是否為 object 格式，當其中一個參數不符合時，回傳 false**
 ```javascript
-    r = caro.isObjJson('{"a": 1}'); // true
-    r2 = caro.isObjJson('{"a": function(){}}'); // false
-    r3 = caro.isObjJson('{"a": 1}', {b: 2}) // false
+var r = caro.isObjJson('{"a": 1}'); // true
+var r2 = caro.isObjJson('{"a": function(){}}'); // false
+var r3 = caro.isObjJson('{"a": 1}', {b: 2}) // false
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isObj([]); // true
-    var r2 = caro.isObj([], {}); // false
+var r = caro.isObj([]); // true
+var r2 = caro.isObj([], {}); // false
 ```
 - **isObjOrArr(arg...) - 判斷是否為 object 或 array，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isObjOrArr([], {}); // true
-    var r2 = caro.isObjOrArr([], null); // false
+var r = caro.isObjOrArr([], {}); // true
+var r2 = caro.isObjOrArr([], null); // false
 ```
 - **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isRegExp(/^foo(bar)?$/i); // true
-    var r2 = caro.isRegExp('/[a-z]/g', '/[a-z]/i'); // false
+var r = caro.isRegExp(/^foo(bar)?$/i); // true
+var r2 = caro.isRegExp('/[a-z]/g', '/[a-z]/i'); // false
 ```
 - **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
 ```javascript
-    var r = caro.isObj(new Buffer(1)); // true
-    var r2 = caro.isObj(null, {}); // false
+var r = caro.isObj(new Buffer(1)); // true
+var r2 = caro.isObj(null, {}); // false
 ```
