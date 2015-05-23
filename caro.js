@@ -2807,17 +2807,6 @@
   };
 
   /**
-   * check if null, return false is one of them not match
-   * @param {...} arg
-   * @returns {*}
-   */
-  self.isNull = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      return val === null;
-    });
-  };
-
-  /**
    * check if JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}

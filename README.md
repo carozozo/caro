@@ -877,11 +877,6 @@ var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 var r = caro.isInteger(1); // true
 var r2 = caro.isInteger(1.3); // false
 ```
-- **isNull(arg...) - 判斷是否為 null，當其中一個參數不符合時，回傳 false**
-```javascript
-var r = caro.isNull(null); // true
-var r2 = caro.isNull(null, undefined); // false
-```
 - **isJson(arg...) - 判斷是否為 JSON，當其中一個參數不符合時，回傳 false**
 ```javascript
 var r = caro.isJson(null); // true
