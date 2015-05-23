@@ -19,7 +19,7 @@
     var aType, r;
     aType = ['upper', 'lower', 'upperFirst', 'trim'];
     r = obj;
-    if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
+    if (!caro.isObject(obj) || aType.indexOf(type) < 0) {
       return obj;
     }
     keys = keys || caro.getKeysInObj(r);
@@ -55,7 +55,7 @@
   pushValToObjOrArr = function(arg, key, val) {
     if (caro.isArray(arg)) {
       arg.push(val);
-    } else if (caro.isObj(arg)) {
+    } else if (caro.isObject(arg)) {
       arg[key] = val;
     }
   };
@@ -94,7 +94,7 @@
       results = [];
       for (key in arg) {
         val = arg[key];
-        if (caro.isObj(r) && caro.keysInObj(r, key) && !deep) {
+        if (caro.isObject(val) && caro.keysInObj(r, key) && !deep) {
           continue;
         }
         results.push(pushValToObjOrArr(r, key, val));
@@ -164,7 +164,7 @@
     coverObjVal = function(o) {
       caro.each(o, function(key, val) {
         var newVal;
-        if (caro.isObj(val) && deep) {
+        if (caro.isObject(val) && deep) {
           coverObjVal(val);
           return;
         }
@@ -226,7 +226,7 @@
    */
   self.keysInObj = function(obj, keys) {
     var pass;
-    if (!caro.isObj(obj)) {
+    if (!caro.isObject(obj)) {
       return false;
     }
     pass = true;
@@ -249,7 +249,7 @@
   self.getKeysInObj = function(obj, levelLimit) {
     var getKey, levelCount, r;
     r = [];
-    if (!caro.isObj(obj)) {
+    if (!caro.isObject(obj)) {
       return r;
     }
     levelLimit = caro.coverToInt(levelLimit, false) > -1 ? levelLimit : 1;
@@ -261,7 +261,7 @@
           return;
         }
         r.push(key);
-        if (caro.isObj(val)) {
+        if (caro.isObject(val)) {
           getKey(val);
         }
       });

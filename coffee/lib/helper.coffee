@@ -22,7 +22,7 @@ do ->
   ###
   self.isEmptyVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      return caro.getObjLength(arg) < 1 if caro.isObj(arg)
+      return caro.getObjLength(arg) < 1 if caro.isObject(arg)
       return arg.length < 1 if caro.isArray(arg)
       !arg and arg != 0 and arg != false
 
@@ -109,7 +109,7 @@ do ->
     r = []
     caro.eachArgs arguments, (i, arg) ->
       return if i == 0
-      return opt = arg if caro.isObj(arg)
+      return opt = arg if caro.isObject(arg)
       return type = arg if caro.isString(arg)
       return
     opt = caro.coverToObj(opt);
@@ -150,34 +150,12 @@ do ->
     [arg]
 
   ###*
-  # cover to string, will return '' if force!=false
+  # cover to string
   # @param arg
-  # @param {boolean} [force=true] if return string
   # @returns {*}
   ###
-  self.coverToStr = (arg, force = true) ->
-    return arg if caro.isString(arg)
-    if arg == undefined
-      if force
-        return 'undefined'
-      return ''
-    if arg == null
-      if force
-        return 'null'
-      return ''
-    if caro.isObj(arg)
-      if force
-# cover fn to string first, and not replace \r\n
-        caro.coverFnToStrInObj arg, false
-        # after cover to json, replace \\r\\n to wrap
-        arg = caro.coverToJson(arg)
-        arg = caro.replaceAll(arg, '\\r', '\r')
-        arg = caro.replaceAll(arg, '\\n', '\n')
-        return arg
-      return ''
-    return arg.toString() if caro.isFunction(arg.toString)
-    return arg if !force
-    ''
+  self.coverToStr = (arg) ->
+    String(arg)
 
   ###*
   # cover to integer
@@ -222,7 +200,7 @@ do ->
   # @returns {*}
   ###
   self.coverToObj = (arg, force = true) ->
-    return arg if caro.isObj(arg)
+    return arg if caro.isObject(arg)
     if caro.isArray(arg)
       r = {}
       caro.each(arg, (i, val) ->
@@ -231,7 +209,7 @@ do ->
       return r
     try
       r = JSON.parse(arg)
-      return r if caro.isObj(r)
+      return r if caro.isObject(r)
     catch e
     return arg if !force
     {}

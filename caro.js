@@ -359,8 +359,11 @@
     return nMoment();
   };
   coverLocale = function(locale) {
-    locale = caro.coverToStr(locale, false);
-    return locale || defLocale;
+    if (caro.isString(locale)) {
+      return locale;
+    } else {
+      return defLocale;
+    }
   };
   coverFormatType = function(shorthandFormat, locale) {
     var oLocale;
@@ -441,7 +444,7 @@
   self.addDateTime = function(dateTime, amount, unit, formatType) {
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
-    if (caro.isObj(amount)) {
+    if (caro.isObject(amount)) {
       oDateTime.add(amount);
     } else {
       oDateTime.add(amount, unit);
@@ -461,7 +464,7 @@
   self.subtractDateTime = function(dateTime, amount, unit, formatType) {
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
-    if (caro.isObj(amount)) {
+    if (caro.isObject(amount)) {
       oDateTime.subtract(amount);
     } else {
       oDateTime.subtract(amount, unit);
@@ -1286,7 +1289,7 @@
    */
   self.isEmptyVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isObj(arg)) {
+      if (caro.isObject(arg)) {
         return caro.getObjLength(arg) < 1;
       }
       if (caro.isArray(arg)) {
@@ -1405,7 +1408,7 @@
       if (i === 0) {
         return;
       }
-      if (caro.isObj(arg)) {
+      if (caro.isObject(arg)) {
         return opt = arg;
       }
       if (caro.isString(arg)) {
@@ -1458,47 +1461,12 @@
   };
 
   /**
-   * cover to string, will return '' if force!=false
+   * cover to string
    * @param arg
-   * @param {boolean} [force=true] if return string
    * @returns {*}
    */
-  self.coverToStr = function(arg, force) {
-    if (force == null) {
-      force = true;
-    }
-    if (caro.isString(arg)) {
-      return arg;
-    }
-    if (arg === void 0) {
-      if (force) {
-        return 'undefined';
-      }
-      return '';
-    }
-    if (arg === null) {
-      if (force) {
-        return 'null';
-      }
-      return '';
-    }
-    if (caro.isObj(arg)) {
-      if (force) {
-        caro.coverFnToStrInObj(arg, false);
-        arg = caro.coverToJson(arg);
-        arg = caro.replaceAll(arg, '\\r', '\r');
-        arg = caro.replaceAll(arg, '\\n', '\n');
-        return arg;
-      }
-      return '';
-    }
-    if (caro.isFunction(arg.toString)) {
-      return arg.toString();
-    }
-    if (!force) {
-      return arg;
-    }
-    return '';
+  self.coverToStr = function(arg) {
+    return String(arg);
   };
 
   /**
@@ -1571,7 +1539,7 @@
     if (force == null) {
       force = true;
     }
-    if (caro.isObj(arg)) {
+    if (caro.isObject(arg)) {
       return arg;
     }
     if (caro.isArray(arg)) {
@@ -1583,7 +1551,7 @@
     }
     try {
       r = JSON.parse(arg);
-      if (caro.isObj(r)) {
+      if (caro.isObject(r)) {
         return r;
       }
     } catch (_error) {
@@ -1939,7 +1907,7 @@
     var aType, r;
     aType = ['upper', 'lower', 'upperFirst', 'trim'];
     r = obj;
-    if (!caro.isObj(obj) || aType.indexOf(type) < 0) {
+    if (!caro.isObject(obj) || aType.indexOf(type) < 0) {
       return obj;
     }
     keys = keys || caro.getKeysInObj(r);
@@ -1975,7 +1943,7 @@
   pushValToObjOrArr = function(arg, key, val) {
     if (caro.isArray(arg)) {
       arg.push(val);
-    } else if (caro.isObj(arg)) {
+    } else if (caro.isObject(arg)) {
       arg[key] = val;
     }
   };
@@ -2014,7 +1982,7 @@
       results = [];
       for (key in arg) {
         val = arg[key];
-        if (caro.isObj(r) && caro.keysInObj(r, key) && !deep) {
+        if (caro.isObject(val) && caro.keysInObj(r, key) && !deep) {
           continue;
         }
         results.push(pushValToObjOrArr(r, key, val));
@@ -2084,7 +2052,7 @@
     coverObjVal = function(o) {
       caro.each(o, function(key, val) {
         var newVal;
-        if (caro.isObj(val) && deep) {
+        if (caro.isObject(val) && deep) {
           coverObjVal(val);
           return;
         }
@@ -2146,7 +2114,7 @@
    */
   self.keysInObj = function(obj, keys) {
     var pass;
-    if (!caro.isObj(obj)) {
+    if (!caro.isObject(obj)) {
       return false;
     }
     pass = true;
@@ -2169,7 +2137,7 @@
   self.getKeysInObj = function(obj, levelLimit) {
     var getKey, levelCount, r;
     r = [];
-    if (!caro.isObj(obj)) {
+    if (!caro.isObject(obj)) {
       return r;
     }
     levelLimit = caro.coverToInt(levelLimit, false) > -1 ? levelLimit : 1;
@@ -2181,7 +2149,7 @@
           return;
         }
         r.push(key);
-        if (caro.isObj(val)) {
+        if (caro.isObject(val)) {
           getKey(val);
         }
       });
@@ -2831,25 +2799,11 @@
     var e, r;
     try {
       r = JSON.parse(arg);
-      return caro.isObj(r);
+      return caro.isObject(r);
     } catch (_error) {
       e = _error;
     }
     return false;
-  };
-
-  /**
-   * check if object, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isObj = function(arg) {
-    if (!checkType(arguments, 'object')) {
-      return false;
-    }
-    return caro.checkIfPassCb(arguments, function(val) {
-      return !caro.isNull(val) && !caro.isArray(val);
-    });
   };
 
   /**

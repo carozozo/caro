@@ -24,17 +24,11 @@ describe 'TypeCheck', ->
     r2.should.be.false
     r3.should.be.false
 
-  it 'isObj', ->
-    r = caro.isObj({});
-    r2 = caro.isObj({}, []);
-    r.should.be.true
-    r2.should.be.false
-
   it 'isObject', ->
     r = caro.isObject({});
     r2 = caro.isObject({}, []);
     r.should.be.true
-    r2.should.be.true
+    r2.should.be.false
 
   it 'isRegExp', ->
     r = caro.isRegExp(/\d/g);

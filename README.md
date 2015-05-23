@@ -890,16 +890,6 @@ var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
 var r3 = caro.isObjJson('{{b: 2}) // false
 ```
-- **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
-```javascript
-var r = caro.isObj([]); // true
-var r2 = caro.isObj([], {}); // false
-```
-- **isObjOrArr(arg...) - 判斷是否為 object 或 array，當其中一個參數不符合時，回傳 false**
-```javascript
-var r = caro.isObjOrArr([], {}); // true
-var r2 = caro.isObjOrArr([], null); // false
-```
 - **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
 ```javascript
 var r = caro.isRegExp(/^foo(bar)?$/i); // true

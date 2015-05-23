@@ -77,8 +77,10 @@ describe 'Helper', ->
   it 'coverToStr', ->
     r = caro.coverToStr('3')
     r2 = caro.coverToStr(['caro', 4])
+    r3 = caro.coverToStr(undefined)
     r.should.eq('3')
     r2.should.eq('caro,4')
+    r3.should.eq('undefined')
 
   it 'coverToInt', ->
     r = caro.coverToInt('3')

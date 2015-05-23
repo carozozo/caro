@@ -18,8 +18,7 @@ do ->
     nMoment()
 
   coverLocale = (locale) ->
-    locale = caro.coverToStr(locale, false)
-    locale or defLocale
+    if caro.isString(locale) then locale else defLocale
 
   coverFormatType = (shorthandFormat, locale) ->
     locale = coverLocale(locale)
@@ -93,7 +92,7 @@ do ->
   ###
   self.addDateTime = (dateTime, amount, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
-    if caro.isObj(amount)
+    if caro.isObject(amount)
       oDateTime.add amount
     else
       oDateTime.add amount, unit
@@ -110,7 +109,7 @@ do ->
   ###
   self.subtractDateTime = (dateTime, amount, unit, formatType) ->
     oDateTime = getDateTimeObj(dateTime)
-    if caro.isObj(amount)
+    if caro.isObject(amount)
       oDateTime.subtract amount
     else
       oDateTime.subtract amount, unit

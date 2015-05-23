@@ -19,8 +19,11 @@
     return nMoment();
   };
   coverLocale = function(locale) {
-    locale = caro.coverToStr(locale, false);
-    return locale || defLocale;
+    if (caro.isString(locale)) {
+      return locale;
+    } else {
+      return defLocale;
+    }
   };
   coverFormatType = function(shorthandFormat, locale) {
     var oLocale;
@@ -101,7 +104,7 @@
   self.addDateTime = function(dateTime, amount, unit, formatType) {
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
-    if (caro.isObj(amount)) {
+    if (caro.isObject(amount)) {
       oDateTime.add(amount);
     } else {
       oDateTime.add(amount, unit);
@@ -121,7 +124,7 @@
   self.subtractDateTime = function(dateTime, amount, unit, formatType) {
     var oDateTime;
     oDateTime = getDateTimeObj(dateTime);
-    if (caro.isObj(amount)) {
+    if (caro.isObject(amount)) {
       oDateTime.subtract(amount);
     } else {
       oDateTime.subtract(amount, unit);
