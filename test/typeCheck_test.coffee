@@ -23,21 +23,3 @@ describe 'TypeCheck', ->
     r.should.be.true
     r2.should.be.false
     r3.should.be.false
-
-  it 'isObject', ->
-    r = caro.isObject({});
-    r2 = caro.isObject({}, []);
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isRegExp', ->
-    r = caro.isRegExp(/\d/g);
-    r2 = caro.isRegExp(/\w/, '/\w/');
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isBuf', ->
-    r = caro.isBuf(new Buffer(1));
-    r2 = caro.isBuf(null);
-    r.should.be.true
-    r2.should.be.false

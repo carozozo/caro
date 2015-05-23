@@ -48,29 +48,4 @@ do ->
     catch e
     false
 
-  ###*
-  # check if RegExp, return false is one of them not match
-  # @param {...} arg
-  # @returns {boolean}
-  ###
-  self.isRegExp = (arg) ->
-    caro.checkIfPassCb arguments, (val) ->
-      val instanceof RegExp
-
-  ### -------------------- Node.js only -------------------- ###
-  return if !caro.isNode
-
-  ###*
-  # check if Buffer, return false is one of them not match
-  # @param {...} arg
-  # @returns {Boolean}
-  ###
-  self.isBuf = (arg) ->
-    caro.checkIfPassCb arguments, (val) ->
-      try
-        return Buffer.isBuffer(val)
-      catch e
-        return false
-      return
-
   return

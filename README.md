@@ -27,11 +27,11 @@ caro.isArr(['caro']); // true
 ```
 ## Index
 
-##### (★ only support Node.js | ☆ some support Node.js)
+##### (★ only support Node.js)
 
 **[Array](#array)** | **[Console](#console)** | **[DateTime](#datetime)** | **★[FileSystem](#filesystem)**
 | **[Helper](#helper)** | **★[Log](#log)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
-| **[String](#string)** | **☆[TypeCheck](#typecheck)**
+| **[String](#string)** | **[TypeCheck](#typecheck)**
 
 ### Array
 [Back to Index](#index)
@@ -870,7 +870,7 @@ var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
 var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
 
-### ☆TypeCheck
+### TypeCheck
 [Back to Index](#index)
 - **isInteger(arg) - 判斷是否為整數**
 ```javascript
@@ -889,14 +889,3 @@ var r4 = caro.isJson('{"a":1, "b": function(){}}') // false
 var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
 var r3 = caro.isObjJson('{{b: 2}) // false
-```
-- **isRegExp(arg...) - 判斷是否為 RegExp，當其中一個參數不符合時，回傳 false**
-```javascript
-var r = caro.isRegExp(/^foo(bar)?$/i); // true
-var r2 = caro.isRegExp('/[a-z]/g', '/[a-z]/i'); // false
-```
-- **☆isBuf(arg...) - 判斷是否為 Buffer，當其中一個參數不符合時，回傳 false**
-```javascript
-var r = caro.isObj(new Buffer(1)); // true
-var r2 = caro.isObj(null, {}); // false
-```
