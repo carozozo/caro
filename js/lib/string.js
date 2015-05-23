@@ -347,7 +347,7 @@
    */
   self.splitStr = function(str, splitter) {
     var mainSplit;
-    if (caro.isArr(str)) {
+    if (caro.isArray(str)) {
       return str;
     }
     if (!splitter) {

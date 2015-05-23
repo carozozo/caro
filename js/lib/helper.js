@@ -29,7 +29,7 @@
       if (caro.isObj(arg)) {
         return caro.getObjLength(arg) < 1;
       }
-      if (caro.isArr(arg)) {
+      if (caro.isArray(arg)) {
         return arg.length < 1;
       }
       return !arg && arg !== 0 && arg !== false;
@@ -191,7 +191,7 @@
    * @returns {*}
    */
   self.coverToArr = function(arg) {
-    if (caro.isArr(arg)) {
+    if (caro.isArray(arg)) {
       return arg;
     }
     return [arg];
@@ -314,7 +314,7 @@
     if (caro.isObj(arg)) {
       return arg;
     }
-    if (caro.isArr(arg)) {
+    if (caro.isArray(arg)) {
       r = {};
       caro.each(arg, function(i, val) {
         return r[i] = val;

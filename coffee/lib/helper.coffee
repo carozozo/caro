@@ -23,7 +23,7 @@ do ->
   self.isEmptyVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
       return caro.getObjLength(arg) < 1 if caro.isObj(arg)
-      return arg.length < 1 if caro.isArr(arg)
+      return arg.length < 1 if caro.isArray(arg)
       !arg and arg != 0 and arg != false
 
   ###*
@@ -146,7 +146,7 @@ do ->
   # @returns {*}
   ###
   self.coverToArr = (arg) ->
-    return arg if caro.isArr(arg)
+    return arg if caro.isArray(arg)
     [arg]
 
   ###*
@@ -223,7 +223,7 @@ do ->
   ###
   self.coverToObj = (arg, force = true) ->
     return arg if caro.isObj(arg)
-    if caro.isArr(arg)
+    if caro.isArray(arg)
       r = {}
       caro.each(arg, (i, val) ->
         r[i] = val

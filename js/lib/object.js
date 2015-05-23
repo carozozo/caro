@@ -53,7 +53,7 @@
     return r;
   };
   pushValToObjOrArr = function(arg, key, val) {
-    if (caro.isArr(arg)) {
+    if (caro.isArray(arg)) {
       arg.push(val);
     } else if (caro.isObj(arg)) {
       arg[key] = val;
@@ -118,7 +118,7 @@
     if (!caro.isObjOrArr(arg)) {
       return arg;
     }
-    r = caro.isArr(arg) ? [] : {};
+    r = caro.isArray(arg) ? [] : {};
     caro.extendObj(r, arg);
     if (deep) {
       caro.each(r, function(key, val) {

@@ -33,17 +33,6 @@
   };
 
   /**
-   * check if array, return false is one of them not match
-   * @param {...} arg
-   * @returns {*}
-   */
-  self.isArr = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      return Array.isArray(val);
-    });
-  };
-
-  /**
    * check if null, return false is one of them not match
    * @param {...} arg
    * @returns {*}
@@ -103,7 +92,7 @@
       return false;
     }
     return caro.checkIfPassCb(arguments, function(val) {
-      return !caro.isNull(val) && !caro.isArr(val);
+      return !caro.isNull(val) && !caro.isArray(val);
     });
   };
 

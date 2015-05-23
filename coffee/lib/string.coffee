@@ -282,7 +282,7 @@ do ->
   # @returns {*}
   ###
   self.splitStr = (str, splitter) ->
-    return str if caro.isArr(str)
+    return str if caro.isArray(str)
     return [] if !splitter
     splitter = caro.coverToArr(splitter)
     # get mainSplit first

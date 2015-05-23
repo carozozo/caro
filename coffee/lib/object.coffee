@@ -43,7 +43,7 @@ do ->
     r
 
   pushValToObjOrArr = (arg, key, val) ->
-    if caro.isArr(arg)
+    if caro.isArray(arg)
       arg.push(val)
     else if caro.isObj(arg)
       arg[key] = val
@@ -86,7 +86,7 @@ do ->
   ###
   self.cloneObj = (arg, deep = false) ->
     return arg if !caro.isObjOrArr(arg)
-    r = if caro.isArr(arg) then [] else {}
+    r = if caro.isArray(arg) then [] else {}
     caro.extendObj(r, arg)
     if(deep)
       caro.each(r, (key, val) ->

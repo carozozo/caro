@@ -45,7 +45,7 @@ do ->
       if caro.isString(arg)
         aStr.push arg
         return
-      if caro.isArr(arg)
+      if caro.isArray(arg)
         aArr.push arg
         return
       if caro.isNumber(arg)
