@@ -23,18 +23,6 @@ do ->
     sum
 
   ###*
-  # remove duplicate-value in array
-  # @param {[]} arr
-  # @returns {array}
-  ###
-  self.removeDup = (arr) ->
-    r = []
-    caro.each arr, (i, val) ->
-      r.push val if r.indexOf(val) < 0
-      return
-    arr = r
-
-  ###*
   # push value into array if not exists
   # @param {[]} arr
   # @param {...*} value

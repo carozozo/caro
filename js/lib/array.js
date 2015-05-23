@@ -32,22 +32,6 @@
   };
 
   /**
-   * remove duplicate-value in array
-   * @param {[]} arr
-   * @returns {array}
-   */
-  self.removeDup = function(arr) {
-    var r;
-    r = [];
-    caro.each(arr, function(i, val) {
-      if (r.indexOf(val) < 0) {
-        r.push(val);
-      }
-    });
-    return arr = r;
-  };
-
-  /**
    * push value into array if not exists
    * @param {[]} arr
    * @param {...*} value
