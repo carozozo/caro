@@ -19,7 +19,7 @@ describe 'TypeCheck', ->
   it 'isObjJson', ->
     r = caro.isObjJson('{"a":1}');
     r2 = caro.isObjJson('{"a": function(){}}');
-    r3 = caro.isObjJson({}, '{"a":1}');
+    r3 = caro.isObjJson({});
     r.should.be.true
     r2.should.be.false
     r3.should.be.false
@@ -30,9 +30,9 @@ describe 'TypeCheck', ->
     r.should.be.true
     r2.should.be.false
 
-  it 'isObjOrArr', ->
-    r = caro.isObjOrArr({});
-    r2 = caro.isObjOrArr({}, []);
+  it 'isObject', ->
+    r = caro.isObject({});
+    r2 = caro.isObject({}, []);
     r.should.be.true
     r2.should.be.true
 

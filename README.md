@@ -884,11 +884,11 @@ var r2 = caro.isJson('caro'); // false
 var r3 = caro.isJson('{"a":1}') // true
 var r4 = caro.isJson('{"a":1, "b": function(){}}') // false
 ```
-- **isObjJson(arg...) - 先判斷是否為 JSON，再判斷是否為 object 格式，當其中一個參數不符合時，回傳 false**
+- **isObjJson(arg...) - 先判斷是否為 JSON，再判斷是否為 object 格式**
 ```javascript
 var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
-var r3 = caro.isObjJson('{"a": 1}', {b: 2}) // false
+var r3 = caro.isObjJson('{{b: 2}) // false
 ```
 - **isObj(arg...) - 判斷是否為 object，當其中一個參數不符合時，回傳 false**
 ```javascript

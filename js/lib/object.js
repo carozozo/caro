@@ -87,7 +87,7 @@
     }
     caro.eachArgs(arguments, function(key, arg) {
       var results, val;
-      if (!r && caro.isObjOrArr(arg)) {
+      if (!r && caro.isObject(arg)) {
         r = arg;
         return true;
       }
@@ -115,7 +115,7 @@
     if (deep == null) {
       deep = false;
     }
-    if (!caro.isObjOrArr(arg)) {
+    if (!caro.isObject(arg)) {
       return arg;
     }
     r = caro.isArray(arg) ? [] : {};
@@ -284,7 +284,7 @@
     r = obj;
     caro.each(r, function(key, val) {
       var fnStr;
-      if (caro.isObjOrArr(val)) {
+      if (caro.isPlainObject(val)) {
         caro.coverFnToStrInObj(val);
       } else if (caro.isFunction(val)) {
         fnStr = val.toString();
