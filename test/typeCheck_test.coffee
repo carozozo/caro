@@ -9,7 +9,7 @@ describe 'TypeCheck', ->
   it 'isJson', ->
     r = caro.isJson(null);
     r2 = caro.isJson('caro');
-    r3 = caro.isJson(123, '{"a":1}')
+    r3 = caro.isJson('{"a":1}')
     r4 = caro.isJson('{"a": function(){}}')
     r.should.be.true
     r2.should.be.false

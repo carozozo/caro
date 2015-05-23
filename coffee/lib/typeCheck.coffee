@@ -26,19 +26,15 @@ do ->
 
   ###*
   # check if JSON, return false is one of them not match
-  # @param {...} arg
+  # @param {*} arg
   # @returns {boolean}
   ###
   self.isJson = (arg) ->
-    pass = true
-    caro.each arguments, (i, arg) ->
-      try
-        JSON.parse(arg);
-      catch e
-        pass = false;
-        return false
-      return
-    pass
+    try
+      JSON.parse(arg);
+    catch e
+      return false
+    true
 
   ###*
   # check if argument is object-like JSON, return false is one of them not match
