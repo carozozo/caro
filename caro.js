@@ -1,4 +1,4 @@
-/*! caro - v0.5.14 - 2015-05-23 */
+/*! caro - v0.5.15 - 2015-05-23 */
 (function(g) {
   'use strict';
   var caro;
