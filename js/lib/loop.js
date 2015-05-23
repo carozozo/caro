@@ -50,11 +50,11 @@
    * @param {function} cb callback-function for each key & value
    */
   self.each = function(arg, cb) {
-    var isArr, key, val;
-    isArr = Array.isArray(arg);
+    var isArray, key, val;
+    isArray = Array.isArray(arg);
     for (key in arg) {
       val = arg[key];
-      if (isArr) {
+      if (isArray) {
         key = parseInt(key);
       }
       if (cb(key, val) === false) {

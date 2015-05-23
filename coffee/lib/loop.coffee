@@ -34,9 +34,9 @@ do ->
   # @param {function} cb callback-function for each key & value
   ###
   self.each = (arg, cb) ->
-    isArr = Array.isArray(arg)
+    isArray = Array.isArray(arg)
     for key, val of arg
-      key = parseInt(key) if isArr
+      key = parseInt(key) if isArray
       break if cb(key, val) == false
     return
 

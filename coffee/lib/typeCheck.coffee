@@ -25,15 +25,6 @@ do ->
     int == arg
 
   ###*
-  # check if array, return false is one of them not match
-  # @param {...} arg
-  # @returns {*}
-  ###
-  self.isArr = (arg) ->
-    caro.checkIfPassCb arguments, (val) ->
-      Array.isArray val
-
-  ###*
   # check if null, return false is one of them not match
   # @param {...} arg
   # @returns {*}
@@ -80,7 +71,7 @@ do ->
     if !checkType(arguments, 'object')
       return false
     caro.checkIfPassCb arguments, (val) ->
-      !caro.isNull(val) and !caro.isArr(val)
+      !caro.isNull(val) and !caro.isArray(val)
 
   ###*
   # check if object or array, return false is one of them not match

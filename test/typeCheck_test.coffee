@@ -6,12 +6,6 @@ describe 'TypeCheck', ->
     r.should.be.true;
     r2.should.be.false;
 
-  it 'isArr', ->
-    r = caro.isArr([]);
-    r2 = caro.isArr([], {});
-    r.should.be.true;
-    r2.should.be.false;
-
   it 'isNull', ->
     r = caro.isNull(null);
     r2 = caro.isNull(null, {});

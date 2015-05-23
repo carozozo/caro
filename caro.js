@@ -647,7 +647,7 @@
         aStr.push(arg);
         return;
       }
-      if (caro.isArr(arg)) {
+      if (caro.isArray(arg)) {
         aArr.push(arg);
         return;
       }
@@ -1289,7 +1289,7 @@
       if (caro.isObj(arg)) {
         return caro.getObjLength(arg) < 1;
       }
-      if (caro.isArr(arg)) {
+      if (caro.isArray(arg)) {
         return arg.length < 1;
       }
       return !arg && arg !== 0 && arg !== false;
@@ -1451,7 +1451,7 @@
    * @returns {*}
    */
   self.coverToArr = function(arg) {
-    if (caro.isArr(arg)) {
+    if (caro.isArray(arg)) {
       return arg;
     }
     return [arg];
@@ -1574,7 +1574,7 @@
     if (caro.isObj(arg)) {
       return arg;
     }
-    if (caro.isArr(arg)) {
+    if (caro.isArray(arg)) {
       r = {};
       caro.each(arg, function(i, val) {
         return r[i] = val;
@@ -1889,11 +1889,11 @@
    * @param {function} cb callback-function for each key & value
    */
   self.each = function(arg, cb) {
-    var isArr, key, val;
-    isArr = Array.isArray(arg);
+    var isArray, key, val;
+    isArray = Array.isArray(arg);
     for (key in arg) {
       val = arg[key];
-      if (isArr) {
+      if (isArray) {
         key = parseInt(key);
       }
       if (cb(key, val) === false) {
@@ -1973,7 +1973,7 @@
     return r;
   };
   pushValToObjOrArr = function(arg, key, val) {
-    if (caro.isArr(arg)) {
+    if (caro.isArray(arg)) {
       arg.push(val);
     } else if (caro.isObj(arg)) {
       arg[key] = val;
@@ -2038,7 +2038,7 @@
     if (!caro.isObjOrArr(arg)) {
       return arg;
     }
-    r = caro.isArr(arg) ? [] : {};
+    r = caro.isArray(arg) ? [] : {};
     caro.extendObj(r, arg);
     if (deep) {
       caro.each(r, function(key, val) {
@@ -2706,7 +2706,7 @@
    */
   self.splitStr = function(str, splitter) {
     var mainSplit;
-    if (caro.isArr(str)) {
+    if (caro.isArray(str)) {
       return str;
     }
     if (!splitter) {
@@ -2807,17 +2807,6 @@
   };
 
   /**
-   * check if array, return false is one of them not match
-   * @param {...} arg
-   * @returns {*}
-   */
-  self.isArr = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      return Array.isArray(val);
-    });
-  };
-
-  /**
    * check if null, return false is one of them not match
    * @param {...} arg
    * @returns {*}
@@ -2877,7 +2866,7 @@
       return false;
     }
     return caro.checkIfPassCb(arguments, function(val) {
-      return !caro.isNull(val) && !caro.isArr(val);
+      return !caro.isNull(val) && !caro.isArray(val);
     });
   };
 
