@@ -42,7 +42,7 @@
         aArr.push(arg);
         return;
       }
-      if (caro.isNum(arg)) {
+      if (caro.isNumber(arg)) {
         aNum.push(arg);
         return;
       }
@@ -67,7 +67,7 @@
     if (status) {
       return status.size;
     }
-    if (caro.isNum(path)) {
+    if (caro.isNumber(path)) {
       return path;
     }
     return null;

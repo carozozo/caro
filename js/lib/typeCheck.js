@@ -19,29 +19,11 @@
   };
 
   /**
-   * check if function, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isFunction = function(arg) {
-    return checkType(arguments, 'function');
-  };
-
-  /**
-   * check if undefined, return false is one of them not match
-   * @param {...} arg
-   * @returns {*}
-   */
-  self.isUndef = function(arg) {
-    return checkType(arguments, 'undefined');
-  };
-
-  /**
    * check if number, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
-  self.isNum = function(arg) {
+  self.isNumber = function(arg) {
     return checkType(arguments, 'number');
   };
 
