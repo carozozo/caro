@@ -1,13 +1,14 @@
 (function(g) {
-  var caro;
+  var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
-  caro.isNode = (function() {
+  g.caro = caro;
+  isNode = (function() {
     return (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   })();
-  g.caro = caro;
-  if (caro.isNode) {
+  if (isNode) {
     caro = require('lodash');
     module.exports = caro;
-    return global.caro = caro;
+    global.caro = caro;
   }
+  return caro.isNode = isNode;
 })(this);

@@ -1,16 +1,17 @@
 /*! caro - v0.6.0 - 2015-05-23 */
 (function(g) {
-  var caro;
+  var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
-  caro.isNode = (function() {
+  g.caro = caro;
+  isNode = (function() {
     return (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   })();
-  g.caro = caro;
-  if (caro.isNode) {
+  if (isNode) {
     caro = require('lodash');
     module.exports = caro;
-    return global.caro = caro;
+    global.caro = caro;
   }
+  return caro.isNode = isNode;
 })(this);
 
 
@@ -638,7 +639,7 @@
         aFn.push(arg);
         return;
       }
-      if (caro.isBool(arg)) {
+      if (caro.isBoolean(arg)) {
         aBool.push(arg);
         return;
       }
@@ -1274,7 +1275,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      return !(!caro.isBool(arg) && !caro.isStr(arg) && !caro.isNum(arg));
+      return !(!caro.isBoolean(arg) && !caro.isStr(arg) && !caro.isNum(arg));
     });
   };
 
@@ -2000,7 +2001,7 @@
       deep = false;
     }
     r = null;
-    if (!caro.isBool(deep)) {
+    if (!caro.isBoolean(deep)) {
       r = deep;
       deep = false;
     }
@@ -2789,15 +2790,6 @@
       }
     });
     return pass;
-  };
-
-  /**
-   * check if boolean, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isBool = function(arg) {
-    return checkType(arguments, 'boolean');
   };
 
   /**

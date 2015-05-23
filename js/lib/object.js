@@ -81,7 +81,7 @@
       deep = false;
     }
     r = null;
-    if (!caro.isBool(deep)) {
+    if (!caro.isBoolean(deep)) {
       r = deep;
       deep = false;
     }

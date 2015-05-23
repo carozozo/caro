@@ -15,7 +15,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      return !(!caro.isBool(arg) && !caro.isStr(arg) && !caro.isNum(arg));
+      return !(!caro.isBoolean(arg) && !caro.isStr(arg) && !caro.isNum(arg));
     });
   };
 

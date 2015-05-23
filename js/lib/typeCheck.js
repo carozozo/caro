@@ -19,15 +19,6 @@
   };
 
   /**
-   * check if boolean, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isBool = function(arg) {
-    return checkType(arguments, 'boolean');
-  };
-
-  /**
    * check if string, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
