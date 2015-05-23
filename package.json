@@ -1,7 +1,7 @@
 {
   "name": "caro",
-  "version": "0.5.15",
-  "description": "The common-libraries for fast-coding on JavaScript / Node.js",
+  "version": "0.6.0",
+  "description": "The common-libraries depend on lodash",
   "author": {
     "name": "Caro.Huang",
     "email": "carozozo@yahoo.com.tw"
