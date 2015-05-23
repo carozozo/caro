@@ -15,27 +15,11 @@ do ->
     pass
 
   ###*
-  # check if function, return false is one of them not match
-  # @param {...} arg
-  # @returns {boolean}
-  ###
-  self.isFunction = (arg) ->
-    checkType arguments, 'function'
-
-  ###*
-  # check if undefined, return false is one of them not match
-  # @param {...} arg
-  # @returns {*}
-  ###
-  self.isUndef = (arg) ->
-    checkType arguments, 'undefined'
-
-  ###*
   # check if number, return false is one of them not match
   # @param {...} arg
   # @returns {boolean}
   ###
-  self.isNum = (arg) ->
+  self.isNumber = (arg) ->
     checkType arguments, 'number'
 
   ###*

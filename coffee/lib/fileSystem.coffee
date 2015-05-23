@@ -48,7 +48,7 @@ do ->
       if caro.isArr(arg)
         aArr.push arg
         return
-      if caro.isNum(arg)
+      if caro.isNumber(arg)
         aNum.push arg
         return
       return
@@ -63,7 +63,7 @@ do ->
   getFileSize = (path) ->
     status = caro.getFsStat(path)
     return status.size if status
-    return path if caro.isNum(path)
+    return path if caro.isNumber(path)
     null
 
   ###*

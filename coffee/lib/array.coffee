@@ -44,7 +44,7 @@ do ->
   self.sumOfArr = (arr, force = false) ->
     sum = 0
     caro.each arr, (i, val) ->
-      if caro.isNum(val)
+      if caro.isNumber(val)
         sum += val
       if force
         sum += parseFloat(val) or 0
