@@ -15,14 +15,6 @@ do ->
     pass
 
   ###*
-  # check if string, return false is one of them not match
-  # @param {...} arg
-  # @returns {boolean}
-  ###
-  self.isStr = (arg) ->
-    checkType arguments, 'string'
-
-  ###*
   # check if function, return false is one of them not match
   # @param {...} arg
   # @returns {boolean}

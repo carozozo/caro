@@ -42,7 +42,7 @@ do ->
       if caro.isBoolean(arg)
         aBool.push arg
         return
-      if caro.isStr(arg)
+      if caro.isString(arg)
         aStr.push arg
         return
       if caro.isArr(arg)
@@ -407,7 +407,7 @@ do ->
     cb = args.fn[0]
     force = args.bool[0]
     aPathMap = do ->
-      if caro.isStr(path, newPath)
+      if caro.isString(path) and caro.isString(newPath)
         return [
           path
           newPath

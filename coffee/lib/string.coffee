@@ -14,7 +14,7 @@ do ->
     start = caro.coverToInt(opt.start)
     end = if caro.coverToInt(opt.end) > 0 then caro.coverToInt(opt.end) else null
     force = opt.force != false
-    if !caro.isStr(str)
+    if !caro.isString(str)
       if !force
         return str
       str = ''
@@ -107,7 +107,7 @@ do ->
   # @returns {*}
   ###
   self.hasHead = (str, str2) ->
-    return false if !caro.isStr(str, str2)
+    return false if !caro.isString(str)
     str.indexOf(str2) == 0
 
   ###*
@@ -117,7 +117,7 @@ do ->
   # @returns {*}
   ###
   self.addHead = (str, addStr) ->
-    return str if !caro.isStr(str, addStr)
+    return str if !caro.isString(str)
     str = addStr + str if !caro.hasHead(str, addStr)
     str
 
@@ -128,7 +128,7 @@ do ->
   # @returns {*}
   ###
   self.hasTail = (str, str2) ->
-    return false if !caro.isStr(str, str2)
+    return false if !caro.isString(str)
     index = str.lastIndexOf(str2)
     strLength = str.length
     strLength2 = str2.length
@@ -141,7 +141,7 @@ do ->
   # @returns {*}
   ###
   self.addTail = (str, addStr) ->
-    return str if !caro.isStr(str, addStr)
+    return str if !caro.isString(str)
     str += addStr if !caro.hasTail(str, addStr)
     str
 
@@ -151,7 +151,7 @@ do ->
   # @returns {string}
   ###
   self.wrapToBr = (str) ->
-    return str if !caro.isStr(str)
+    return str if !caro.isString(str)
     str = str.replace(/\r\n/g, '<br />')
     str = str.replace(/\n/g, '<br />')
     str = str.replace(/\r/g, '<br />')
@@ -172,7 +172,7 @@ do ->
   # @returns {*}
   ###
   self.splitByWrap = (str) ->
-    return str if !caro.isStr(str)
+    return str if !caro.isString(str)
     aWrap = [
       '\r\n'
       '\r'
@@ -186,7 +186,7 @@ do ->
   # @returns {*|string}
   ###
   self.escapeRegExp = (str) ->
-    if !caro.isStr(str)
+    if !caro.isString(str)
       return str
     str.replace /([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1'
 
@@ -199,7 +199,7 @@ do ->
   ###
   self.replaceAll = (str, find, replace) ->
     isRegExp = caro.isRegExp(find)
-    return str if !caro.isStr(str, find, replace) and !isRegExp
+    return str if !caro.isString(str, find, replace) and !isRegExp
     regex = find
     if !isRegExp
       find = caro.escapeRegExp(find)
@@ -212,7 +212,7 @@ do ->
   # @returns {string}
   ###
   self.insertBlankBefUpper = (str) ->
-    return str if !caro.isStr(str)
+    return str if !caro.isString(str)
     r = []
     aStr = str.split('')
     caro.each aStr, (i, val) ->
@@ -265,7 +265,7 @@ do ->
   # @returns {}
   ###
   self.trimStr = (str, char, side) ->
-    char = if caro.isStr(char) then char else ' '
+    char = if caro.isString(char) then char else ' '
     char = caro.escapeRegExp(char)
     if side == true or side != false
       regExpFirst = new RegExp('^' + char + '+')
@@ -290,16 +290,16 @@ do ->
     mainSplit = splitter[0]
     if(mainSplit.length > 1)
       caro.each splitter, (j, eachSplit) ->
-        return if !caro.isStr(eachSplit)
+        return if !caro.isString(eachSplit)
         return if mainSplit < 2
         if mainSplit.length >= eachSplit.length
           mainSplit = eachSplit
         return
-    return str if !caro.isStr(mainSplit)
+    return str if !caro.isString(mainSplit)
     # replace all splitter to mainSplitter
     # e.g. string='caro.huang, is handsome'; splitter=['.', ',']; => string='caro,huang, is handsome'
     caro.each splitter, (i, eachSplit) ->
-      return if !caro.isStr(eachSplit)
+      return if !caro.isString(eachSplit)
       str = caro.replaceAll(str, eachSplit, mainSplit)
       return
     str.split mainSplit

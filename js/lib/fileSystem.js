@@ -34,7 +34,7 @@
         aBool.push(arg);
         return;
       }
-      if (caro.isStr(arg)) {
+      if (caro.isString(arg)) {
         aStr.push(arg);
         return;
       }
@@ -511,7 +511,7 @@
     cb = args.fn[0];
     force = args.bool[0];
     aPathMap = (function() {
-      if (caro.isStr(path, newPath)) {
+      if (caro.isString(path) && caro.isString(newPath)) {
         return [path, newPath];
       }
       return args.arr;

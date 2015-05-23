@@ -19,15 +19,6 @@
   };
 
   /**
-   * check if string, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isStr = function(arg) {
-    return checkType(arguments, 'string');
-  };
-
-  /**
    * check if function, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}

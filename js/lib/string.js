@@ -14,7 +14,7 @@
     start = caro.coverToInt(opt.start);
     end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
     force = opt.force !== false;
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       if (!force) {
         return str;
       }
@@ -126,7 +126,7 @@
    * @returns {*}
    */
   self.hasHead = function(str, str2) {
-    if (!caro.isStr(str, str2)) {
+    if (!caro.isString(str)) {
       return false;
     }
     return str.indexOf(str2) === 0;
@@ -139,7 +139,7 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (!caro.isStr(str, addStr)) {
+    if (!caro.isString(str)) {
       return str;
     }
     if (!caro.hasHead(str, addStr)) {
@@ -156,7 +156,7 @@
    */
   self.hasTail = function(str, str2) {
     var index, strLength, strLength2;
-    if (!caro.isStr(str, str2)) {
+    if (!caro.isString(str)) {
       return false;
     }
     index = str.lastIndexOf(str2);
@@ -172,7 +172,7 @@
    * @returns {*}
    */
   self.addTail = function(str, addStr) {
-    if (!caro.isStr(str, addStr)) {
+    if (!caro.isString(str)) {
       return str;
     }
     if (!caro.hasTail(str, addStr)) {
@@ -187,7 +187,7 @@
    * @returns {string}
    */
   self.wrapToBr = function(str) {
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     str = str.replace(/\r\n/g, '<br />');
@@ -214,7 +214,7 @@
    */
   self.splitByWrap = function(str) {
     var aWrap;
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     aWrap = ['\r\n', '\r', '\n'];
@@ -227,7 +227,7 @@
    * @returns {*|string}
    */
   self.escapeRegExp = function(str) {
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
@@ -243,7 +243,7 @@
   self.replaceAll = function(str, find, replace) {
     var isRegExp, regex;
     isRegExp = caro.isRegExp(find);
-    if (!caro.isStr(str, find, replace) && !isRegExp) {
+    if (!caro.isString(str, find, replace) && !isRegExp) {
       return str;
     }
     regex = find;
@@ -261,7 +261,7 @@
    */
   self.insertBlankBefUpper = function(str) {
     var aStr, r;
-    if (!caro.isStr(str)) {
+    if (!caro.isString(str)) {
       return str;
     }
     r = [];
@@ -326,7 +326,7 @@
    */
   self.trimStr = function(str, char, side) {
     var regExpFirst, regExpLast;
-    char = caro.isStr(char) ? char : ' ';
+    char = caro.isString(char) ? char : ' ';
     char = caro.escapeRegExp(char);
     if (side === true || side !== false) {
       regExpFirst = new RegExp('^' + char + '+');
@@ -357,7 +357,7 @@
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
       caro.each(splitter, function(j, eachSplit) {
-        if (!caro.isStr(eachSplit)) {
+        if (!caro.isString(eachSplit)) {
           return;
         }
         if (mainSplit < 2) {
@@ -368,11 +368,11 @@
         }
       });
     }
-    if (!caro.isStr(mainSplit)) {
+    if (!caro.isString(mainSplit)) {
       return str;
     }
     caro.each(splitter, function(i, eachSplit) {
-      if (!caro.isStr(eachSplit)) {
+      if (!caro.isString(eachSplit)) {
         return;
       }
       str = caro.replaceAll(str, eachSplit, mainSplit);

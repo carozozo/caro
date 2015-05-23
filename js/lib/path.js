@@ -18,7 +18,7 @@
    * @returns {String}
    */
   self.setAbsolutePath = function(path) {
-    if (!caro.isStr(path)) {
+    if (!caro.isString(path)) {
       return false;
     }
     return absolutePath = caro.normalizePath(path);
