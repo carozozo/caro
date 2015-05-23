@@ -35,21 +35,6 @@ caro.isArr(['caro']); // true
 
 ### Array
 [Back to Index](#index)
-- **sortArr(arr [sort=true]) - 陣列排序**
-```javascript
-var r = caro.sortArr([1, 3, 2, null]); // [ null, 1, 2, 3 ]
-var r2 = caro.sortArr([1, 3, 2, null], false); // [ 3, 2, 1, null ]
-```
-- **sortByObjKey(arr, key [sort=true]) - 則可指定物件的 key 值排序**
-```javascript
-var obj = {index: 0, name: 'caro'};
-var obj2 = {index: 1, name: 'huang'};
-var obj3 = {index: 2, name: 'zozo'};
-var arr = [obj, obj3, obj2];
-caro.sortByObjKey(arr, 'index'); // [ { index: 0, name: 'caro' }, { index: 1, name: 'huang' }, { index: 2, name: 'zozo' } ]
-var arr2 = [obj, obj3, obj2];
-caro.sortByObjKey(arr, 'index', false); // [ { index: 2, name: 'zozo' }, { index: 1, name: 'huang' },  { index: 0, name: 'caro' } ]
-```
 - **sumOfArr(arr [force=false]) - 加總陣列中的數字**
 ```javascript
 var arr = [1, 2, '5', null, {}];
