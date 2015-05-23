@@ -15,22 +15,14 @@ do ->
     pass
 
   ###*
-  # check if number, return false is one of them not match
-  # @param {...} arg
+  # check if integer
+  # @param {*} arg
   # @returns {boolean}
   ###
-  self.isNumber = (arg) ->
-    checkType arguments, 'number'
-
-  ###*
-  # check if integer, return false is one of them not match
-  # @param {...} arg
-  # @returns {boolean}
-  ###
-  self.isInt = (arg) ->
-    caro.checkIfPassCb arguments, (val) ->
-      int = parseInt(val)
-      int == val
+  self.isInteger = (arg) ->
+    return false if !caro.isNumber arg
+    int = parseInt(arg)
+    int == arg
 
   ###*
   # check if array, return false is one of them not match

@@ -19,25 +19,17 @@
   };
 
   /**
-   * check if number, return false is one of them not match
-   * @param {...} arg
+   * check if integer
+   * @param {*} arg
    * @returns {boolean}
    */
-  self.isNumber = function(arg) {
-    return checkType(arguments, 'number');
-  };
-
-  /**
-   * check if integer, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isInt = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      var int;
-      int = parseInt(val);
-      return int === val;
-    });
+  self.isInteger = function(arg) {
+    var int;
+    if (!caro.isNumber(arg)) {
+      return false;
+    }
+    int = parseInt(arg);
+    return int === arg;
   };
 
   /**

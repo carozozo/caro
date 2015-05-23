@@ -1,8 +1,8 @@
 do ->
 describe 'TypeCheck', ->
-  it 'isInt', ->
-    r = caro.isInt(123);
-    r2 = caro.isInt(333.456, 12);
+  it 'isInteger', ->
+    r = caro.isInteger(123);
+    r2 = caro.isInteger(333.456, 12);
     r.should.be.true;
     r2.should.be.false;
 
