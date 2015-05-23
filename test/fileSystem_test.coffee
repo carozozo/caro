@@ -6,8 +6,8 @@ describe.skip 'FileSystem', ->
 
   describe 'File', ->
     it 'readFileCaro', ->
-    r = caro.readFileCaro(__dirname + '/test.html');
-    r.should.be.string
+      r = caro.readFileCaro(__dirname + '/test.html');
+      r.should.be.string
 
     it 'writeFileCaro', ->
       data = caro.readFileCaro(__dirname + '/test.html');

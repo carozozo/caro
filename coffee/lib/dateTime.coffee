@@ -3,8 +3,8 @@
 # @author Caro.Huang
 ###
 do ->
-  # https://www.npmjs.com/package/moment
-  nMoment= if caro.isNode then require 'moment' else moment
+# https://www.npmjs.com/package/moment
+  nMoment = if caro.isNode then require 'moment' else if moment? then moment else null
   return if !nMoment?
   self = caro
 

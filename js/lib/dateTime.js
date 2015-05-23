@@ -5,7 +5,7 @@
  */
 (function() {
   var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnDateTimeStr, self;
-  nMoment = caro.isNode ? require('moment') : moment;
+  nMoment = caro.isNode ? require('moment') : typeof moment !== "undefined" && moment !== null ? moment : null;
   if (nMoment == null) {
     return;
   }
