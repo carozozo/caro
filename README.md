@@ -116,7 +116,7 @@ caro.log3('2', null); // '2null'
 
 ### DateTime
 [Back to Index](#index)
-(由 [moment](https://www.npmjs.com/package/moment) 延伸，可透過 caro.nMoment 使用 moment)
+Depend on [moment](https://www.npmjs.com/package/moment
 - **getDefaultLocale(locale) - 取得目前預設的語系(en)**
 ```javascript
 caro.getDefaultLocale(); // 'en'

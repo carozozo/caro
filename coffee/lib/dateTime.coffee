@@ -3,9 +3,11 @@
 # @author Caro.Huang
 ###
 do ->
-  return if !caro.nMoment?
+  # https://www.npmjs.com/package/moment
+  nMoment= if caro.isNode then require 'moment' else moment
+  return if !nMoment?
   self = caro
-  nMoment = self.nMoment
+
   defLocale = 'en'
   # save the custom format-type, e.g { en:{date:'MM/DD/YYYY'}, zh-tw :{date:'YYYY-MM-DD'} }
   oShorthandFormat = {}

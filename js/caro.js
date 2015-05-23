@@ -1,5 +1,4 @@
 (function(g) {
-  'use strict';
   var caro;
   caro = {};
   caro.isNode = (function() {
@@ -11,13 +10,3 @@
     return global.caro = caro;
   }
 })(this);
-
-(function() {
-  if (caro.isNode) {
-    caro.nMoment = require('moment');
-  } else {
-    if (typeof moment !== "undefined" && moment !== null) {
-      caro.nMoment = moment;
-    }
-  }
-})();
