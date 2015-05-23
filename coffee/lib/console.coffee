@@ -11,7 +11,7 @@ do ->
     msg = caro.cloneObj(msg)
     variable = caro.cloneObj(variable)
     msg = caro.coverToStr(msg)
-    variable = '' if caro.isUndef(variable)
+    variable = '' if caro.isUndefined(variable)
     variable = caro.coverToStr(variable)
     msg += variable
     msg

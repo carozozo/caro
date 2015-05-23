@@ -271,7 +271,7 @@
     msg = caro.cloneObj(msg);
     variable = caro.cloneObj(variable);
     msg = caro.coverToStr(msg);
-    if (caro.isUndef(variable)) {
+    if (caro.isUndefined(variable)) {
       variable = '';
     }
     variable = caro.coverToStr(variable);
