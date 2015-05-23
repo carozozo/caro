@@ -57,43 +57,11 @@
     var e, r;
     try {
       r = JSON.parse(arg);
+      console.log('r=', r);
       return caro.isObject(r);
     } catch (_error) {
       e = _error;
     }
     return false;
-  };
-
-  /**
-   * check if RegExp, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isRegExp = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      return val instanceof RegExp;
-    });
-  };
-
-  /* -------------------- Node.js only -------------------- */
-  if (!caro.isNode) {
-    return;
-  }
-
-  /**
-   * check if Buffer, return false is one of them not match
-   * @param {...} arg
-   * @returns {Boolean}
-   */
-  self.isBuf = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      var e;
-      try {
-        return Buffer.isBuffer(val);
-      } catch (_error) {
-        e = _error;
-        return false;
-      }
-    });
   };
 })();
