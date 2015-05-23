@@ -1,10 +1,10 @@
 ((g) ->
   caro = if _? then _ else {}
-  caro.isNode = do ->
-    return global? and module? and exports?
   g.caro = caro
-  if caro.isNode
+  isNode = do ->
+    return global? and module? and exports?
+  if isNode
     caro = require 'lodash'
     module.exports = caro
     global.caro = caro
-) this
+  caro.isNode = isNode) this

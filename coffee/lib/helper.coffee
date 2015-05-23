@@ -13,7 +13,7 @@ do ->
   ###
   self.isBasicVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      !(!caro.isBool(arg) and !caro.isStr(arg) and !caro.isNum(arg))
+      !(!caro.isBoolean(arg) and !caro.isStr(arg) and !caro.isNum(arg))
 
   ###*
   # check if value is empty ( {} | [] | null | '' | undefined )

@@ -1,11 +1,5 @@
 do ->
 describe 'TypeCheck', ->
-  it 'isBool', ->
-    r = caro.isBool(true);
-    r2 = caro.isBool(false, undefined);
-    r.should.be.true;
-    r2.should.be.false;
-
   it 'isStr', ->
     r = caro.isStr('caro');
     r2 = caro.isStr(undefined, 'caro');

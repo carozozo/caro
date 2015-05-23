@@ -39,7 +39,7 @@ do ->
       if caro.isFn(arg)
         aFn.push arg
         return
-      if caro.isBool(arg)
+      if caro.isBoolean(arg)
         aBool.push arg
         return
       if caro.isStr(arg)

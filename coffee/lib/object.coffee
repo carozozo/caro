@@ -65,7 +65,7 @@ do ->
   ###
   self.extendObj = (deep = false, arg) ->
     r = null
-    if !caro.isBool(deep)
+    if !caro.isBoolean(deep)
       r = deep
       deep = false
     caro.eachArgs arguments, (key, arg) ->
