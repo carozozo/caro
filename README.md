@@ -1,10 +1,12 @@
 # Caro.js
-General libraries for JavaScript / Node.js by Caro
+General libraries for JavaScript / Node.js depend on lodash
 
 ## Install and Usage
 
 ### In Html
 ```html
+<!-- https://lodash.com/ -->
+<script src="/js/lodash.js"></script> 
 <!-- http://momentjs.com/ -->
 <script src="/js/moment-with-locale.js"></script> <!-- if you want to use DateTime -->
 <script src="/js/caro.js"></script>
