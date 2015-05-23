@@ -1,6 +1,5 @@
 /*! caro - v0.5.15 - 2015-05-23 */
 (function(g) {
-  'use strict';
   var caro;
   caro = {};
   caro.isNode = (function() {
@@ -12,16 +11,6 @@
     return global.caro = caro;
   }
 })(this);
-
-(function() {
-  if (caro.isNode) {
-    caro.nMoment = require('moment');
-  } else {
-    if (typeof moment !== "undefined" && moment !== null) {
-      caro.nMoment = moment;
-    }
-  }
-})();
 
 
 /**
@@ -354,11 +343,11 @@
  */
 (function() {
   var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnDateTimeStr, self;
-  if (caro.nMoment == null) {
+  nMoment = caro.isNode ? require('moment') : moment;
+  if (nMoment == null) {
     return;
   }
   self = caro;
-  nMoment = self.nMoment;
   defLocale = 'en';
   oShorthandFormat = {};
   getDateTimeObj = function(dateTime) {

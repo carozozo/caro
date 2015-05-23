@@ -5,11 +5,11 @@
  */
 (function() {
   var coverFormatType, coverLocale, defLocale, getDateTimeObj, nMoment, oShorthandFormat, returnDateTimeStr, self;
-  if (caro.nMoment == null) {
+  nMoment = caro.isNode ? require('moment') : moment;
+  if (nMoment == null) {
     return;
   }
   self = caro;
-  nMoment = self.nMoment;
   defLocale = 'en';
   oShorthandFormat = {};
   getDateTimeObj = function(dateTime) {
