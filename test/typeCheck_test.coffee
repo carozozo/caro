@@ -1,17 +1,5 @@
 do ->
 describe 'TypeCheck', ->
-  it 'isUndef', ->
-    r = caro.isUndef(undefined);
-    r2 = caro.isUndef(undefined, null);
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isNum', ->
-    r = caro.isNum(123, 33.56);
-    r2 = caro.isNum(333, 'caro');
-    r.should.be.true;
-    r2.should.be.false;
-
   it 'isInt', ->
     r = caro.isInt(123);
     r2 = caro.isInt(333.456, 12);
