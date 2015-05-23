@@ -87,7 +87,7 @@
     }
     sum = 0;
     caro.each(arr, function(i, val) {
-      if (caro.isNum(val)) {
+      if (caro.isNumber(val)) {
         sum += val;
       }
       if (force) {

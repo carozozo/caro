@@ -1,4 +1,4 @@
-/*! caro - v0.6.0 - 2015-05-23 */
+/*! caro - v0.6.1 - 2015-05-23 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -103,7 +103,7 @@
     }
     sum = 0;
     caro.each(arr, function(i, val) {
-      if (caro.isNum(val)) {
+      if (caro.isNumber(val)) {
         sum += val;
       }
       if (force) {
@@ -651,7 +651,7 @@
         aArr.push(arg);
         return;
       }
-      if (caro.isNum(arg)) {
+      if (caro.isNumber(arg)) {
         aNum.push(arg);
         return;
       }
@@ -676,7 +676,7 @@
     if (status) {
       return status.size;
     }
-    if (caro.isNum(path)) {
+    if (caro.isNumber(path)) {
       return path;
     }
     return null;
@@ -1275,7 +1275,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNum(arg));
+      return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNumber(arg));
     });
   };
 
@@ -2793,29 +2793,11 @@
   };
 
   /**
-   * check if function, return false is one of them not match
-   * @param {...} arg
-   * @returns {boolean}
-   */
-  self.isFunction = function(arg) {
-    return checkType(arguments, 'function');
-  };
-
-  /**
-   * check if undefined, return false is one of them not match
-   * @param {...} arg
-   * @returns {*}
-   */
-  self.isUndef = function(arg) {
-    return checkType(arguments, 'undefined');
-  };
-
-  /**
    * check if number, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
-  self.isNum = function(arg) {
+  self.isNumber = function(arg) {
     return checkType(arguments, 'number');
   };
 
