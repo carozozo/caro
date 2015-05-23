@@ -42,12 +42,11 @@ do ->
   # @returns {boolean}
   ###
   self.isObjJson = (arg) ->
-    caro.checkIfPassCb arguments, (val) ->
-      try
-        r = JSON.parse(val);
-        return caro.isObj(r)
-      catch e
-        return false
+    try
+      r = JSON.parse(arg);
+      return caro.isObj(r)
+    catch e
+    false
 
   ###*
   # check if object, return false is one of them not match

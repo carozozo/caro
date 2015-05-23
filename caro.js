@@ -2828,16 +2828,14 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    return caro.checkIfPassCb(arguments, function(val) {
-      var e, r;
-      try {
-        r = JSON.parse(val);
-        return caro.isObj(r);
-      } catch (_error) {
-        e = _error;
-        return false;
-      }
-    });
+    var e, r;
+    try {
+      r = JSON.parse(arg);
+      return caro.isObj(r);
+    } catch (_error) {
+      e = _error;
+    }
+    return false;
   };
 
   /**
