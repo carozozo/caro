@@ -23,7 +23,7 @@
    * @param {...} arg
    * @returns {boolean}
    */
-  self.isFn = function(arg) {
+  self.isFunction = function(arg) {
     return checkType(arguments, 'function');
   };
 

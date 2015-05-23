@@ -219,7 +219,7 @@ do ->
     caro.each r, (key, val) ->
       if caro.isObjOrArr(val)
         caro.coverFnToStrInObj(val)
-      else if caro.isFn(val)
+      else if caro.isFunction(val)
         fnStr = val.toString()
         if replaceWrap
           fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g, '');

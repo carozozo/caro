@@ -75,7 +75,7 @@
     if (needAllPass == null) {
       needAllPass = true;
     }
-    if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFn(checkFn)) {
+    if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFunction(checkFn)) {
       return false;
     }
     caro.each(arr, function(i, arg) {
@@ -105,7 +105,7 @@
       }
       otherArgs.push(arg);
     });
-    if (caro.isFn(fn)) {
+    if (caro.isFunction(fn)) {
       r = fn.apply(fn, otherArgs);
     }
     return r;
@@ -118,7 +118,7 @@
    */
   self.getFnName = function(fn) {
     var r;
-    if (!caro.isFn(fn)) {
+    if (!caro.isFunction(fn)) {
       return null;
     }
     r = fn.toString();
@@ -232,7 +232,7 @@
       }
       return '';
     }
-    if (caro.isFn(arg.toString)) {
+    if (caro.isFunction(arg.toString)) {
       return arg.toString();
     }
     if (!force) {

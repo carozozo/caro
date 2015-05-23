@@ -36,7 +36,7 @@ do ->
     aArr = []
     aNum = []
     caro.each args, (i, arg) ->
-      if caro.isFn(arg)
+      if caro.isFunction(arg)
         aFn.push arg
         return
       if caro.isBoolean(arg)

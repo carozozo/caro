@@ -19,7 +19,7 @@ do ->
   # @param {...} arg
   # @returns {boolean}
   ###
-  self.isFn = (arg) ->
+  self.isFunction = (arg) ->
     checkType arguments, 'function'
 
   ###*
