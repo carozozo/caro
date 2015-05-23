@@ -57,7 +57,6 @@
     var e, r;
     try {
       r = JSON.parse(arg);
-      console.log('r=', r);
       return caro.isObject(r);
     } catch (_error) {
       e = _error;

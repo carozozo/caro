@@ -114,45 +114,6 @@
   };
 
   /**
-   * remove item from array by index
-   * @param {[]} arr
-   * @param {...number} index
-   * @returns {array}
-   */
-  self.removeByIndex = function(arr, index) {
-    var count;
-    count = 0;
-    caro.eachArgs(arguments, function(i, index) {
-      if (i === 0) {
-        return;
-      }
-      index -= count;
-      arr.splice(index, 1);
-      return count++;
-    });
-    return arr;
-  };
-
-  /**
-   * remove the item from array by value
-   * @param {[]} arr
-   * @param {...*} value
-   * @returns {array}
-   */
-  self.removeByArrVal = function(arr, val) {
-    var args, r;
-    args = caro.objToArr(arguments);
-    args.shift();
-    r = [];
-    caro.each(arr, function(i, val) {
-      if (args.indexOf(val) < 0) {
-        r.push(val);
-      }
-    });
-    return arr = r;
-  };
-
-  /**
    * remove duplicate-value in array
    * @param {[]} arr
    * @returns {array}
@@ -2799,7 +2760,6 @@
     var e, r;
     try {
       r = JSON.parse(arg);
-      console.log('r=', r);
       return caro.isObject(r);
     } catch (_error) {
       e = _error;

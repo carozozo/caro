@@ -56,15 +56,6 @@ var arr = [1, 2, '5', null, {}];
 var r = caro.sumOfArr(arr); // 3
 var r2 = caro.sumOfArr(arr, true); // 11
 ```
-- **removeByIndex(arr, index...) - 依 index 移除陣列中的元素**
-```javascript
-var r = caro.removeByIndex([1, 2, 3, 4], 0, 2); // [ 2, 4 ]
-```
-- **removeByArrVal(arr, val...) - 依 value 移除陣列中的元素**
-```javascript
-var arr = [1, undefined, 3, undefined, null, 4];
-var r = caro.removeByArrVal(arr, undefined, null); // [ 1, 3, 4 ]
-```
 - **removeDup(arr) - 移除陣列中重覆的值**
 ```javascript
 var arr = [1, 5, {}, 5, undefined, null, {}, null];
