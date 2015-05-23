@@ -26,7 +26,7 @@
     aArr = [];
     aNum = [];
     caro.each(args, function(i, arg) {
-      if (caro.isFn(arg)) {
+      if (caro.isFunction(arg)) {
         aFn.push(arg);
         return;
       }

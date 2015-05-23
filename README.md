@@ -872,11 +872,6 @@ var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 
 ### ☆TypeCheck
 [Back to Index](#index)
-- **isFn(arg...) - 判斷是否為 function，當其中一個參數不符合時，回傳 false**
-```javascript
-var r = caro.isFn(function () {}); // true
-var r2 = caro.isFn(function () {}, 123); // false
-```
 - **isNum(arg...) - 判斷是否為 number，當其中一個參數不符合時，回傳 false**
 ```javascript
 var r = caro.isNum(1); // true

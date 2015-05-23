@@ -635,7 +635,7 @@
     aArr = [];
     aNum = [];
     caro.each(args, function(i, arg) {
-      if (caro.isFn(arg)) {
+      if (caro.isFunction(arg)) {
         aFn.push(arg);
         return;
       }
@@ -1335,7 +1335,7 @@
     if (needAllPass == null) {
       needAllPass = true;
     }
-    if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFn(checkFn)) {
+    if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFunction(checkFn)) {
       return false;
     }
     caro.each(arr, function(i, arg) {
@@ -1365,7 +1365,7 @@
       }
       otherArgs.push(arg);
     });
-    if (caro.isFn(fn)) {
+    if (caro.isFunction(fn)) {
       r = fn.apply(fn, otherArgs);
     }
     return r;
@@ -1378,7 +1378,7 @@
    */
   self.getFnName = function(fn) {
     var r;
-    if (!caro.isFn(fn)) {
+    if (!caro.isFunction(fn)) {
       return null;
     }
     r = fn.toString();
@@ -1492,7 +1492,7 @@
       }
       return '';
     }
-    if (caro.isFn(arg.toString)) {
+    if (caro.isFunction(arg.toString)) {
       return arg.toString();
     }
     if (!force) {
@@ -2206,7 +2206,7 @@
       var fnStr;
       if (caro.isObjOrArr(val)) {
         caro.coverFnToStrInObj(val);
-      } else if (caro.isFn(val)) {
+      } else if (caro.isFunction(val)) {
         fnStr = val.toString();
         if (replaceWrap) {
           fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g, '');
@@ -2797,7 +2797,7 @@
    * @param {...} arg
    * @returns {boolean}
    */
-  self.isFn = function(arg) {
+  self.isFunction = function(arg) {
     return checkType(arguments, 'function');
   };
 

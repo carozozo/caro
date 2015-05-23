@@ -56,7 +56,7 @@ do ->
   # @returns {boolean}
   ###
   self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
-    return false if !Array.isArray(arr) and typeof arr != 'object' or !caro.isFn(checkFn)
+    return false if !Array.isArray(arr) and typeof arr != 'object' or !caro.isFunction(checkFn)
     caro.each arr, (i, arg) ->
       result = checkFn(arg)
       # need all pass, but result is false || no-need all pass, and result is true
@@ -79,7 +79,7 @@ do ->
       return if i < 1
       otherArgs.push arg
       return
-    r = fn.apply(fn, otherArgs) if caro.isFn(fn)
+    r = fn.apply(fn, otherArgs) if caro.isFunction(fn)
     r
 
   ###*
@@ -88,7 +88,7 @@ do ->
   # @returns {string|*|String}
   ###
   self.getFnName = (fn) ->
-    return null if !caro.isFn(fn)
+    return null if !caro.isFunction(fn)
     r = fn.toString()
     r = r.substr('function '.length)
     r = r.substr(0, r.indexOf('('))
@@ -175,7 +175,7 @@ do ->
         arg = caro.replaceAll(arg, '\\n', '\n')
         return arg
       return ''
-    return arg.toString() if caro.isFn(arg.toString)
+    return arg.toString() if caro.isFunction(arg.toString)
     return arg if !force
     ''
 
