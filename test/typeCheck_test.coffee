@@ -2,7 +2,7 @@ do ->
 describe 'TypeCheck', ->
   it 'isInteger', ->
     r = caro.isInteger(123);
-    r2 = caro.isInteger(333.456, 12);
+    r2 = caro.isInteger(333.456);
     r.should.be.true;
     r2.should.be.false;
 
