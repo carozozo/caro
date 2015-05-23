@@ -32,19 +32,6 @@ describe 'Array', ->
     r.should.equal 3
     r2.should.equal 11
 
-  it 'removeByIndex', ->
-    arr = [1, 2, 3, 4];
-    arr2 = [1, 2, 3, 4, 5];
-    r = caro.removeByIndex arr, 0, 2
-    r2 = caro.removeByIndex arr2, 1, 3, 4
-    r.should.eql [2, 4]
-    r2.should.eql [1, 3]
-
-  it 'removeByArrVal', ->
-    arr = [1, undefined, 3, undefined, null, 4]
-    r = caro.removeByArrVal(arr, undefined, null)
-    r.should.eql [1, 3, 4]
-
   it 'removeDup', ->
     arr = [1, 5, {}, 5, undefined, null, {}, null];
     r = caro.removeDup(arr);

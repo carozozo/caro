@@ -52,37 +52,6 @@ do ->
     sum
 
   ###*
-  # remove item from array by index
-  # @param {[]} arr
-  # @param {...number} index
-  # @returns {array}
-  ###
-  self.removeByIndex = (arr, index) ->
-    count = 0
-    caro.eachArgs(arguments, (i, index)->
-      return if i == 0
-      index -= count
-      arr.splice(index, 1)
-      count++
-    )
-    arr
-
-  ###*
-  # remove the item from array by value
-  # @param {[]} arr
-  # @param {...*} value
-  # @returns {array}
-  ###
-  self.removeByArrVal = (arr, val) ->
-    args = caro.objToArr(arguments)
-    args.shift()
-    r = []
-    caro.each arr, (i, val) ->
-      r.push val if args.indexOf(val) < 0
-      return
-    arr = r
-
-  ###*
   # remove duplicate-value in array
   # @param {[]} arr
   # @returns {array}
