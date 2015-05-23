@@ -6,12 +6,6 @@ describe 'TypeCheck', ->
     r.should.be.true;
     r2.should.be.false;
 
-  it 'isNull', ->
-    r = caro.isNull(null);
-    r2 = caro.isNull(null, {});
-    r.should.be.true;
-    r2.should.be.false;
-
   it 'isJson', ->
     r = caro.isJson(null);
     r2 = caro.isJson('caro');

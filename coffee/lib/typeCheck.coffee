@@ -25,15 +25,6 @@ do ->
     int == arg
 
   ###*
-  # check if null, return false is one of them not match
-  # @param {...} arg
-  # @returns {*}
-  ###
-  self.isNull = (arg) ->
-    caro.checkIfPassCb arguments, (val) ->
-      val == null
-
-  ###*
   # check if JSON, return false is one of them not match
   # @param {...} arg
   # @returns {boolean}
