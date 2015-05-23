@@ -875,7 +875,7 @@ var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 - **isInteger(arg) - 判斷是否為整數**
 ```javascript
 var r = caro.isInteger(1); // true
-var r2 = caro.isInteger(1, 1.3); // false
+var r2 = caro.isInteger(1.3); // false
 ```
 - **isArr(arg...) - 判斷是否為 array，當其中一個參數不符合時，回傳 false**
 ```javascript
