@@ -1,9 +1,6 @@
 #do ->
 #describe.only 'Unit', ->
 #  it 'test', ->
-#    fn = (i) ->
-#      ++i
-#    r = caro.executeIfFn(fn, 12)
-#    r2 = caro.executeIfFn(null)
-#    r.should.eq 13
-#    should.equal r2, undefined
+#    arr = [1, 2, 3]
+#    r = caro.pushNoEmptyVal(arr, 1, 'caro', undefined, null, 0, '', [])
+#    r.should.eql [1, 2, 3, 1, 'caro', 0]

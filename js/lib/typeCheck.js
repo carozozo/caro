@@ -26,13 +26,10 @@
    */
   self.isEmptyVal = function(arg) {
     return caro.checkIfPassCb(arguments, function(arg) {
-      if (caro.isObject(arg)) {
-        return caro.getObjLength(arg) < 1;
+      if (caro.isNumber(arg) || caro.isBoolean(arg)) {
+        return false;
       }
-      if (caro.isArray(arg)) {
-        return arg.length < 1;
-      }
-      return !arg && arg !== 0 && arg !== false;
+      return caro.size(arg) < 1;
     });
   };
 
