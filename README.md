@@ -56,30 +56,6 @@ var r = caro.pullUnBasicVal([1, {a: 1}, null, 'caro']); // [1, 'caro']
 
 ### Helper
 [Back to Index](#index)
-- **isBasicVal(arg...) - 判斷是否為基本值 (boolean 或 string 或 number)**
-```javascript
-var r = caro.isBasicVal(1, '', false); // true
-var r2 = caro.isBasicVal({}); // false
-```
-- **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
-```javascript
-var r = caro.isEmptyVal(0, {a:1}); // false
-var r2 = caro.isEmptyVal({}, [], null, '', undefined); // true
-```
-- **isTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
-```javascript
-var arg = true, arg2 = 'True', arg3 = 1;
-var arg4 = false;
-var r = caro.isTrue(arg, arg2, arg3); // true
-var r2 = caro.isTrue(arg3, arg4); // false
-```
-- **isFalse(arg...) - 判斷是否為 false 或 'false' 或 0**
-```javascript
-var arg = false, arg2 = 'false', arg3 = 0;
-var arg4 = true;
-var r = caro.isFalse(arg, arg2, arg3); // true
-var r2 = caro.isFalse(arg3, arg4); // false
-```
 - **checkIfPassCb((arr, checkFn [needAllPass=true]) - 回傳 checkFn 的執行結果**
 ```javascript
 var arg = [1, 2, 3];
@@ -399,6 +375,26 @@ var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 
 ### TypeCheck
 [Back to Index](#index)
+- **isBasicVal(arg...) - 判斷是否為基本值 (boolean 或 string 或 number)**
+```javascript
+var r = caro.isBasicVal(1, '', false); // true
+var r2 = caro.isBasicVal({}); // false
+```
+- **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
+```javascript
+var r = caro.isEmptyVal(0, {a:1}); // false
+var r2 = caro.isEmptyVal({}, [], null, '', undefined); // true
+```
+- **isEasingTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
+```javascript
+var r = caro.isEasingTrue('True'); // true
+var r2 = caro.isEasingTrue(1); // true
+```
+- **isEasingFalse(arg...) - 判斷是否為 false 或 'false' 或 0**
+```javascript
+var r = caro.isEasingFalse('false'); // true
+var r2 = caro.isEasingFalse(0); // true
+```
 - **isInteger(arg) - 判斷是否為整數**
 ```javascript
 var r = caro.isInteger(1); // true
@@ -416,7 +412,7 @@ var r4 = caro.isJson('{"a":1, "b": function(){}}') // false
 var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
 var r3 = caro.isObjJson('{{b: 2}) // false
-
+```
 
 ### TypeCover
 [Back to Index](#index)

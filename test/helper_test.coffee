@@ -1,29 +1,5 @@
 do ->
 describe 'Helper', ->
-  it 'isBasicVal', ->
-    r = caro.isBasicVal('');
-    r2 = caro.isBasicVal({});
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isEmptyVal', ->
-    r = caro.isEmptyVal({}, [], null, '', undefined);
-    r2 = caro.isEmptyVal('null');
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isTrue', ->
-    r = caro.isTrue(true, 'true', 1);
-    r2 = caro.isTrue(false);
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isFalse', ->
-    r = caro.isFalse(false, 'false', 0);
-    r2 = caro.isFalse(false, true);
-    r.should.be.true
-    r2.should.be.false
-
   it 'checkIfPassCb', ->
     r = caro.checkIfPassCb [1, 2, 3], (val) ->
       return val == 1;
