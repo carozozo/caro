@@ -1,7 +1,6 @@
-do ->
-describe 'Unit', ->
-  it 'test', ->
-#    r = caro.forEach([1, 2, 3], (val, i,j)->
-#    )
-#    r = caro.forEach({1, 2, 3}, (val, i)->
-#    )
+#do ->
+#describe.only 'Unit', ->
+#  it 'test', ->
+#    r = caro.loop((i)->
+#      console.log i
+#    ,1,1,2)

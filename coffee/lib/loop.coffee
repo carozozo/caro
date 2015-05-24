@@ -14,18 +14,12 @@ do ->
   # @param {end} start
   ###
   self.loop = (fn, start = 0, end = 0, step = 1) ->
-    if start < end
-      realStart = start
-      realEnd = end
-      step2 = step
-    else
-      realStart = end
-      realEnd = start
-      step2 = -step
-    while realStart <= realEnd
+    isLow = do -> start < end
+    compareFn = caro.lte
+    compareFn = if isLow then caro.lte else caro.gte
+    while compareFn start, end
       break if fn(start) == false
-      start += step2
-      realStart += step
+      start += if isLow then step else -step
     return
 
   return
