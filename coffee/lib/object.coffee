@@ -68,7 +68,7 @@ do ->
     if !caro.isBoolean(deep)
       r = deep
       deep = false
-    caro.eachArgs arguments, (key, arg) ->
+    caro.forEach arguments, (arg, key) ->
       if !r and caro.isObject(arg)
         r = arg
         return true
