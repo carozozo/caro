@@ -1,4 +1,4 @@
-/*! caro - v0.6.20 - 2015-05-24 */
+/*! caro - v0.6.21 - 2015-05-24 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -832,6 +832,9 @@
   self.toArray = function(arg) {
     if (caro.isArray(arg)) {
       return arg;
+    }
+    if (caro.isNumber(arg)) {
+      return [arg];
     }
     return Array(arg);
   };

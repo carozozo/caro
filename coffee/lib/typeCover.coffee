@@ -13,6 +13,7 @@ do ->
   ###
   self.toArray = (arg) ->
     return arg if caro.isArray(arg)
+    return [arg] if caro.isNumber(arg)
     Array(arg)
 
   ###*

@@ -17,6 +17,9 @@
     if (caro.isArray(arg)) {
       return arg;
     }
+    if (caro.isNumber(arg)) {
+      return [arg];
+    }
     return Array(arg);
   };
 
