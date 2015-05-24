@@ -45,16 +45,8 @@ module.exports = function (grunt) {
                 files: {
                     // 輸出檔案: [要合併的檔案]
                     '<%= pkg.name %>.js': [
-                        //nodeDir + 'moment/min/moment-with-locales.js',
-                        //nodeDir + '/validator/validator.js',
                         caro
                     ]
-                    //'dependencies/validator-min.js': [
-                    //    nodeDir + 'validator/validator.min.js'
-                    //]
-                    //'dependencies/moment-with-locales-min.js': [
-                    //    nodeDir + 'moment/min/moment-with-locales.min.js'
-                    //]
                 }
             }
         },

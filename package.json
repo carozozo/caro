@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "The common-libraries depend on lodash",
   "author": {
     "name": "Caro.Huang",
@@ -20,7 +20,6 @@
   "keywords": [
     "array",
     "console",
-    "date time",
     "helper",
     "loop",
     "object",
@@ -29,8 +28,7 @@
     "type check"
   ],
   "dependencies": {
-    "colors": "~1.1.0",
-    "moment": "~2.10.3"
+    "colors": "~1.1.0"
   },
   "devDependencies": {
     "coffee-script": "1.9.2",
