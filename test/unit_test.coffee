@@ -2,14 +2,13 @@
 #describe.only 'Unit', ->
 #  it 'test', ->
 #    arr=[
-#      caro.toString('3')
-#      caro.toString(['caro',undefined])
-#      caro.toString(undefined)
-#      caro.toString(null)
-#      caro.toString(3)
-#      caro.toString({a:'2',c:'d'})
-#      caro.toString(()->)
-#      caro.toString(NaN)
+#      caro.toArray('3')
+#      caro.toArray(['caro',undefined])
+#      caro.toArray(undefined)
+#      caro.toArray(null)
+#      caro.toArray(1)
+#      caro.toArray({a:'2',c:'d'})
+#      caro.toArray(()->)
 #    ]
 #
 #    caro.forEach(arr,(val)->

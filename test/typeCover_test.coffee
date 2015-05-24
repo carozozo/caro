@@ -2,7 +2,7 @@ do ->
 describe 'Helper', ->
   it 'toArray', ->
     r = caro.toArray('3')
-    r2 = caro.toArray([1])
+    r2 = caro.toArray(1)
     r.should.eql(['3'])
     r2.should.eql([1])
 
