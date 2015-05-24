@@ -119,21 +119,11 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串**
+- **toWord(obj [wrap=false]) - 將物件轉為可讀的字串**
 ```javascript
-var arg = {
-  a: 1, b: 2, c: function (a){
-    return a
-  }
-};
-var arg2 = {
-  a: 1, b: 2, c: function (a){
-    return a
-  }
-};
-r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
-r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
-
+r = caro.toWord(['caro', undefined], true);
+r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->});
+```
 ### String
 [Back to Index](#index)
 - **random(len [opt]) - 產生隨機字串**
