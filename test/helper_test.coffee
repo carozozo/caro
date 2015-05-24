@@ -4,7 +4,7 @@ describe 'Helper', ->
     r = caro.checkIfPassCb [1, 2, 3], (val) ->
       return val == 1;
     r2 = caro.checkIfPassCb [1, 2, 3], (val) ->
-      return val == 1;
+      return val > 2;
     , false
     r.should.be.false
     r2.should.be.true

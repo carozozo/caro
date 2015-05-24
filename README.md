@@ -63,9 +63,9 @@ var arg = [1, 2, 3];
 var r = caro.checkIfPassCb(arg, function (val) {
     return val === 1;
 }); // false
-// 不完全比對，相當於 (1===1 || 2===1 || 3===1)
+// 不完全比對，相當於 (1 > 2 || 2 > 2 || 3 > 2)
 var r2 = caro.checkIfPassCb(arg, function (val) {
-    return val === 1;
+    return val > 2;
 }, false); // true
 ```
 - **executeIfFn(fn [arg...]) - 如果是 function 的話則執行**

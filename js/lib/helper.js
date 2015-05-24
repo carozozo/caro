@@ -19,9 +19,6 @@
     if (needAllPass == null) {
       needAllPass = true;
     }
-    if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFunction(checkFn)) {
-      return false;
-    }
     caro.forEach(arr, function(arg) {
       var result;
       result = checkFn(arg);
@@ -40,19 +37,10 @@
    * @returns {*}
    */
   self.executeIfFn = function(fn, args) {
-    var otherArgs, r;
-    otherArgs = [];
-    r = void 0;
-    caro.forEach(arguments, function(arg, i) {
-      if (i < 1) {
-        return;
-      }
-      otherArgs.push(arg);
-    });
+    args = caro.drop(arguments);
     if (caro.isFunction(fn)) {
-      r = fn.apply(fn, otherArgs);
+      return fn.apply(fn, args);
     }
-    return r;
   };
 
   /**

@@ -14,7 +14,6 @@ do ->
   # @returns {boolean}
   ###
   self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
-    return false if !Array.isArray(arr) and typeof arr != 'object' or !caro.isFunction(checkFn)
     caro.forEach arr, (arg) ->
       result = checkFn(arg)
       # need all pass, but result is false || no-need all pass, and result is true
@@ -31,14 +30,8 @@ do ->
   # @returns {*}
   ###
   self.executeIfFn = (fn, args) ->
-    otherArgs = []
-    r = undefined
-    caro.forEach arguments, (arg, i) ->
-      return if i < 1
-      otherArgs.push arg
-      return
-    r = fn.apply(fn, otherArgs) if caro.isFunction(fn)
-    r
+    args = caro.drop(arguments)
+    fn.apply(fn, args) if caro.isFunction(fn)
 
   ###*
   # get function name
