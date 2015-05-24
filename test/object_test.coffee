@@ -1,48 +1,5 @@
 do ->
 describe 'Object', ->
-  it 'extendObj', ->
-    arg = {a: {a1: 1}};
-    arg2 = {a: {a1: 1}};
-    arg3 = {a: {a1: 2}, b: 2, c: {c1: 1}};
-    caro.extendObj(arg, arg3);
-    caro.extendObj(true, arg2, arg3);
-
-    arg.should.be.eql {a: {a1: 1}, b: 2, c: {c1: 1}}
-    arg2.should.be.eql {a: {a1: 2}, b: 2, c: {c1: 1}}
-
-    arg = [1, 2, 3];
-    arg2 = [4, 5, 6];
-    caro.extendObj(arg, arg2)
-    arg.should.be.eql [1, 2, 3, 4, 5, 6]
-
-  it 'cloneObj', ->
-    arg = {a: 1, b: 2, c: {c1: 1}};
-    r = caro.cloneObj(arg);
-    r2 = caro.cloneObj(arg, true);
-    arg.c.c1 = 3
-    r.should.be.eql {a: 1, b: 2, c: {c1: 3}}
-    r2.should.be.eql {a: 1, b: 2, c: {c1: 1}}
-
-  it 'replaceObjKey', ->
-    arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}}
-    caro.replaceObjKey(arg, (key)->
-      return 'dd' if key == 'cc'
-    );
-    arg.should.eql({aa: 1, bb: 2, dd: {c1: 3}})
-
-  it 'replaceObjVal', ->
-    arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
-    caro.replaceObjVal(arg, (val)->
-      return 1 if val == 4
-    );
-    arg.should.eql({aa: 1, bb: 2, cc: {c1: 4}})
-
-    arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
-    caro.replaceObjVal(arg, (val)->
-      return 1 if val == 4
-    , true);
-    arg.should.eql({aa: 1, bb: 2, cc: {c1: 1}})
-
   it 'upperCaseByObjKey', ->
     arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
     arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};

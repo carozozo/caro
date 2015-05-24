@@ -1,4 +1,4 @@
-/*! caro - v0.6.17 - 2015-05-24 */
+/*! caro - v0.6.18 - 2015-05-24 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -268,7 +268,7 @@
  * @author Caro.Huang
  */
 (function() {
-  var changeStrValByObjKey, pushValToObjOrArr, self;
+  var changeStrValByObjKey, self;
   self = caro;
 
   /**
@@ -314,122 +314,6 @@
           r[key] = caro.trimStr(val, false);
       }
     });
-    return r;
-  };
-  pushValToObjOrArr = function(arg, key, val) {
-    if (caro.isArray(arg)) {
-      arg.push(val);
-    } else if (caro.isObject(arg)) {
-      arg[key] = val;
-    }
-  };
-
-  /**
-   * extend object, similar jQuery.extend
-   * @param {boolean} [deep=false] extend-recursive
-   * @param {object...|array...} arg
-   * @returns {*}
-   */
-  self.extendObj = function(deep, arg) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    r = null;
-    if (!caro.isBoolean(deep)) {
-      r = deep;
-      deep = false;
-    }
-    caro.forEach(arguments, function(arg, key) {
-      var results, val;
-      if (!r && caro.isObject(arg)) {
-        r = arg;
-        return true;
-      }
-      results = [];
-      for (key in arg) {
-        val = arg[key];
-        if (caro.isObject(val) && caro.keysInObj(r, key) && !deep) {
-          continue;
-        }
-        results.push(pushValToObjOrArr(r, key, val));
-      }
-      return results;
-    });
-    return r;
-  };
-
-  /**
-   * clone object
-   * @param {object} obj
-   * @param {boolean} [deep=false] if clone all under object
-   * @returns {*}
-   */
-  self.cloneObj = function(arg, deep) {
-    var r;
-    if (deep == null) {
-      deep = false;
-    }
-    if (!caro.isObject(arg)) {
-      return arg;
-    }
-    r = caro.isArray(arg) ? [] : {};
-    caro.extendObj(r, arg);
-    if (deep) {
-      caro.forEach(r, function(val, key) {
-        return r[key] = caro.cloneObj(val);
-      });
-    }
-    return r;
-  };
-
-  /**
-   * replace key in object
-   * @param {object} obj
-   * @param {function({})} cb callback-function that include key, and return new-key if you want to replace
-   * @returns {*}
-   */
-  self.replaceObjKey = function(obj, cb) {
-    var r;
-    r = obj;
-    caro.forEach(r, function(val, key) {
-      var newKey;
-      newKey = caro.executeIfFn(cb, key);
-      if (newKey) {
-        r[newKey] = val;
-        delete r[key];
-      }
-    });
-    return r;
-  };
-
-  /**
-   * replace value in object
-   * @param {object} obj
-   * @param {function({})} cb callback-function that include value, and return new-value if you want to replace
-   * @param {boolean} [deep=false] if deep-replace when element is object
-   * @returns {*}
-   */
-  self.replaceObjVal = function(obj, cb, deep) {
-    var coverObjVal, r;
-    if (deep == null) {
-      deep = false;
-    }
-    r = obj;
-    coverObjVal = function(o) {
-      caro.forEach(o, function(val, key) {
-        var newVal;
-        if (caro.isObject(val) && deep) {
-          coverObjVal(val);
-          return;
-        }
-        newVal = caro.executeIfFn(cb, val);
-        if (newVal !== void 0) {
-          o[key] = newVal;
-        }
-      });
-    };
-    coverObjVal(r);
     return r;
   };
 
