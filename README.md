@@ -119,34 +119,6 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **upperCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為大寫**
-```javascript
-var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-caro.upperCaseByObjKey(arg, 'aa,bb'); // {aa: 'CARO', bb: 'PIKA', cc: 'doraemon'}
-caro.upperCaseByObjKey(arg2); // {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON'}
-```
-- **lowerCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為小寫**
-```javascript
-var arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
-var arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon'};
-caro.lowerCaseByObjKey(arg, ['aa','bb']); // {'aa': 'caro', 'bb': 'pika', 'cc': 'Doraemon'};
-caro.lowerCaseByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-```
-- **upperFirstByObjKey(obj, [keys]) - 指定 key 將對應的 val 的第一個字母轉為大寫**
-```javascript
-var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-var arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
-caro.upperFirstByObjKey(arg, 'aa,bb'); // {aa: 'Caro', bb: 'Pika', cc: 'doraemon'};
-var r = caro.upperFirstByObjKey(arg2, null, true); // {aa: 'Caro', bb: 'Pika', cc: 'Doraemon'}
-```
-- **trimByObjKey(obj, [keys]) - obj 中 val 為 str 的值，去除頭尾空白**
-```javascript
-var arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-var arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-var caro.trimByObjKey(arg, ['aa','cc']); // {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
-var caro.trimByObjKey(arg2); // {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
-```
 - **keysInObj(obj [keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
 var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
