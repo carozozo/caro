@@ -119,45 +119,6 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **extendObj([deep=false], obj...) - 合併至第1個 obj**
-```javascript
-var arg = {a: {a1: 1}};
-var arg2 = {a: {a1: 1}};
-var arg3 = {a: {a1: 2}, b: 2, c: {c1: 1}};
-caro.extend(arg, arg3); // {a: {a1: 1}, b: 2, c: {c1: 1}}
-caro.extend(true, arg2, arg3); // { a: { a1: 2 }, b: 2, c: { c1: 1 } }
- var arg = [1, 2, 3];
-var arg2 = [4, 5, 6];
-caro.extend(arg, arg2) // [ 1, 2, 3, 4, 5, 6 ]
-``` 
-- **cloneObj(obj) - 複製 obj**
-```javascript
-var arg = {a: 1, b: 2, c: {c1: 1}};
-var r = caro.cloneObj(arg);
-var r2 = caro.cloneObj(arg, true);
-arg.c.c1 = 3
-console.log(r) // { a: 1, b: 2, c: { c1: 3 } }
-console.log(r2) // { a: 1, b: 2, c: { c1: 1 } } - 所有的值都不受 arg 影響
-```
-- **replaceObjKey(obj, replaceFn) - 轉換 obj 中的 key**
-```javascript
-var arg = {'aa': 1, 'bb': 2, 'cc': {'c1': 3}};
-caro.replaceObjKey(arg, function (key){
-  return 'dd' if key == 'cc'
-});
-console.log(arg); // { aa: 1, bb: 2, dd: { c1: 3 } }
-```
-- **replaceObjVal(obj, replaceFn [deep=false]) - 轉換 obj 中的 val**
-```javascript
-var arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
-caro.replaceObjVal(arg, function (val){
-  return 1 if val == 4
-}); // {aa: 1, bb: 2, cc: {c1: 4}}
- arg = {'aa': 4, 'bb': 2, 'cc': {'c1': 4}}
-caro.replaceObjVal(arg, function (val){
-  return 1 if val == 4
-}, true); // {aa: 1, bb: 2, cc: {c1: 1}}
-```
 - **upperCaseByObjKey(obj, [keys]) - 指定 key 將對應的 val 轉為大寫**
 ```javascript
 var arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon'};
