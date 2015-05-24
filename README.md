@@ -25,7 +25,7 @@ caro.isArr(['caro']); // true
 ```
 ## Index
 
-**[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)**
+**[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)** | **[TypeCover](#typecover)**
 
 ### Array
 [Back to Index](#index)
@@ -125,61 +125,6 @@ var r4 = caro.formatMoney(arg3, {
 var r5 = caro.formatMoney(arg3, {
   float: 5, forceFloat: true
 }); // '12,003,000.92300'
-```
-- **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
-```javascript
-var r = caro.coverToArr([3, 2, 1]); // [3, 2, 1]
-var r2 = caro.coverToArr(null); // [ null ]
-```
-- **coverToStr(arg [force=true]) - 將變數轉為 string**
-```javascript
-var r = caro.coverToStr(function () {}); // 'function () {}'
-var r2 = caro.coverToStr({a: 2}); // '{a: 2}'
-var r3 = caro.coverToStr(null); // 'null'
-var r4 = caro.coverToStr(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
-```
-- **coverToInt(arg [force=true]) - 將變數轉為 integer**
-```javascript
-var r = caro.coverToInt('123.6'); // 123
-var r2 = caro.coverToInt('a', false); // 'a'
-var r3 = caro.coverToInt(null); // 0
-```
-- **coverToNum(arg [force=true]) - 將變數轉為 number**
-```javascript
-var r = caro.coverToNum('123.45'); // 123.45
-var r2 = caro.coverToNum({}, false); // {}
-var r3 = caro.coverToNum(undefined); // 0
-```
-- **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
-```javascript
-var r = caro.coverToFixed('3.4355', 2); // 3.44
-var r2 = caro.coverToFixed(undefined, 3); // 0
-var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
-```
-- **coverToObj(arg [force=true]) - 將變數轉為 object**
-```javascript
-var r = caro.coverToObj({}); // {}
-var r2 = caro.coverToObj(123, false); // 123
-var r3 = caro.coverToObj('{"a":1}'); // {a: 1}
-var r4 = caro.coverToObj(undefined); // {}
-```
-- **coverToJson(arg [opt]) - 將變數轉為 JSON**
-```javascript
-var arg = [0, 1, 2];
-var replacer = function (key, val) {
-    if (key === '') {
-        return val; // [0, 1, 2]
-    }
-    return val + 2; // 0 + 2 ,1 + 2, 2 + 2
-};
-var r = caro.coverToJson(arg, {
-    force: false, // 是否強制轉為 JSON 格式
-    replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
-    space: 2 // 請參考 JSON.stringify 的參數 space
-});
-var r = caro.coverToJson(3.4); // '3.4'
-var r2 = caro.coverToJson(null); // 'null'
-var r3 = caro.coverToJson('caro', false); // '"caro"'    
 ```
 
 ### ★Loop
@@ -493,3 +438,62 @@ var r4 = caro.isJson('{"a":1, "b": function(){}}') // false
 var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
 var r3 = caro.isObjJson('{{b: 2}) // false
+
+
+### TypeCover
+[Back to Index](#index)
+- **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
+```javascript
+var r = caro.coverToArr([3, 2, 1]); // [3, 2, 1]
+var r2 = caro.coverToArr(null); // [ null ]
+```
+- **coverToStr(arg [force=true]) - 將變數轉為 string**
+```javascript
+var r = caro.coverToStr(function () {}); // 'function () {}'
+var r2 = caro.coverToStr({a: 2}); // '{a: 2}'
+var r3 = caro.coverToStr(null); // 'null'
+var r4 = caro.coverToStr(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
+```
+- **coverToInt(arg [force=true]) - 將變數轉為 integer**
+```javascript
+var r = caro.coverToInt('123.6'); // 123
+var r2 = caro.coverToInt('a', false); // 'a'
+var r3 = caro.coverToInt(null); // 0
+```
+- **coverToNum(arg [force=true]) - 將變數轉為 number**
+```javascript
+var r = caro.coverToNum('123.45'); // 123.45
+var r2 = caro.coverToNum({}, false); // {}
+var r3 = caro.coverToNum(undefined); // 0
+```
+- **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
+```javascript
+var r = caro.coverToFixed('3.4355', 2); // 3.44
+var r2 = caro.coverToFixed(undefined, 3); // 0
+var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
+```
+- **coverToObj(arg [force=true]) - 將變數轉為 object**
+```javascript
+var r = caro.coverToObj({}); // {}
+var r2 = caro.coverToObj(123, false); // 123
+var r3 = caro.coverToObj('{"a":1}'); // {a: 1}
+var r4 = caro.coverToObj(undefined); // {}
+```
+- **coverToJson(arg [opt]) - 將變數轉為 JSON**
+```javascript
+var arg = [0, 1, 2];
+var replacer = function (key, val) {
+    if (key === '') {
+        return val; // [0, 1, 2]
+    }
+    return val + 2; // 0 + 2 ,1 + 2, 2 + 2
+};
+var r = caro.coverToJson(arg, {
+    force: false, // 是否強制轉為 JSON 格式
+    replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
+    space: 2 // 請參考 JSON.stringify 的參數 space
+});
+var r = caro.coverToJson(3.4); // '3.4'
+var r2 = caro.coverToJson(null); // 'null'
+var r3 = caro.coverToJson('caro', false); // '"caro"'    
+```
