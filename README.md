@@ -30,7 +30,7 @@ caro.isArr(['caro']); // true
 ##### (★ only support Node.js)
 
 **[Array](#array)** | **[Console](#console)** | **[DateTime](#datetime)** 
-| **[Helper](#helper)** | **★[Log](#log)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
+| **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
 | **[String](#string)** | **[TypeCheck](#typecheck)**
 
 ### Array
@@ -325,67 +325,6 @@ var r = caro.coverToJson(arg, {
 var r = caro.coverToJson(3.4); // '3.4'
 var r2 = caro.coverToJson(null); // 'null'
 var r3 = caro.coverToJson('caro', false); // '"caro"'    
-```
-
-### ★Log
-[Back to Index](#index)
-- **setLogTrace(bool) - 設定log檔案操作發生錯誤時，是否顯示 console.error (default=false)**
-```javascript
-caro.setLogTrace(true);
-```
-- **setLogRoot(path) - 設置 log 檔所要放的路徑**
-```javascript
-var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
-```
-- **getLogRoot() - 取得 log 檔所在的路徑**
-```javascript
-var r = caro.getLogRoot(); // 資料夾路徑
-```
-- **setLogExtendName() - 設定 log 的副檔名(預設為 .log)**
-```javascript
-var r = caro.setLogExtendName('logger'); // true
-var r2 = caro.setLogExtendName(''); // false
-```
-- **getLogExtendName() - 取得 log 的副檔名(預設為 .log)**
-```javascript
-var r = caro.getLogExtendName(); // '.log'
-```
-- **readLog(logPath) - 讀取 .log 檔**
-```javascript
-var r = caro.setLogRoot('log'); // 路徑產生成功則回傳 true
-```
-- **writeLog(logPath, data) - 寫入 .log 檔，如檔案已存在則覆寫**
-```javascript
-var r = caro.writeLog('test', {
-  name: 'Caro'
-  like: 'Snoopy'
-}); // 檔案產生成功則回傳 true
-```
-- **updateLog(logPath, data [opt]) - 加入資料至 .log 檔，如檔案不存在則先產生檔案**
-```javascript
-var r = caro.writeLog('test', 'This is first log'); // true
-var r2 = caro.writeLog('test', 'This is second log', {
-    ifWrap: true // 是否換行
-    prepend: false // 是否加到舊資料之前
-}); // - here is default options  
-```
-- **updateLogWithDayFileName(logPath, data [opt]) - 產生/更新有今天日期名稱的 .log 檔**
-```javascript
-var r = caro.updateLogWithDayFileName('test', 'This is log with day', {
-    dateFirst: true // log 檔名中的日期是否顯示在前面
-    ifWrap: true // 是否換行
-    prepend: false // 是否加到舊資料之前
-}); //  - here is default options
-var r2 = caro.updateLogWithDayFileName('test', 'This is log with day', {
-    dateFirst: false
-}); // 檔案產生成功則回傳 true， e.g. 檔名為 test_20151221.log
-```
-- **traceLog( data [opt]) - 產生/更新 trace.log 檔**
-```javascript
-var r = caro.traceLog('This is log trace data', {
-    ifWrap: true // 是否換行
-    prepend: false // 是否加到舊資料之前
-}); //  - here is default options
 ```
 
 ### ★Loop
