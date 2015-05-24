@@ -10,9 +10,9 @@
     var aType, end, force, r, start;
     r = [];
     aType = ['toUpperCase', 'toLowerCase'];
-    opt = caro.coverToObj(opt);
-    start = caro.coverToInt(opt.start);
-    end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
+    opt = caro.toObject(opt);
+    start = caro.toInteger(opt.start);
+    end = caro.toInteger(opt.end) > 0 ? caro.toInteger(opt.end) : null;
     force = opt.force !== false;
     if (!caro.isString(str)) {
       if (!force) {
@@ -46,7 +46,7 @@
     text = '';
     chars = [];
     len = parseInt(len) ? parseInt(len) : 1;
-    opt = caro.coverToObj(opt);
+    opt = caro.toObject(opt);
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;
@@ -317,7 +317,9 @@
     if (!splitter) {
       return [];
     }
-    splitter = caro.coverToArr(splitter);
+    if (!caro.isArray(splitter)) {
+      splitter = caro.toArray(splitter);
+    }
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
       caro.forEach(splitter, function(eachSplit, j) {

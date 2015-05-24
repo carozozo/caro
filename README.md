@@ -310,64 +310,6 @@ var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
 var r3 = caro.isObjJson('{{b: 2}) // false
 ```
-
-### TypeCover
-[Back to Index](#index)
-- **coverToArr(arg) - 如果變數不是 array 的話，將轉為 array**
-```javascript
-var r = caro.coverToArr([3, 2, 1]); // [3, 2, 1]
-var r2 = caro.coverToArr(null); // [ null ]
-```
-- **coverToStr(arg [force=true]) - 將變數轉為 string**
-```javascript
-var r = caro.coverToStr(function () {}); // 'function () {}'
-var r2 = caro.coverToStr({a: 2}); // '{a: 2}'
-var r3 = caro.coverToStr(null); // 'null'
-var r4 = caro.coverToStr(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
-```
-- **coverToInt(arg [force=true]) - 將變數轉為 integer**
-```javascript
-var r = caro.coverToInt('123.6'); // 123
-var r2 = caro.coverToInt('a', false); // 'a'
-var r3 = caro.coverToInt(null); // 0
-```
-- **coverToNum(arg [force=true]) - 將變數轉為 number**
-```javascript
-var r = caro.coverToNum('123.45'); // 123.45
-var r2 = caro.coverToNum({}, false); // {}
-var r3 = caro.coverToNum(undefined); // 0
-```
-- **coverToFixed(arg [force=true]) - 將變數轉為 fixed-number**
-```javascript
-var r = caro.coverToFixed('3.4355', 2); // 3.44
-var r2 = caro.coverToFixed(undefined, 3); // 0
-var r3 = caro.coverToFixed('caro', 3, false) // 'caro'
-```
-- **coverToObj(arg [force=true]) - 將變數轉為 object**
-```javascript
-var r = caro.coverToObj({}); // {}
-var r2 = caro.coverToObj(123, false); // 123
-var r3 = caro.coverToObj('{"a":1}'); // {a: 1}
-var r4 = caro.coverToObj(undefined); // {}
-```
-- **coverToJson(arg [opt]) - 將變數轉為 JSON**
-```javascript
-var arg = [0, 1, 2];
-var replacer = function (key, val) {
-    if (key === '') {
-        return val; // [0, 1, 2]
-    }
-    return val + 2; // 0 + 2 ,1 + 2, 2 + 2
-};
-var r = caro.coverToJson(arg, {
-    force: false, // 是否強制轉為 JSON 格式
-    replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
-    space: 2 // 請參考 JSON.stringify 的參數 space
-});
-var r = caro.coverToJson(3.4); // '3.4'
-var r2 = caro.coverToJson(null); // 'null'
-var r3 = caro.coverToJson('caro', false); // '"caro"'    
-```
 - **isUpper(str) - 判斷是否為大寫字串**
 ```javascript
 var r = caro.isUpper('CARO'); // true
@@ -377,4 +319,62 @@ var r2 = caro.isUpper('caro'); // false
 ```javascript
 var r = caro.isLower('caro'); // true
 var r2 = caro.isLower('Caro'); // false
+```
+
+### TypeCover
+[Back to Index](#index)
+- **toArray(arg) - 將變數轉為 array**
+```javascript
+var r = caro.toArray([3, 2, 1]); // [3, 2, 1]
+var r2 = caro.toArray(null); // [ null ]
+```
+- **toString(arg [force=true]) - 將變數轉為 string**
+```javascript
+var r = caro.toString(function () {}); // 'function () {}'
+var r2 = caro.toString({a: 2}); // '{a: 2}'
+var r3 = caro.toString(null); // 'null'
+var r4 = caro.toString(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
+```
+- **toInteger(arg [force=true]) - 將變數轉為 integer**
+```javascript
+var r = caro.toInteger('123.6'); // 123
+var r2 = caro.toInteger('a', false); // 'a'
+var r3 = caro.toInteger(null); // 0
+```
+- **toNumber(arg [force=true]) - 將變數轉為 number**
+```javascript
+var r = caro.toNumber('123.45'); // 123.45
+var r2 = caro.toNumber({}, false); // {}
+var r3 = caro.toNumber(undefined); // 0
+```
+- **toFixedNumber(arg [force=true]) - 將變數轉為 fixed-number**
+```javascript
+var r = caro.toFixedNumber('3.4355', 2); // 3.44
+var r2 = caro.toFixedNumber(undefined, 3); // 0
+var r3 = caro.toFixedNumber('caro', 3, false) // 'caro'
+```
+- **toObject(arg [force=true]) - 將變數轉為 object**
+```javascript
+var r = caro.toObject({}); // {}
+var r2 = caro.toObject(123, false); // 123
+var r3 = caro.toObject('{"a":1}'); // {a: 1}
+var r4 = caro.toObject(undefined); // {}
+```
+- **toJson(arg [opt]) - 將變數轉為 JSON**
+```javascript
+var arg = [0, 1, 2];
+var replacer = function (key, val) {
+    if (key === '') {
+        return val; // [0, 1, 2]
+    }
+    return val + 2; // 0 + 2 ,1 + 2, 2 + 2
+};
+var r = caro.toJson(arg, {
+    force: false, // 是否強制轉為 JSON 格式
+    replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
+    space: 2 // 請參考 JSON.stringify 的參數 space
+});
+var r = caro.toJson(3.4); // '3.4'
+var r2 = caro.toJson(null); // 'null'
+var r3 = caro.toJson('caro', false); // '"caro"'    
 ```
