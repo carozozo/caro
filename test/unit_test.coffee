@@ -1,5 +1,9 @@
 #do ->
 #describe.only 'Unit', ->
 #  it 'test', ->
-#    r = caro.pullUnBasicVal([1, {a: 1}, 'caro']);
-#    r.should.be.eql [1, 'caro']
+#    fn = (i) ->
+#      ++i
+#    r = caro.executeIfFn(fn, 12)
+#    r2 = caro.executeIfFn(null)
+#    r.should.eq 13
+#    should.equal r2, undefined
