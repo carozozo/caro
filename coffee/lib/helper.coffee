@@ -57,7 +57,7 @@ do ->
   ###
   self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
     return false if !Array.isArray(arr) and typeof arr != 'object' or !caro.isFunction(checkFn)
-    caro.each arr, (i, arg) ->
+    caro.forEach arr, (arg) ->
       result = checkFn(arg)
       # need all pass, but result is false || no-need all pass, and result is true
       if needAllPass and result == false or !needAllPass and result == true

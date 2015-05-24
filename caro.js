@@ -36,7 +36,7 @@
       force = false;
     }
     sum = 0;
-    caro.each(arr, function(i, val) {
+    caro.forEach(arr, function(val) {
       if (caro.isNumber(val)) {
         sum += val;
       }
@@ -54,8 +54,8 @@
    * @returns {array}
    */
   self.pushNoDuplicate = function(arr, val) {
-    caro.each(arguments, function(i, val) {
-      if (i === '0' || arr.indexOf(val) > -1) {
+    caro.forEach(arguments, function(val, i) {
+      if (i === 0 || arr.indexOf(val) > -1) {
         return;
       }
       arr.push(val);
@@ -70,8 +70,8 @@
    * @returns {array}
    */
   self.pushNoEmptyVal = function(arr, val) {
-    caro.each(arguments, function(i, arg) {
-      if (i === '0' || caro.isEmptyVal(arg)) {
+    caro.forEach(arguments, function(arg, i) {
+      if (i === 0 || caro.isEmptyVal(arg)) {
         return;
       }
       arr.push(arg);
@@ -87,7 +87,7 @@
   self.pullEmptyVal = function(arr) {
     var r;
     r = [];
-    caro.each(arr, function(i, val) {
+    caro.forEach(arr, function(val) {
       if (!caro.isEmptyVal(val)) {
         r.push(val);
       }
@@ -103,7 +103,7 @@
   self.pullUnBasicVal = function(arr) {
     var r;
     r = [];
-    caro.each(arr, function(i, val) {
+    caro.forEach(arr, function(val) {
       if (caro.isBasicVal(val)) {
         r.push(val);
       }
@@ -192,7 +192,7 @@
     if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFunction(checkFn)) {
       return false;
     }
-    caro.each(arr, function(i, arg) {
+    caro.forEach(arr, function(arg) {
       var result;
       result = checkFn(arg);
       if (needAllPass && result === false || !needAllPass && result === true) {
@@ -407,7 +407,7 @@
     }
     keys = keys || caro.getKeysInObj(r);
     keys = caro.splitStr(keys, ',');
-    caro.each(keys, function(i, key) {
+    caro.forEach(keys, function(key) {
       var opt, val;
       if (!caro.keysInObj(r, key)) {
         return;
@@ -504,7 +504,7 @@
     r = caro.isArray(arg) ? [] : {};
     caro.extendObj(r, arg);
     if (deep) {
-      caro.each(r, function(key, val) {
+      caro.forEach(r, function(val, key) {
         return r[key] = caro.cloneObj(val);
       });
     }
@@ -520,7 +520,7 @@
   self.replaceObjKey = function(obj, cb) {
     var r;
     r = obj;
-    caro.each(r, function(key, val) {
+    caro.forEach(r, function(val, key) {
       var newKey;
       newKey = caro.executeIfFn(cb, key);
       if (newKey) {
@@ -545,7 +545,7 @@
     }
     r = obj;
     coverObjVal = function(o) {
-      caro.each(o, function(key, val) {
+      caro.forEach(o, function(val, key) {
         var newVal;
         if (caro.isObject(val) && deep) {
           coverObjVal(val);
@@ -614,7 +614,7 @@
     }
     pass = true;
     keys = caro.splitStr(keys, ',');
-    caro.each(keys, function(i, key) {
+    caro.forEach(keys, function(key) {
       if (!obj.hasOwnProperty(key)) {
         pass = false;
         return false;
@@ -639,7 +639,7 @@
     levelCount = 0;
     getKey = function(obj) {
       levelCount++;
-      caro.each(obj, function(key, val) {
+      caro.forEach(obj, function(val, key) {
         if (levelLimit > 0 && levelCount > levelLimit) {
           return;
         }
@@ -665,7 +665,7 @@
       replaceWrap = true;
     }
     r = obj;
-    caro.each(r, function(key, val) {
+    caro.forEach(r, function(val, key) {
       var fnStr;
       if (caro.isPlainObject(val)) {
         caro.coverFnToStrInObj(val);
@@ -691,7 +691,7 @@
   self.objToArr = function(obj) {
     var r;
     r = [];
-    caro.each(obj, function(i, val) {
+    caro.forEach(obj, function(val) {
       r.push(val);
     });
     return r;
@@ -798,7 +798,7 @@
       chars.push('0123456789');
     }
     chars = chars.join('');
-    caro.each(exclude, function(i, excludeStr) {
+    caro.forEach(exclude, function(excludeStr) {
       chars = caro.replaceAll(chars, excludeStr, '');
     });
     i = 0;
@@ -966,7 +966,7 @@
     }
     r = [];
     aStr = str.split('');
-    caro.each(aStr, function(i, val) {
+    caro.forEach(aStr, function(val, i) {
       if (i > 0 && caro.isUpper(val)) {
         r.push(' ');
       }
@@ -1056,7 +1056,7 @@
     splitter = caro.coverToArr(splitter);
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
-      caro.each(splitter, function(j, eachSplit) {
+      caro.forEach(splitter, function(eachSplit, j) {
         if (!caro.isString(eachSplit)) {
           return;
         }
@@ -1071,7 +1071,7 @@
     if (!caro.isString(mainSplit)) {
       return str;
     }
-    caro.each(splitter, function(i, eachSplit) {
+    caro.forEach(splitter, function(eachSplit) {
       if (!caro.isString(eachSplit)) {
         return;
       }
@@ -1094,7 +1094,7 @@
     }
     count = 0;
     aArgs = ['?'];
-    caro.each(oArgs, function(key, val) {
+    caro.forEach(oArgs, function(val, key) {
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {
           return;
@@ -1276,7 +1276,7 @@
     }
     if (caro.isArray(arg)) {
       r = {};
-      caro.each(arg, function(i, val) {
+      caro.forEach(arg, function(val, i) {
         return r[i] = val;
       });
       return r;

@@ -20,7 +20,7 @@
       force = false;
     }
     sum = 0;
-    caro.each(arr, function(i, val) {
+    caro.forEach(arr, function(val) {
       if (caro.isNumber(val)) {
         sum += val;
       }
@@ -38,8 +38,8 @@
    * @returns {array}
    */
   self.pushNoDuplicate = function(arr, val) {
-    caro.each(arguments, function(i, val) {
-      if (i === '0' || arr.indexOf(val) > -1) {
+    caro.forEach(arguments, function(val, i) {
+      if (i === 0 || arr.indexOf(val) > -1) {
         return;
       }
       arr.push(val);
@@ -54,8 +54,8 @@
    * @returns {array}
    */
   self.pushNoEmptyVal = function(arr, val) {
-    caro.each(arguments, function(i, arg) {
-      if (i === '0' || caro.isEmptyVal(arg)) {
+    caro.forEach(arguments, function(arg, i) {
+      if (i === 0 || caro.isEmptyVal(arg)) {
         return;
       }
       arr.push(arg);
@@ -71,7 +71,7 @@
   self.pullEmptyVal = function(arr) {
     var r;
     r = [];
-    caro.each(arr, function(i, val) {
+    caro.forEach(arr, function(val) {
       if (!caro.isEmptyVal(val)) {
         r.push(val);
       }
@@ -87,7 +87,7 @@
   self.pullUnBasicVal = function(arr) {
     var r;
     r = [];
-    caro.each(arr, function(i, val) {
+    caro.forEach(arr, function(val) {
       if (caro.isBasicVal(val)) {
         r.push(val);
       }

@@ -14,7 +14,7 @@ do ->
   ###
   self.sumOfArr = (arr, force = false) ->
     sum = 0
-    caro.each arr, (i, val) ->
+    caro.forEach arr, (val) ->
       sum += val if caro.isNumber(val)
       sum += parseFloat(val) or 0 if force
       return
@@ -27,8 +27,8 @@ do ->
   # @returns {array}
   ###
   self.pushNoDuplicate = (arr, val) ->
-    caro.each arguments, (i, val) ->
-      return if i == '0' or arr.indexOf(val) > -1
+    caro.forEach arguments, (val, i) ->
+      return if i == 0 or arr.indexOf(val) > -1
       arr.push val
       return
     arr
@@ -40,8 +40,8 @@ do ->
   # @returns {array}
   ###
   self.pushNoEmptyVal = (arr, val) ->
-    caro.each arguments, (i, arg) ->
-      return if i == '0' or caro.isEmptyVal(arg)
+    caro.forEach arguments, (arg, i) ->
+      return if i == 0 or caro.isEmptyVal(arg)
       arr.push arg
       return
     arr
@@ -53,7 +53,7 @@ do ->
   ###
   self.pullEmptyVal = (arr) ->
     r = []
-    caro.each arr, (i, val) ->
+    caro.forEach arr, (val) ->
       r.push(val) if !caro.isEmptyVal(val)
       return
     arr = r
@@ -65,7 +65,7 @@ do ->
   ###
   self.pullUnBasicVal = (arr) ->
     r = []
-    caro.each arr, (i, val) ->
+    caro.forEach arr, (val) ->
       r.push(val) if caro.isBasicVal(val)
       return
     arr = r

@@ -29,18 +29,6 @@ do ->
     return
 
   ###*
-  # for-loop the arg and callback of key/value
-  # @param {array|object} arg
-  # @param {function} cb callback-function for each key & value
-  ###
-  self.each = (arg, cb) ->
-    isArray = Array.isArray(arg)
-    for key, val of arg
-      key = parseInt(key) if isArray
-      break if cb(key, val) == false
-    return
-
-  ###*
   # for-loop the arg and callback of int-key/value
   # @param {array|object} arg
   # @param {function} cb callback-function for each key & value

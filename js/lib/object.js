@@ -24,7 +24,7 @@
     }
     keys = keys || caro.getKeysInObj(r);
     keys = caro.splitStr(keys, ',');
-    caro.each(keys, function(i, key) {
+    caro.forEach(keys, function(key) {
       var opt, val;
       if (!caro.keysInObj(r, key)) {
         return;
@@ -121,7 +121,7 @@
     r = caro.isArray(arg) ? [] : {};
     caro.extendObj(r, arg);
     if (deep) {
-      caro.each(r, function(key, val) {
+      caro.forEach(r, function(val, key) {
         return r[key] = caro.cloneObj(val);
       });
     }
@@ -137,7 +137,7 @@
   self.replaceObjKey = function(obj, cb) {
     var r;
     r = obj;
-    caro.each(r, function(key, val) {
+    caro.forEach(r, function(val, key) {
       var newKey;
       newKey = caro.executeIfFn(cb, key);
       if (newKey) {
@@ -162,7 +162,7 @@
     }
     r = obj;
     coverObjVal = function(o) {
-      caro.each(o, function(key, val) {
+      caro.forEach(o, function(val, key) {
         var newVal;
         if (caro.isObject(val) && deep) {
           coverObjVal(val);
@@ -231,7 +231,7 @@
     }
     pass = true;
     keys = caro.splitStr(keys, ',');
-    caro.each(keys, function(i, key) {
+    caro.forEach(keys, function(key) {
       if (!obj.hasOwnProperty(key)) {
         pass = false;
         return false;
@@ -256,7 +256,7 @@
     levelCount = 0;
     getKey = function(obj) {
       levelCount++;
-      caro.each(obj, function(key, val) {
+      caro.forEach(obj, function(val, key) {
         if (levelLimit > 0 && levelCount > levelLimit) {
           return;
         }
@@ -282,7 +282,7 @@
       replaceWrap = true;
     }
     r = obj;
-    caro.each(r, function(key, val) {
+    caro.forEach(r, function(val, key) {
       var fnStr;
       if (caro.isPlainObject(val)) {
         caro.coverFnToStrInObj(val);
@@ -308,7 +308,7 @@
   self.objToArr = function(obj) {
     var r;
     r = [];
-    caro.each(obj, function(i, val) {
+    caro.forEach(obj, function(val) {
       r.push(val);
     });
     return r;
