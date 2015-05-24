@@ -10,10 +10,9 @@
   /**
    * for-loop function
    * @param {function} fn for-loop function, will break-loop when function return false
-   * @param {integer} start
-   * @param {integer} end
-   * @param {integer} step add the step in each function-called
-   * @param {end} start
+   * @param {number} start
+   * @param {number} end
+   * @param {number} step add the step in each function-called
    */
   self.loop = function(fn, start, end, step) {
     var compareFn;
@@ -35,7 +34,6 @@
       if (fn(start) === false) {
         break;
       }
-      console.log('start=', start);
       start += step;
     }
   };

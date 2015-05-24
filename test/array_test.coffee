@@ -1,11 +1,11 @@
 do ->
 describe 'Array', ->
   it 'sumOfArr', ->
-    arr = [1, 2, '5', null, {}]
+    arr = [1, 2, '5']
     r = caro.sumOfArr arr
-    r2 = caro.sumOfArr arr, true
+    r2 = caro.sumOfArr arr,true
     r.should.equal 3
-    r2.should.equal 11
+    r2.should.equal 8
 
   it 'pushNoDuplicate', ->
     arr = [1, 2, 3];

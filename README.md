@@ -31,9 +31,10 @@ caro.isArr(['caro']); // true
 [Back to Index](#index)
 - **sumOfArr(arr [force=false]) - 加總陣列中的數字**
 ```javascript
-var arr = [1, 2, '5', null, {}];
+var arr = [1, 2, '5'];
 var r = caro.sumOfArr(arr); // 3
 var r2 = caro.sumOfArr(arr, true); // 11
+```
 - **pushNoDuplicate(arr, val...) - 不重覆 push 值至陣列**
 ```javascript
 var arr = [1, 2, 3];
