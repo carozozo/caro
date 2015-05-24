@@ -119,11 +119,6 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **getObjLength(obj) - 取得 obj 長度(element 數量)**
-```javascript
-var arg = ['a' ,'b', 'c'];
-var r = caro.getObjLength(arg); // 3    
-```
 - **extendObj([deep=false], obj...) - 合併至第1個 obj**
 ```javascript
 var arg = {a: {a1: 1}};
