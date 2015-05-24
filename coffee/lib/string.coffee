@@ -28,32 +28,6 @@ do ->
     r.join ''
 
   ###*
-  # check if string is uppercase
-  # @param {...string} str
-  # @returns {boolean}
-  ###
-  self.isUpper = (str) ->
-    pass = true
-    caro.checkIfPassCb(arguments, (str)->
-      upp = str.toUpperCase()
-      pass = false if upp != str
-    )
-    pass
-
-  ###*
-  # check if string is lowercase
-  # @param {string} str
-  # @returns {boolean}
-  ###
-  self.isLower = (str) ->
-    pass = true
-    caro.checkIfPassCb(arguments, (str)->
-      low = str.toLowerCase()
-      pass = false if low != str
-    )
-    pass
-
-  ###*
   # create random string
   # @param {number} len the length of random
   # @param {object} [opt]

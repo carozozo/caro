@@ -105,4 +105,32 @@
     }
     return false;
   };
+
+  /**
+   * check if string is uppercase
+   * @param {...string} str
+   * @returns {boolean}
+   */
+  self.isUpper = function(str) {
+    var upp;
+    upp = str.toUpperCase();
+    if (upp !== str) {
+      return false;
+    }
+    return true;
+  };
+
+  /**
+   * check if string is lowercase
+   * @param {string} str
+   * @returns {boolean}
+   */
+  self.isLower = function(str) {
+    var low;
+    low = str.toLowerCase();
+    if (low !== str) {
+      return false;
+    }
+    return true;
+  };
 })();

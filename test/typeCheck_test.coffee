@@ -49,3 +49,15 @@ describe 'TypeCheck', ->
     r2.should.be.false
     r3.should.be.false
     r4.should.be.false
+
+  it 'isUpper', ->
+    r = caro.isUpper('CARO')
+    r2 = caro.isUpper('caro')
+    r.should.be.true
+    r2.should.be.false
+
+  it 'isLower', ->
+    r = caro.isLower('caro')
+    r2 = caro.isLower('Caro')
+    r.should.be.true
+    r2.should.be.false
