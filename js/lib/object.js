@@ -8,29 +8,30 @@
   self = caro;
 
   /**
-   * covert to string if element is function in object
+   * show object/array by string
    * @param {object} obj
-   * @param {boolean} [replaceWrap=true] if replace \r\n
+   * @param {boolean} [wrap=false] if display with wrap
    */
-  self.coverFnToStrInObj = function(obj, replaceWrap) {
-    if (replaceWrap == null) {
-      replaceWrap = true;
+  self.toWord = function(obj, wrap) {
+    var json;
+    if (wrap == null) {
+      wrap = false;
     }
     caro.forEach(obj, function(val, key) {
-      var fnStr;
-      if (caro.isPlainObject(val)) {
-        caro.coverFnToStrInObj(val);
-      } else if (caro.isFunction(val)) {
-        fnStr = val.toString();
-        if (replaceWrap) {
-          fnStr = fnStr.replace(/([\r]\s*|[\n]\s*)/g, '');
-        } else {
-          fnStr = fnStr.replace(/[\r]\s*/g, '\r ');
-          fnStr = fnStr.replace(/[\n]\s*/g, '\n ');
-        }
-        obj[key] = fnStr;
+      if (caro.isString(val)) {
+        obj[key] = "'" + val + "'";
+        return;
       }
+      if (caro.isPlainObject(val) || caro.isArray(val)) {
+        obj[key] = caro.toWord(val);
+        return;
+      }
+      return obj[key] = caro.toString(val);
     });
-    return obj;
+    json = caro.toJson(obj);
+    if (!wrap) {
+      json = json.replace(/([\r]\s*|[\n]\s*)/g, '');
+    }
+    return caro.replaceAll(json, '"', '');
   };
 })();

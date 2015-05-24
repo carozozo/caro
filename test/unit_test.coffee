@@ -1,16 +1,16 @@
 #do ->
 #describe.only 'Unit', ->
 #  it 'test', ->
-#    arr=[
-#      caro.toArray('3')
-#      caro.toArray(['caro',undefined])
-#      caro.toArray(undefined)
-#      caro.toArray(null)
-#      caro.toArray(1)
-#      caro.toArray({a:'2',c:'d'})
-#      caro.toArray(()->)
+#    arr = [
+#      caro.toString('3')
+#      caro.toString(['caro', undefined])
+#      caro.toString(undefined)
+#      caro.toString(null)
+#      caro.toString(1)
+#      caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->}, false)
+#      caro.toString(()->)
 #    ]
 #
-#    caro.forEach(arr,(val)->
+#    caro.forEach(arr, (val)->
 #      console.log val
 #    )
