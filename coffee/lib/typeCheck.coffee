@@ -77,4 +77,24 @@ do ->
     catch e
     false
 
+  ###*
+  # check if string is uppercase
+  # @param {...string} str
+  # @returns {boolean}
+  ###
+  self.isUpper = (str) ->
+    upp = str.toUpperCase()
+    return false if upp != str
+    true
+
+  ###*
+  # check if string is lowercase
+  # @param {string} str
+  # @returns {boolean}
+  ###
+  self.isLower = (str) ->
+    low = str.toLowerCase()
+    return false if low != str
+    true
+
   return

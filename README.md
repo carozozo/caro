@@ -229,16 +229,6 @@ fn(1, 2);
 
 ### String
 [Back to Index](#index)
-- **isUpper(str...) - 判斷是否為大寫字串**
-```javascript
-var r = caro.isUpper('CARO', 'SNOOPY'); // true
-var r2 = caro.isUpper('caro', 'SNOOPY'); // false
-```
-- **isLower(str...) - 判斷是否為小寫字串**
-```javascript
-var r = caro.isLower('Caro'); // false
-var r2 = caro.isLower('caro', 'snoopy'); // true
-```
 - **random(len [opt]) - 產生隨機字串**
 ```javascript
 var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
@@ -470,4 +460,14 @@ var r = caro.coverToJson(arg, {
 var r = caro.coverToJson(3.4); // '3.4'
 var r2 = caro.coverToJson(null); // 'null'
 var r3 = caro.coverToJson('caro', false); // '"caro"'    
+```
+- **isUpper(str) - 判斷是否為大寫字串**
+```javascript
+var r = caro.isUpper('CARO'); // true
+var r2 = caro.isUpper('caro'); // false
+```
+- **isLower(str) - 判斷是否為小寫字串**
+```javascript
+var r = caro.isLower('caro'); // true
+var r2 = caro.isLower('Caro'); // false
 ```

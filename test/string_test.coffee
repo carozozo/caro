@@ -1,17 +1,5 @@
 do ->
 describe 'String', ->
-  it 'isUpper', ->
-    r = caro.isUpper('CARO', 'SNOOPY')
-    r2 = caro.isUpper('caro', 'SNOOPY')
-    r.should.be.true
-    r2.should.be.false
-
-  it 'isLower', ->
-    r = caro.isLower('Caro')
-    r2 = caro.isLower('caro', 'snoopy')
-    r.should.be.false
-    r2.should.be.true
-
   it 'random', ->
     r = caro.random(15)
     r2 = caro.random(15, {
