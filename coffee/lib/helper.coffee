@@ -75,7 +75,7 @@ do ->
   self.executeIfFn = (fn, args) ->
     otherArgs = []
     r = undefined
-    caro.eachArgs arguments, (i, arg) ->
+    caro.forEach arguments, (arg, i) ->
       return if i < 1
       otherArgs.push arg
       return
@@ -107,7 +107,7 @@ do ->
   ###
   self.formatMoney = (arg, type, opt) ->
     r = []
-    caro.eachArgs arguments, (i, arg) ->
+    caro.forEach arguments, (arg, i) ->
       return if i == 0
       return opt = arg if caro.isObject(arg)
       return type = arg if caro.isString(arg)

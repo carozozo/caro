@@ -139,29 +139,6 @@ caro.loop(function (i){
     // i = 1,3,5
 }, 1, 10, 2);
 ```
-- **each(arg, cb) - 遍歷 arr/obj 中的 key 和 val， 並代入 callback-function**
-```javascript
-caro.each(['a', 'b', 'c'], function (key, val){
-  console.log(val);
-  if(val==='b') return false; // break
-}); // console only print 'a', 'b' 
-caro.each({a: 1, b: 2, c: 3}, function (key, val){
-  // key will be 'a', 'b', 'c'
-  // val will be 1, 2, 3
-});
-caro.each(null, function (key, val){
-}); // do nothing
-```
-- **eachArgs(fn) - 遍歷 arr/obj 中的 key 和 val ，將 key 轉為 int 之後代入 callback-fn**
-```javascript
-var fn = function (a, b, c) {
-    caro.eachArgs(arguments, function (key, val) {
-        // key will be 0, 1...
-        // val will be 'd', 'e', ...
-    });
-};
-fn('d','e', {});
-```
 
 ### Object
 [Back to Index](#index)

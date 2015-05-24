@@ -43,19 +43,4 @@
       realStart += step;
     }
   };
-
-  /**
-   * for-loop the arg and callback of int-key/value
-   * @param {array|object} arg
-   * @param {function} cb callback-function for each key & value
-   */
-  self.eachArgs = function(arg, cb) {
-    var i;
-    for (i in arg) {
-      i = parseInt(i);
-      if (cb(i, arg[i]) === false) {
-        break;
-      }
-    }
-  };
 })();

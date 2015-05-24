@@ -28,15 +28,4 @@ do ->
       realStart += step
     return
 
-  ###*
-  # for-loop the arg and callback of int-key/value
-  # @param {array|object} arg
-  # @param {function} cb callback-function for each key & value
-  ###
-  self.eachArgs = (arg, cb) ->
-    for i of arg
-      i = parseInt(i)
-      break if cb(i, arg[i]) == false
-    return
-
   return

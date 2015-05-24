@@ -1,4 +1,4 @@
-/*! caro - v0.6.12 - 2015-05-24 */
+/*! caro - v0.6.13 - 2015-05-24 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -213,7 +213,7 @@
     var otherArgs, r;
     otherArgs = [];
     r = void 0;
-    caro.eachArgs(arguments, function(i, arg) {
+    caro.forEach(arguments, function(arg, i) {
       if (i < 1) {
         return;
       }
@@ -255,7 +255,7 @@
   self.formatMoney = function(arg, type, opt) {
     var aStr, decimal, fStr, float, forceFloat, i, iStr, j, prefix, r, ref, s, sepLength, separated;
     r = [];
-    caro.eachArgs(arguments, function(i, arg) {
+    caro.forEach(arguments, function(arg, i) {
       if (i === 0) {
         return;
       }
@@ -343,21 +343,6 @@
       }
       start += step2;
       realStart += step;
-    }
-  };
-
-  /**
-   * for-loop the arg and callback of int-key/value
-   * @param {array|object} arg
-   * @param {function} cb callback-function for each key & value
-   */
-  self.eachArgs = function(arg, cb) {
-    var i;
-    for (i in arg) {
-      i = parseInt(i);
-      if (cb(i, arg[i]) === false) {
-        break;
-      }
     }
   };
 })();
@@ -449,7 +434,7 @@
       r = deep;
       deep = false;
     }
-    caro.eachArgs(arguments, function(key, arg) {
+    caro.forEach(arguments, function(arg, key) {
       var results, val;
       if (!r && caro.isObject(arg)) {
         r = arg;

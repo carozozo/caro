@@ -85,7 +85,7 @@
       r = deep;
       deep = false;
     }
-    caro.eachArgs(arguments, function(key, arg) {
+    caro.forEach(arguments, function(arg, key) {
       var results, val;
       if (!r && caro.isObject(arg)) {
         r = arg;

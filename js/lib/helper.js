@@ -99,7 +99,7 @@
     var otherArgs, r;
     otherArgs = [];
     r = void 0;
-    caro.eachArgs(arguments, function(i, arg) {
+    caro.forEach(arguments, function(arg, i) {
       if (i < 1) {
         return;
       }
@@ -141,7 +141,7 @@
   self.formatMoney = function(arg, type, opt) {
     var aStr, decimal, fStr, float, forceFloat, i, iStr, j, prefix, r, ref, s, sepLength, separated;
     r = [];
-    caro.eachArgs(arguments, function(i, arg) {
+    caro.forEach(arguments, function(arg, i) {
       if (i === 0) {
         return;
       }
