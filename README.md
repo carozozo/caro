@@ -370,10 +370,10 @@ var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 var r = caro.isBasicVal(1, '', false); // true
 var r2 = caro.isBasicVal({}); // false
 ```
-- **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined )**
+- **isEmptyVal(arg...) - 判斷是否為空值 ( {} | [] | null | '' | undefined | NaN )**
 ```javascript
-var r = caro.isEmptyVal(0, {a:1}); // false
-var r2 = caro.isEmptyVal({}, [], null, '', undefined); // true
+var r = caro.isEmptyVal(0); // false
+var r2 = caro.isEmptyVal({}); // true
 ```
 - **isEasingTrue(arg...) - 判斷是否為 true 或 'true' 或 1**
 ```javascript

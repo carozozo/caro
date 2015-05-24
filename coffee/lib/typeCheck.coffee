@@ -21,9 +21,8 @@ do ->
   ###
   self.isEmptyVal = (arg) ->
     caro.checkIfPassCb arguments, (arg) ->
-      return caro.getObjLength(arg) < 1 if caro.isObject(arg)
-      return arg.length < 1 if caro.isArray(arg)
-      !arg and arg != 0 and arg != false
+      return false if caro.isNumber(arg) or caro.isBoolean(arg)
+      return caro.size(arg) < 1
 
   ###*
   # check if value is true | 'true' | 1
