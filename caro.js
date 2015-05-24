@@ -53,9 +53,9 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoDup = function(arr, val) {
-    caro.eachArgs(arguments, function(i, val) {
-      if (i === 0 || arr.indexOf(val) > -1) {
+  self.pushNoDuplicate = function(arr, val) {
+    caro.each(arguments, function(i, val) {
+      if (i === '0' || arr.indexOf(val) > -1) {
         return;
       }
       arr.push(val);
@@ -69,9 +69,9 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoEmpty = function(arr, val) {
-    caro.eachArgs(arguments, function(i, arg) {
-      if (i === 0 || caro.isEmptyVal(arg)) {
+  self.pushNoEmptyVal = function(arr, val) {
+    caro.each(arguments, function(i, arg) {
+      if (i === '0' || caro.isEmptyVal(arg)) {
         return;
       }
       arr.push(arg);
@@ -80,36 +80,11 @@
   };
 
   /**
-   * check if empty-value in array
-   * @param {...[]} arr
-   * @returns {boolean}
-   */
-  self.hasEmptyInArr = function(arr) {
-    var checkVal, hasEmpty;
-    hasEmpty = false;
-    checkVal = function(arr) {
-      caro.each(arr, function(i, val) {
-        if (caro.isEmptyVal(val)) {
-          hasEmpty = true;
-          return false;
-        }
-      });
-    };
-    caro.each(arguments, function(i, arr) {
-      if (hasEmpty) {
-        return false;
-      }
-      checkVal(arr);
-    });
-    return hasEmpty;
-  };
-
-  /**
    * remove empty-value in array
    * @param {[]} arr
    * @returns {array}
    */
-  self.removeEmptyInArr = function(arr) {
+  self.pullEmptyVal = function(arr) {
     var r;
     r = [];
     caro.each(arr, function(i, val) {
@@ -125,7 +100,7 @@
    * @param {[]} arr
    * @returns {array}
    */
-  self.basicArr = function(arr) {
+  self.pullUnBasicVal = function(arr) {
     var r;
     r = [];
     caro.each(arr, function(i, val) {
@@ -1289,18 +1264,8 @@
  * @author Caro.Huang
  */
 (function() {
-  var checkType, self;
+  var self;
   self = caro;
-  checkType = function(args, type) {
-    var pass;
-    pass = true;
-    caro.each(args, function(i, arg) {
-      if (typeof arg !== type) {
-        pass = false;
-      }
-    });
-    return pass;
-  };
 
   /**
    * check if integer

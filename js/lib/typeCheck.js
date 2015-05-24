@@ -5,18 +5,8 @@
  * @author Caro.Huang
  */
 (function() {
-  var checkType, self;
+  var self;
   self = caro;
-  checkType = function(args, type) {
-    var pass;
-    pass = true;
-    caro.each(args, function(i, arg) {
-      if (typeof arg !== type) {
-        pass = false;
-      }
-    });
-    return pass;
-  };
 
   /**
    * check if integer

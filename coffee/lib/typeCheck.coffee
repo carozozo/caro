@@ -6,14 +6,6 @@
 do ->
   self = caro
 
-  checkType = (args, type) ->
-    pass = true
-    caro.each args, (i, arg) ->
-      if typeof arg != type
-        pass = false
-      return
-    pass
-
   ###*
   # check if integer
   # @param {*} arg
