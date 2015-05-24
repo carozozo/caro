@@ -16,7 +16,7 @@
    * @param {end} start
    */
   self.loop = function(fn, start, end, step) {
-    var compareFn, isLow;
+    var compareFn;
     if (start == null) {
       start = 0;
     }
@@ -26,16 +26,17 @@
     if (step == null) {
       step = 1;
     }
-    isLow = (function() {
-      return start < end;
-    })();
     compareFn = caro.lte;
-    compareFn = isLow ? caro.lte : caro.gte;
+    if (start > end) {
+      compareFn = caro.gte;
+      step = -step;
+    }
     while (compareFn(start, end)) {
       if (fn(start) === false) {
         break;
       }
-      start += isLow ? step : -step;
+      console.log('start=', start);
+      start += step;
     }
   };
 })();

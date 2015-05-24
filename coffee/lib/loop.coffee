@@ -14,12 +14,14 @@ do ->
   # @param {end} start
   ###
   self.loop = (fn, start = 0, end = 0, step = 1) ->
-    isLow = do -> start < end
     compareFn = caro.lte
-    compareFn = if isLow then caro.lte else caro.gte
+    if start > end
+      compareFn = caro.gte
+      step = -step
     while compareFn start, end
       break if fn(start) == false
-      start += if isLow then step else -step
+      console.log 'start=',start
+      start += step
     return
 
   return
