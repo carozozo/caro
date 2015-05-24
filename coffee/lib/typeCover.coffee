@@ -69,7 +69,7 @@ do ->
     return arg if caro.isObject(arg)
     if caro.isArray(arg)
       r = {}
-      caro.each(arg, (i, val) ->
+      caro.forEach(arg, (val, i) ->
         r[i] = val
       )
       return r

@@ -78,7 +78,7 @@
     if (!Array.isArray(arr) && typeof arr !== 'object' || !caro.isFunction(checkFn)) {
       return false;
     }
-    caro.each(arr, function(i, arg) {
+    caro.forEach(arr, function(arg) {
       var result;
       result = checkFn(arg);
       if (needAllPass && result === false || !needAllPass && result === true) {

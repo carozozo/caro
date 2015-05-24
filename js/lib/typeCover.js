@@ -104,7 +104,7 @@
     }
     if (caro.isArray(arg)) {
       r = {};
-      caro.each(arg, function(i, val) {
+      caro.forEach(arg, function(val, i) {
         return r[i] = val;
       });
       return r;

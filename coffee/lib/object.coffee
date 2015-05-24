@@ -24,7 +24,7 @@ do ->
     return obj if !caro.isObject(obj) or aType.indexOf(type) < 0
     keys = keys or caro.getKeysInObj(r)
     keys = caro.splitStr(keys, ',')
-    caro.each keys, (i, key) ->
+    caro.forEach keys, (key) ->
       return if !caro.keysInObj(r, key)
       val = r[key]
       return if !caro.isString(val)
@@ -89,7 +89,7 @@ do ->
     r = if caro.isArray(arg) then [] else {}
     caro.extendObj(r, arg)
     if(deep)
-      caro.each(r, (key, val) ->
+      caro.forEach(r, (val, key) ->
         r[key] = caro.cloneObj(val)
       )
     r
@@ -102,7 +102,7 @@ do ->
   ###
   self.replaceObjKey = (obj, cb) ->
     r = obj
-    caro.each r, (key, val) ->
+    caro.forEach r, (val, key) ->
       newKey = caro.executeIfFn(cb, key)
       if newKey
         r[newKey] = val
@@ -120,7 +120,7 @@ do ->
   self.replaceObjVal = (obj, cb, deep = false) ->
     r = obj
     coverObjVal = (o) ->
-      caro.each o, (key, val) ->
+      caro.forEach o, (val, key) ->
         if caro.isObject(val) and deep
           coverObjVal val
           return
@@ -178,7 +178,7 @@ do ->
     return false if !caro.isObject(obj)
     pass = true
     keys = caro.splitStr(keys, ',')
-    caro.each keys, (i, key) ->
+    caro.forEach keys, (key) ->
       if !obj.hasOwnProperty(key)
         pass = false
         return false
@@ -198,7 +198,7 @@ do ->
     levelCount = 0
     getKey = (obj) ->
       levelCount++
-      caro.each obj, (key, val) ->
+      caro.forEach obj, (val, key) ->
         return if levelLimit > 0 and levelCount > levelLimit
         r.push key
         if caro.isObject(val)
@@ -216,7 +216,7 @@ do ->
   ###
   self.coverFnToStrInObj = (obj, replaceWrap = true) ->
     r = obj
-    caro.each r, (key, val) ->
+    caro.forEach r, (val, key) ->
       if caro.isPlainObject(val)
         caro.coverFnToStrInObj(val)
       else if caro.isFunction(val)
@@ -237,7 +237,7 @@ do ->
   ###
   self.objToArr = (obj) ->
     r = []
-    caro.each obj, (i, val) ->
+    caro.forEach obj, (val) ->
       r.push val
       return
     r

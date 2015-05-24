@@ -81,7 +81,7 @@ do ->
     if num
       chars.push '0123456789'
     chars = chars.join('')
-    caro.each exclude, (i, excludeStr) ->
+    caro.forEach exclude, (excludeStr) ->
       chars = caro.replaceAll(chars, excludeStr, '')
       return
     i = 0
@@ -215,7 +215,7 @@ do ->
     return str if !caro.isString(str)
     r = []
     aStr = str.split('')
-    caro.each aStr, (i, val) ->
+    caro.forEach aStr, (val, i) ->
       r.push ' ' if i > 0 and caro.isUpper(val)
       r.push val
     r.join ''
@@ -289,7 +289,7 @@ do ->
     # e.g. splitter=['a','ab','c']; => mainSplit='a'
     mainSplit = splitter[0]
     if(mainSplit.length > 1)
-      caro.each splitter, (j, eachSplit) ->
+      caro.forEach splitter, (eachSplit, j) ->
         return if !caro.isString(eachSplit)
         return if mainSplit < 2
         if mainSplit.length >= eachSplit.length
@@ -298,7 +298,7 @@ do ->
     return str if !caro.isString(mainSplit)
     # replace all splitter to mainSplitter
     # e.g. string='caro.huang, is handsome'; splitter=['.', ',']; => string='caro,huang, is handsome'
-    caro.each splitter, (i, eachSplit) ->
+    caro.forEach splitter, (eachSplit) ->
       return if !caro.isString(eachSplit)
       str = caro.replaceAll(str, eachSplit, mainSplit)
       return
@@ -314,7 +314,7 @@ do ->
   self.serializeUrl = (url, oArgs, coverEmpty = false) ->
     count = 0
     aArgs = ['?']
-    caro.each oArgs, (key, val) ->
+    caro.forEach oArgs, (val, key) ->
       if caro.isEmptyVal(val)
         return if !coverEmpty
         val = ''

@@ -98,7 +98,7 @@
       chars.push('0123456789');
     }
     chars = chars.join('');
-    caro.each(exclude, function(i, excludeStr) {
+    caro.forEach(exclude, function(excludeStr) {
       chars = caro.replaceAll(chars, excludeStr, '');
     });
     i = 0;
@@ -266,7 +266,7 @@
     }
     r = [];
     aStr = str.split('');
-    caro.each(aStr, function(i, val) {
+    caro.forEach(aStr, function(val, i) {
       if (i > 0 && caro.isUpper(val)) {
         r.push(' ');
       }
@@ -356,7 +356,7 @@
     splitter = caro.coverToArr(splitter);
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
-      caro.each(splitter, function(j, eachSplit) {
+      caro.forEach(splitter, function(eachSplit, j) {
         if (!caro.isString(eachSplit)) {
           return;
         }
@@ -371,7 +371,7 @@
     if (!caro.isString(mainSplit)) {
       return str;
     }
-    caro.each(splitter, function(i, eachSplit) {
+    caro.forEach(splitter, function(eachSplit) {
       if (!caro.isString(eachSplit)) {
         return;
       }
@@ -394,7 +394,7 @@
     }
     count = 0;
     aArgs = ['?'];
-    caro.each(oArgs, function(key, val) {
+    caro.forEach(oArgs, function(val, key) {
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {
           return;
