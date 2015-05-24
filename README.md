@@ -133,14 +133,6 @@ var arg2 = {
 };
 r = caro.coverFnToStrInObj(arg); // { a: 1, b: 2, c: 'function (a) {return a;}' }
 r2 = caro.coverFnToStrInObj(arg2, false); // { a: 1, b: 2, c: 'function (a) {\n return a;\n }' }
-```
-- **getArgumentsAsArr(fn) - 將物件轉為陣列**
-```javascript
-var fn = function (a, b) {
-    var args = caro.objToArr(arguments); // [1, 2]
-};
-fn(1, 2);
-```
 
 ### String
 [Back to Index](#index)
