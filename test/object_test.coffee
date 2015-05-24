@@ -1,9 +1,9 @@
 do ->
 describe 'Object', ->
-  it 'keysInObj', ->
+  it 'ownKey', ->
     arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
-    r = caro.keysInObj(arg, 'aa,bb');
-    r2 = caro.keysInObj(arg, ['aa', 'ee']);
+    r = caro.ownKey(arg, 'aa','bb');
+    r2 = caro.ownKey(arg, 'aa', 'ee');
     r.should.be.true
     r2.should.be.false
 

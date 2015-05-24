@@ -274,17 +274,14 @@
   /**
    * check if key exists in object, will return false when key not exist, no matter that other-keys are
    * @param {object} obj
-   * @param {string[]|string} keys the keys that want to validate
+   * @param {string} keys the keys that want to validate
    * @returns {boolean}
    */
-  self.keysInObj = function(obj, keys) {
-    var pass;
-    if (!caro.isObject(obj)) {
-      return false;
-    }
+  self.ownKey = function(obj, key) {
+    var aKey, pass;
     pass = true;
-    keys = caro.splitStr(keys, ',');
-    caro.forEach(keys, function(key) {
+    aKey = caro.drop(arguments);
+    caro.forEach(aKey, function(key) {
       if (!obj.hasOwnProperty(key)) {
         pass = false;
         return false;
