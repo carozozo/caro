@@ -9,16 +9,14 @@ do ->
   ###*
   # get sum of value in array
   # @param {[]} arr
-  # @param {boolean} [force=false]
+  # @param {boolean} [force=false] if cover to number when argument is not number
   # @returns {number}
   ###
   self.sumOfArr = (arr, force = false) ->
-    sum = 0
-    caro.forEach arr, (val) ->
-      sum += val if caro.isNumber(val)
-      sum += parseFloat(val) or 0 if force
-      return
-    sum
+    caro.reduce(arr, (total, n) ->
+      return total if !caro.isNumber(n) and !force
+      return (total + Number(n))
+    )
 
   ###*
   # push value into array if not exists
@@ -27,8 +25,9 @@ do ->
   # @returns {array}
   ###
   self.pushNoDuplicate = (arr, val) ->
-    caro.forEach arguments, (val, i) ->
-      return if i == 0 or arr.indexOf(val) > -1
+    args = caro.drop(arguments)
+    caro.forEach args, (val) ->
+      return if arr.indexOf(val) > -1
       arr.push val
       return
     arr
@@ -40,8 +39,9 @@ do ->
   # @returns {array}
   ###
   self.pushNoEmptyVal = (arr, val) ->
-    caro.forEach arguments, (arg, i) ->
-      return if i == 0 or caro.isEmptyVal(arg)
+    args = caro.drop(arguments)
+    caro.forEach args, (arg) ->
+      return if caro.isEmptyVal(arg)
       arr.push arg
       return
     arr
@@ -52,11 +52,9 @@ do ->
   # @returns {array}
   ###
   self.pullEmptyVal = (arr) ->
-    r = []
-    caro.forEach arr, (val) ->
-      r.push(val) if !caro.isEmptyVal(val)
-      return
-    arr = r
+    caro.remove(arr, (n) ->
+      return !caro.isEmptyVal(n)
+    )
 
   ###*
   # only keep basic-value in array
@@ -64,10 +62,8 @@ do ->
   # @returns {array}
   ###
   self.pullUnBasicVal = (arr) ->
-    r = []
-    caro.forEach arr, (val) ->
-      r.push(val) if caro.isBasicVal(val)
-      return
-    arr = r
+    caro.remove(arr, (n) ->
+      return caro.isBasicVal(n)
+    )
 
   return

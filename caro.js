@@ -1,4 +1,4 @@
-/*! caro - v0.6.13 - 2015-05-24 */
+/*! caro - v0.6.14 - 2015-05-24 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -27,24 +27,19 @@
   /**
    * get sum of value in array
    * @param {[]} arr
-   * @param {boolean} [force=false]
+   * @param {boolean} [force=false] if cover to number when argument is not number
    * @returns {number}
    */
   self.sumOfArr = function(arr, force) {
-    var sum;
     if (force == null) {
       force = false;
     }
-    sum = 0;
-    caro.forEach(arr, function(val) {
-      if (caro.isNumber(val)) {
-        sum += val;
+    return caro.reduce(arr, function(total, n) {
+      if (!caro.isNumber(n) && !force) {
+        return total;
       }
-      if (force) {
-        sum += parseFloat(val) || 0;
-      }
+      return total + Number(n);
     });
-    return sum;
   };
 
   /**
@@ -54,8 +49,10 @@
    * @returns {array}
    */
   self.pushNoDuplicate = function(arr, val) {
-    caro.forEach(arguments, function(val, i) {
-      if (i === 0 || arr.indexOf(val) > -1) {
+    var args;
+    args = caro.drop(arguments);
+    caro.forEach(args, function(val) {
+      if (arr.indexOf(val) > -1) {
         return;
       }
       arr.push(val);
@@ -70,8 +67,10 @@
    * @returns {array}
    */
   self.pushNoEmptyVal = function(arr, val) {
-    caro.forEach(arguments, function(arg, i) {
-      if (i === 0 || caro.isEmptyVal(arg)) {
+    var args;
+    args = caro.drop(arguments);
+    caro.forEach(args, function(arg) {
+      if (caro.isEmptyVal(arg)) {
         return;
       }
       arr.push(arg);
@@ -85,14 +84,9 @@
    * @returns {array}
    */
   self.pullEmptyVal = function(arr) {
-    var r;
-    r = [];
-    caro.forEach(arr, function(val) {
-      if (!caro.isEmptyVal(val)) {
-        r.push(val);
-      }
+    return caro.remove(arr, function(n) {
+      return !caro.isEmptyVal(n);
     });
-    return arr = r;
   };
 
   /**
@@ -101,14 +95,9 @@
    * @returns {array}
    */
   self.pullUnBasicVal = function(arr) {
-    var r;
-    r = [];
-    caro.forEach(arr, function(val) {
-      if (caro.isBasicVal(val)) {
-        r.push(val);
-      }
+    return caro.remove(arr, function(n) {
+      return caro.isBasicVal(n);
     });
-    return arr = r;
   };
 })();
 
@@ -312,10 +301,9 @@
   /**
    * for-loop function
    * @param {function} fn for-loop function, will break-loop when function return false
-   * @param {integer} start
-   * @param {integer} end
-   * @param {integer} step add the step in each function-called
-   * @param {end} start
+   * @param {number} start
+   * @param {number} end
+   * @param {number} step add the step in each function-called
    */
   self.loop = function(fn, start, end, step) {
     var compareFn;
@@ -337,7 +325,6 @@
       if (fn(start) === false) {
         break;
       }
-      console.log('start=', start);
       start += step;
     }
   };

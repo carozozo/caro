@@ -1,6 +1,5 @@
 do ->
 describe.only 'Unit', ->
   it 'test', ->
-    r = caro.loop((i)->
-      console.log i
-    ,1,3)
+    r = caro.pullUnBasicVal([1, {a: 1}, 'caro']);
+    r.should.be.eql [1, 'caro']
