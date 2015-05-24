@@ -50,14 +50,6 @@ do ->
     return
 
   ###*
-  # get object-length
-  # @param {object} obj
-  # @returns {Number}
-  ###
-  self.getObjLength = (obj) ->
-    Object.keys(obj).length
-
-  ###*
   # extend object, similar jQuery.extend
   # @param {boolean} [deep=false] extend-recursive
   # @param {object...|array...} arg

@@ -1,10 +1,5 @@
 do ->
 describe 'Object', ->
-  it 'getObjLength', ->
-    arg = ['a', 'b', 'c']
-    r = caro.getObjLength(arg);
-    r.should.eq 3
-
   it 'extendObj', ->
     arg = {a: {a1: 1}};
     arg2 = {a: {a1: 1}};
