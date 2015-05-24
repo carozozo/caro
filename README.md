@@ -119,19 +119,6 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **ownKey(obj [keys]) - 確認 obj 中的 key 是否存在**
-```javascript
-var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
-var r = caro.ownKey(arg, 'aa', 'bb'); // true
-var r2 = caro.ownKey(arg, 'aa', 'ee'); // false
-```
-- **getKeysInObj(obj [levelLimit]) - 取得 obj 中的 key**
-```javascript
-var arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
-var r = caro.getKeysInObj(arg); // [ 'a', 'b', 'c' ] - 取得第一層的 key
-var r2 = caro.getKeysInObj(arg, 2); // [ 'a', 'b', 'c', 'd', 'e' ] - 取到第二層的 key
-var r3 = caro.getKeysInObj(arg, 0); // [ 'a', 'b', 'c', 'd', 'e', 'f' ] - 取得所有層級的 key
-```
 - **coverFnToStrInObj(obj [opt]) - 如果 obj 中的 val 是 fn，則轉為字串**
 ```javascript
 var arg = {

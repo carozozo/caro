@@ -1,21 +1,5 @@
 do ->
 describe 'Object', ->
-  it 'ownKey', ->
-    arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
-    r = caro.ownKey(arg, 'aa','bb');
-    r2 = caro.ownKey(arg, 'aa', 'ee');
-    r.should.be.true
-    r2.should.be.false
-
-  it 'getKeysInObj', ->
-    arg = {a: 1, b: 2, c: {d: 3, e: {f: 4}}};
-    r = caro.getKeysInObj(arg);
-    r2 = caro.getKeysInObj(arg, 2);
-    r3 = caro.getKeysInObj(arg, 0);
-    r.should.eql ['a', 'b', 'c']
-    r2.should.eql ['a', 'b', 'c', 'd', 'e']
-    r3.should.eql ['a', 'b', 'c', 'd', 'e', 'f']
-
   it 'coverFnToStrInObj', ->
     arg = {
       a: 1, b: 2, c: (a) ->
