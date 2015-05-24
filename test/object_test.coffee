@@ -1,37 +1,5 @@
 do ->
 describe 'Object', ->
-  it 'upperCaseByObjKey', ->
-    arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
-    arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', 'dd': 1};
-    caro.upperCaseByObjKey(arg, 'aa,bb');
-    caro.upperCaseByObjKey(arg2);
-    arg.should.eql {aa: 'CARO', bb: 'PIKA', cc: 'doraemon', dd: 1}
-    arg2.should.eql {aa: 'CARO', bb: 'PIKA', cc: 'DORAEMON', dd: 1}
-
-  it 'lowerCaseByObjKey', ->
-    arg = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
-    arg2 = {'aa': 'Caro', 'bb': 'Pika', 'cc': 'Doraemon', 'dd': 1};
-    caro.lowerCaseByObjKey(arg, 'aa,bb');
-    caro.lowerCaseByObjKey(arg2);
-    arg.should.eql {aa: 'caro', bb: 'pika', cc: 'Doraemon', dd: 1}
-    arg2.should.eql {aa: 'caro', bb: 'pika', cc: 'doraemon', dd: 1}
-
-  it 'upperFirstByObjKey', ->
-    arg = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
-    arg2 = {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
-    caro.upperFirstByObjKey(arg, 'aa,bb');
-    caro.upperFirstByObjKey(arg2);
-    arg.should.eql {aa: 'Caro', bb: 'Pika', cc: 'doraemon', dd: 1};
-    arg2.should.eql {aa: 'Caro', bb: 'Pika', cc: 'Doraemon', dd: 1};
-
-  it 'trimByObjKey', ->
-    arg = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-    arg2 = {'aa': ' caro ', 'bb': ' pika ', 'cc': ' doraemon ', dd: 1};
-    caro.trimByObjKey(arg, ['aa', 'cc']);
-    caro.trimByObjKey(arg2);
-    arg.should.eql {'aa': 'caro', 'bb': ' pika ', 'cc': 'doraemon', dd: 1};
-    arg2.should.eql {'aa': 'caro', 'bb': 'pika', 'cc': 'doraemon', dd: 1};
-
   it 'keysInObj', ->
     arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
     r = caro.keysInObj(arg, 'aa,bb');
