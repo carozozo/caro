@@ -13,11 +13,11 @@
    * @param arg
    * @returns {*}
    */
-  self.coverToArr = function(arg) {
+  self.toArray = function(arg) {
     if (caro.isArray(arg)) {
       return arg;
     }
-    return [arg];
+    return Array(arg);
   };
 
   /**
@@ -25,7 +25,7 @@
    * @param arg
    * @returns {*}
    */
-  self.coverToStr = function(arg) {
+  self.toString = function(arg) {
     return String(arg);
   };
 
@@ -35,7 +35,7 @@
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.coverToInt = function(arg, force) {
+  self.toInteger = function(arg, force) {
     var int;
     if (force == null) {
       force = true;
@@ -53,7 +53,7 @@
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.coverToNum = function(arg, force) {
+  self.toNumber = function(arg, force) {
     var num;
     if (force == null) {
       force = true;
@@ -71,13 +71,13 @@
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.coverToFixed = function(arg, dec, force) {
+  self.toFixedNumber = function(arg, dec, force) {
     var r;
     if (force == null) {
       force = true;
     }
     dec = dec || 0;
-    r = caro.coverToStr(arg);
+    r = caro.toString(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }
@@ -94,7 +94,7 @@
    * @param {boolean} [force=true] if return {} when cover-failed, otherwise return original-argument
    * @returns {*}
    */
-  self.coverToObj = function(arg, force) {
+  self.toObject = function(arg, force) {
     var e, r;
     if (force == null) {
       force = true;
@@ -131,10 +131,10 @@
    * @param {space=4} [opt.space] the space for easy-reading after cover to JSON
    * @returns {*}
    */
-  self.coverToJson = function(arg, opt) {
+  self.toJson = function(arg, opt) {
     var force, json, replacer, space;
     json = '';
-    opt = caro.coverToObj(opt);
+    opt = caro.toObject(opt);
     force = opt.force !== false;
     replacer = opt.replacer || null;
     space = opt.space != null ? opt.space : 4;

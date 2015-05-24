@@ -63,8 +63,8 @@ do ->
       return opt = arg if caro.isObject(arg)
       return type = arg if caro.isString(arg)
       return
-    opt = caro.coverToObj(opt);
-    float = Math.abs(caro.coverToInt(opt.float))
+    opt = caro.toObject(opt);
+    float = Math.abs(caro.toInteger(opt.float))
     decimal = if caro.isString(opt.decimal) then opt.decimal else '.'
     separated = if caro.isString(opt.separated) then opt.separated else ','
     prefix = if caro.isString(opt.prefix) then opt.prefix else ''
@@ -76,8 +76,8 @@ do ->
         prefix = '$'
       when 'int'
         float = 0
-    arg = caro.coverToNum(arg)
-    arg = caro.coverToStr(arg)
+    arg = caro.toNumber(arg)
+    arg = caro.toString(arg)
     aStr = caro.splitStr(arg, '.')
     iStr = aStr[0]
     fStr = if aStr[1] then aStr[1].slice(0, float) else ''

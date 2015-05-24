@@ -10,9 +10,9 @@ do ->
       'toUpperCase'
       'toLowerCase'
     ]
-    opt = caro.coverToObj(opt)
-    start = caro.coverToInt(opt.start)
-    end = if caro.coverToInt(opt.end) > 0 then caro.coverToInt(opt.end) else null
+    opt = caro.toObject(opt)
+    start = caro.toInteger(opt.start)
+    end = if caro.toInteger(opt.end) > 0 then caro.toInteger(opt.end) else null
     force = opt.force != false
     if !caro.isString(str)
       if !force
@@ -41,7 +41,7 @@ do ->
     text = ''
     chars = []
     len = if parseInt(len) then parseInt(len) else 1
-    opt = caro.coverToObj(opt)
+    opt = caro.toObject(opt)
     lower = opt.lower != false
     upper = opt.upper != false
     num = opt.num != false
@@ -258,7 +258,7 @@ do ->
   self.splitStr = (str, splitter) ->
     return str if caro.isArray(str)
     return [] if !splitter
-    splitter = caro.coverToArr(splitter)
+    splitter = caro.toArray(splitter) if !caro.isArray(splitter)
     # get mainSplit first
     # e.g. splitter=['a','ab','c']; => mainSplit='a'
     mainSplit = splitter[0]

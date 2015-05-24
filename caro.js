@@ -187,8 +187,8 @@
         return type = arg;
       }
     });
-    opt = caro.coverToObj(opt);
-    float = Math.abs(caro.coverToInt(opt.float));
+    opt = caro.toObject(opt);
+    float = Math.abs(caro.toInteger(opt.float));
     decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
     separated = caro.isString(opt.separated) ? opt.separated : ',';
     prefix = caro.isString(opt.prefix) ? opt.prefix : '';
@@ -202,8 +202,8 @@
       case 'int':
         float = 0;
     }
-    arg = caro.coverToNum(arg);
-    arg = caro.coverToStr(arg);
+    arg = caro.toNumber(arg);
+    arg = caro.toString(arg);
     aStr = caro.splitStr(arg, '.');
     iStr = aStr[0];
     fStr = aStr[1] ? aStr[1].slice(0, float) : '';
@@ -311,9 +311,9 @@
     var aType, end, force, r, start;
     r = [];
     aType = ['toUpperCase', 'toLowerCase'];
-    opt = caro.coverToObj(opt);
-    start = caro.coverToInt(opt.start);
-    end = caro.coverToInt(opt.end) > 0 ? caro.coverToInt(opt.end) : null;
+    opt = caro.toObject(opt);
+    start = caro.toInteger(opt.start);
+    end = caro.toInteger(opt.end) > 0 ? caro.toInteger(opt.end) : null;
     force = opt.force !== false;
     if (!caro.isString(str)) {
       if (!force) {
@@ -347,7 +347,7 @@
     text = '';
     chars = [];
     len = parseInt(len) ? parseInt(len) : 1;
-    opt = caro.coverToObj(opt);
+    opt = caro.toObject(opt);
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;
@@ -618,7 +618,9 @@
     if (!splitter) {
       return [];
     }
-    splitter = caro.coverToArr(splitter);
+    if (!caro.isArray(splitter)) {
+      splitter = caro.toArray(splitter);
+    }
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
       caro.forEach(splitter, function(eachSplit, j) {
@@ -827,11 +829,11 @@
    * @param arg
    * @returns {*}
    */
-  self.coverToArr = function(arg) {
+  self.toArray = function(arg) {
     if (caro.isArray(arg)) {
       return arg;
     }
-    return [arg];
+    return Array(arg);
   };
 
   /**
@@ -839,7 +841,7 @@
    * @param arg
    * @returns {*}
    */
-  self.coverToStr = function(arg) {
+  self.toString = function(arg) {
     return String(arg);
   };
 
@@ -849,7 +851,7 @@
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.coverToInt = function(arg, force) {
+  self.toInteger = function(arg, force) {
     var int;
     if (force == null) {
       force = true;
@@ -867,7 +869,7 @@
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.coverToNum = function(arg, force) {
+  self.toNumber = function(arg, force) {
     var num;
     if (force == null) {
       force = true;
@@ -885,13 +887,13 @@
    * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.coverToFixed = function(arg, dec, force) {
+  self.toFixedNumber = function(arg, dec, force) {
     var r;
     if (force == null) {
       force = true;
     }
     dec = dec || 0;
-    r = caro.coverToStr(arg);
+    r = caro.toString(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }
@@ -908,7 +910,7 @@
    * @param {boolean} [force=true] if return {} when cover-failed, otherwise return original-argument
    * @returns {*}
    */
-  self.coverToObj = function(arg, force) {
+  self.toObject = function(arg, force) {
     var e, r;
     if (force == null) {
       force = true;
@@ -945,10 +947,10 @@
    * @param {space=4} [opt.space] the space for easy-reading after cover to JSON
    * @returns {*}
    */
-  self.coverToJson = function(arg, opt) {
+  self.toJson = function(arg, opt) {
     var force, json, replacer, space;
     json = '';
-    opt = caro.coverToObj(opt);
+    opt = caro.toObject(opt);
     force = opt.force !== false;
     replacer = opt.replacer || null;
     space = opt.space != null ? opt.space : 4;

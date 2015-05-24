@@ -1,54 +1,54 @@
 do ->
 describe 'Helper', ->
-  it 'coverToArr', ->
-    r = caro.coverToArr('3')
-    r2 = caro.coverToArr([1])
+  it 'toArray', ->
+    r = caro.toArray('3')
+    r2 = caro.toArray([1])
     r.should.eql(['3'])
     r2.should.eql([1])
 
-  it 'coverToStr', ->
-    r = caro.coverToStr('3')
-    r2 = caro.coverToStr(['caro', 4])
-    r3 = caro.coverToStr(undefined)
+  it 'toString', ->
+    r = caro.toString('3')
+    r2 = caro.toString(['caro', 4])
+    r3 = caro.toString(undefined)
     r.should.eq('3')
     r2.should.eq('caro,4')
     r3.should.eq('undefined')
 
-  it 'coverToInt', ->
-    r = caro.coverToInt('3')
-    r2 = caro.coverToInt('caro')
-    r3 = caro.coverToInt(null, false)
+  it 'toInteger', ->
+    r = caro.toInteger('3')
+    r2 = caro.toInteger('caro')
+    r3 = caro.toInteger(null, false)
     r.should.eq(3)
     r2.should.eq(0)
     should.equal(r3, null);
 
-  it 'coverToNum', ->
-    r = caro.coverToNum('3.4')
-    r2 = caro.coverToNum('caro')
-    r3 = caro.coverToNum('caro', false)
+  it 'toNumber', ->
+    r = caro.toNumber('3.4')
+    r2 = caro.toNumber('caro')
+    r3 = caro.toNumber('caro', false)
     r.should.eq(3.4)
     r2.should.eq(0)
     r3.should.eq('caro')
 
-  it 'coverToFixed', ->
-    r = caro.coverToFixed('3.4355', 2)
-    r2 = caro.coverToFixed(undefined, 3)
-    r3 = caro.coverToFixed('caro', 3, false)
+  it 'toFixedNumber', ->
+    r = caro.toFixedNumber('3.4355', 2)
+    r2 = caro.toFixedNumber(undefined, 3)
+    r3 = caro.toFixedNumber('caro', 3, false)
     r.should.eq(3.44)
     r2.should.eq(0)
     r3.should.eq('caro')
 
-  it 'coverToObj', ->
-    r = caro.coverToObj('3.4')
-    r2 = caro.coverToObj('{"a":3}')
-    r3 = caro.coverToObj('caro', false)
+  it 'toObject', ->
+    r = caro.toObject('3.4')
+    r2 = caro.toObject('{"a":3}')
+    r3 = caro.toObject('caro', false)
     r.should.eql({})
     r2.should.eql({a: 3})
     r3.should.eq('caro')
 
-  it 'coverToJson', ->
-    r = caro.coverToJson(3.4)
-    r2 = caro.coverToJson({
+  it 'toJson', ->
+    r = caro.toJson(3.4)
+    r2 = caro.toJson({
       a: 3
       b: 5
     }, {
@@ -58,7 +58,7 @@ describe 'Helper', ->
       space: 0
       force: false
     })
-    r3 = caro.coverToJson(undefined, {
+    r3 = caro.toJson(undefined, {
       force: false
     })
     r.should.eq('3.4')

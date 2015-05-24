@@ -84,8 +84,8 @@
         return type = arg;
       }
     });
-    opt = caro.coverToObj(opt);
-    float = Math.abs(caro.coverToInt(opt.float));
+    opt = caro.toObject(opt);
+    float = Math.abs(caro.toInteger(opt.float));
     decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
     separated = caro.isString(opt.separated) ? opt.separated : ',';
     prefix = caro.isString(opt.prefix) ? opt.prefix : '';
@@ -99,8 +99,8 @@
       case 'int':
         float = 0;
     }
-    arg = caro.coverToNum(arg);
-    arg = caro.coverToStr(arg);
+    arg = caro.toNumber(arg);
+    arg = caro.toString(arg);
     aStr = caro.splitStr(arg, '.');
     iStr = aStr[0];
     fStr = aStr[1] ? aStr[1].slice(0, float) : '';
