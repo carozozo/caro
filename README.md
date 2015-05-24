@@ -25,9 +25,7 @@ caro.isArr(['caro']); // true
 ```
 ## Index
 
-##### (★ only support Node.js)
-
-**[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)** | **[String](#string)** | **[TypeCheck](#typecheck)**
+**[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)**
 
 ### Array
 [Back to Index](#index)
@@ -339,52 +337,6 @@ var fn = function (a, b) {
     var args = caro.objToArr(arguments); // [1, 2]
 };
 fn(1, 2);
-```
-### ★Path
-[Back to Index](#index)
-- **setAbsolutePath(path) - 定義絕對路徑根目錄**
-```javascript
-var r = caro.setAbsolutePath('/path/from/root'); // '/path/from/root'
-var r2 = caro.setAbsolutePath('/path2//from\root'); // '/path2/from\root'
-```
-- **getAbsolutePath(path) - 取得絕對路徑根目錄**
-```javascript
-caro.setAbsolutePath('/path/from/root');
-var r = caro.getAbsolutePath(); // '/path/from/root'
-```
-- **normalizePath(path...) - 正規化路徑**
-```javascript
-var r = caro.normalizePath('path//seems/not/exists'); // 'path/seems/not/exists'
-var r2 = caro.normalizePath('path', '\exists'); // 'path/exists'
-```
-- **isFullPath(path...) - 確認是否為絕對路徑**
-```javascript
-caro.setAbsolutePath('/path/root');
-var r = caro.isFullPath('/path/root/caro.js'); // true
-var r2 = caro.isFullPath('/path/root/caro.js', '/path2'); // false
-```
-- **getDirPath(path) - 取得所在的資料夾路徑**
-```javascript
-var r = caro.getDirPath('/path/from/root'); // '/path/from'
-var r2 = caro.getDirPath('/path/from/root/caro.js'); // '/path/from/root'
-```
-- **getFileName(path [getFull=true]) - 取得檔案名稱**
-```javascript
-var r = caro.getFileName('/path/from/root'); // 'root'
-var r2 = caro.getFileName('/path/from/root/caro.js'); // 'caro.js'
-var r3 = caro.getFileName('/path/from/root/caro.js', false); // 'caro'
-```
-- **getExtendName(path [withDot=true]) - 取得附檔名**
-```javascript
-var r = caro.getExtendName('caro.js'); // '.js'
-var r2 = caro.getExtendName('caro.js.bk', false); // 'bk'
-```
-- **coverToFullPath(path) - 轉為絕對路徑**
-```javascript
-caro.setAbsolutePath('/path/from/root');
-var r = caro.coverToFullPath('caro.js');  // '/path/from/root/caro.js'
-var r2 = caro.coverToFullPath('other', 'caro.js'); // '/path/from/root/other/caro.js'
-var r3 = caro.coverToFullPath('/path/from/root/caro.js'); // '/path/from/root/caro.js'
 ```
 
 ### String

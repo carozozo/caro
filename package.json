@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.6.8",
+  "version": "0.6.10",
   "description": "The common-libraries depend on lodash",
   "author": {
     "name": "Caro.Huang",
@@ -22,13 +22,13 @@
     "helper",
     "loop",
     "object",
-    "path",
     "string",
     "type check"
   ],
   "dependencies": {
   },
   "devDependencies": {
+    "chai": "~2.3.0",
     "coffee-script": "1.9.2",
     "grunt": "~0.4.5",
     "grunt-contrib-coffee": "~0.13.0",
@@ -36,7 +36,6 @@
     "grunt-contrib-uglify": "~0.9.1",
     "grunt-contrib-nodeunit": "~0.4.0",
     "grunt-mocha-test": "~0.12.7",
-    "mocha": "~2.2.4",
-    "chai": "~2.3.0"
+    "mocha": "~2.2.4"
   }
 }
