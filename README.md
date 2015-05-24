@@ -119,11 +119,11 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **keysInObj(obj [keys]) - 確認 obj 中的 key 是否存在**
+- **ownKey(obj [keys]) - 確認 obj 中的 key 是否存在**
 ```javascript
 var arg = {aa: ' caro ', bb: ' pika ', cc: ' doraemon '};
-var r = caro.keysInObj(arg, 'aa,bb'); // true
-var r2 = caro.keysInObj(arg, ['aa', 'ee']); // false
+var r = caro.ownKey(arg, 'aa', 'bb'); // true
+var r2 = caro.ownKey(arg, 'aa', 'ee'); // false
 ```
 - **getKeysInObj(obj [levelLimit]) - 取得 obj 中的 key**
 ```javascript

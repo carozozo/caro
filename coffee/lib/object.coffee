@@ -8,14 +8,13 @@ do ->
   ###*
   # check if key exists in object, will return false when key not exist, no matter that other-keys are
   # @param {object} obj
-  # @param {string[]|string} keys the keys that want to validate
+  # @param {...string} key the key that want to validate
   # @returns {boolean}
   ###
-  self.keysInObj = (obj, keys) ->
-    return false if !caro.isObject(obj)
+  self.ownKey = (obj, key) ->
     pass = true
-    keys = caro.splitStr(keys, ',')
-    caro.forEach keys, (key) ->
+    aKey = caro.drop(arguments)
+    caro.forEach aKey, (key) ->
       if !obj.hasOwnProperty(key)
         pass = false
         return false
