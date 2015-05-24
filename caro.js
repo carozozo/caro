@@ -1,4 +1,4 @@
-/*! caro - v0.6.16 - 2015-05-24 */
+/*! caro - v0.6.17 - 2015-05-24 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -322,15 +322,6 @@
     } else if (caro.isObject(arg)) {
       arg[key] = val;
     }
-  };
-
-  /**
-   * get object-length
-   * @param {object} obj
-   * @returns {Number}
-   */
-  self.getObjLength = function(obj) {
-    return Object.keys(obj).length;
   };
 
   /**
