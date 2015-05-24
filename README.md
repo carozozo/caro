@@ -7,8 +7,6 @@ General libraries for JavaScript / Node.js depend on lodash
 ```html
 <!-- https://lodash.com/ -->
 <script src="/js/lodash.js"></script> 
-<!-- http://momentjs.com/ -->
-<script src="/js/moment-with-locale.js"></script> <!-- if you want to use DateTime -->
 <script src="/js/caro.js"></script>
 ```
 
@@ -29,9 +27,7 @@ caro.isArr(['caro']); // true
 
 ##### (★ only support Node.js)
 
-**[Array](#array)** | **[Console](#console)** | **[DateTime](#datetime)** 
-| **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)**
-| **[String](#string)** | **[TypeCheck](#typecheck)**
+**[Array](#array)** | **[Console](#console)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[Path](#path)** | **[String](#string)** | **[TypeCheck](#typecheck)**
 
 ### Array
 [Back to Index](#index)
@@ -90,112 +86,6 @@ caro.log2('2', {}); // '2{}'
 caro.log3(2, {a: 1}); // '2{"a": 1}'
 caro.log3('1', undefined); // '1undefined'
 caro.log3('2', null); // '2null'
-```
-
-### DateTime
-[Back to Index](#index)
-Depend on [moment](https://www.npmjs.com/package/moment
-- **getDefaultLocale(locale) - 取得目前預設的語系(en)**
-```javascript
-caro.getDefaultLocale(); // 'en'
-```
-- **setDefaultLocale(locale) - 設定預設的國家語系**
-```javascript
-caro.setDefaultLocale('zh-tw');
-```
-- **addDateTimeFormatType(shorthandFormat, formatType [locale]) - 自定時間格式**
-```javascript
-caro.addDateTimeShortFormat('date', 'YYYY MM DD');
-caro.addDateTimeShortFormat('date2', 'YYYY/MM/DD');
-```
-- **formatDateTime(dateTime, shorthandFormat | formatType [locale]) - 時間格式化**
-```javascript
-caro.setDefaultLocale('zh-tw');
-caro.addDateTimeShortFormat('date', 'LLLL');
-caro.addDateTimeShortFormat('date2', 'L');
-var r = caro.formatDateTime('2015-06-30', 'date'); // 2015年6月30日星期二早上12點00分
-var r2 = caro.formatDateTime('2015-06-30', 'date2'); // 2015年6月30日
-```
-- **formatNow(formatType [locale]) - 取得現在的時間並格式化**
-```javascript
-var r = caro.formatNow('date');
-var r2 = caro.formatNow('date', 'zh-cn');
-```
-- **addDateTime(dateTime, amount, unit [formatType]) - 增加時間**
-```javascript
-var t = '2015-06-30 12:34:56';
-var r = caro.addDateTime(t, 3, 'h'); // '2015-06-30T15:34:56+08:00'
-var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2015/07/03'
-```
-- **subtractDateTime(dateTime, amount, unit [formatType]) - 減少時間**
-```javascript
-var t = '2015-01-01 12:34:56';
-var r = caro.addDateTime(t, 3, 'h', 'YYYY-MM-DD h:mm'); // '2015-01-01 9:34'
-var r2 = caro.addDateTime(t, 3, 'd', 'YYYY/MM/DD'); // '2014/12/29'
-```
-- **startOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的開始**
-```javascript
-var t = '2015-08-21 12:34:56';
-var r = caro.startOfDateTime(t, 'Y'); // '2015-01-01T00:00:00+08:00'
-var r2 = caro.startOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 12:00:00'
-```
-- **endOfDateTime(dateTime, unit [formatType]) - 取得指定時間單位的結束**
-```javascript
-caro.setDefaultLocale('en');
-var t = '2015-08-21 12:34:56';
-var r = caro.endOfDateTime(t, 'Y'); // '2015-12-31T23:59:59+08:00'
-var r2 = caro.endOfDateTime(t, 'd','dddd hh:mm:ss'); // 'Friday 11:59:59'
-```
-- **getUtc(dateTime [formatType]) - 取得指定時間單位的 UTC 時間**
-```javascript
-var t = '2015-02-21'
-var r = caro.getUtc(t); // '2015-02-20T16:00:00+00:00'
-```
-- **isBeforeDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」是否在「目標時間」之前**
-```javascript
-var t = '2015-01-01';
-var t2 = '2020-01-01';
-var t3 = '2010-01-01';
-var r = caro.isBeforeDateTime(t, t2); // true
-var r2 = caro.isBeforeDateTime(t, t3); // false
-```
-- **isAfterDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」是否在「目標時間」之後**
-```javascript
-var t = '2015-01-01 12:00:00';
-var t2 = '2015-01-01 13:00:00';
-var t3 = '2010-01-01';
-var r = caro.isAfterDateTime(t, t2); // false
-var r2 = caro.isAfterDateTime(t, t3); // true
-```
-- **isSameDateTime(dateTime, targetDateTime [unit]) - 比對「指定的時間」和「目標時間」是否相同**
-```javascript
-var t = '2015-01-01';
-var t2 = '2015-01-21';
-var t3 = '2013-01-21';
-var r = caro.isSameDateTime(t, t2, 'year'); // true
-var r2 = caro.isSameDateTime(t2, t3, 'month'); // false (因為 year 不同)
-```
-- **isBetweenDateTime(dateTime, dateTime1, dateTime2 [unit]) - 比對「指定的時間」是否在「目標時間1」和「目標時間2」之間**
-```javascript
-var t = '2015-01-01';
-var t2 = '2013-01-21';
-var t3 = '2015-01-21';
-var r = caro.isBetweenDateTime(t, t2, t3); // true (t2 <= t <= t3)
-var r2 = caro.isBetweenDateTime(t, t3, t2); // false (因為 t 沒有比 t3 大) 
-```
-- **isValidDateTime(dateTime) - 檢查日期格式是否正確**
-```javascript
-var t = '2015-01-01';
-var t2 = '2013-01-32';
-var r = caro.isValidDateTime(t); // true
-var r2 = caro.isValidDateTime(t2); // false
-```
-- **getDateTimeDiff(dateTime1, dateTime2 [unit] [withFloat]) - 取得日期間的差**
-```javascript
-var t = '2015-01-01';
-var t2 = '2013-01-31';
-var r = caro.getDateTimeDiff(t, t2); // 60480000000 
-var r2 = caro.getDateTimeDiff(t, t2, 'month'); // 23
 ```
 
 ### Helper
