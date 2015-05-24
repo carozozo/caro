@@ -1,4 +1,4 @@
-/*! caro - v0.6.11 - 2015-05-24 */
+/*! caro - v0.6.12 - 2015-05-24 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -343,25 +343,6 @@
       }
       start += step2;
       realStart += step;
-    }
-  };
-
-  /**
-   * for-loop the arg and callback of key/value
-   * @param {array|object} arg
-   * @param {function} cb callback-function for each key & value
-   */
-  self.each = function(arg, cb) {
-    var isArray, key, val;
-    isArray = Array.isArray(arg);
-    for (key in arg) {
-      val = arg[key];
-      if (isArray) {
-        key = parseInt(key);
-      }
-      if (cb(key, val) === false) {
-        break;
-      }
     }
   };
 

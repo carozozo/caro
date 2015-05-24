@@ -45,25 +45,6 @@
   };
 
   /**
-   * for-loop the arg and callback of key/value
-   * @param {array|object} arg
-   * @param {function} cb callback-function for each key & value
-   */
-  self.each = function(arg, cb) {
-    var isArray, key, val;
-    isArray = Array.isArray(arg);
-    for (key in arg) {
-      val = arg[key];
-      if (isArray) {
-        key = parseInt(key);
-      }
-      if (cb(key, val) === false) {
-        break;
-      }
-    }
-  };
-
-  /**
    * for-loop the arg and callback of int-key/value
    * @param {array|object} arg
    * @param {function} cb callback-function for each key & value
