@@ -34,34 +34,23 @@ caro.isArr(['caro']); // true
 var arr = [1, 2, '5', null, {}];
 var r = caro.sumOfArr(arr); // 3
 var r2 = caro.sumOfArr(arr, true); // 11
-```
-- **removeDup(arr) - 移除陣列中重覆的值**
-```javascript
-var arr = [1, 5, {}, 5, undefined, null, {}, null];
-var r = caro.removeDup(arr); // [ 1, 5, {}, undefined, null, {} ]
-```
-- **pushNoDup(arr, val...) - 不重覆 push 值至陣列**
+- **pushNoDuplicate(arr, val...) - 不重覆 push 值至陣列**
 ```javascript
 var arr = [1, 2, 3];
-var r = caro.pushNoDup(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
+var r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
 ```
-- **pushNoEmpty(arr, val...) - 如果值不為空值，才會 push 至陣列**
+- **pushNoEmptyVal(arr, val...) - 如果不為空值，才會 push 至陣列**
 ```javascript
 var arr = [1, 2, 3];
-var r = caro.pushNoEmpty(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
+var r = caro.pushNoEmptyVal(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
 ```
-- **hasEmptyInArr(arr...) - 判斷陣列中是否有空值**
+- **pullEmptyVal(arr) - 移除陣列中的空值**
 ```javascript
-var r = caro.hasEmptyInArr([1, 2, 3]); // false
-var r2 = caro.hasEmptyInArr([1, 2, ''], ['caro']); // true
+var r = caro.pullEmptyVal([1, '', null, 'caro']); // [1, 'caro']
 ```
-- **removeEmptyInArr(arr) - 移除陣列中的空值**
+- **pullUnBasicVal(arr) - 只保留陣列中的基本值 (boolean 或 string 或 number)**
 ```javascript
-var r = caro.removeEmptyInArr([1, '', null, 'caro']); // [1, 'caro']
-```
-- **basicArr(arr) - 只保留陣列中的基本值 (boolean 或 string 或 number)**
-```javascript
-var r = caro.basicArr([1, {a: 1}, null, 'caro']); // [1, 'caro']
+var r = caro.pullUnBasicVal([1, {a: 1}, null, 'caro']); // [1, 'caro']
 ```
 
 ### Helper
