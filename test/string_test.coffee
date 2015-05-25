@@ -52,10 +52,6 @@ describe 'String', ->
     ''');
     r.should.eql ['I love', 'my mother', 'and', 'my father']
 
-  it 'escapeRegExp', ->
-    r = caro.escapeRegExp('I*am*{Caro}.');
-    r.should.eql 'I\\*am\\*\\{Caro\\}\\.'
-
   it 'replaceAll', ->
     r = caro.replaceAll('I*am*{Caro}.', '*', '-');
     r2 = caro.replaceAll('I*am*{Caro}.', /\w/g, '-');

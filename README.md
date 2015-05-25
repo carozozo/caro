@@ -178,10 +178,6 @@ var r = caro.splitByWrap('''
     my father
 '''); // [ 'I love', 'my mother', 'and', 'my father' ]
 ```
-- **escapeRegExp(str) - 將字串中的特定符號轉為跳脫字元**
-```javascript
-var r = caro.escapeRegExp('I*am*{Caro}.'); // 'I\\*am\\*\\{Caro\\}\\.'
-```
 - **replaceAll(str, find, replace) - 取代符合的字串**
 ```javascript
 var r = caro.replaceAll('I*am*{Caro}.','*','-'); // 'I-am-{Caro}.'

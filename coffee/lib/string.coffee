@@ -122,23 +122,12 @@ do ->
   # @returns {*}
   ###
   self.splitByWrap = (str) ->
-    return str if !caro.isString(str)
     aWrap = [
       '\r\n'
       '\r'
       '\n'
     ]
     caro.splitStr str, aWrap
-
-  ###*
-  # escape RegExp
-  # @param {string} str
-  # @returns {*|string}
-  ###
-  self.escapeRegExp = (str) ->
-    if !caro.isString(str)
-      return str
-    str.replace /([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1'
 
   ###*
   # replace all find in string
