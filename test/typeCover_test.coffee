@@ -1,5 +1,5 @@
 do ->
-describe 'Helper', ->
+describe 'TypeCover', ->
   it 'toArray', ->
     r = caro.toArray('3')
     r2 = caro.toArray(1)
@@ -9,7 +9,7 @@ describe 'Helper', ->
   it 'toString', ->
     r = caro.toString('3')
     r2 = caro.toString(['caro', undefined])
-    r3 = caro.toString({a: false, b: null, c: 0, d: NaN, e: undefined, f: [], g:()->})
+    r3 = caro.toString({a: false, b: null, c: 0, d: NaN, e: undefined, f: [], g: ()->})
     r.should.eq('3')
     r2.should.eq('caro,')
     r3.should.eq('[object Object]')
@@ -31,7 +31,7 @@ describe 'Helper', ->
     r3.should.eql(NaN)
 
   it 'toFixedNumber', ->
-    r = caro.toFixedNumber('3.4355')
+    r = caro.toFixedNumber('3.4355', 2)
     r2 = caro.toFixedNumber(2.12345, 3)
     r3 = caro.toFixedNumber('caro', 3)
     r.should.eq(3.44)
@@ -40,19 +40,17 @@ describe 'Helper', ->
 
   it 'toJson', ->
     r = caro.toJson(3.4)
-    r2 = caro.toJson({
-      a: 3
-      b: 5
-    }, {
-      replacer: (key, val) ->
+    r2 = caro.toJson(
+      {
+        a: 3
+        b: 5
+      }
+    ,
+      (key, val) ->
         return val if (key == '')
         return val + 1
-      space: 0
-      force: false
-    })
-    r3 = caro.toJson(undefined, {
-      force: false
-    })
+    )
+    r3 = caro.toJson(undefined)
     r.should.eq('3.4')
     r2.should.eq('{"a":4,"b":6}')
     should.equal(r3, undefined)

@@ -69,66 +69,12 @@
   };
 
   /**
-   * cover to object
    * @param arg
-   * @param {boolean} [force=true] if return {} when cover-failed, otherwise return original-argument
+   * @param {*} [replacer=null] the replace in each element
+   * @param {*} [space=0] the space for easy-reading after cover to JSON
    * @returns {*}
    */
-  self.toObject = function(arg, force) {
-    var e, r;
-    if (force == null) {
-      force = true;
-    }
-    if (caro.isObject(arg)) {
-      return arg;
-    }
-    if (caro.isArray(arg)) {
-      r = {};
-      caro.forEach(arg, function(val, i) {
-        return r[i] = val;
-      });
-      return r;
-    }
-    try {
-      r = JSON.parse(arg);
-      if (caro.isObject(r)) {
-        return r;
-      }
-    } catch (_error) {
-      e = _error;
-    }
-    if (!force) {
-      return arg;
-    }
-    return {};
-  };
-
-  /**
-   * @param arg
-   * @param {object} [opt]
-   * @param {boolean} [opt.force=true] if force cover to JSON
-   * @param {function=null} [opt.replacer] the replace-function in each element
-   * @param {space=4} [opt.space] the space for easy-reading after cover to JSON
-   * @returns {*}
-   */
-  self.toJson = function(arg, opt) {
-    var force, json, replacer, space;
-    json = '';
-    opt = opt || {};
-    force = opt.force !== false;
-    replacer = opt.replacer || null;
-    space = opt.space != null ? opt.space : 4;
-    if (space) {
-      json = JSON.stringify(arg, replacer, space);
-    } else {
-      json = JSON.stringify(arg, replacer);
-    }
-    if (caro.isJson(json)) {
-      return json;
-    }
-    if (!force) {
-      return arg;
-    }
-    return '';
+  self.toJson = function(arg, replacer, space) {
+    return JSON.stringify.apply(null, arguments);
   };
 })();

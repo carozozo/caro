@@ -46,31 +46,18 @@ do ->
   # @param {boolean} [dec=2] decimal-number
   # @returns {*}
   ###
-  self.toFixedNumber = (arg, dec=2) ->
+  self.toFixedNumber = (arg, dec = 2) ->
     r = caro.toString(arg);
     r = r.replace(/5$/, '6') if(arg % 1)
     Number((+r).toFixed(dec))
 
   ###*
   # @param arg
-  # @param {object} [opt]
-  # @param {boolean} [opt.force=true] if force cover to JSON
-  # @param {function=null} [opt.replacer] the replace-function in each element
-  # @param {space=4} [opt.space] the space for easy-reading after cover to JSON
+  # @param {*} [replacer=null] the replace in each element
+  # @param {*} [space=0] the space for easy-reading after cover to JSON
   # @returns {*}
   ###
-  self.toJson = (arg, opt) ->
-    json = ''
-    opt = opt or {};
-    force = opt.force != false
-    replacer = opt.replacer or null
-    space = if opt.space? then opt.space else 4
-    if space
-      json = JSON.stringify(arg, replacer, space)
-    else
-      json = JSON.stringify(arg, replacer)
-    return json if caro.isJson(json)
-    return arg if !force
-    ''
+  self.toJson = (arg, replacer, space) ->
+    JSON.stringify.apply(null, arguments)
 
   return
