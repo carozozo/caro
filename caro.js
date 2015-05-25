@@ -870,24 +870,19 @@
   /**
    * cover to fixed-number
    * @param arg
-   * @param {boolean} [force=true] if return 0 when it's NaN
+   * @param {boolean} [dec=2] decimal-number
    * @returns {*}
    */
-  self.toFixedNumber = function(arg, dec, force) {
+  self.toFixedNumber = function(arg, dec) {
     var r;
-    if (force == null) {
-      force = true;
+    if (dec == null) {
+      dec = 2;
     }
-    dec = dec || 0;
     r = caro.toString(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }
-    r = Number((+r).toFixed(dec));
-    if (!force) {
-      return arg;
-    }
-    return r || 0;
+    return Number((+r).toFixed(dec));
   };
 
   /**

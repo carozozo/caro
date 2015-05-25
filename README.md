@@ -318,29 +318,29 @@ var r2 = caro.isLower('Caro'); // false
 var r = caro.toArray([3, 2, 1]); // [3, 2, 1]
 var r2 = caro.toArray(null); // [ null ]
 ```
-- **toString(arg [force=true]) - 將變數轉為 string**
+- **toString(arg) - 將變數轉為 string**
 ```javascript
 var r = caro.toString(function () {}); // 'function () {}'
 var r2 = caro.toString(null); // 'null'
 var r3 = caro.toString(['caro', undefined]); // 'caro,'
 ```
-- **toInteger(arg [force=true]) - 將變數轉為 integer**
+- **toInteger(arg) - 將變數轉為 integer**
 ```javascript
 var r = caro.toInteger('123.6'); // 123
 var r2 = caro.toInteger('a'); // NaN
 var r3 = caro.toInteger(null); // NaN
 ```
-- **toNumber(arg [force=true]) - 將變數轉為 number**
+- **toNumber(arg) - 將變數轉為 number**
 ```javascript
 var r = caro.toNumber('123.45'); // 123.45
 var r2 = caro.toNumber({}); // NaN
 var r3 = caro.toNumber(undefined); // NaN
 ```
-- **toFixedNumber(arg [force=true]) - 將變數轉為 fixed-number**
+- **toFixedNumber(arg [dec=2]) - 將變數轉為 fixed-number**
 ```javascript
-var r = caro.toFixedNumber('3.4355', 2); // 3.44
-var r2 = caro.toFixedNumber(undefined, 3); // 0
-var r3 = caro.toFixedNumber('caro', 3, false) // 'caro'
+var r = caro.toFixedNumber('3.4355'); // 3.44
+var r2 = caro.toFixedNumber(2.12345, 3); // 2.123
+var r3 = caro.toFixedNumber('caro', 3) // NaN
 ```
 - **toObject(arg [force=true]) - 將變數轉為 object**
 ```javascript

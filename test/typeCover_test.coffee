@@ -31,12 +31,12 @@ describe 'Helper', ->
     r3.should.eql(NaN)
 
   it 'toFixedNumber', ->
-    r = caro.toFixedNumber('3.4355', 2)
-    r2 = caro.toFixedNumber(undefined, 3)
-    r3 = caro.toFixedNumber('caro', 3, false)
+    r = caro.toFixedNumber('3.4355')
+    r2 = caro.toFixedNumber(2.12345, 3)
+    r3 = caro.toFixedNumber('caro', 3)
     r.should.eq(3.44)
-    r2.should.eq(0)
-    r3.should.eq('caro')
+    r2.should.eq(2.123)
+    r3.should.eql(NaN)
 
   it 'toObject', ->
     r = caro.toObject('3.4')
