@@ -53,7 +53,7 @@ do ->
   ###
   self.pullEmptyVal = (arr) ->
     caro.remove(arr, (n) ->
-      return !caro.isEmptyVal(n)
+      return caro.isEmptyVal(n)
     )
 
   ###*
@@ -63,7 +63,7 @@ do ->
   ###
   self.pullUnBasicVal = (arr) ->
     caro.remove(arr, (n) ->
-      return caro.isBasicVal(n)
+      return !caro.isBasicVal(n)
     )
 
   return
