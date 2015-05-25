@@ -11,6 +11,7 @@ do ->
   # @param {boolean} [wrap=false] if display with wrap
   ###
   self.toWord = (obj, wrap = false) ->
+    json = ''
     caro.forEach(obj, (val, key) ->
       if caro.isString(val)
         obj[key] = "'" + val + "'"
@@ -20,7 +21,10 @@ do ->
         return
       obj[key] = caro.toString(val)
     )
-    json = caro.toJson(obj)
-    json = json.replace(/([\r]\s*|[\n]\s*)/g, '') if !wrap
+    if(!wrap)
+      json = caro.toJson(obj)
+    else
+      json = caro.toJson(obj, null, 2)
     return caro.replaceAll(json, '"', '')
+
   return

@@ -17,6 +17,7 @@
     if (wrap == null) {
       wrap = false;
     }
+    json = '';
     caro.forEach(obj, function(val, key) {
       if (caro.isString(val)) {
         obj[key] = "'" + val + "'";
@@ -28,9 +29,10 @@
       }
       return obj[key] = caro.toString(val);
     });
-    json = caro.toJson(obj);
     if (!wrap) {
-      json = json.replace(/([\r]\s*|[\n]\s*)/g, '');
+      json = caro.toJson(obj);
+    } else {
+      json = caro.toJson(obj, null, 2);
     }
     return caro.replaceAll(json, '"', '');
   };

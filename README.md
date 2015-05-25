@@ -342,21 +342,15 @@ var r = caro.toFixedNumber('3.4355'); // 3.44
 var r2 = caro.toFixedNumber(2.12345, 3); // 2.123
 var r3 = caro.toFixedNumber('caro', 3) // NaN
 ```
-- **toJson(arg [opt]) - 將變數轉為 JSON**
+- **toJson(arg [replacer=null] [space=0]) - 將變數轉為 JSON**
 ```javascript
-var arg = [0, 1, 2];
+var arg = {a: 3, b: 5};
 var replacer = function (key, val) {
     if (key === '') {
-        return val; // [0, 1, 2]
+        return val; // the arg itself
     }
-    return val + 2; // 0 + 2 ,1 + 2, 2 + 2
+    return val + 1;
 };
-var r = caro.toJson(arg, {
-    force: false, // 是否強制轉為 JSON 格式
-    replacer: replacer, // 請參考 JSON.stringify 的參數 replacer
-    space: 2 // 請參考 JSON.stringify 的參數 space
-});
 var r = caro.toJson(3.4); // '3.4'
-var r2 = caro.toJson(null); // 'null'
-var r3 = caro.toJson('caro', false); // '"caro"'    
+var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
