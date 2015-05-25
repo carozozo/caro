@@ -230,36 +230,4 @@
     });
     return str.split(mainSplit);
   };
-
-  /**
-   * serialize object-arguments to url
-   * @param {string} url
-   * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
-   * @param {boolean} [coverEmpty=false] if cover when value is empty
-   * @returns {*}
-   */
-  self.serializeUrl = function(url, oArgs, coverEmpty) {
-    var aArgs, count;
-    if (coverEmpty == null) {
-      coverEmpty = false;
-    }
-    count = 0;
-    aArgs = ['?'];
-    caro.forEach(oArgs, function(val, key) {
-      if (caro.isEmptyVal(val)) {
-        if (!coverEmpty) {
-          return;
-        }
-        val = '';
-      }
-      if (count > 0) {
-        aArgs.push('&');
-      }
-      aArgs.push(key);
-      aArgs.push('=');
-      aArgs.push(val);
-      count++;
-    });
-    return url += aArgs.join('');
-  };
 })();

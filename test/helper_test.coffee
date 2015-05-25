@@ -1,9 +1,9 @@
 do ->
 describe 'Helper', ->
-  it 'checkIfPassCb', ->
-    r = caro.checkIfPassCb [1, 2, 3], (val) ->
+  it 'checkIfPass', ->
+    r = caro.checkIfPass [1, 2, 3], (val) ->
       return val == 1;
-    r2 = caro.checkIfPassCb [1, 2, 3], (val) ->
+    r2 = caro.checkIfPass [1, 2, 3], (val) ->
       return val > 2;
     , false
     r.should.be.false
@@ -43,3 +43,11 @@ describe 'Helper', ->
     r3.should.eq '$12,003,000'
     r4.should.eq '12,003,000'
     r5.should.eq '12,003,000.92300'
+
+  it 'serializeUrl', ->
+    arg = 'http://localhost';
+    obj = {a: 1, b: 2, c: null}
+    r = caro.serializeUrl(arg, obj);
+    r2 = caro.serializeUrl(arg, obj, true);
+    r.should.eq 'http://localhost?a=1&b=2'
+    r2.should.eq 'http://localhost?a=1&b=2&c='

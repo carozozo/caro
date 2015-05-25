@@ -56,15 +56,15 @@ var r = caro.pullUnBasicVal([1, {a: 1}, null, 'caro']); // [1, 'caro']
 
 ### Helper
 [Back to Index](#index)
-- **checkIfPassCb((arr, checkFn [needAllPass=true]) - 回傳 checkFn 的執行結果**
+- **checkIfPass((arr, checkFn [needAllPass=true]) - 回傳 checkFn 的執行結果**
 ```javascript
 var arg = [1, 2, 3];
 // 完全比對，相當於 (1===1 && 2===1 && 3===1)
-var r = caro.checkIfPassCb(arg, function (val) {
+var r = caro.checkIfPass(arg, function (val) {
     return val === 1;
 }); // false
 // 不完全比對，相當於 (1 > 2 || 2 > 2 || 3 > 2)
-var r2 = caro.checkIfPassCb(arg, function (val) {
+var r2 = caro.checkIfPass(arg, function (val) {
     return val > 2;
 }, false); // true
 ```
@@ -103,7 +103,13 @@ var r5 = caro.formatMoney(arg3, {
   float: 5, forceFloat: true
 }); // '12,003,000.92300'
 ```
-
+- **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
+```javascript
+var arg = 'http://localhost';
+var obj = {a: 1, b: 2, c: null};
+var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
+var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
+```
 ### ★Loop
 [Back to Index](#index)
 - **loop(fn, start=0, end=0, step=1) - 執行迴圈**
@@ -199,13 +205,6 @@ var r3 = caro.lowerStr('I AM CARO', 5, 6); // 'I AM cARO'
 ```javascript
 var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
 var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
-```
-- **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
-```javascript
-var arg = 'http://localhost';
-var obj = {a: 1, b: 2, c: null};
-var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
-var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
 
 ### TypeCheck

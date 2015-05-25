@@ -79,11 +79,3 @@ describe 'String', ->
     r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']);
     r.should.eql ['i', 'am', 'caro']
     r2.should.eql ['I', '', 'love', 'Snoopy', '!', '!']
-
-  it 'serializeUrl', ->
-    arg = 'http://localhost';
-    obj = {a: 1, b: 2, c: null}
-    r = caro.serializeUrl(arg, obj);
-    r2 = caro.serializeUrl(arg, obj, true);
-    r.should.eq 'http://localhost?a=1&b=2'
-    r2.should.eq 'http://localhost?a=1&b=2&c='

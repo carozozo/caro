@@ -14,7 +14,7 @@
    * @returns {boolean}
    */
   self.isBasicVal = function(arg) {
-    return caro.checkIfPassCb(arguments, function(arg) {
+    return caro.checkIfPass(arguments, function(arg) {
       return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNumber(arg));
     });
   };
@@ -25,7 +25,7 @@
    * @returns {boolean}
    */
   self.isEmptyVal = function(arg) {
-    return caro.checkIfPassCb(arguments, function(arg) {
+    return caro.checkIfPass(arguments, function(arg) {
       if (caro.isNumber(arg) || caro.isBoolean(arg)) {
         return false;
       }
