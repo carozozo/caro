@@ -82,12 +82,6 @@ describe 'String', ->
     r3.should.eq 'i am CARO'
     r4.should.eq 'i am Caro'
 
-  it 'upperFirst', ->
-    r = caro.upperFirst('i am caro');
-    r2 = caro.upperFirst({}, false);
-    r.should.eq 'I am caro'
-    r2.should.eql {}
-
   it 'lowerStr', ->
     r = caro.lowerStr('I AM CARO');
     r2 = caro.lowerStr('I AM CARO', {

@@ -204,12 +204,6 @@ var r4 = caro.upperStr('i am caro', {
   end: 6
 }); // 'i am Caro'
 ```
-- **upperFirst(str [force=true]) - 將第一個字母轉為大寫**
-```javascript
-var r = caro.upperFirst('I am Caro'); // 'I am caro'
-var r2 = caro.upperFirst({}); // ''
-var r3 = caro.upperFirst({}, false); // {}
-```
 - **lowerStr(str [opt]) - 將字串轉為小寫**
 ```javascript
 var r = caro.lowerStr('I AM CARO'); // 'i am caro'
