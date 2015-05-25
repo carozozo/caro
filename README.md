@@ -321,21 +321,20 @@ var r2 = caro.toArray(null); // [ null ]
 - **toString(arg [force=true]) - 將變數轉為 string**
 ```javascript
 var r = caro.toString(function () {}); // 'function () {}'
-var r2 = caro.toString({a: 2}); // '{a: 2}'
-var r3 = caro.toString(null); // 'null'
-var r4 = caro.toString(['caro', 1]); // 'caro,1' ( 相當於 ['caro', 1].join(',') )
+var r2 = caro.toString(null); // 'null'
+var r3 = caro.toString(['caro', undefined]); // 'caro,'
 ```
 - **toInteger(arg [force=true]) - 將變數轉為 integer**
 ```javascript
 var r = caro.toInteger('123.6'); // 123
-var r2 = caro.toInteger('a', false); // 'a'
-var r3 = caro.toInteger(null); // 0
+var r2 = caro.toInteger('a'); // NaN
+var r3 = caro.toInteger(null); // NaN
 ```
 - **toNumber(arg [force=true]) - 將變數轉為 number**
 ```javascript
 var r = caro.toNumber('123.45'); // 123.45
-var r2 = caro.toNumber({}, false); // {}
-var r3 = caro.toNumber(undefined); // 0
+var r2 = caro.toNumber({}); // NaN
+var r3 = caro.toNumber(undefined); // NaN
 ```
 - **toFixedNumber(arg [force=true]) - 將變數轉為 fixed-number**
 ```javascript
