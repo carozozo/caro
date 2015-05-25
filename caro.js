@@ -509,22 +509,6 @@
   };
 
   /**
-   * uppercase first-chat in string
-   * @param {string} str
-   * @param {boolean} [force] if force cover to string
-   * @returns {*}
-   */
-  self.upperFirst = function(str, force) {
-    var opt;
-    opt = {
-      start: 0,
-      end: 1,
-      force: force !== false
-    };
-    return caro.upperStr(str, opt);
-  };
-
-  /**
    * lowercase string
    * @param {string} str
    * @param {object} [opt]

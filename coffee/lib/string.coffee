@@ -172,19 +172,6 @@ do ->
     changeCase str, 'upperCase', opt
 
   ###*
-  # uppercase first-chat in string
-  # @param {string} str
-  # @param {boolean} [force] if force cover to string
-  # @returns {*}
-  ###
-  self.upperFirst = (str, force) ->
-    opt =
-      start: 0
-      end: 1
-      force: force != false
-    caro.upperStr str, opt
-
-  ###*
   # lowercase string
   # @param {string} str
   # @param {object} [opt]
