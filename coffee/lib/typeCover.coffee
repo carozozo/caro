@@ -43,16 +43,13 @@ do ->
   ###*
   # cover to fixed-number
   # @param arg
-  # @param {boolean} [force=true] if return 0 when it's NaN
+  # @param {boolean} [dec=2] decimal-number
   # @returns {*}
   ###
-  self.toFixedNumber = (arg, dec, force = true) ->
-    dec = dec || 0;
+  self.toFixedNumber = (arg, dec=2) ->
     r = caro.toString(arg);
     r = r.replace(/5$/, '6') if(arg % 1)
-    r = Number((+r).toFixed(dec))
-    return arg if !force
-    r or 0
+    Number((+r).toFixed(dec))
 
   ###*
   # cover to object
