@@ -11,7 +11,7 @@ do ->
   # @returns {boolean}
   ###
   self.isBasicVal = (arg) ->
-    caro.checkIfPassCb arguments, (arg) ->
+    caro.checkIfPass arguments, (arg) ->
       !(!caro.isBoolean(arg) and !caro.isString(arg) and !caro.isNumber(arg))
 
   ###*
@@ -20,7 +20,7 @@ do ->
   # @returns {boolean}
   ###
   self.isEmptyVal = (arg) ->
-    caro.checkIfPassCb arguments, (arg) ->
+    caro.checkIfPass arguments, (arg) ->
       return false if caro.isNumber(arg) or caro.isBoolean(arg)
       return caro.size(arg) < 1
 

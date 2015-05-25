@@ -13,7 +13,7 @@ do ->
   # @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
   # @returns {boolean}
   ###
-  self.checkIfPassCb = (arr, checkFn, needAllPass = true) ->
+  self.checkIfPass = (arr, checkFn, needAllPass = true) ->
     caro.forEach arr, (arg) ->
       result = checkFn(arg)
       # need all pass, but result is false || no-need all pass, and result is true
@@ -90,5 +90,27 @@ do ->
     r.push iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated)
     r.push if fStr then (decimal + fStr) else ''
     r.join ''
+
+  ###*
+  # serialize object-arguments to url
+  # @param {string} url
+  # @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
+  # @param {boolean} [coverEmpty=false] if cover when value is empty
+  # @returns {*}
+  ###
+  self.serializeUrl = (url, oArgs, coverEmpty = false) ->
+    count = 0
+    aArgs = ['?']
+    caro.forEach oArgs, (val, key) ->
+      if caro.isEmptyVal(val)
+        return if !coverEmpty
+        val = ''
+      aArgs.push '&' if count > 0
+      aArgs.push key
+      aArgs.push '='
+      aArgs.push val
+      count++
+      return
+    url += aArgs.join('')
 
   return

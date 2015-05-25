@@ -118,7 +118,7 @@
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
    * @returns {boolean}
    */
-  self.checkIfPassCb = function(arr, checkFn, needAllPass) {
+  self.checkIfPass = function(arr, checkFn, needAllPass) {
     if (needAllPass == null) {
       needAllPass = true;
     }
@@ -218,6 +218,38 @@
     r.push(iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated));
     r.push(fStr ? decimal + fStr : '');
     return r.join('');
+  };
+
+  /**
+   * serialize object-arguments to url
+   * @param {string} url
+   * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
+   * @param {boolean} [coverEmpty=false] if cover when value is empty
+   * @returns {*}
+   */
+  self.serializeUrl = function(url, oArgs, coverEmpty) {
+    var aArgs, count;
+    if (coverEmpty == null) {
+      coverEmpty = false;
+    }
+    count = 0;
+    aArgs = ['?'];
+    caro.forEach(oArgs, function(val, key) {
+      if (caro.isEmptyVal(val)) {
+        if (!coverEmpty) {
+          return;
+        }
+        val = '';
+      }
+      if (count > 0) {
+        aArgs.push('&');
+      }
+      aArgs.push(key);
+      aArgs.push('=');
+      aArgs.push(val);
+      count++;
+    });
+    return url += aArgs.join('');
   };
 })();
 
@@ -534,38 +566,6 @@
     });
     return str.split(mainSplit);
   };
-
-  /**
-   * serialize object-arguments to url
-   * @param {string} url
-   * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
-   * @param {boolean} [coverEmpty=false] if cover when value is empty
-   * @returns {*}
-   */
-  self.serializeUrl = function(url, oArgs, coverEmpty) {
-    var aArgs, count;
-    if (coverEmpty == null) {
-      coverEmpty = false;
-    }
-    count = 0;
-    aArgs = ['?'];
-    caro.forEach(oArgs, function(val, key) {
-      if (caro.isEmptyVal(val)) {
-        if (!coverEmpty) {
-          return;
-        }
-        val = '';
-      }
-      if (count > 0) {
-        aArgs.push('&');
-      }
-      aArgs.push(key);
-      aArgs.push('=');
-      aArgs.push(val);
-      count++;
-    });
-    return url += aArgs.join('');
-  };
 })();
 
 
@@ -584,7 +584,7 @@
    * @returns {boolean}
    */
   self.isBasicVal = function(arg) {
-    return caro.checkIfPassCb(arguments, function(arg) {
+    return caro.checkIfPass(arguments, function(arg) {
       return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNumber(arg));
     });
   };
@@ -595,7 +595,7 @@
    * @returns {boolean}
    */
   self.isEmptyVal = function(arg) {
-    return caro.checkIfPassCb(arguments, function(arg) {
+    return caro.checkIfPass(arguments, function(arg) {
       if (caro.isNumber(arg) || caro.isBoolean(arg)) {
         return false;
       }
