@@ -63,7 +63,7 @@ do ->
       return opt = arg if caro.isObject(arg)
       return type = arg if caro.isString(arg)
       return
-    opt = caro.toObject(opt);
+    opt = opt or {};
     float = Math.abs(caro.toInteger(opt.float))
     decimal = if caro.isString(opt.decimal) then opt.decimal else '.'
     separated = if caro.isString(opt.separated) then opt.separated else ','

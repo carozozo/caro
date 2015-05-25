@@ -52,27 +52,6 @@ do ->
     Number((+r).toFixed(dec))
 
   ###*
-  # cover to object
-  # @param arg
-  # @param {boolean} [force=true] if return {} when cover-failed, otherwise return original-argument
-  # @returns {*}
-  ###
-  self.toObject = (arg, force = true) ->
-    return arg if caro.isObject(arg)
-    if caro.isArray(arg)
-      r = {}
-      caro.forEach(arg, (val, i) ->
-        r[i] = val
-      )
-      return r
-    try
-      r = JSON.parse(arg)
-      return r if caro.isObject(r)
-    catch e
-    return arg if !force
-    {}
-
-  ###*
   # @param arg
   # @param {object} [opt]
   # @param {boolean} [opt.force=true] if force cover to JSON
@@ -82,7 +61,7 @@ do ->
   ###
   self.toJson = (arg, opt) ->
     json = ''
-    opt = caro.toObject(opt)
+    opt = opt or {};
     force = opt.force != false
     replacer = opt.replacer or null
     space = if opt.space? then opt.space else 4

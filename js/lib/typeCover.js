@@ -114,7 +114,7 @@
   self.toJson = function(arg, opt) {
     var force, json, replacer, space;
     json = '';
-    opt = caro.toObject(opt);
+    opt = opt || {};
     force = opt.force !== false;
     replacer = opt.replacer || null;
     space = opt.space != null ? opt.space : 4;

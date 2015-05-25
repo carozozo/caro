@@ -10,7 +10,7 @@ do ->
       'toUpperCase'
       'toLowerCase'
     ]
-    opt = caro.toObject(opt)
+    opt = opt or {};
     start = caro.toInteger(opt.start)
     end = if caro.toInteger(opt.end) > 0 then caro.toInteger(opt.end) else null
     force = opt.force != false
@@ -41,7 +41,7 @@ do ->
     text = ''
     chars = []
     len = if parseInt(len) then parseInt(len) else 1
-    opt = caro.toObject(opt)
+    opt = opt or {};
     lower = opt.lower != false
     upper = opt.upper != false
     num = opt.num != false

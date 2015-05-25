@@ -342,13 +342,6 @@ var r = caro.toFixedNumber('3.4355'); // 3.44
 var r2 = caro.toFixedNumber(2.12345, 3); // 2.123
 var r3 = caro.toFixedNumber('caro', 3) // NaN
 ```
-- **toObject(arg [force=true]) - 將變數轉為 object**
-```javascript
-var r = caro.toObject({}); // {}
-var r2 = caro.toObject(123, false); // 123
-var r3 = caro.toObject('{"a":1}'); // {a: 1}
-var r4 = caro.toObject(undefined); // {}
-```
 - **toJson(arg [opt]) - 將變數轉為 JSON**
 ```javascript
 var arg = [0, 1, 2];

@@ -38,14 +38,6 @@ describe 'Helper', ->
     r2.should.eq(2.123)
     r3.should.eql(NaN)
 
-  it 'toObject', ->
-    r = caro.toObject('3.4')
-    r2 = caro.toObject('{"a":3}')
-    r3 = caro.toObject('caro', false)
-    r.should.eql({})
-    r2.should.eql({a: 3})
-    r3.should.eq('caro')
-
   it 'toJson', ->
     r = caro.toJson(3.4)
     r2 = caro.toJson({

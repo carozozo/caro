@@ -10,7 +10,7 @@
     var aType, end, force, r, start;
     r = [];
     aType = ['toUpperCase', 'toLowerCase'];
-    opt = caro.toObject(opt);
+    opt = opt || {};
     start = caro.toInteger(opt.start);
     end = caro.toInteger(opt.end) > 0 ? caro.toInteger(opt.end) : null;
     force = opt.force !== false;
@@ -46,7 +46,7 @@
     text = '';
     chars = [];
     len = parseInt(len) ? parseInt(len) : 1;
-    opt = caro.toObject(opt);
+    opt = opt || {};
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;

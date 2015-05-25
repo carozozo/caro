@@ -84,7 +84,7 @@
         return type = arg;
       }
     });
-    opt = caro.toObject(opt);
+    opt = opt || {};
     float = Math.abs(caro.toInteger(opt.float));
     decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
     separated = caro.isString(opt.separated) ? opt.separated : ',';

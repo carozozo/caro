@@ -1,4 +1,4 @@
-/*! caro - v0.6.23 - 2015-05-25 */
+/*! caro - v0.6.24 - 2015-05-25 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -187,7 +187,7 @@
         return type = arg;
       }
     });
-    opt = caro.toObject(opt);
+    opt = opt || {};
     float = Math.abs(caro.toInteger(opt.float));
     decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
     separated = caro.isString(opt.separated) ? opt.separated : ',';
@@ -312,7 +312,7 @@
     var aType, end, force, r, start;
     r = [];
     aType = ['toUpperCase', 'toLowerCase'];
-    opt = caro.toObject(opt);
+    opt = opt || {};
     start = caro.toInteger(opt.start);
     end = caro.toInteger(opt.end) > 0 ? caro.toInteger(opt.end) : null;
     force = opt.force !== false;
@@ -348,7 +348,7 @@
     text = '';
     chars = [];
     len = parseInt(len) ? parseInt(len) : 1;
-    opt = caro.toObject(opt);
+    opt = opt || {};
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;
@@ -931,7 +931,7 @@
   self.toJson = function(arg, opt) {
     var force, json, replacer, space;
     json = '';
-    opt = caro.toObject(opt);
+    opt = opt || {};
     force = opt.force !== false;
     replacer = opt.replacer || null;
     space = opt.space != null ? opt.space : 4;
