@@ -449,23 +449,8 @@
    */
   self.splitByWrap = function(str) {
     var aWrap;
-    if (!caro.isString(str)) {
-      return str;
-    }
     aWrap = ['\r\n', '\r', '\n'];
     return caro.splitStr(str, aWrap);
-  };
-
-  /**
-   * escape RegExp
-   * @param {string} str
-   * @returns {*|string}
-   */
-  self.escapeRegExp = function(str) {
-    if (!caro.isString(str)) {
-      return str;
-    }
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1');
   };
 
   /**
