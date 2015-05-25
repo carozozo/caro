@@ -133,20 +133,6 @@ do ->
     str.replace regex, replace
 
   ###*
-  # e.g. ThisIsWord -> This Is Word
-  # @param {string} str
-  # @returns {string}
-  ###
-  self.insertBlankBefUpper = (str) ->
-    return str if !caro.isString(str)
-    r = []
-    aStr = str.split('')
-    caro.forEach aStr, (val, i) ->
-      r.push ' ' if i > 0 and caro.isUpper(val)
-      r.push val
-    r.join ''
-
-  ###*
   # uppercase string
   # @param {string} str
   # @param {number} [start] the start-index you want to uppercase
@@ -167,24 +153,6 @@ do ->
   ###
   self.lowerStr = (str, start, end) ->
     changeCase str, 'toLowerCase', start, end
-
-  ###*
-  # trim string, you can set what you want you trim
-  # @param {string} str
-  # @param {string} [target=' '] the chars you want to trim
-  # @param {boolean} [side] the side of string, true is head, false is tail, otherwise is booth
-  # @returns {}
-  ###
-  self.trimStr = (str, char, side) ->
-    char = if caro.isString(char) then char else ' '
-    char = caro.escapeRegExp(char)
-    if side == true or side != false
-      regExpFirst = new RegExp('^' + char + '+')
-      str = str.replace regExpFirst, ''
-    if side == false or side != true
-      regExpLast = new RegExp(char + '+$')
-      str = str.replace regExpLast, ''
-    str
 
   ###*
   # split string

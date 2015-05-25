@@ -58,10 +58,6 @@ describe 'String', ->
     r.should.eql 'I-am-{Caro}.'
     r2.should.eql '-*--*{----}.'
 
-  it 'insertBlankBefUpper', ->
-    r = caro.insertBlankBefUpper('IAmCaro');
-    r.should.eql 'I Am Caro'
-
   it 'upperStr', ->
     r = caro.upperStr('I am Caro');
     r2 = caro.upperStr('i am caro', 5);
@@ -77,14 +73,6 @@ describe 'String', ->
     r.should.eq 'i am caro'
     r2.should.eq 'I AM caro'
     r3.should.eq 'I AM cARO'
-
-  it 'trimStr', ->
-    r = caro.trimStr(' i am caro ');
-    r2 = caro.trimStr('Ai am caroA', 'A', true);
-    r3 = caro.trimStr('Ai am caroA', 'A', false);
-    r.should.eq 'i am caro'
-    r2.should.eq 'i am caroA'
-    r3.should.eq 'Ai am caro'
 
   it 'splitStr', ->
     r = caro.splitStr('i am caro', ' ');

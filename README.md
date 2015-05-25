@@ -183,10 +183,6 @@ var r = caro.splitByWrap('''
 var r = caro.replaceAll('I*am*{Caro}.','*','-'); // 'I-am-{Caro}.'
 var r2 = caro.replaceAll('I*am*{Caro}.',/\w/g,'-'); // '-*--*{----}.'
 ```
-- **insertBlankBefUpper(str) - 在大寫的字母前面加上空白**
-```javascript
-var r = caro.insertBlankBefUpper('IAmCaro'); // 'I Am Caro'
-```
 - **upperStr(str [opt]) - 將字串轉為大寫**
 ```javascript
 var r = caro.upperStr('i am caro'); // 'I AM CARO'
@@ -198,12 +194,6 @@ var r3 = caro.upperStr('i am caro', 5, 6); // 'i am Caro'
 var r = caro.lowerStr('I AM CARO'); // 'i am caro'
 var r2 = caro.lowerStr('I AM CARO', 5); // 'I AM caro'
 var r3 = caro.lowerStr('I AM CARO', 5, 6); // 'I AM cARO'
-```
-- **trimStr(str [char=' '] [side]) - 移除字串前後空白或特定的字串**
-```javascript
-var r = caro.trimStr(' i am caro '); // 'i am caro'
-var r2 = caro.trimStr('Ai am caroA', 'A', true); // 'i am caroA'
-var r3 = caro.trimStr('Ai am caroA', 'A', false); // 'Ai am caro'
 ```
 - **splitStr(str [splitter]) - 將字串用指定的 splitter 分割為陣列**
 ```javascript

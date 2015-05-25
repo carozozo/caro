@@ -165,27 +165,6 @@
   };
 
   /**
-   * e.g. ThisIsWord -> This Is Word
-   * @param {string} str
-   * @returns {string}
-   */
-  self.insertBlankBefUpper = function(str) {
-    var aStr, r;
-    if (!caro.isString(str)) {
-      return str;
-    }
-    r = [];
-    aStr = str.split('');
-    caro.forEach(aStr, function(val, i) {
-      if (i > 0 && caro.isUpper(val)) {
-        r.push(' ');
-      }
-      return r.push(val);
-    });
-    return r.join('');
-  };
-
-  /**
    * uppercase string
    * @param {string} str
    * @param {number} [start] the start-index you want to uppercase
@@ -207,28 +186,6 @@
    */
   self.lowerStr = function(str, start, end) {
     return changeCase(str, 'toLowerCase', start, end);
-  };
-
-  /**
-   * trim string, you can set what you want you trim
-   * @param {string} str
-   * @param {string} [target=' '] the chars you want to trim
-   * @param {boolean} [side] the side of string, true is head, false is tail, otherwise is booth
-   * @returns {}
-   */
-  self.trimStr = function(str, char, side) {
-    var regExpFirst, regExpLast;
-    char = caro.isString(char) ? char : ' ';
-    char = caro.escapeRegExp(char);
-    if (side === true || side !== false) {
-      regExpFirst = new RegExp('^' + char + '+');
-      str = str.replace(regExpFirst, '');
-    }
-    if (side === false || side !== true) {
-      regExpLast = new RegExp(char + '+$');
-      str = str.replace(regExpLast, '');
-    }
-    return str;
   };
 
   /**
