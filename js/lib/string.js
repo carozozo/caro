@@ -84,49 +84,16 @@
   };
 
   /**
-   * check if charts has in head of string
-   * @param {string} str
-   * @param {string} str2
-   * @returns {*}
-   */
-  self.hasHead = function(str, str2) {
-    if (!caro.isString(str)) {
-      return false;
-    }
-    return str.indexOf(str2) === 0;
-  };
-
-  /**
    * add the head to string if not exist
    * @param {string} str
    * @param {string} addStr
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (!caro.isString(str)) {
-      return str;
-    }
-    if (!caro.hasHead(str, addStr)) {
+    if (!caro.startsWith(str, addStr)) {
       str = addStr + str;
     }
     return str;
-  };
-
-  /**
-   * check if charts has in tail of string
-   * @param {string} str
-   * @param {string} str2
-   * @returns {*}
-   */
-  self.hasTail = function(str, str2) {
-    var index, strLength, strLength2;
-    if (!caro.isString(str)) {
-      return false;
-    }
-    index = str.lastIndexOf(str2);
-    strLength = str.length;
-    strLength2 = str2.length;
-    return strLength > strLength2 && index === strLength - strLength2;
   };
 
   /**
@@ -139,7 +106,7 @@
     if (!caro.isString(str)) {
       return str;
     }
-    if (!caro.hasTail(str, addStr)) {
+    if (!caro.endsWith(str, addStr)) {
       str += addStr;
     }
     return str;
