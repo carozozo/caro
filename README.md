@@ -190,36 +190,14 @@ var r = caro.insertBlankBefUpper('IAmCaro'); // 'I Am Caro'
 - **upperStr(str [opt]) - 將字串轉為大寫**
 ```javascript
 var r = caro.upperStr('i am caro'); // 'I AM CARO'
-var r2 = caro.upperStr('i am caro', {
-  start: 0,
-  end: null,
-  force: true
-}); // 'I AM CARO' - here is default options
-var r3 = caro.upperStr('i am caro', {
-  start: 5,
-  end: null
-}); // 'i am CARO'
-var r4 = caro.upperStr('i am caro', {
-  start: 5,
-  end: 6
-}); // 'i am Caro'
+var r2 = caro.upperStr('i am caro', 5); // 'i am CARO'
+var r3 = caro.upperStr('i am caro', 5, 6); // 'i am Caro'
 ```
 - **lowerStr(str [opt]) - 將字串轉為小寫**
 ```javascript
 var r = caro.lowerStr('I AM CARO'); // 'i am caro'
-var r2 = caro.lowerStr('I AM CARO', {
-  start: 0,
-  end: null,
-  force: true
-}); // 'i am caro' - here is default options
-var r3 = caro.lowerStr('I AM CARO', {
-  start: 5,
-  end: null
-}); // 'I AM caro'
-var r4 = caro.lowerStr('I AM CARO', {
-  start: 5,
-  end: 6
-}); 'I AM cARO'
+var r2 = caro.lowerStr('I AM CARO', 5); // 'I AM caro'
+var r3 = caro.lowerStr('I AM CARO', 5, 6); // 'I AM cARO'
 ```
 - **trimStr(str [char=' '] [side]) - 移除字串前後空白或特定的字串**
 ```javascript

@@ -4,21 +4,8 @@
 ###
 do ->
   self = caro
-  changeCase = (str, type, opt) ->
+  changeCase = (str, type, start = 0, end = null) ->
     r = []
-    aType = [
-      'toUpperCase'
-      'toLowerCase'
-    ]
-    opt = opt or {};
-    start = caro.toInteger(opt.start)
-    end = if caro.toInteger(opt.end) > 0 then caro.toInteger(opt.end) else null
-    force = opt.force != false
-    if !caro.isString(str)
-      if !force
-        return str
-      str = ''
-    type = if aType.indexOf(type) > -1 then type else aType[0]
     r.push str.slice(0, start)
     if end
       r.push str.slice(start, end)[type]()
@@ -162,14 +149,12 @@ do ->
   ###*
   # uppercase string
   # @param {string} str
-  # @param {object} [opt]
-  # @param {number} [opt.start] the start-index you want to uppercase
-  # @param {number} [opt.end] the end-index you want to uppercase
-  # @param {boolean} [opt.force] if force cover to string
+  # @param {number} [start] the start-index you want to uppercase
+  # @param {number} [end] the end-index you want to uppercase
   # @returns {*}
   ###
-  self.upperStr = (str, opt) ->
-    changeCase str, 'upperCase', opt
+  self.upperStr = (str, start, end) ->
+    changeCase str, 'toUpperCase', start, end
 
   ###*
   # lowercase string
@@ -180,8 +165,8 @@ do ->
   # @param {boolean} [opt.force] if force cover to string
   # @returns {*}
   ###
-  self.lowerStr = (str, opt) ->
-    changeCase str, 'toLowerCase', opt
+  self.lowerStr = (str, start, end) ->
+    changeCase str, 'toLowerCase', start, end
 
   ###*
   # trim string, you can set what you want you trim
