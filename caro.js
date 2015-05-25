@@ -1,4 +1,4 @@
-/*! caro - v0.6.27 - 2015-05-26 */
+/*! caro - v0.6.28 - 2015-05-26 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -85,7 +85,7 @@
    */
   self.pullEmptyVal = function(arr) {
     return caro.remove(arr, function(n) {
-      return !caro.isEmptyVal(n);
+      return caro.isEmptyVal(n);
     });
   };
 
@@ -96,7 +96,7 @@
    */
   self.pullUnBasicVal = function(arr) {
     return caro.remove(arr, function(n) {
-      return caro.isBasicVal(n);
+      return !caro.isBasicVal(n);
     });
   };
 })();

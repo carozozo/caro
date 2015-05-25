@@ -45,13 +45,19 @@ var r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
 var arr = [1, 2, 3];
 var r = caro.pushNoEmptyVal(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
 ```
-- **pullEmptyVal(arr) - 移除陣列中的空值**
+- **pullEmptyVal(arr) - 取出陣列中的空值**
 ```javascript
-var r = caro.pullEmptyVal([1, '', null, 'caro']); // [1, 'caro']
+var arr = [1, '', null, 'caro'];
+var r = caro.pullEmptyVal(arr);
+console.log(arr); // [1, 'caro']
+console.log(r); // ['', null]
 ```
-- **pullUnBasicVal(arr) - 只保留陣列中的基本值 (boolean 或 string 或 number)**
+- **pullUnBasicVal(arr) - 取出陣列中不是 boolean 或 string 或 number 的值**
 ```javascript
-var r = caro.pullUnBasicVal([1, {a: 1}, null, 'caro']); // [1, 'caro']
+var arr = [1, {a: 1}, 'caro'];
+var r = caro.pullUnBasicVal(arr);
+console.log(arr); // [1, 'caro']
+console.log(r); // [{a: 1}]
 ```
 
 ### Helper

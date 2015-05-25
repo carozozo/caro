@@ -3,7 +3,7 @@ describe 'Array', ->
   it 'sumOfArr', ->
     arr = [1, 2, '5']
     r = caro.sumOfArr arr
-    r2 = caro.sumOfArr arr,true
+    r2 = caro.sumOfArr arr, true
     r.should.equal 3
     r2.should.equal 8
 
@@ -18,9 +18,13 @@ describe 'Array', ->
     r.should.eql [1, 2, 3, 1, 'caro', 0]
 
   it 'pullEmptyVal', ->
-    r = caro.pullEmptyVal([1, '', null, 'caro']);
-    r.should.be.eql [1, 'caro']
+    arr = [1, '', null, 'caro'];
+    r = caro.pullEmptyVal(arr);
+    arr.should.be.eql [1, 'caro']
+    r.should.be.eql ['', null]
 
   it 'pullUnBasicVal', ->
-    r = caro.pullUnBasicVal([1, {a: 1}, 'caro']);
-    r.should.be.eql [1, 'caro']
+    arr = [1, {a: 1}, 'caro'];
+    r = caro.pullUnBasicVal(arr);
+    arr.should.be.eql [1, 'caro']
+    r.should.be.eql [{a: 1}]
