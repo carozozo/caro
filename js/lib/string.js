@@ -6,21 +6,15 @@
 (function() {
   var changeCase, self;
   self = caro;
-  changeCase = function(str, type, opt) {
-    var aType, end, force, r, start;
-    r = [];
-    aType = ['toUpperCase', 'toLowerCase'];
-    opt = opt || {};
-    start = caro.toInteger(opt.start);
-    end = caro.toInteger(opt.end) > 0 ? caro.toInteger(opt.end) : null;
-    force = opt.force !== false;
-    if (!caro.isString(str)) {
-      if (!force) {
-        return str;
-      }
-      str = '';
+  changeCase = function(str, type, start, end) {
+    var r;
+    if (start == null) {
+      start = 0;
     }
-    type = aType.indexOf(type) > -1 ? type : aType[0];
+    if (end == null) {
+      end = null;
+    }
+    r = [];
     r.push(str.slice(0, start));
     if (end) {
       r.push(str.slice(start, end)[type]());
@@ -194,14 +188,12 @@
   /**
    * uppercase string
    * @param {string} str
-   * @param {object} [opt]
-   * @param {number} [opt.start] the start-index you want to uppercase
-   * @param {number} [opt.end] the end-index you want to uppercase
-   * @param {boolean} [opt.force] if force cover to string
+   * @param {number} [start] the start-index you want to uppercase
+   * @param {number} [end] the end-index you want to uppercase
    * @returns {*}
    */
-  self.upperStr = function(str, opt) {
-    return changeCase(str, 'upperCase', opt);
+  self.upperStr = function(str, start, end) {
+    return changeCase(str, 'toUpperCase', start, end);
   };
 
   /**
@@ -213,8 +205,8 @@
    * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
    */
-  self.lowerStr = function(str, opt) {
-    return changeCase(str, 'toLowerCase', opt);
+  self.lowerStr = function(str, start, end) {
+    return changeCase(str, 'toLowerCase', start, end);
   };
 
   /**

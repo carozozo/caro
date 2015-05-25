@@ -64,43 +64,19 @@ describe 'String', ->
 
   it 'upperStr', ->
     r = caro.upperStr('I am Caro');
-    r2 = caro.upperStr('i am caro', {
-      start: 0,
-      end: null,
-      force: true
-    });
-    r3 = caro.upperStr('i am caro', {
-      start: 5,
-      end: null
-    });
-    r4 = caro.upperStr('i am caro', {
-      start: 5,
-      end: 6
-    });
+    r2 = caro.upperStr('i am caro', 5);
+    r3 = caro.upperStr('i am caro', 5, 6);
     r.should.eq 'I AM CARO'
-    r2.should.eq 'I AM CARO'
-    r3.should.eq 'i am CARO'
-    r4.should.eq 'i am Caro'
+    r2.should.eq 'i am CARO'
+    r3.should.eq 'i am Caro'
 
   it 'lowerStr', ->
     r = caro.lowerStr('I AM CARO');
-    r2 = caro.lowerStr('I AM CARO', {
-      start: 0,
-      end: null,
-      force: true
-    });
-    r3 = caro.lowerStr('I AM CARO', {
-      start: 5,
-      end: null
-    });
-    r4 = caro.lowerStr('I AM CARO', {
-      start: 5,
-      end: 6
-    });
+    r2 = caro.lowerStr('I AM CARO', 5);
+    r3 = caro.lowerStr('I AM CARO', 5, 6);
     r.should.eq 'i am caro'
-    r2.should.eq 'i am caro'
-    r3.should.eq 'I AM caro'
-    r4.should.eq 'I AM cARO'
+    r2.should.eq 'I AM caro'
+    r3.should.eq 'I AM cARO'
 
   it 'trimStr', ->
     r = caro.trimStr(' i am caro ');
