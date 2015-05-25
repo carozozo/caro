@@ -27,24 +27,18 @@ do ->
   ###*
   # cover to integer
   # @param arg
-  # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
-  self.toInteger = (arg, force = true) ->
-    int = parseInt(arg)
-    return arg if !force
-    int or 0
+  self.toInteger = (arg) ->
+    parseInt(arg)
 
   ###*
   # cover to number
   # @param arg
-  # @param {boolean} [force=true] if return 0 when it's NaN
   # @returns {*}
   ###
-  self.toNumber = (arg, force = true) ->
-    num = parseFloat(arg)
-    return arg if !force
-    num or 0
+  self.toNumber = (arg) ->
+    Number(arg)
 
   ###*
   # cover to fixed-number

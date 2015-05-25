@@ -17,18 +17,18 @@ describe 'Helper', ->
   it 'toInteger', ->
     r = caro.toInteger('3')
     r2 = caro.toInteger('caro')
-    r3 = caro.toInteger(null, false)
+    r3 = caro.toInteger(null)
     r.should.eq(3)
-    r2.should.eq(0)
-    should.equal(r3, null);
+    r2.should.eql(NaN)
+    r3.should.eql(NaN)
 
   it 'toNumber', ->
     r = caro.toNumber('3.4')
     r2 = caro.toNumber('caro')
-    r3 = caro.toNumber('caro', false)
+    r3 = caro.toNumber({})
     r.should.eq(3.4)
-    r2.should.eq(0)
-    r3.should.eq('caro')
+    r2.should.eql(NaN)
+    r3.should.eql(NaN)
 
   it 'toFixedNumber', ->
     r = caro.toFixedNumber('3.4355', 2)

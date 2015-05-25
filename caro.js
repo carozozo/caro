@@ -1,4 +1,4 @@
-/*! caro - v0.6.22 - 2015-05-25 */
+/*! caro - v0.6.23 - 2015-05-25 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -852,37 +852,19 @@
   /**
    * cover to integer
    * @param arg
-   * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.toInteger = function(arg, force) {
-    var int;
-    if (force == null) {
-      force = true;
-    }
-    int = parseInt(arg);
-    if (!force) {
-      return arg;
-    }
-    return int || 0;
+  self.toInteger = function(arg) {
+    return parseInt(arg);
   };
 
   /**
    * cover to number
    * @param arg
-   * @param {boolean} [force=true] if return 0 when it's NaN
    * @returns {*}
    */
-  self.toNumber = function(arg, force) {
-    var num;
-    if (force == null) {
-      force = true;
-    }
-    num = parseFloat(arg);
-    if (!force) {
-      return arg;
-    }
-    return num || 0;
+  self.toNumber = function(arg) {
+    return Number(arg);
   };
 
   /**
