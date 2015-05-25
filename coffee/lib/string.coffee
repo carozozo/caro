@@ -75,38 +75,14 @@ do ->
     str != '' and str != 'false'
 
   ###*
-  # check if charts has in head of string
-  # @param {string} str
-  # @param {string} str2
-  # @returns {*}
-  ###
-  self.hasHead = (str, str2) ->
-    return false if !caro.isString(str)
-    str.indexOf(str2) == 0
-
-  ###*
   # add the head to string if not exist
   # @param {string} str
   # @param {string} addStr
   # @returns {*}
   ###
   self.addHead = (str, addStr) ->
-    return str if !caro.isString(str)
-    str = addStr + str if !caro.hasHead(str, addStr)
+    str = addStr + str if !caro.startsWith(str, addStr)
     str
-
-  ###*
-  # check if charts has in tail of string
-  # @param {string} str
-  # @param {string} str2
-  # @returns {*}
-  ###
-  self.hasTail = (str, str2) ->
-    return false if !caro.isString(str)
-    index = str.lastIndexOf(str2)
-    strLength = str.length
-    strLength2 = str2.length
-    strLength > strLength2 and index == strLength - strLength2
 
   ###*
   # add the tail to string if not exist
@@ -116,7 +92,7 @@ do ->
   ###
   self.addTail = (str, addStr) ->
     return str if !caro.isString(str)
-    str += addStr if !caro.hasTail(str, addStr)
+    str += addStr if !caro.endsWith(str, addStr)
     str
 
   ###*

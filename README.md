@@ -149,20 +149,10 @@ var r2 = caro.strToBool('fAlse'); // false
 var r3 = caro.strToBool('123'); // true
 var r4 = caro.strToBool(''); // false
 ```
-- **hasHead(str, str2) - 確認字串的開頭是否符合特定字串**
-```javascript
-var r = caro.hasHead('false', 'fa'); // true
-var r2 = caro.hasHead('false', 'se'); // false
-```
 - **addHead(str, addStr) - 在字串的開頭加上新字串(不重覆)**
 ```javascript
 var r = caro.addHead('moon', 'mo'); // 'moon'
 var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
-```
-- **hasTail(str, str2) - 確認字串的結尾是否符合特定字串**
-```javascript
-var r = caro.hasTail('false', 'fa'); // false
-var r2 = caro.hasTail('false', 'se'); // true
 ```
 - **addTail(str, addStr) - 在字串的尾巴加上新字串(不重覆)**
 ```javascript

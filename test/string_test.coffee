@@ -21,23 +21,11 @@ describe 'String', ->
     r3.should.be.true
     r4.should.be.false
 
-  it 'hasHead', ->
-    r = caro.hasHead('false', 'fa');
-    r2 = caro.hasHead('false', 'se');
-    r.should.be.true
-    r2.should.be.false
-
   it 'addHead', ->
     r = caro.addHead('false', 'fa');
     r2 = caro.addHead('False', 'is');
     r.should.eq 'false'
     r2.should.eq 'isFalse'
-
-  it 'hasTail', ->
-    r = caro.hasTail('false', 'fa');
-    r2 = caro.hasTail('false', 'se');
-    r.should.be.false
-    r2.should.be.true
 
   it 'addTail', ->
     r = caro.addTail('moon', 'on');
