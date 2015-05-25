@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
-    'use strict';
     var pkgName = '<%= pkg.name %>';
-    var caro = pkgName + '.js';
+    var pkgFile = pkgName + '.js';
     var coffeeDir = 'coffee/';
     var jsDir = 'js/';
     var testDir = 'test/';
@@ -45,7 +44,7 @@ module.exports = function (grunt) {
                 files: {
                     // 輸出檔案: [要合併的檔案]
                     '<%= pkg.name %>.js': [
-                        caro
+                        pkgFile
                     ]
                 }
             }
@@ -57,7 +56,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    '<%= pkg.name %>.min.js': [caro]
+                    '<%= pkg.name %>.min.js': [pkgFile]
                 }
             }
         },
