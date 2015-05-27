@@ -153,9 +153,6 @@
   self.replaceAll = function(str, find, replace) {
     var isRegExp, regex;
     isRegExp = caro.isRegExp(find);
-    if (!caro.isString(str, find, replace) && !isRegExp) {
-      return str;
-    }
     regex = find;
     if (!isRegExp) {
       find = caro.escapeRegExp(find);

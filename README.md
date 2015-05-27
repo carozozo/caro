@@ -131,7 +131,7 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **toWord(obj [wrap=false]) - 將物件轉為可讀的字串**
+- **toWord(obj) - 將物件轉為可讀的字串**
 ```javascript
 r = caro.toWord(['caro', undefined], true);
 r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->});
