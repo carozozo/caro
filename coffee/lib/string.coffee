@@ -125,7 +125,7 @@ do ->
   ###
   self.replaceAll = (str, find, replace) ->
     isRegExp = caro.isRegExp(find)
-    return str if !caro.isString(str, find, replace) and !isRegExp
+#    return str if !caro.isString(str, find, replace) and !isRegExp
     regex = find
     if !isRegExp
       find = caro.escapeRegExp(find)

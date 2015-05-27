@@ -8,23 +8,38 @@ do ->
   ###*
   # show object/array by string
   # @param {object} obj
-  # @param {boolean} [wrap=false] if display with wrap
   ###
-  self.toWord = (obj, wrap = false) ->
-    json = ''
-    caro.forEach(obj, (val, key) ->
-      if caro.isString(val)
-        obj[key] = "'" + val + "'"
-        return
-      if caro.isPlainObject(val) or caro.isArray(val)
-        obj[key] = caro.toWord(val)
-        return
-      obj[key] = caro.toString(val)
-    )
-    if(!wrap)
-      json = caro.toJson(obj)
-    else
-      json = caro.toJson(obj, null, 2)
-    return caro.replaceAll(json, '"', '')
+  self.toWord = (arg) ->
+    toWord = (arg, spaceLength) ->
+      spaceLength = spaceLength or 0
+      ret = ''
+      spaceLength += 2
+      space = ''
+      space2 = '    '
+      caro.loop(()->
+        space += ' '
+        space2 += ' '
+      , 1, spaceLength)
+      try
+        ret = JSON.stringify(arg, (key, val)->
+          return val if !key
+          return toWord(val, spaceLength)
+        , 2)
+        ret = ret.replace(/\\r\\n/g, '\r\n  ');
+        ret = ret.replace(/\\r/g, '\r  ');
+        ret = ret.replace(/\\n/g, '\n  ');
+        ret = ret.replace(/"/g, '');
+      return ret if ret
+      try
+        ret = arg.toString()
+        reg = new RegExp('\r\n' + space2, 'g')
+        ret = ret.replace(reg, '\r\n')
+        reg = new RegExp('\r' + space2, 'g')
+        ret = ret.replace(reg, '\r')
+        reg = new RegExp('\n' + space2, 'g')
+        ret = ret.replace(reg, '\n')
+        ret = ret.replace(/"/g, '');
+      return ret
+    return toWord(arg, 0)
 
   return

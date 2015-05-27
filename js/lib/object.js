@@ -10,30 +10,47 @@
   /**
    * show object/array by string
    * @param {object} obj
-   * @param {boolean} [wrap=false] if display with wrap
    */
-  self.toWord = function(obj, wrap) {
-    var json;
-    if (wrap == null) {
-      wrap = false;
-    }
-    json = '';
-    caro.forEach(obj, function(val, key) {
-      if (caro.isString(val)) {
-        obj[key] = "'" + val + "'";
-        return;
+  self.toWord = function(arg) {
+    var toWord;
+    toWord = function(arg, spaceLength) {
+      var reg, ret, space, space2;
+      spaceLength = spaceLength || 0;
+      ret = '';
+      spaceLength += 2;
+      space = '';
+      space2 = '    ';
+      caro.loop(function() {
+        space += ' ';
+        return space2 += ' ';
+      }, 1, spaceLength);
+      try {
+        ret = JSON.stringify(arg, function(key, val) {
+          if (!key) {
+            return val;
+          }
+          return toWord(val, spaceLength);
+        }, 2);
+        ret = ret.replace(/\\r\\n/g, '\r\n  ');
+        ret = ret.replace(/\\r/g, '\r  ');
+        ret = ret.replace(/\\n/g, '\n  ');
+        ret = ret.replace(/"/g, '');
+      } catch (_error) {}
+      if (ret) {
+        return ret;
       }
-      if (caro.isPlainObject(val) || caro.isArray(val)) {
-        obj[key] = caro.toWord(val);
-        return;
-      }
-      return obj[key] = caro.toString(val);
-    });
-    if (!wrap) {
-      json = caro.toJson(obj);
-    } else {
-      json = caro.toJson(obj, null, 2);
-    }
-    return caro.replaceAll(json, '"', '');
+      try {
+        ret = arg.toString();
+        reg = new RegExp('\r\n' + space2, 'g');
+        ret = ret.replace(reg, '\r\n');
+        reg = new RegExp('\r' + space2, 'g');
+        ret = ret.replace(reg, '\r');
+        reg = new RegExp('\n' + space2, 'g');
+        ret = ret.replace(reg, '\n');
+        ret = ret.replace(/"/g, '');
+      } catch (_error) {}
+      return ret;
+    };
+    return toWord(arg, 0);
   };
 })();
