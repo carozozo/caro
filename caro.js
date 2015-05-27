@@ -1,4 +1,4 @@
-/*! caro - v0.6.29 - 2015-05-28 */
+/*! caro - v0.6.30 - 2015-05-28 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
