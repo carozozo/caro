@@ -14,16 +14,13 @@
   self.toWord = function(arg) {
     var toWord;
     toWord = function(arg, spaceLength) {
-      var reg, ret, space, space2;
+      var addSpace, reg, ret, space;
       spaceLength = spaceLength || 0;
       ret = '';
       spaceLength += 2;
-      space = '';
-      space2 = '    ';
-      caro.loop(function() {
-        space += ' ';
-        return space2 += ' ';
-      }, 1, spaceLength);
+      space = '    ';
+      addSpace = caro.repeat(' ', spaceLength);
+      space += addSpace;
       try {
         ret = JSON.stringify(arg, function(key, val) {
           if (!key) {
@@ -41,11 +38,11 @@
       }
       try {
         ret = arg.toString();
-        reg = new RegExp('\r\n' + space2, 'g');
+        reg = new RegExp('\r\n' + space, 'g');
         ret = ret.replace(reg, '\r\n');
-        reg = new RegExp('\r' + space2, 'g');
+        reg = new RegExp('\r' + space, 'g');
         ret = ret.replace(reg, '\r');
-        reg = new RegExp('\n' + space2, 'g');
+        reg = new RegExp('\n' + space, 'g');
         ret = ret.replace(reg, '\n');
         ret = ret.replace(/"/g, '');
       } catch (_error) {}
