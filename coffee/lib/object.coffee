@@ -14,12 +14,9 @@ do ->
       spaceLength = spaceLength or 0
       ret = ''
       spaceLength += 2
-      space = ''
-      space2 = '    '
-      caro.loop(()->
-        space += ' '
-        space2 += ' '
-      , 1, spaceLength)
+      space = '    '
+      addSpace = caro.repeat(' ', spaceLength)
+      space += addSpace
       try
         ret = JSON.stringify(arg, (key, val)->
           return val if !key
@@ -32,11 +29,11 @@ do ->
       return ret if ret
       try
         ret = arg.toString()
-        reg = new RegExp('\r\n' + space2, 'g')
+        reg = new RegExp('\r\n' + space, 'g')
         ret = ret.replace(reg, '\r\n')
-        reg = new RegExp('\r' + space2, 'g')
+        reg = new RegExp('\r' + space, 'g')
         ret = ret.replace(reg, '\r')
-        reg = new RegExp('\n' + space2, 'g')
+        reg = new RegExp('\n' + space, 'g')
         ret = ret.replace(reg, '\n')
         ret = ret.replace(/"/g, '');
       return ret
