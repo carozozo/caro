@@ -94,9 +94,6 @@ var r2 = caro.getFnName(arg2); // 'isFn'
 ```
 - **formatMoney(str [type | opt]) - format string/number to money type**
 ```javascript
-var arg = null;
-var arg2 = '12003000.923';
-var arg3 = 12003000.923;
 var r = caro.formatMoney(null); // '0' 
 var r2 = caro.formatMoney('12003000.923', 'int'); // '12,003,000'
 var r3 = caro.formatMoney(12003000.923, 'sInt'); // '$12,003,000'
