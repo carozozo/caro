@@ -6,7 +6,7 @@
     "name": "Caro.Huang",
     "email": "carozozo@yahoo.com.tw"
   },
-  "main": "caro.min.js",
+  "main": "caro.js",
   "files": [
     "caro.js",
     "caro.min.js",
