@@ -8,7 +8,7 @@ do ->
   ###*
   # display object/array by string
   # @param {object} obj
-  # @param {number} spaceLength the space before each line
+  # @param {number} [spaceLength=2] the space before each line
   ###
   self.toWord = (arg, spaceLength) ->
     toWord = (arg, spaceLength, layer) ->
