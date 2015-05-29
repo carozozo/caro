@@ -1,7 +1,7 @@
 {
   "name": "caro",
   "version": "0.6.30",
-  "description": "The common-libraries depend on lodash",
+  "description": "The general libraries base on lodash",
   "author": {
     "name": "Caro.Huang",
     "email": "carozozo@yahoo.com.tw"

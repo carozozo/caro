@@ -1,6 +1,6 @@
 # Caro.js
-General libraries for JavaScript / Node.js depend on lodash
-
+General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
+It also support [lodash-libraries](https://lodash.com/docs)
 ## Install and Usage
 
 ### In Html
@@ -11,7 +11,7 @@ General libraries for JavaScript / Node.js depend on lodash
 ```
 
 ```javascript
-caro.isArr(['caro']); // true
+caro.isArray(['caro']); // true
 ```
 
 ### In Node.js
@@ -21,7 +21,7 @@ $ npm install caro
 
 ```javascript
 var caro = require('caro');
-caro.isArr(['caro']); // true
+caro.isArray(['caro']); // true
 ```
 ## Index
 
@@ -29,30 +29,30 @@ caro.isArr(['caro']); // true
 
 ### Array
 [Back to Index](#index)
-- **sumOfArr(arr [force=false]) - 加總陣列中的數字**
+- **sumOfArr(arr [force=false]) - get sum-value in array**
 ```javascript
 var arr = [1, 2, '5'];
 var r = caro.sumOfArr(arr); // 3
 var r2 = caro.sumOfArr(arr, true); // 11
 ```
-- **pushNoDuplicate(arr, val...) - 不重覆 push 值至陣列**
+- **pushNoDuplicate(arr, val...) - push value to array exclude duplicate**
 ```javascript
 var arr = [1, 2, 3];
 var r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
 ```
-- **pushNoEmptyVal(arr, val...) - 如果不為空值，才會 push 至陣列**
+- **pushNoEmptyVal(arr, val...) - push non-empty value to array**
 ```javascript
 var arr = [1, 2, 3];
 var r = caro.pushNoEmptyVal(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
 ```
-- **pullEmptyVal(arr) - 取出陣列中的空值**
+- **pullEmptyVal(arr) - pull empty-value from array**
 ```javascript
 var arr = [1, '', null, 'caro'];
 var r = caro.pullEmptyVal(arr);
 console.log(arr); // [1, 'caro']
 console.log(r); // ['', null]
 ```
-- **pullUnBasicVal(arr) - 取出陣列中不是 boolean 或 string 或 number 的值**
+- **pullUnBasicVal(arr) - pull un-basic-value(exclude boolean/string/number) from array **
 ```javascript
 var arr = [1, {a: 1}, 'caro'];
 var r = caro.pullUnBasicVal(arr);
@@ -62,19 +62,19 @@ console.log(r); // [{a: 1}]
 
 ### Helper
 [Back to Index](#index)
-- **checkIfPass((arr, checkFn [needAllPass=true]) - 回傳 checkFn 的執行結果**
+- **checkIfPass((arr, checkFn [needAllPass=true]) - validate all values in array by check-function**
 ```javascript
 var arg = [1, 2, 3];
-// 完全比對，相當於 (1===1 && 2===1 && 3===1)
+// (1===1 && 2===1 && 3===1)
 var r = caro.checkIfPass(arg, function (val) {
     return val === 1;
 }); // false
-// 不完全比對，相當於 (1 > 2 || 2 > 2 || 3 > 2)
+// (1 > 2 || 2 > 2 || 3 > 2)
 var r2 = caro.checkIfPass(arg, function (val) {
     return val > 2;
 }, false); // true
 ```
-- **executeIfFn(fn [arg...]) - 如果是 function 的話則執行**
+- **executeIfFn(fn [arg...]) - execute it if argument is function**
 ```javascript
 var arg = function (i) {
     return ++i;
@@ -83,7 +83,7 @@ var arg2 = null;
 var r = caro.executeIfFn(arg, 12); // 13
 var r2 = caro.executeIfFn(arg2); // undefined
 ```
-- **getFnName(fn) - 取得 function 名稱**
+- **getFnName(fn) - get function name**
 ```javascript
 var arg = function (i) {
     return ++i;
@@ -92,33 +92,33 @@ var arg2 = function isFn(){};
 var r = caro.getFnName(arg); // ''
 var r2 = caro.getFnName(arg2); // 'isFn'
 ```
-- **formatMoney(str [type | opt]) - 轉換為錢幣格式**
+- **formatMoney(str [type | opt]) - format string/number to money type**
 ```javascript
 var arg = null;
 var arg2 = '12003000.923';
 var arg3 = 12003000.923;
-var r = caro.formatMoney(arg); // '0' 
-var r2 = caro.formatMoney(arg2, 'int'); // '$12,003,000'
-var r3 = caro.formatMoney(arg3, 'sInt');
-var r4 = caro.formatMoney(arg3, {
+var r = caro.formatMoney(null); // '0' 
+var r2 = caro.formatMoney('12003000.923', 'int'); // '12,003,000'
+var r3 = caro.formatMoney(12003000.923, 'sInt'); // '$12,003,000'
+var r4 = caro.formatMoney(12003000.923, {
   float: 0, separated: ',',
   decimal: '.', prefix: '',
   forceFloat: false
 }); // '12,003,000' - here is default options
-var r5 = caro.formatMoney(arg3, {
+var r5 = caro.formatMoney(12003000.923, {
   float: 5, forceFloat: true
 }); // '12,003,000.92300'
 ```
-- **serializeUrl(str [oArgs] [coverEmpty=false]) - 將變數物件代入 URL**
+- **serializeUrl(str [oArgs] [coverEmpty=false]) - format object to URL params**
 ```javascript
 var arg = 'http://localhost';
 var obj = {a: 1, b: 2, c: null};
 var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
 var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
-### ★Loop
+### Loop
 [Back to Index](#index)
-- **loop(fn, start=0, end=0, step=1) - 執行迴圈**
+- **loop(fn, start=0, end=0, step=1) - for loop**
 ```javascript
 caro.loop(function (i){
     // i = 10,9,...0
@@ -131,14 +131,14 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **toWord(obj) - 將物件轉為可讀的字串**
+- **toWord(obj [space=2]) - get string for easy-reading with object/array**
 ```javascript
 r = caro.toWord(['caro', undefined], true);
 r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->});
 ```
 ### String
 [Back to Index](#index)
-- **random(len [opt]) - 產生隨機字串**
+- **random(len [opt]) - create random string**
 ```javascript
 var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
 var r2 = caro.random(15, {
