@@ -6,37 +6,39 @@ do ->
   self = caro
 
   ###*
-  # show object/array by string
+  # display object/array by string
   # @param {object} obj
+  # @param {number} spaceLength the space before each line
   ###
-  self.toWord = (arg) ->
-    toWord = (arg, spaceLength) ->
-      spaceLength = spaceLength or 0
-      ret = ''
-      spaceLength += 2
-      space = '    '
-      addSpace = caro.repeat(' ', spaceLength)
-      space += addSpace
+  self.toWord = (arg, spaceLength) ->
+    toWord = (arg, spaceLength, layer) ->
+      spaceLength = spaceLength or 2
+      layer = layer or 0
+      fnSpaceLength = layer * 2 + 6
+      space = caro.repeat(' ', spaceLength)
+      fnSpace = caro.repeat(' ', fnSpaceLength)
+      layer++
       try
         ret = JSON.stringify(arg, (key, val)->
           return val if !key
-          return toWord(val, spaceLength)
-        , 2)
-        ret = ret.replace(/\\r\\n/g, '\r\n  ');
-        ret = ret.replace(/\\r/g, '\r  ');
-        ret = ret.replace(/\\n/g, '\n  ');
+          return toWord(val, spaceLength, layer)
+        , spaceLength)
+        ret = ret.replace(/\\r\\n/g, '\r\n' + space);
+        ret = ret.replace(/\\r/g, '\r' + space);
+        ret = ret.replace(/\\n/g, '\n' + space);
         ret = ret.replace(/"/g, '');
       return ret if ret
       try
         ret = arg.toString()
-        reg = new RegExp('\r\n' + space, 'g')
-        ret = ret.replace(reg, '\r\n')
-        reg = new RegExp('\r' + space, 'g')
-        ret = ret.replace(reg, '\r')
-        reg = new RegExp('\n' + space, 'g')
-        ret = ret.replace(reg, '\n')
-        ret = ret.replace(/"/g, '');
+        if caro.isFunction(arg)
+          reg = new RegExp('\r\n' + fnSpace, 'g')
+          ret = ret.replace(reg, '\r\n')
+          reg = new RegExp('\r' + fnSpace, 'g')
+          ret = ret.replace(reg, '\r')
+          reg = new RegExp('\\n' + fnSpace, 'g')
+          ret = ret.replace(reg, '\n')
+          ret = ret.replace(/"/g, '');
       return ret
-    return toWord(arg, 0)
+    return toWord(arg, spaceLength)
 
   return

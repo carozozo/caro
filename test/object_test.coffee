@@ -1,6 +1,6 @@
 do ->
 describe 'Object', ->
-  it.only 'toWord', ->
+  it 'toWord', ->
     a = {
       a: false, b: null, c: 0, d: 'caro', e: undefined, f: [],
       g: () ->
@@ -15,12 +15,10 @@ describe 'Object', ->
     }
     r = caro.toWord(['caro', undefined], 4)
     r2 = caro.toWord(a)
-    console.log r
-    console.log r2
     r.should.eq('''
     [
-      caro,
-      null
+        caro,
+        null
     ]
     ''')
     r2.should.eq('''
