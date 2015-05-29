@@ -19,7 +19,6 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: coffeeDir,
                     src: ['{,*/}*.coffee'],
-                    //src: ['*.coffee'],
                     dest: jsDir,
                     rename: function (dest, src) {
                         return dest + '/' + src.replace(/\.coffee$/, '.js');
@@ -32,20 +31,6 @@ module.exports = function (grunt) {
                 },
                 files: {
                     '<%= pkg.name %>.js': [coffeeDir + pkgName + '.coffee', coffeeDir + 'lib/*.coffee']
-                }
-            }
-        },
-        concat: {
-            options: {
-                stripBanners: true,
-                banner: banner
-            },
-            dist: {
-                files: {
-                    // 輸出檔案: [要合併的檔案]
-                    '<%= pkg.name %>.js': [
-                        pkgFile
-                    ]
                 }
             }
         },
@@ -82,15 +67,13 @@ module.exports = function (grunt) {
 
     // coffee-script 轉 js
     grunt.loadNpmTasks('grunt-contrib-coffee');
-    // 合併檔案
-    grunt.loadNpmTasks('grunt-contrib-concat');
     // 檔案最小化
     grunt.loadNpmTasks('grunt-contrib-uglify');
     // unit test
     grunt.loadNpmTasks('grunt-mocha-test');
 
     // 套裝任務
-    grunt.registerTask('default', ['coffee', 'concat', 'uglify', 'test']);
+    grunt.registerTask('default', ['coffee', 'uglify', 'test']);
     grunt.registerTask('test', ['mochaTest']);
-    grunt.registerTask('compileTest', ['coffee', 'concat', 'mochaTest']);
+    grunt.registerTask('compileTest', ['coffee', 'mochaTest']);
 };
