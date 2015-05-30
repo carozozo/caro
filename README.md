@@ -1,5 +1,6 @@
 # Caro.js
-[![Build Status](https://travis-ci.org/carozozo/caro.svg?branch=master)](https://travis-ci.org/carozozo/caro)
+[![Build Status](https://travis-ci.org/carozozo/caro.svg?branch=master)](https://travis-ci.org/carozozo/caro)  
+
 General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
 It also support [lodash-libraries](https://lodash.com/docs)
 ## Install and Usage
