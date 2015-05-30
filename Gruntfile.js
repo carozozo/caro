@@ -52,11 +52,11 @@ module.exports = function (grunt) {
                     require: [
                         nodeDir + 'coffee-script/register',
                         function () {
-                            caro = require('./caro');
+                            global.caro = require('./caro');
                         },
                         function () {
                             var chai = require('chai');
-                            should = chai.should();
+                            global.should = chai.should();
                         }
                     ]
                 },
