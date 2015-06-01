@@ -133,7 +133,7 @@ caro.loop(function (i){
 - **toWord(obj [space=2]) - get string for easy-reading with object/array**
 ```javascript
 r = caro.toWord(['caro', undefined], true);
-r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->});
+r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: function(){}});
 ```
 - **classify(obj) - group by argument type**
 ```javascript
