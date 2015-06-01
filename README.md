@@ -96,9 +96,6 @@ var r2 = caro.getFnName(arg2); // 'isFn'
 ```
 - **formatMoney(str [type | opt]) - format string/number to money type**
 ```javascript
-var arg = null;
-var arg2 = '12003000.923';
-var arg3 = 12003000.923;
 var r = caro.formatMoney(null); // '0' 
 var r2 = caro.formatMoney('12003000.923', 'int'); // '12,003,000'
 var r3 = caro.formatMoney(12003000.923, 'sInt'); // '$12,003,000'
@@ -137,6 +134,27 @@ caro.loop(function (i){
 ```javascript
 r = caro.toWord(['caro', undefined], true);
 r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->});
+```
+- **classify(obj) - group by argument type**
+```javascript
+var r = caro.classify({
+  a: 1
+  b: 'd'
+  c: {cc: 1}
+  d: function(){}
+  e: ['caro']
+  f: 'FF'
+});
+/*
+{ 
+  bool: [],
+  str: [ 'd', 'FF' ],
+  num: [ 1 ],
+  arr: [ [ 'caro' ] ],
+  obj: [ { cc: 1 } ],
+  fn: [ [Function] ] 
+}
+*/
 ```
 ### String
 [Back to Index](#index)
