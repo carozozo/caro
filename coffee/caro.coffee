@@ -4,7 +4,7 @@
   isNode = do ->
     return global? and module? and exports?
   if isNode
-    caro = require 'lodash'
+    caro = require('lodash').runInContext()
     module.exports = caro
     global.caro = caro
   caro.isNode = isNode) this

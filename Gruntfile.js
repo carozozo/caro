@@ -34,6 +34,20 @@ module.exports = function (grunt) {
                 }
             }
         },
+        concat: {
+            options: {
+                stripBanners: true,
+                banner: banner
+            },
+            dist: {
+                files: {
+                    // 輸出檔案: [要合併的檔案]
+                    '<%= pkg.name %>.js': [
+                        pkgFile
+                    ]
+                }
+            }
+        },
         uglify: {
             options: {
                 stripBanners: true,
@@ -52,11 +66,11 @@ module.exports = function (grunt) {
                     require: [
                         nodeDir + 'coffee-script/register',
                         function () {
-                            global.caro = require('./caro');
+                            caro = require('./caro');
                         },
                         function () {
                             var chai = require('chai');
-                            global.should = chai.should();
+                            should = chai.should();
                         }
                     ]
                 },
@@ -67,13 +81,14 @@ module.exports = function (grunt) {
 
     // coffee-script 轉 js
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    // 合併檔案
+    grunt.loadNpmTasks('grunt-contrib-concat');
     // 檔案最小化
     grunt.loadNpmTasks('grunt-contrib-uglify');
     // unit test
     grunt.loadNpmTasks('grunt-mocha-test');
 
     // 套裝任務
-    grunt.registerTask('default', ['coffee', 'uglify', 'test']);
+    grunt.registerTask('default', ['coffee', 'concat', 'uglify', 'test']);
     grunt.registerTask('test', ['mochaTest']);
-    grunt.registerTask('compileTest', ['coffee', 'mochaTest']);
 };

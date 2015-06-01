@@ -1,3 +1,4 @@
+/*! caro - v0.7.1 - 2015-06-01 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -6,7 +7,7 @@
     return (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   })();
   if (isNode) {
-    caro = require('lodash');
+    caro = require('lodash').runInContext();
     module.exports = caro;
     global.caro = caro;
   }
