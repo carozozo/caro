@@ -54,7 +54,7 @@ var r = caro.pullEmptyVal(arr);
 console.log(arr); // [1, 'caro']
 console.log(r); // ['', null]
 ```
-- **pullUnBasicVal(arr) - pull un-basic-value(exclude boolean/string/number) from array **
+- **pullUnBasicVal(arr) - pull un-basic-value(exclude boolean/string/number) from array**
 ```javascript
 var arr = [1, {a: 1}, 'caro'];
 var r = caro.pullUnBasicVal(arr);
