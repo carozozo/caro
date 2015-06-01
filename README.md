@@ -133,6 +133,27 @@ caro.loop(function (i){
 r = caro.toWord(['caro', undefined], true);
 r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: ()->});
 ```
+- **classify(obj) - group by argument type**
+```javascript
+var r = caro.classify({
+  a: 1
+  b: 'd'
+  c: {cc: 1}
+  d: function(){}
+  e: ['caro']
+  f: 'FF'
+});
+/*
+{ 
+  bool: [],
+  str: [ 'd', 'FF' ],
+  num: [ 1 ],
+  arr: [ [ 'caro' ] ],
+  obj: [ { cc: 1 } ],
+  fn: [ [Function] ] 
+}
+*/
+```
 ### String
 [Back to Index](#index)
 - **random(len [opt]) - create random string**

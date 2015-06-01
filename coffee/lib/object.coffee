@@ -7,7 +7,7 @@ do ->
 
   ###*
   # display object/array by string
-  # @param {object} obj
+  # @param {object|array} obj
   # @param {number} [spaceLength=2] the space before each line
   ###
   self.toWord = (arg, spaceLength) ->
@@ -41,4 +41,36 @@ do ->
       return ret
     return toWord(arg, spaceLength)
 
-  return
+  ###*
+  # group by argument type
+  # @param {object|array} arg
+  # @return {object}
+  ###
+  self.classify = (arg) ->
+    aStr = []
+    aBool = []
+    aArr = []
+    aNum = []
+    aObj = []
+    aFn = []
+    caro.forEach(arg, (a) ->
+      if caro.isBoolean(a)
+        aBool.push a
+      else if caro.isString(a)
+        aStr.push a
+        return
+      else if caro.isNumber(a)
+        aNum.push a
+      else if caro.isArray(a)
+        aArr.push a
+      else if caro.isPlainObject(a)
+        aObj.push(a)
+      else if caro.isFunction(a)
+        aFn.push a
+    )
+    bool: aBool
+    str: aStr
+    num: aNum
+    arr: aArr
+    obj: aObj
+    fn: aFn
