@@ -1,4 +1,4 @@
-/*! caro - v0.6.31 - 2015-05-30 */
+/*! caro - v0.6.31 - 2015-06-01 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -305,8 +305,8 @@
 
   /**
    * display object/array by string
-   * @param {object} obj
-   * @param {number} spaceLength the space before each line
+   * @param {object|array} obj
+   * @param {number} [spaceLength=2] the space before each line
    */
   self.toWord = function(arg, spaceLength) {
     var toWord;
@@ -348,6 +348,44 @@
       return ret;
     };
     return toWord(arg, spaceLength);
+  };
+
+  /**
+   * group by argument type
+   * @param {object|array} arg
+   * @return {object}
+   */
+  return self.classify = function(arg) {
+    var aArr, aBool, aFn, aNum, aObj, aStr;
+    aStr = [];
+    aBool = [];
+    aArr = [];
+    aNum = [];
+    aObj = [];
+    aFn = [];
+    caro.forEach(arg, function(a) {
+      if (caro.isBoolean(a)) {
+        return aBool.push(a);
+      } else if (caro.isString(a)) {
+        aStr.push(a);
+      } else if (caro.isNumber(a)) {
+        return aNum.push(a);
+      } else if (caro.isArray(a)) {
+        return aArr.push(a);
+      } else if (caro.isPlainObject(a)) {
+        return aObj.push(a);
+      } else if (caro.isFunction(a)) {
+        return aFn.push(a);
+      }
+    });
+    return {
+      bool: aBool,
+      str: aStr,
+      num: aNum,
+      arr: aArr,
+      obj: aObj,
+      fn: aFn
+    };
   };
 })();
 

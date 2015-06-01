@@ -44,3 +44,24 @@ describe 'Object', ->
       }
     }
     ''')
+
+  it 'classify', ->
+    r = caro.classify({
+      a: 1
+      b: 'd'
+      c: {cc: 1}
+      d: ()->
+      e: ['caro']
+      f: 'FF'
+    });
+    r2 = caro.classify([
+      'caro'
+      '4'
+      3
+      ()-> return a
+      ['m']
+    ]);
+    console.log r
+    keysArr=['bool', 'str', 'num', 'arr', 'obj', 'fn']
+    r.should.has.keys(keysArr)
+    r2.should.has.keys(keysArr)
