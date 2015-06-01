@@ -6,7 +6,7 @@
     return (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   })();
   if (isNode) {
-    caro = require('lodash');
+    caro = require('lodash').runInContext();
     module.exports = caro;
     global.caro = caro;
   }
