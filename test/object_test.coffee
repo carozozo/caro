@@ -61,7 +61,6 @@ describe 'Object', ->
       ()-> return a
       ['m']
     ]);
-    console.log r
-    keysArr=['bool', 'str', 'num', 'arr', 'obj', 'fn']
+    keysArr = ['bool', 'str', 'num', 'arr', 'obj', 'fn']
     r.should.has.keys(keysArr)
     r2.should.has.keys(keysArr)
