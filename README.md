@@ -5,7 +5,7 @@ General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.co
 It also support [lodash-libraries](https://lodash.com/docs)   
 
 **Last Updated:**   
-- Add Object -> catching
+Add [Object -> catching]
 
 ## Install
 
