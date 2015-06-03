@@ -1,4 +1,4 @@
-/*! caro - v0.7.2 - 2015-06-01 */
+/*! caro - v0.7.2 - 2015-06-04 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -386,6 +386,24 @@
       obj: aObj,
       fn: aFn
     };
+  };
+
+  /**
+   * catch other object-values to target-object
+   * @param {object} obj
+   * @return {object}
+   */
+  self.catching = function(obj) {
+    var args;
+    args = caro.drop(arguments);
+    caro.forEach(args, function(eachObj) {
+      return caro.forEach(eachObj, function(eachVal, eachKey) {
+        if (obj.hasOwnProperty(eachKey)) {
+          return obj[eachKey] = eachVal;
+        }
+      });
+    });
+    return obj;
   };
 })();
 

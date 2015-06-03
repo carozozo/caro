@@ -64,3 +64,14 @@ describe 'Object', ->
     keysArr = ['bool', 'str', 'num', 'arr', 'obj', 'fn']
     r.should.has.keys(keysArr)
     r2.should.has.keys(keysArr)
+
+  it 'catching', ->
+    obj = {name: 'Caro', age: 18};
+    obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
+    r = {name: ''};
+    r2 = {name: '', city: ''};
+    caro.catching(r, obj);
+    caro.catching(r2, obj, obj2);
+    r.name.should.eq 'Caro'
+    r2.name.should.eq 'Caro'
+    r2.city.should.eq 'Kaohsiung'

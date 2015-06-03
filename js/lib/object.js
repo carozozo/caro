@@ -91,4 +91,22 @@
       fn: aFn
     };
   };
+
+  /**
+   * catch other object-values to target-object
+   * @param {object} obj
+   * @return {object}
+   */
+  self.catching = function(obj) {
+    var args;
+    args = caro.drop(arguments);
+    caro.forEach(args, function(eachObj) {
+      return caro.forEach(eachObj, function(eachVal, eachKey) {
+        if (obj.hasOwnProperty(eachKey)) {
+          return obj[eachKey] = eachVal;
+        }
+      });
+    });
+    return obj;
+  };
 })();
