@@ -250,7 +250,7 @@ var r2 = caro.isEmptyVal({}); // true
 var r = caro.isEasingTrue('True'); // true
 var r2 = caro.isEasingTrue(1); // true
 ```
-- **isEasingFalse(arg...) - check if false or 'false' 或 0**
+- **isEasingFalse(arg...) - check if false or 'false' or 0**
 ```javascript
 var r = caro.isEasingFalse('false'); // true
 var r2 = caro.isEasingFalse(0); // true
