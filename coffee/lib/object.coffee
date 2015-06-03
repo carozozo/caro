@@ -75,4 +75,18 @@ do ->
     obj: aObj
     fn: aFn
 
+  ###*
+  # catch other object-values to target-object
+  # @param {object} obj
+  # @return {object}
+  ###
+  self.catching = (obj) ->
+    args = caro.drop(arguments)
+    caro.forEach(args, (eachObj) ->
+      caro.forEach(eachObj, (eachVal, eachKey) ->
+        obj[eachKey] = eachVal if obj.hasOwnProperty(eachKey)
+      )
+    )
+    obj
+
   return

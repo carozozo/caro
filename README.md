@@ -156,6 +156,15 @@ var r = caro.classify({
 }
 */
 ```
+- **catching(obj) - catch other object-values to target-object when it has key matched**
+```javascript
+var obj = {name: 'Caro', age: 18};
+var obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
+var r = {name: ''};
+var r2 = {name: '', city: ''};
+caro.catching(r, obj); // { name: 'Caro' }
+caro.catching(r2, obj, obj2); // { name: 'Caro', city: 'Kaohsiung' }
+```
 ### String
 [Back to Index](#index)
 - **random(len [opt]) - create random string**
