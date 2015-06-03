@@ -123,7 +123,7 @@ caro.loop(function (i){
     // i = 10, 9,...0
 }, 10, 0);
 caro.loop(function (i){
-    if(i > 5) return false
+    if(i > 5) return false;
     // i = 1, 3, 5
 }, 1, 10, 2);
 ```
@@ -138,12 +138,12 @@ r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: fu
 - **classify(obj) - group by argument type**
 ```javascript
 var r = caro.classify({
-  a: 1
-  b: 'd'
-  c: {cc: 1}
-  d: function(){}
-  e: ['caro']
-  f: 'FF'
+  a: 1,
+  b: 'd',
+  c: {cc: 1},
+  d: function(){},
+  e: ['caro'],
+  f: 'FF',
 });
 /*
 { 
@@ -162,15 +162,15 @@ var r = caro.classify({
 ```javascript
 var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
 var r2 = caro.random(15, {
-  lower: true
-  upper: true
-  num: true
+  lower: true,
+  upper: true,
+  num: true,
   exclude: ''
 }); // here is default options
 var r3 = caro.random(15, {
-  lower: false
-  upper: true
-  num: false
+  lower: false,
+  upper: true,
+  num: false,
   exclude: 'A,B,C'
 }); // - will create uppercase-only, and without A/B/C
 ```
@@ -271,7 +271,7 @@ var r4 = caro.isJson('{"a":1, "b": function(){}}') // false
 ```javascript
 var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
-var r3 = caro.isObjJson('{{b: 2}) // false
+var r3 = caro.isObjJson({b: 2}) // false
 ```
 - **isUpper(str) - check string if all uppercase**
 ```javascript
