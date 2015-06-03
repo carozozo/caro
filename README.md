@@ -2,8 +2,12 @@
 [![Build Status](https://travis-ci.org/carozozo/caro.svg?branch=master)](https://travis-ci.org/carozozo/caro)  
 
 General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
-It also support [lodash-libraries](https://lodash.com/docs)
-## Install and Usage
+It also support [lodash-libraries](https://lodash.com/docs)   
+
+**Last Updated:**   
+- Add Object -> catching
+
+## Install
 
 ### In Html
 ```html
@@ -11,22 +15,18 @@ It also support [lodash-libraries](https://lodash.com/docs)
 <script src="/js/lodash.js"></script> 
 <script src="/js/caro.js"></script>
 ```
-
-```javascript
-caro.isArray(['caro']); // true
-```
-
 ### In Node.js
 ```bash
 $ npm install caro
 ```
 
+## Usage
 ```javascript
 var caro = require('caro');
 caro.isArray(['caro']); // true
 ```
-## Index
 
+## Index
 **[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)** | **[TypeCover](#typecover)**
 
 ### Array
