@@ -156,7 +156,7 @@ var r = caro.classify({
 }
 */
 ```
-- **catching(obj) - catch other object-values to target-object when it has key matched**
+- **catching(obj, obj2...) - catch other object-values to target-object when it has key matched**
 ```javascript
 var obj = {name: 'Caro', age: 18};
 var obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
