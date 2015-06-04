@@ -4,10 +4,10 @@
 General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
 It also support [lodash-libraries](https://lodash.com/docs)   
 
-**Last Updated:**
-- Add [Object -> catching]
+**Last Updated:**   
+Add [Object -> catching]
 
-### Install
+## Install
 
 **In Html**
 ```html
@@ -20,13 +20,13 @@ It also support [lodash-libraries](https://lodash.com/docs)
 $ npm install caro
 ```
 
-### Usage
+## Usage
 ```javascript
 var caro = require('caro');
 caro.isArray(['caro']); // true
 ```
 
-### Index
+## Index
 **[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)** | **[TypeCover](#typecover)**
 
 ### Array
