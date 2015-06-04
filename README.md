@@ -4,29 +4,29 @@
 General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
 It also support [lodash-libraries](https://lodash.com/docs)   
 
-**Last Updated:**   
-Add [Object -> catching]
+**Last Updated:**
+- Add [Object -> catching]
 
-## Install
+### Install
 
-### In Html
+**In Html**
 ```html
 <!-- https://lodash.com/ -->
 <script src="/js/lodash.js"></script> 
 <script src="/js/caro.js"></script>
 ```
-### In Node.js
+**In Node.js**
 ```bash
 $ npm install caro
 ```
 
-## Usage
+### Usage
 ```javascript
 var caro = require('caro');
 caro.isArray(['caro']); // true
 ```
 
-## Index
+### Index
 **[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)** | **[TypeCover](#typecover)**
 
 ### Array
