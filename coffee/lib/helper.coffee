@@ -1,6 +1,5 @@
 ###*
 # Helper
-# @namespace caro
 # @author Caro.Huang
 ###
 do ->
@@ -113,21 +112,26 @@ do ->
       return
     url += aArgs.join('')
 
-  self.whereAmI = () ->
-    err = new Error();
-    stack = err.stack
-    sStack = do ->
-      reg = /^\s*at\s*/i
-      aStack = caro.splitByWrap(stack)
-      aStack = aStack.slice(2, 3)
-      sStack = aStack[0]
-      sStack.replace(reg, '')
-    #    return sStack if arguments.length < 1
-    stackReg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi;
-    stackReg2 = /()(.*):(\d*):(\d*)/gi;
-    sp = stackReg.exec(sStack) or stackReg2.exec(sStack);
-    console.log 'sp=',sp
-    console.log 'sp=',sp.length
-
+#  self.getStackList = () ->
+#    r = []
+#    err = new Error();
+#    stack = err.stack
+#    aStack = caro.splitByWrap(stack).slice(2)
+#    caro.forEach(aStack, (sStack) ->
+#      data = {}
+#      reg = /^\s*at\s*/i
+#      sStack = sStack.replace(reg, '')
+#      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
+#      reg2 = /()(.*):(\d*):(\d*)/gi
+#      sp = reg.exec(sStack) or reg2.exec(sStack)
+#      if (sp && sp.length == 5)
+#        data.method = sp[1];
+#        data.path = sp[2];
+#        data.line = sp[3];
+#        data.pos = sp[4];
+#        data.file = self.getFileName(data.path)
+#      r.push(data)
+#    )
+#    r
 
   return

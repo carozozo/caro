@@ -124,13 +124,31 @@ do ->
   # @returns {*|string}
   ###
   self.replaceAll = (str, find, replace) ->
-    isRegExp = caro.isRegExp(find)
-#    return str if !caro.isString(str, find, replace) and !isRegExp
-    regex = find
-    if !isRegExp
-      find = caro.escapeRegExp(find)
-      regex = new RegExp(find, 'g')
+    find = caro.escapeRegExp(find)
+    regex = new RegExp(find, 'g')
     str.replace regex, replace
+
+  ###*
+  # replace last find in string
+  # @param {string} str
+  # @param {string} find
+  # @param {string} replace
+  # @returns {*|string}
+  ###
+  self.replaceLast = (str, find, replace) ->
+    r = []
+    find = caro.escapeRegExp(find)
+    aStr = str.split(find);
+    strLength = aStr.length
+    caro.forEach(aStr, (val, i) ->
+      last = strLength - 2
+      r.push(val)
+      if(i < last)
+        r.push(find)
+      if(i == last)
+        r.push(replace)
+    )
+    r.join('')
 
   ###*
   # uppercase string
