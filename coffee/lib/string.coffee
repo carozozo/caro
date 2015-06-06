@@ -136,19 +136,10 @@ do ->
   # @returns {*|string}
   ###
   self.replaceLast = (str, find, replace) ->
-    r = []
-    find = caro.escapeRegExp(find)
-    aStr = str.split(find);
-    strLength = aStr.length
-    caro.forEach(aStr, (val, i) ->
-      last = strLength - 2
-      r.push(val)
-      if(i < last)
-        r.push(find)
-      if(i == last)
-        r.push(replace)
-    )
-    r.join('')
+    lastIndex = str.lastIndexOf(find)
+    str1 = str.slice(0, lastIndex)
+    str2 = str.slice(lastIndex)
+    str1 + str2.replace(find, replace)
 
   ###*
   # uppercase string

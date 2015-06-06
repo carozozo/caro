@@ -5,13 +5,21 @@
 #do ->
 #  self = caro
 #
+#  ###*
+#  # get dir-path
+#  # @param {string} path
+#  # @return {string}
+#  ###
 #  self.getDirPath = (path) ->
-#    filename = self.getFileName(path)
-#    path.replace(filename)
+#    filename = caro.getFileName(path)
+#    console.log 'filename=',filename
+#    path = caro.replaceLast(path, filename)
+#
 #  ###*
 #  # get file name in path
 #  # @param {string} path
 #  # @param {boolean} [getFull] if return file-name by full (with extend-name)
+#  # @return {string}
 #  ###
 #  self.getFileName = (path, getFull) ->
 #    getFull = getFull != false
@@ -27,6 +35,7 @@
 #  # get extend name of file
 #  # @param {string} path
 #  # @param {boolean} [withDot] if return extend-name with '.'
+#  # @return {string}
 #  ###
 #  self.getExtendName = (path, withDot) ->
 #    withDot = withDot != false
