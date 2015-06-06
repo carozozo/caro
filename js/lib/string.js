@@ -169,9 +169,6 @@
     lastIndex = str.lastIndexOf(find);
     str1 = str.slice(0, lastIndex);
     str2 = str.slice(lastIndex);
-    console.log('find=', find);
-    console.log('str1=', str1);
-    console.log('str2=', str2);
     return str1 + str2.replace(find, replace);
   };
 

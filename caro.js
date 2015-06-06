@@ -1,4 +1,4 @@
-/*! caro - v0.9.0 - 2015-06-07 */
+/*! caro - v0.9.1 - 2015-06-07 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -579,9 +579,6 @@
     lastIndex = str.lastIndexOf(find);
     str1 = str.slice(0, lastIndex);
     str2 = str.slice(lastIndex);
-    console.log('find=', find);
-    console.log('str1=', str1);
-    console.log('str2=', str2);
     return str1 + str2.replace(find, replace);
   };
 
