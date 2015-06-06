@@ -4,10 +4,6 @@
 General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
 It also support [lodash-libraries](https://lodash.com/docs)   
 
-**Last Updated:**   
-Add [String -> replaceLast]   
-Add [Object -> catching]
-
 ## Install
 
 **In Html**
@@ -28,7 +24,9 @@ caro.isArray(['caro']); // true
 ```
 
 ## Index
-**[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | **[Object](#object)** | **[String](#string)** | **[TypeCheck](#typecheck)** | **[TypeCover](#typecover)**
+**[Array](#array)** | **[Helper](#helper)** | **[Loop](#loop)** | 
+**[Object](#object)** | **[Path](#path)** | **[String](#string)** | 
+**[TypeCheck](#typecheck)** | **[TypeCover](#typecover)**
 
 ### Array
 [Back to Index](#index)
@@ -166,6 +164,24 @@ var r2 = {name: '', city: ''};
 caro.catching(r, obj); // { name: 'Caro' }
 caro.catching(r2, obj, obj2); // { name: 'Caro', city: 'Kaohsiung' }
 ```
+
+### Path
+[Back to Index](#index)
+- **getDirPath(path) - get dir-path**
+```javascript
+var r = caro.getDirPath('a/b/c/d.js'); // 'a/b/c/'
+```
+- **getFileName(path [getFull=true]) - get filename of path**
+```javascript
+var r = caro.getFileName('a/b/c/d.js'); // 'd.js'
+var r2 = caro.getFileName('a/b/c/d.js', false); // 'd'
+```
+- **getExtendName(path [getFull=true]) - get extend-name of filename**
+```javascript
+var r = caro.getExtendName('a/b/c/d.js'); // '.js'
+var r2 = caro.getExtendName('a/b/c/d.js', false); // 'js'
+```
+
 ### String
 [Back to Index](#index)
 - **random(len [opt]) - create random string**
@@ -342,3 +358,10 @@ var replacer = function (key, val) {
 var r = caro.toJson(3.4); // '3.4'
 var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
+
+## History
+- Add [Path -> getDirPath] - v0.10.0
+- Add [Path -> getFileName] - v0.10.0   
+- Add [Path -> getExtendName] - v0.10.0
+- Add [String -> replaceLast] - v0.9.0  
+- Add [Object -> catching] - v0.8.0
