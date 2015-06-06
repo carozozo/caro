@@ -59,10 +59,10 @@ describe 'String', ->
     r2.should.eql 'I@am@Caro.'
 
   it 'replaceLast', ->
-    r = caro.replaceLast('I@am@Caro.', '@', ' ');
-    r2 = caro.replaceLast('I-am-Caro.', '-', ' ');
-    r.should.eql 'I@am Caro.'
-    r2.should.eql 'I-am Caro.'
+    r = caro.replaceLast('I-am-Caro.', '-', ' ');
+    r2 = caro.replaceLast('I am Caro not Colo.', 'C', 'T');
+    r.should.eql 'I-am Caro.'
+    r2.should.eql 'I am Caro not Tolo.'
 
   it 'upperStr', ->
     r = caro.upperStr('I am Caro');

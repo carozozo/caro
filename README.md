@@ -227,8 +227,8 @@ var r2 = caro.replaceAll('I-am-Caro.', '-', '@'); // 'I@am@Caro.'
 ```
 - **replaceLast(str, find, replace) - replace string that last-matched**
 ```javascript
-var r = caro.replaceLast('I@am@Caro.', '@', ' '); // 'I@am Caro.'
-var r2 = caro.replaceLast('I-am-Caro.', '-', ' '); // 'I-am Caro.'
+var r = caro.replaceLast('I-am-Caro.', '-', ' '); // 'I-am Caro.'
+var r2 = caro.replaceLast('I am Caro not Colo.', 'C', 'T'); // 'I am Caro not Tolo.'
 ```
 - **upperStr(str [opt]) - cover string to uppercase**
 ```javascript

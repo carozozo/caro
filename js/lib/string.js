@@ -165,23 +165,14 @@
    * @returns {*|string}
    */
   self.replaceLast = function(str, find, replace) {
-    var aStr, r, strLength;
-    r = [];
-    find = caro.escapeRegExp(find);
-    aStr = str.split(find);
-    strLength = aStr.length;
-    caro.forEach(aStr, function(val, i) {
-      var last;
-      last = strLength - 2;
-      r.push(val);
-      if (i < last) {
-        r.push(find);
-      }
-      if (i === last) {
-        return r.push(replace);
-      }
-    });
-    return r.join('');
+    var lastIndex, str1, str2;
+    lastIndex = str.lastIndexOf(find);
+    str1 = str.slice(0, lastIndex);
+    str2 = str.slice(lastIndex);
+    console.log('find=', find);
+    console.log('str1=', str1);
+    console.log('str2=', str2);
+    return str1 + str2.replace(find, replace);
   };
 
   /**
