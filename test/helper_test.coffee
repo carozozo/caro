@@ -51,3 +51,7 @@ describe 'Helper', ->
     r2 = caro.serializeUrl(arg, obj, true);
     r.should.eq 'http://localhost?a=1&b=2'
     r2.should.eq 'http://localhost?a=1&b=2&c='
+#
+#  it.only 'getStackList', ->
+#    r = caro.getStackList();
+#    r[0]

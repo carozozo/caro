@@ -54,9 +54,15 @@ describe 'String', ->
 
   it 'replaceAll', ->
     r = caro.replaceAll('I*am*{Caro}.', '*', '-');
-    r2 = caro.replaceAll('I*am*{Caro}.', /\w/g, '-');
+    r2 = caro.replaceAll('I-am-Caro.', '-', '@');
     r.should.eql 'I-am-{Caro}.'
-    r2.should.eql '-*--*{----}.'
+    r2.should.eql 'I@am@Caro.'
+
+  it 'replaceLast', ->
+    r = caro.replaceLast('I@am@Caro.', '@', ' ');
+    r2 = caro.replaceLast('I-am-Caro.', '-', ' ');
+    r.should.eql 'I@am Caro.'
+    r2.should.eql 'I-am Caro.'
 
   it 'upperStr', ->
     r = caro.upperStr('I am Caro');

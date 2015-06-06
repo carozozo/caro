@@ -1,7 +1,6 @@
 
 /**
  * Helper
- * @namespace caro
  * @author Caro.Huang
  */
 (function() {

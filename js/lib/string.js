@@ -151,14 +151,37 @@
    * @returns {*|string}
    */
   self.replaceAll = function(str, find, replace) {
-    var isRegExp, regex;
-    isRegExp = caro.isRegExp(find);
-    regex = find;
-    if (!isRegExp) {
-      find = caro.escapeRegExp(find);
-      regex = new RegExp(find, 'g');
-    }
+    var regex;
+    find = caro.escapeRegExp(find);
+    regex = new RegExp(find, 'g');
     return str.replace(regex, replace);
+  };
+
+  /**
+   * replace last find in string
+   * @param {string} str
+   * @param {string} find
+   * @param {string} replace
+   * @returns {*|string}
+   */
+  self.replaceLast = function(str, find, replace) {
+    var aStr, r, strLength;
+    r = [];
+    find = caro.escapeRegExp(find);
+    aStr = str.split(find);
+    strLength = aStr.length;
+    caro.forEach(aStr, function(val, i) {
+      var last;
+      last = strLength - 2;
+      r.push(val);
+      if (i < last) {
+        r.push(find);
+      }
+      if (i === last) {
+        return r.push(replace);
+      }
+    });
+    return r.join('');
   };
 
   /**

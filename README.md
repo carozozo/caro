@@ -5,6 +5,7 @@ General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.co
 It also support [lodash-libraries](https://lodash.com/docs)   
 
 **Last Updated:**   
+Add [String -> replaceLast]   
 Add [Object -> catching]
 
 ## Install
@@ -221,8 +222,13 @@ var r = caro.splitByWrap('''
 ```
 - **replaceAll(str, find, replace) - replace string that matched**
 ```javascript
-var r = caro.replaceAll('I*am*{Caro}.','*','-'); // 'I-am-{Caro}.'
-var r2 = caro.replaceAll('I*am*{Caro}.',/\w/g,'-'); // '-*--*{----}.'
+var r = caro.replaceAll('I*am*{Caro}.', '*', '-'); // 'I-am-{Caro}.'
+var r2 = caro.replaceAll('I-am-Caro.', '-', '@'); // 'I@am@Caro.'
+```
+- **replaceLast(str, find, replace) - replace string that last-matched**
+```javascript
+var r = caro.replaceLast('I@am@Caro.', '@', ' '); // 'I@am Caro.'
+var r2 = caro.replaceLast('I-am-Caro.', '-', ' '); // 'I-am Caro.'
 ```
 - **upperStr(str [opt]) - cover string to uppercase**
 ```javascript
