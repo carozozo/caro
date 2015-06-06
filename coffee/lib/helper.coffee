@@ -113,4 +113,21 @@ do ->
       return
     url += aArgs.join('')
 
+  self.whereAmI = () ->
+    err = new Error();
+    stack = err.stack
+    sStack = do ->
+      reg = /^\s*at\s*/i
+      aStack = caro.splitByWrap(stack)
+      aStack = aStack.slice(2, 3)
+      sStack = aStack[0]
+      sStack.replace(reg, '')
+    #    return sStack if arguments.length < 1
+    stackReg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi;
+    stackReg2 = /()(.*):(\d*):(\d*)/gi;
+    sp = stackReg.exec(sStack) or stackReg2.exec(sStack);
+    console.log 'sp=',sp
+    console.log 'sp=',sp.length
+
+
   return
