@@ -114,6 +114,21 @@ var obj = {a: 1, b: 2, c: null};
 var r = caro.serializeUrl(arg, obj); // 'http://localhost?a=1&b=2'
 var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 ```
+- **getStackList([start=0] [length=0]) - get stack-information list**
+```javascript
+// in /caro/caro.js
+var r = caro.getStackList();
+/*
+[{ method: 'Context.<anonymous>',
+    path: '/caro/caro.js',
+    line: '1',
+    position: '14',
+    file: 'caro.coffee' },
+    ...
+    ...
+]
+*/
+```
 ### Loop
 [Back to Index](#index)
 - **loop(fn, start=0, end=0 [step=1]) - for-loop**
@@ -363,6 +378,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Helper -> getStackList] - v0.11.0
 - Add [Path -> getDirPath] - v0.10.0
 - Add [Path -> getFileName] - v0.10.0   
 - Add [Path -> getExtendName] - v0.10.0
