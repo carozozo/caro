@@ -34,7 +34,7 @@ caro.isArray(['caro']); // true
 ```javascript
 var arr = [1, 2, '5'];
 var r = caro.sumOfArr(arr); // 3
-var r2 = caro.sumOfArr(arr, true); // 11
+var r2 = caro.sumOfArr(arr, true); // 8
 ```
 - **pushNoDuplicate(arr, val...) - push value to array exclude duplicate**
 ```javascript
