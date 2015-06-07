@@ -60,9 +60,9 @@ describe 'String', ->
 
   it 'replaceLast', ->
     r = caro.replaceLast('I-am-Caro.', '-', ' ');
-    r2 = caro.replaceLast('I am Caro not Colo.', 'C', 'T');
+    r2 = caro.replaceLast('I am Caro not Colo.', 'o', 'a');
     r.should.eql 'I-am Caro.'
-    r2.should.eql 'I am Caro not Tolo.'
+    r2.should.eql 'I am Caro not Cola.'
 
   it 'upperStr', ->
     r = caro.upperStr('I am Caro');

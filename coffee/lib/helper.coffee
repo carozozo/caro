@@ -112,26 +112,39 @@ do ->
       return
     url += aArgs.join('')
 
-#  self.getStackList = () ->
-#    r = []
-#    err = new Error();
-#    stack = err.stack
-#    aStack = caro.splitByWrap(stack).slice(2)
-#    caro.forEach(aStack, (sStack) ->
-#      data = {}
-#      reg = /^\s*at\s*/i
-#      sStack = sStack.replace(reg, '')
-#      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
-#      reg2 = /()(.*):(\d*):(\d*)/gi
-#      sp = reg.exec(sStack) or reg2.exec(sStack)
-#      if (sp && sp.length == 5)
-#        data.method = sp[1];
-#        data.path = sp[2];
-#        data.line = sp[3];
-#        data.pos = sp[4];
-#        data.file = self.getFileName(data.path)
-#      r.push(data)
-#    )
-#    r
+  ###*
+  # get stack-information list
+  # @param {integer} start=0 the start-index of list
+  # @param {integer} length=1 the list length you want get
+  # @returns {array}
+  ###
+  self.getStackList = (start, length) ->
+    r = []
+    err = new Error();
+    stack = err.stack
+    aStack = caro.splitByWrap(stack).slice(2)
+    start = start or 0
+    length = length or null
+    if length
+      end = start + length - 1
+    else
+      end = aStack.length - 1
+    caro.forEach(aStack, (sStack, i) ->
+      return if i < start or i > end
+      data = {}
+      reg = /^\s*at\s*/i
+      sStack = sStack.replace(reg, '')
+      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
+      reg2 = /()(.*):(\d*):(\d*)/gi
+      info = reg.exec(sStack) or reg2.exec(sStack)
+      if (info && info.length == 5)
+        data.method = info[1];
+        data.path = info[2];
+        data.line = info[3];
+        data.position = info[4];
+        data.file = self.getFileName(data.path)
+      r.push(data)
+    )
+    r
 
   return

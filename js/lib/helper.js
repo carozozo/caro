@@ -147,4 +147,46 @@
     });
     return url += aArgs.join('');
   };
+
+  /**
+   * get stack-information list
+   * @param {integer} start=0 the start-index of list
+   * @param {integer} length=1 the list length you want get
+   * @returns {array}
+   */
+  self.getStackList = function(start, length) {
+    var aStack, end, err, r, stack;
+    r = [];
+    err = new Error();
+    stack = err.stack;
+    aStack = caro.splitByWrap(stack).slice(2);
+    start = start || 0;
+    length = length || null;
+    if (length) {
+      end = start + length - 1;
+    } else {
+      end = aStack.length - 1;
+    }
+    caro.forEach(aStack, function(sStack, i) {
+      var data, info, reg, reg2;
+      if (i < start || i > end) {
+        return;
+      }
+      data = {};
+      reg = /^\s*at\s*/i;
+      sStack = sStack.replace(reg, '');
+      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi;
+      reg2 = /()(.*):(\d*):(\d*)/gi;
+      info = reg.exec(sStack) || reg2.exec(sStack);
+      if (info && info.length === 5) {
+        data.method = info[1];
+        data.path = info[2];
+        data.line = info[3];
+        data.position = info[4];
+        data.file = self.getFileName(data.path);
+      }
+      return r.push(data);
+    });
+    return r;
+  };
 })();
