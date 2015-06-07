@@ -114,8 +114,8 @@ do ->
 
   ###*
   # get stack-information list
-  # @param {integer} [start=0] the start-index of list
-  # @param {integer} [length=1] the list length you want get
+  # @param {number} [start=0] the start-index of list
+  # @param {number} [length=1] the list length you want get
   # @returns {array}
   ###
   self.getStackList = (start, length) ->
