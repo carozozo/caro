@@ -137,13 +137,13 @@ do ->
       reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
       reg2 = /()(.*):(\d*):(\d*)/gi
       info = reg.exec(sStack) or reg2.exec(sStack)
-      if (info && info.length == 5)
-        data.stack = info[0]
-        data.method = info[1]
-        data.path = info[2]
-        data.line = info[3]
-        data.position = info[4]
-        data.file = self.getFileName(data.path)
+      return if (!info or info.length != 5)
+      data.stack = info[0]
+      data.method = info[1]
+      data.path = info[2]
+      data.line = info[3]
+      data.position = info[4]
+      data.file = self.getFileName(data.path)
       r.push(data)
     )
     r
