@@ -151,7 +151,7 @@
   /**
    * get stack-information list
    * @param {number} [start=0] the start-index of list
-   * @param {number} [length=1] the list length you want get
+   * @param {number} [length=null] the list length you want get
    * @returns {array}
    */
   self.getStackList = function(start, length) {
@@ -179,6 +179,7 @@
       reg2 = /()(.*):(\d*):(\d*)/gi;
       info = reg.exec(sStack) || reg2.exec(sStack);
       if (info && info.length === 5) {
+        data.stack = info[0];
         data.method = info[1];
         data.path = info[2];
         data.line = info[3];

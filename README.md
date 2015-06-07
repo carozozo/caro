@@ -119,7 +119,9 @@ var r2 = caro.serializeUrl(arg, obj, true); // 'http://localhost?a=1&b=2&c='
 // in /caro/caro.js
 var r = caro.getStackList();
 /*
-[{ method: 'Context.<anonymous>',
+[{ 
+    stack: 'Context.<anonymous> (/caro/caro.js:1:14)'
+    method: 'Context.<anonymous>',
     path: '/caro/caro.js',
     line: '1',
     position: '14',
@@ -378,6 +380,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Update [Helper -> getStackList] - v0.11.1
 - Add [Helper -> getStackList] - v0.11.0
 - Add [Path -> getDirPath] - v0.10.0
 - Add [Path -> getFileName] - v0.10.0   
