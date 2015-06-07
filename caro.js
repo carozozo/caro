@@ -1,4 +1,4 @@
-/*! caro - v0.9.1 - 2015-06-07 */
+/*! caro - v0.10.0 - 2015-06-07 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -423,7 +423,6 @@
   self.getDirPath = function(path) {
     var filename;
     filename = caro.getFileName(path);
-    console.log('filename=', filename);
     return path = caro.replaceLast(path, filename, '');
   };
 

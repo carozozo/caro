@@ -12,7 +12,6 @@ do ->
   ###
   self.getDirPath = (path) ->
     filename = caro.getFileName(path)
-    console.log 'filename=', filename
     path = caro.replaceLast(path, filename, '')
 
   ###*

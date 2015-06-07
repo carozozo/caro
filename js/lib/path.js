@@ -15,7 +15,6 @@
   self.getDirPath = function(path) {
     var filename;
     filename = caro.getFileName(path);
-    console.log('filename=', filename);
     return path = caro.replaceLast(path, filename, '');
   };
 

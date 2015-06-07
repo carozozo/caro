@@ -170,16 +170,19 @@ caro.catching(r2, obj, obj2); // { name: 'Caro', city: 'Kaohsiung' }
 - **getDirPath(path) - get dir-path**
 ```javascript
 var r = caro.getDirPath('a/b/c/d.js'); // 'a/b/c/'
+var r2 = caro.getDirPath('a/b/a'); // 'a/b/'
 ```
 - **getFileName(path [getFull=true]) - get filename of path**
 ```javascript
 var r = caro.getFileName('a/b/c/d.js'); // 'd.js'
 var r2 = caro.getFileName('a/b/c/d.js', false); // 'd'
+var r3 = caro.getFileName('a/b/a'); // 'a'
 ```
 - **getExtendName(path [getFull=true]) - get extend-name of filename**
 ```javascript
 var r = caro.getExtendName('a/b/c/d.js'); // '.js'
 var r2 = caro.getExtendName('a/b/c/d.js', false); // 'js'
+var r3 = caro.getExtendName('a/b/a'); // ''
 ```
 
 ### String
