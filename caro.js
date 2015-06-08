@@ -1,4 +1,4 @@
-/*! caro - v0.11.2 - 2015-06-08 */
+/*! caro - v0.12.1 - 2015-06-08 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -728,21 +728,19 @@
       splitter = [splitter];
     }
     mainSplit = splitter[0];
-    if (mainSplit.length > 1) {
-      caro.forEach(splitter, function(eachSplit, j) {
-        if (!caro.isString(eachSplit)) {
-          return;
-        }
-        if (mainSplit < 2) {
-          return;
-        }
-        if (mainSplit.length >= eachSplit.length) {
-          mainSplit = eachSplit;
-        }
-      });
-    }
+    caro.forEach(splitter, function(eachSplit) {
+      if (!caro.isString(eachSplit)) {
+        return;
+      }
+      if (mainSplit.length < 2) {
+        return false;
+      }
+      if (mainSplit.length > eachSplit.length) {
+        mainSplit = eachSplit;
+      }
+    });
     if (!caro.isString(mainSplit)) {
-      return str;
+      return [];
     }
     caro.forEach(splitter, function(eachSplit) {
       if (!caro.isString(eachSplit)) {
