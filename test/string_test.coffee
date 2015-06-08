@@ -82,6 +82,6 @@ describe 'String', ->
 
   it 'splitStr', ->
     r = caro.splitStr('i am caro', ' ');
-    r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']);
+    r2 = caro.splitStr('I love ~~ Snoopy !~!', ['~', ' ']);
     r.should.eql ['i', 'am', 'caro']
-    r2.should.eql ['I', '', 'love', 'Snoopy', '!', '!']
+    r2.should.eql [ 'I', 'love', '', '', '', 'Snoopy', '!', '!' ]

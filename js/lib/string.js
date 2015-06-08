@@ -214,21 +214,19 @@
       splitter = [splitter];
     }
     mainSplit = splitter[0];
-    if (mainSplit.length > 1) {
-      caro.forEach(splitter, function(eachSplit, j) {
-        if (!caro.isString(eachSplit)) {
-          return;
-        }
-        if (mainSplit < 2) {
-          return;
-        }
-        if (mainSplit.length >= eachSplit.length) {
-          mainSplit = eachSplit;
-        }
-      });
-    }
+    caro.forEach(splitter, function(eachSplit) {
+      if (!caro.isString(eachSplit)) {
+        return;
+      }
+      if (mainSplit.length < 2) {
+        return false;
+      }
+      if (mainSplit.length > eachSplit.length) {
+        mainSplit = eachSplit;
+      }
+    });
     if (!caro.isString(mainSplit)) {
-      return str;
+      return [];
     }
     caro.forEach(splitter, function(eachSplit) {
       if (!caro.isString(eachSplit)) {

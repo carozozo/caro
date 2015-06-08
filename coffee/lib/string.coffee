@@ -173,17 +173,14 @@ do ->
     return str if caro.isArray(str)
     return [] if !splitter
     splitter = [splitter] if !caro.isArray(splitter)
-    # get mainSplit first
-    # e.g. splitter=['a','ab','c']; => mainSplit='a'
+    # e.g. splitter=['aa', 'ab', 'c', 'd']; => mainSplit='c'
     mainSplit = splitter[0]
-    if(mainSplit.length > 1)
-      caro.forEach splitter, (eachSplit, j) ->
-        return if !caro.isString(eachSplit)
-        return if mainSplit < 2
-        if mainSplit.length >= eachSplit.length
-          mainSplit = eachSplit
-        return
-    return str if !caro.isString(mainSplit)
+    caro.forEach splitter, (eachSplit) ->
+      return if !caro.isString(eachSplit)
+      return false if mainSplit.length < 2
+      mainSplit = eachSplit if mainSplit.length > eachSplit.length
+      return
+    return [] if !caro.isString(mainSplit)
     # replace all splitter to mainSplitter
     # e.g. string='caro.huang, is handsome'; splitter=['.', ',']; => string='caro,huang, is handsome'
     caro.forEach splitter, (eachSplit) ->
