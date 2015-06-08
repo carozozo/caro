@@ -7,16 +7,6 @@ do ->
   self = caro
 
   ###*
-  # cover to array
-  # @param arg
-  # @returns {*}
-  ###
-  self.toArray = (arg) ->
-    return arg if caro.isArray(arg)
-    return [arg] if caro.isNumber(arg)
-    Array(arg)
-
-  ###*
   # cover to string
   # @param arg
   # @returns {*}
