@@ -172,7 +172,7 @@ do ->
   self.splitStr = (str, splitter) ->
     return str if caro.isArray(str)
     return [] if !splitter
-    splitter = caro.toArray(splitter) if !caro.isArray(splitter)
+    splitter = [splitter] if !caro.isArray(splitter)
     # get mainSplit first
     # e.g. splitter=['a','ab','c']; => mainSplit='a'
     mainSplit = splitter[0]

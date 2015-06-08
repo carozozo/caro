@@ -211,7 +211,7 @@
       return [];
     }
     if (!caro.isArray(splitter)) {
-      splitter = caro.toArray(splitter);
+      splitter = [splitter];
     }
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {

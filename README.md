@@ -266,13 +266,13 @@ var r2 = caro.replaceAll('I-am-Caro.', '-', '@'); // 'I@am@Caro.'
 var r = caro.replaceLast('I-am-Caro.', '-', ' '); // 'I-am Caro.'
 var r2 = caro.replaceLast('I am Caro not Colo.', 'C', 'T'); // 'I am Caro not Tolo.'
 ```
-- **upperStr(str [opt]) - cover string to uppercase**
+- **upperStr(str [start] [end]) - cover string to uppercase**
 ```javascript
 var r = caro.upperStr('i am caro'); // 'I AM CARO'
 var r2 = caro.upperStr('i am caro', 5); // 'i am CARO'
 var r3 = caro.upperStr('i am caro', 5, 6); // 'i am Caro'
 ```
-- **lowerStr(str [opt]) - cover string to lowercase**
+- **lowerStr(str [start] [end]) - cover string to lowercase**
 ```javascript
 var r = caro.lowerStr('I AM CARO'); // 'i am caro'
 var r2 = caro.lowerStr('I AM CARO', 5); // 'I AM caro'
@@ -337,11 +337,6 @@ var r2 = caro.isLower('Caro'); // false
 
 ### TypeCover
 [Back to Index](#index)
-- **toArray(arg) - cover to array**
-```javascript
-var r = caro.toArray([3, 2, 1]); // [3, 2, 1]
-var r2 = caro.toArray(null); // [ null ]
-```
 - **toString(arg) - cover to string**
 ```javascript
 var r = caro.toString(function () {}); // 'function () {}'
@@ -380,6 +375,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Remove [TypeCover -> toArray] - v0.12.0 - for not conflict with lodash.toArray
 - Update [Helper -> getStackList] - v0.11.1
 - Add [Helper -> getStackList] - v0.11.0
 - Add [Path -> getDirPath] - v0.10.0

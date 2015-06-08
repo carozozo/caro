@@ -1,4 +1,4 @@
-/*! caro - v0.11.2 - 2015-06-07 */
+/*! caro - v0.11.2 - 2015-06-08 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -725,7 +725,7 @@
       return [];
     }
     if (!caro.isArray(splitter)) {
-      splitter = caro.toArray(splitter);
+      splitter = [splitter];
     }
     mainSplit = splitter[0];
     if (mainSplit.length > 1) {
@@ -897,21 +897,6 @@
 (function() {
   var self;
   self = caro;
-
-  /**
-   * cover to array
-   * @param arg
-   * @returns {*}
-   */
-  self.toArray = function(arg) {
-    if (caro.isArray(arg)) {
-      return arg;
-    }
-    if (caro.isNumber(arg)) {
-      return [arg];
-    }
-    return Array(arg);
-  };
 
   /**
    * cover to string

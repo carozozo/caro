@@ -52,7 +52,7 @@ describe 'Helper', ->
     r.should.eq 'http://localhost?a=1&b=2'
     r2.should.eq 'http://localhost?a=1&b=2&c='
 
-  it.only 'getStackList', ->
+  it 'getStackList', ->
     r = caro.getStackList();
     r2 = caro.getStackList(0, 2);
     r = r[0].file

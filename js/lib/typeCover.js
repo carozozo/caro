@@ -9,21 +9,6 @@
   self = caro;
 
   /**
-   * cover to array
-   * @param arg
-   * @returns {*}
-   */
-  self.toArray = function(arg) {
-    if (caro.isArray(arg)) {
-      return arg;
-    }
-    if (caro.isNumber(arg)) {
-      return [arg];
-    }
-    return Array(arg);
-  };
-
-  /**
    * cover to string
    * @param arg
    * @returns {*}
