@@ -1,5 +1,5 @@
 
-/**
+/*
  * Object
  * @author Caro.Huang
  */
@@ -7,7 +7,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * display object/array by string
    * @param {object|array} obj
    * @param {number} [spaceLength=2] the space before each line
@@ -54,7 +54,7 @@
     return toWord(arg, spaceLength);
   };
 
-  /**
+  /*
    * group by argument type
    * @param {object|array} arg
    * @return {object}
@@ -92,7 +92,7 @@
     };
   };
 
-  /**
+  /*
    * catch other object-values to target-object
    * @param {object} obj
    * @return {object}

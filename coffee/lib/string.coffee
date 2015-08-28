@@ -1,4 +1,4 @@
-###*
+###
 # String
 # @author Caro.Huang
 ###
@@ -14,7 +14,7 @@ do ->
       r.push str.slice(start)[type]()
     r.join ''
 
-  ###*
+  ###
   # create random string
   # @param {number} len the length of random
   # @param {object} [opt]
@@ -28,7 +28,7 @@ do ->
     text = ''
     chars = []
     len = if parseInt(len) then parseInt(len) else 1
-    opt = opt or {};
+    opt = opt or {}
     lower = opt.lower != false
     upper = opt.upper != false
     num = opt.num != false
@@ -51,7 +51,7 @@ do ->
       i++
     text
 
-  ###*
+  ###
   # check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
   # @param {string} str
   # @returns {boolean}
@@ -61,7 +61,7 @@ do ->
     # return false when string='false' or '', otherwise return true
     str != '' and str != 'false'
 
-  ###*
+  ###
   # add the head to string if not exist
   # @param {string} str
   # @param {string} addStr
@@ -71,7 +71,7 @@ do ->
     str = addStr + str if !caro.startsWith(str, addStr)
     str
 
-  ###*
+  ###
   # add the tail to string if not exist
   # @param {string} str
   # @param {string} addStr
@@ -82,7 +82,7 @@ do ->
     str += addStr if !caro.endsWith(str, addStr)
     str
 
-  ###*
+  ###
   # replace \r\n | \r | \n to <br/>
   # @param {string} str
   # @returns {string}
@@ -94,7 +94,7 @@ do ->
     str = str.replace(/\r/g, '<br />')
     str
 
-  ###*
+  ###
   # replace the <br /> to \n
   # @param {string} str
   # @returns {string}
@@ -103,7 +103,7 @@ do ->
     regex = /<br\s*[\/]?>/gi
     str.replace regex, '\n'
 
-  ###*
+  ###
   # split to array by '\r\n' | '\n' | '\r'
   # @param {string} str
   # @returns {*}
@@ -116,7 +116,7 @@ do ->
     ]
     caro.splitStr str, aWrap
 
-  ###*
+  ###
   # replace all find in string
   # @param {string} str
   # @param {string} find
@@ -128,7 +128,7 @@ do ->
     regex = new RegExp(find, 'g')
     str.replace regex, replace
 
-  ###*
+  ###
   # replace last find in string
   # @param {string} str
   # @param {string} find
@@ -141,7 +141,7 @@ do ->
     str2 = str.slice(lastIndex)
     str1 + str2.replace(find, replace)
 
-  ###*
+  ###
   # uppercase string
   # @param {string} str
   # @param {number} [start] the start-index you want to uppercase
@@ -151,7 +151,7 @@ do ->
   self.upperStr = (str, start, end) ->
     changeCase str, 'toUpperCase', start, end
 
-  ###*
+  ###
   # lowercase string
   # @param {string} str
   # @param {object} [opt]
@@ -163,7 +163,7 @@ do ->
   self.lowerStr = (str, start, end) ->
     changeCase str, 'toLowerCase', start, end
 
-  ###*
+  ###
   # split string
   # @param {string} str
   # @param {string|string[]} splitter it should be string-array or string
@@ -181,8 +181,11 @@ do ->
       mainSplit = eachSplit if mainSplit.length > eachSplit.length
       return
     return [] if !caro.isString(mainSplit)
-    # replace all splitter to mainSplitter
-    # e.g. string='caro.huang, is handsome'; splitter=['.', ',']; => string='caro,huang, is handsome'
+
+    ### replace all splitter to mainSplitter
+    # e.g. string='caro.huang, is handsome'; splitter=['.', ','];
+    # => string='caro,huang, is handsome'
+    ###
     caro.forEach splitter, (eachSplit) ->
       return if !caro.isString(eachSplit)
       str = caro.replaceAll(str, eachSplit, mainSplit)

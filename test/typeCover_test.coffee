@@ -3,7 +3,7 @@ describe 'TypeCover', ->
   it 'toString', ->
     r = caro.toString('3')
     r2 = caro.toString(['caro', undefined])
-    r3 = caro.toString({a: false, b: null, c: 0, d: NaN, e: undefined, f: [], g: ()->})
+    r3 = caro.toString({a: false, b: null, c: 0, d: NaN, e: undefined, f: [], g: ->})
     r.should.eq('3')
     r2.should.eq('caro,')
     r3.should.eq('[object Object]')

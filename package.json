@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "The general libraries base on lodash",
   "author": {
     "name": "Caro.Huang",
@@ -30,16 +30,17 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "lodash": "~3.9.3"
+    "lodash": "latest"
   },
   "devDependencies": {
-    "chai": "~2.3.0",
-    "coffee-script": "1.9.3",
-    "grunt": "~0.4.5",
-    "grunt-contrib-coffee": "~0.13.0",
-    "grunt-contrib-concat": "~0.5.1",
-    "grunt-contrib-uglify": "~0.9.1",
-    "grunt-mocha-test": "~0.12.7",
-    "mocha": "~2.2.4"
+    "chai": "latest",
+    "coffee-script": "latest",
+    "coffeelint": "latest",
+    "grunt": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-mocha-test": "latest",
+    "mocha": "latest"
   }
 }

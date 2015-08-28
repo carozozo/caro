@@ -1,4 +1,4 @@
-/*! caro - v0.12.1 - 2015-06-08 */
+/*! caro - v0.13.0 - 2015-08-29 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -15,7 +15,7 @@
 })(this);
 
 
-/**
+/*
  * Array
  * @namespace caro
  * @author Caro.Huang
@@ -24,7 +24,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false] if cover to number when argument is not number
@@ -42,7 +42,7 @@
     });
   };
 
-  /**
+  /*
    * push value into array if not exists
    * @param {[]} arr
    * @param {...*} value
@@ -60,7 +60,7 @@
     return arr;
   };
 
-  /**
+  /*
    * will not push to array if value is empty
    * @param {[]} arr
    * @param {...*} value
@@ -78,7 +78,7 @@
     return arr;
   };
 
-  /**
+  /*
    * remove empty-value in array
    * @param {[]} arr
    * @returns {array}
@@ -89,7 +89,7 @@
     });
   };
 
-  /**
+  /*
    * only keep basic-value in array
    * @param {[]} arr
    * @returns {array}
@@ -102,7 +102,7 @@
 })();
 
 
-/**
+/*
  * Helper
  * @author Caro.Huang
  */
@@ -110,8 +110,9 @@
   var self;
   self = caro;
 
-  /**
-   * check all argument in array by check-function, get false if check-function return false
+  /*
+   * check all argument in array by check-function,
+   * get false if check-function return false
    * @param {[]} array
    * @param {function} checkFn
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
@@ -132,7 +133,7 @@
     return needAllPass;
   };
 
-  /**
+  /*
    * execute if first-argument is function
    * @param {function} fn
    * @param {...*} args function-arguments
@@ -145,7 +146,7 @@
     }
   };
 
-  /**
+  /*
    * get function name
    * @param {*} fn
    * @returns {string|*|String}
@@ -161,7 +162,21 @@
     return r;
   };
 
-  /**
+  /*
+   * get function content
+   * @param {*} fn
+   * @returns {string|*|String}
+   */
+  self.getFnBody = function(fn) {
+    var entire;
+    if (!caro.isFunction(fn)) {
+      return null;
+    }
+    entire = fn.toString();
+    return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'));
+  };
+
+  /*
    * format to money type like 1,000.00
    * @param {string|number} arg
    * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
@@ -219,7 +234,7 @@
     return r.join('');
   };
 
-  /**
+  /*
    * serialize object-arguments to url
    * @param {string} url
    * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
@@ -251,7 +266,7 @@
     return url += aArgs.join('');
   };
 
-  /**
+  /*
    * get stack-information list
    * @param {number} [start=0] the start-index of list
    * @param {number} [length=null] the list length you want get
@@ -297,7 +312,7 @@
 })();
 
 
-/**
+/*
  * Loop
  * @author Caro.Huang
  */
@@ -305,9 +320,9 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * for-loop function
-   * @param {function} fn for-loop function, will break-loop when function return false
+   * @param {function} fn for-loop function, will break-loop when return false
    * @param {number} start
    * @param {number} end
    * @param {number} step add the step in each function-called
@@ -338,7 +353,7 @@
 })();
 
 
-/**
+/*
  * Object
  * @author Caro.Huang
  */
@@ -346,7 +361,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * display object/array by string
    * @param {object|array} obj
    * @param {number} [spaceLength=2] the space before each line
@@ -393,7 +408,7 @@
     return toWord(arg, spaceLength);
   };
 
-  /**
+  /*
    * group by argument type
    * @param {object|array} arg
    * @return {object}
@@ -431,7 +446,7 @@
     };
   };
 
-  /**
+  /*
    * catch other object-values to target-object
    * @param {object} obj
    * @return {object}
@@ -451,7 +466,7 @@
 })();
 
 
-/**
+/*
  * Path
  * @author Caro.Huang
  */
@@ -459,7 +474,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * get dir-path
    * @param {string} path
    * @return {string}
@@ -470,7 +485,7 @@
     return path = caro.replaceLast(path, filename, '');
   };
 
-  /**
+  /*
    * get file name in path
    * @param {string} path
    * @param {boolean} [getFull] if return file-name by full (with extend-name)
@@ -490,7 +505,7 @@
     return path.replace(extendName, '');
   };
 
-  /**
+  /*
    * get extend name of file
    * @param {string} path
    * @param {boolean} [withDot] if return extend-name with '.'
@@ -513,7 +528,7 @@
 })();
 
 
-/**
+/*
  * String
  * @author Caro.Huang
  */
@@ -539,7 +554,7 @@
     return r.join('');
   };
 
-  /**
+  /*
    * create random string
    * @param {number} len the length of random
    * @param {object} [opt]
@@ -581,7 +596,7 @@
     return text;
   };
 
-  /**
+  /*
    * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
    * @param {string} str
    * @returns {boolean}
@@ -591,7 +606,7 @@
     return str !== '' && str !== 'false';
   };
 
-  /**
+  /*
    * add the head to string if not exist
    * @param {string} str
    * @param {string} addStr
@@ -604,7 +619,7 @@
     return str;
   };
 
-  /**
+  /*
    * add the tail to string if not exist
    * @param {string} str
    * @param {string} addStr
@@ -620,7 +635,7 @@
     return str;
   };
 
-  /**
+  /*
    * replace \r\n | \r | \n to <br/>
    * @param {string} str
    * @returns {string}
@@ -635,7 +650,7 @@
     return str;
   };
 
-  /**
+  /*
    * replace the <br /> to \n
    * @param {string} str
    * @returns {string}
@@ -646,7 +661,7 @@
     return str.replace(regex, '\n');
   };
 
-  /**
+  /*
    * split to array by '\r\n' | '\n' | '\r'
    * @param {string} str
    * @returns {*}
@@ -657,7 +672,7 @@
     return caro.splitStr(str, aWrap);
   };
 
-  /**
+  /*
    * replace all find in string
    * @param {string} str
    * @param {string} find
@@ -671,7 +686,7 @@
     return str.replace(regex, replace);
   };
 
-  /**
+  /*
    * replace last find in string
    * @param {string} str
    * @param {string} find
@@ -686,7 +701,7 @@
     return str1 + str2.replace(find, replace);
   };
 
-  /**
+  /*
    * uppercase string
    * @param {string} str
    * @param {number} [start] the start-index you want to uppercase
@@ -697,7 +712,7 @@
     return changeCase(str, 'toUpperCase', start, end);
   };
 
-  /**
+  /*
    * lowercase string
    * @param {string} str
    * @param {object} [opt]
@@ -710,7 +725,7 @@
     return changeCase(str, 'toLowerCase', start, end);
   };
 
-  /**
+  /*
    * split string
    * @param {string} str
    * @param {string|string[]} splitter it should be string-array or string
@@ -742,6 +757,11 @@
     if (!caro.isString(mainSplit)) {
       return [];
     }
+
+    /* replace all splitter to mainSplitter
+     * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
+     * => string='caro,huang, is handsome'
+     */
     caro.forEach(splitter, function(eachSplit) {
       if (!caro.isString(eachSplit)) {
         return;
@@ -753,7 +773,7 @@
 })();
 
 
-/**
+/*
  * TypeCheck
  * @namespace caro
  * @author Caro.Huang
@@ -762,7 +782,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * check if arg is boolean | string | number
    * @param {...} arg
    * @returns {boolean}
@@ -773,7 +793,7 @@
     });
   };
 
-  /**
+  /*
    * check if value is empty ( {} | [] | null | '' | undefined )
    * @param {...} arg
    * @returns {boolean}
@@ -787,7 +807,7 @@
     });
   };
 
-  /**
+  /*
    * check if value is true | 'true' | 1
    * @param {...} arg
    * @returns {boolean}
@@ -799,7 +819,7 @@
     return arg === true || arg === 'true' || arg === 1;
   };
 
-  /**
+  /*
    * check if value is false | 'false' | 0
    * @param arg
    * @returns {boolean}
@@ -811,7 +831,7 @@
     return arg === false || arg === 'false' || arg === 0;
   };
 
-  /**
+  /*
    * check if integer
    * @param {*} arg
    * @returns {boolean}
@@ -825,7 +845,7 @@
     return int === arg;
   };
 
-  /**
+  /*
    * check if JSON, return false is one of them not match
    * @param {*} arg
    * @returns {boolean}
@@ -841,7 +861,7 @@
     return true;
   };
 
-  /**
+  /*
    * check if argument is object-like JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
@@ -857,7 +877,7 @@
     return false;
   };
 
-  /**
+  /*
    * check if string is uppercase
    * @param {...string} str
    * @returns {boolean}
@@ -871,7 +891,7 @@
     return true;
   };
 
-  /**
+  /*
    * check if string is lowercase
    * @param {string} str
    * @returns {boolean}
@@ -887,7 +907,7 @@
 })();
 
 
-/**
+/*
  * Helper
  * @namespace caro
  * @author Caro.Huang
@@ -896,7 +916,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * cover to string
    * @param arg
    * @returns {*}
@@ -905,7 +925,7 @@
     return String(arg);
   };
 
-  /**
+  /*
    * cover to integer
    * @param arg
    * @returns {*}
@@ -914,7 +934,7 @@
     return parseInt(arg);
   };
 
-  /**
+  /*
    * cover to number
    * @param arg
    * @returns {*}
@@ -923,7 +943,7 @@
     return Number(arg);
   };
 
-  /**
+  /*
    * cover to fixed-number
    * @param arg
    * @param {boolean} [dec=2] decimal-number
@@ -941,7 +961,7 @@
     return Number((+r).toFixed(dec));
   };
 
-  /**
+  /*
    * @param arg
    * @param {*} [replacer=null] the replace in each element
    * @param {*} [space=0] the space for easy-reading after cover to JSON

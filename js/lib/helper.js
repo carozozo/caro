@@ -1,5 +1,5 @@
 
-/**
+/*
  * Helper
  * @author Caro.Huang
  */
@@ -7,8 +7,9 @@
   var self;
   self = caro;
 
-  /**
-   * check all argument in array by check-function, get false if check-function return false
+  /*
+   * check all argument in array by check-function,
+   * get false if check-function return false
    * @param {[]} array
    * @param {function} checkFn
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
@@ -29,7 +30,7 @@
     return needAllPass;
   };
 
-  /**
+  /*
    * execute if first-argument is function
    * @param {function} fn
    * @param {...*} args function-arguments
@@ -42,7 +43,7 @@
     }
   };
 
-  /**
+  /*
    * get function name
    * @param {*} fn
    * @returns {string|*|String}
@@ -58,7 +59,21 @@
     return r;
   };
 
-  /**
+  /*
+   * get function content
+   * @param {*} fn
+   * @returns {string|*|String}
+   */
+  self.getFnBody = function(fn) {
+    var entire;
+    if (!caro.isFunction(fn)) {
+      return null;
+    }
+    entire = fn.toString();
+    return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'));
+  };
+
+  /*
    * format to money type like 1,000.00
    * @param {string|number} arg
    * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
@@ -116,7 +131,7 @@
     return r.join('');
   };
 
-  /**
+  /*
    * serialize object-arguments to url
    * @param {string} url
    * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
@@ -148,7 +163,7 @@
     return url += aArgs.join('');
   };
 
-  /**
+  /*
    * get stack-information list
    * @param {number} [start=0] the start-index of list
    * @param {number} [length=null] the list length you want get

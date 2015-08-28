@@ -1,5 +1,5 @@
 
-/**
+/*
  * Helper
  * @namespace caro
  * @author Caro.Huang
@@ -8,7 +8,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * cover to string
    * @param arg
    * @returns {*}
@@ -17,7 +17,7 @@
     return String(arg);
   };
 
-  /**
+  /*
    * cover to integer
    * @param arg
    * @returns {*}
@@ -26,7 +26,7 @@
     return parseInt(arg);
   };
 
-  /**
+  /*
    * cover to number
    * @param arg
    * @returns {*}
@@ -35,7 +35,7 @@
     return Number(arg);
   };
 
-  /**
+  /*
    * cover to fixed-number
    * @param arg
    * @param {boolean} [dec=2] decimal-number
@@ -53,7 +53,7 @@
     return Number((+r).toFixed(dec));
   };
 
-  /**
+  /*
    * @param arg
    * @param {*} [replacer=null] the replace in each element
    * @param {*} [space=0] the space for easy-reading after cover to JSON

@@ -1,5 +1,5 @@
 
-/**
+/*
  * Loop
  * @author Caro.Huang
  */
@@ -7,9 +7,9 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * for-loop function
-   * @param {function} fn for-loop function, will break-loop when function return false
+   * @param {function} fn for-loop function, will break-loop when return false
    * @param {number} start
    * @param {number} end
    * @param {number} step add the step in each function-called

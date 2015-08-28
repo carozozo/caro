@@ -93,6 +93,13 @@ var arg2 = function isFn(){};
 var r = caro.getFnName(arg); // ''
 var r2 = caro.getFnName(arg2); // 'isFn'
 ```
+- **getFnBody(fn) - get function body**
+```javascript
+var arg = function (i) {
+    return ++i;
+};
+var r = caro.getFnBody(arg); // '\n    return ++i;\n    '
+```
 - **formatMoney(str [type | opt]) - format string/number to money type**
 ```javascript
 var r = caro.formatMoney(null); // '0' 
@@ -375,6 +382,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Helper -> getFnBody] - v0.13.0
 - Remove [TypeCover -> toArray] - v0.12.0 - for not conflict with lodash.toArray
 - Update [Helper -> getStackList] - v0.11.1
 - Add [Helper -> getStackList] - v0.11.0

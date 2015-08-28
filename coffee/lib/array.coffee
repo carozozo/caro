@@ -1,4 +1,4 @@
-###*
+###
 # Array
 # @namespace caro
 # @author Caro.Huang
@@ -6,7 +6,7 @@
 do ->
   self = caro
 
-  ###*
+  ###
   # get sum of value in array
   # @param {[]} arr
   # @param {boolean} [force=false] if cover to number when argument is not number
@@ -18,7 +18,7 @@ do ->
       return (total + Number(n))
     )
 
-  ###*
+  ###
   # push value into array if not exists
   # @param {[]} arr
   # @param {...*} value
@@ -32,7 +32,7 @@ do ->
       return
     arr
 
-  ###*
+  ###
   # will not push to array if value is empty
   # @param {[]} arr
   # @param {...*} value
@@ -46,7 +46,7 @@ do ->
       return
     arr
 
-  ###*
+  ###
   # remove empty-value in array
   # @param {[]} arr
   # @returns {array}
@@ -56,7 +56,7 @@ do ->
       return caro.isEmptyVal(n)
     )
 
-  ###*
+  ###
   # only keep basic-value in array
   # @param {[]} arr
   # @returns {array}

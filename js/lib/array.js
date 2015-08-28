@@ -1,5 +1,5 @@
 
-/**
+/*
  * Array
  * @namespace caro
  * @author Caro.Huang
@@ -8,7 +8,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false] if cover to number when argument is not number
@@ -26,7 +26,7 @@
     });
   };
 
-  /**
+  /*
    * push value into array if not exists
    * @param {[]} arr
    * @param {...*} value
@@ -44,7 +44,7 @@
     return arr;
   };
 
-  /**
+  /*
    * will not push to array if value is empty
    * @param {[]} arr
    * @param {...*} value
@@ -62,7 +62,7 @@
     return arr;
   };
 
-  /**
+  /*
    * remove empty-value in array
    * @param {[]} arr
    * @returns {array}
@@ -73,7 +73,7 @@
     });
   };
 
-  /**
+  /*
    * only keep basic-value in array
    * @param {[]} arr
    * @returns {array}
