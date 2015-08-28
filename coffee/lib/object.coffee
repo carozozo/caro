@@ -1,11 +1,11 @@
-###*
+###
 # Object
 # @author Caro.Huang
 ###
 do ->
   self = caro
 
-  ###*
+  ###
   # display object/array by string
   # @param {object|array} obj
   # @param {number} [spaceLength=2] the space before each line
@@ -19,14 +19,14 @@ do ->
       fnSpace = caro.repeat(' ', fnSpaceLength)
       layer++
       try
-        ret = JSON.stringify(arg, (key, val)->
+        ret = JSON.stringify(arg, (key, val) ->
           return val if !key
           return toWord(val, spaceLength, layer)
         , spaceLength)
-        ret = ret.replace(/\\r\\n/g, '\r\n' + space);
-        ret = ret.replace(/\\r/g, '\r' + space);
-        ret = ret.replace(/\\n/g, '\n' + space);
-        ret = ret.replace(/"/g, '');
+        ret = ret.replace(/\\r\\n/g, '\r\n' + space)
+        ret = ret.replace(/\\r/g, '\r' + space)
+        ret = ret.replace(/\\n/g, '\n' + space)
+        ret = ret.replace(/"/g, '')
       return ret if ret
       try
         ret = arg.toString()
@@ -37,11 +37,11 @@ do ->
           ret = ret.replace(reg, '\r')
           reg = new RegExp('\\n' + fnSpace, 'g')
           ret = ret.replace(reg, '\n')
-          ret = ret.replace(/"/g, '');
+          ret = ret.replace(/"/g, '')
       return ret
     return toWord(arg, spaceLength)
 
-  ###*
+  ###
   # group by argument type
   # @param {object|array} arg
   # @return {object}
@@ -75,7 +75,7 @@ do ->
     obj: aObj
     fn: aFn
 
-  ###*
+  ###
   # catch other object-values to target-object
   # @param {object} obj
   # @return {object}

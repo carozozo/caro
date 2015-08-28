@@ -3,13 +3,13 @@ describe 'Object', ->
   it 'toWord', ->
     a = {
       a: false, b: null, c: 0, d: 'caro', e: undefined, f: [],
-      g: () ->
+      g: ->
         return 1
       h: {
         i: 3
-        j: () -> return 2
+        j: -> return 2
         k: {
-          l: () -> return 3
+          l: -> return 3
         }
       }
     }
@@ -50,28 +50,28 @@ describe 'Object', ->
       a: 1
       b: 'd'
       c: {cc: 1}
-      d: ()->
+      d:  ->
       e: ['caro']
       f: 'FF'
-    });
+    })
     r2 = caro.classify([
       'caro'
       '4'
       3
-      ()-> return a
+      -> return 'a'
       ['m']
-    ]);
+    ])
     keysArr = ['bool', 'str', 'num', 'arr', 'obj', 'fn']
     r.should.has.keys(keysArr)
     r2.should.has.keys(keysArr)
 
   it 'catching', ->
-    obj = {name: 'Caro', age: 18};
-    obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
-    r = {name: ''};
-    r2 = {name: '', city: ''};
-    caro.catching(r, obj);
-    caro.catching(r2, obj, obj2);
+    obj = {name: 'Caro', age: 18}
+    obj2 = {country: 'Taiwan', city: 'Kaohsiung'}
+    r = {name: ''}
+    r2 = {name: '', city: ''}
+    caro.catching(r, obj)
+    caro.catching(r2, obj, obj2)
     r.name.should.eq 'Caro'
     r2.name.should.eq 'Caro'
     r2.city.should.eq 'Kaohsiung'

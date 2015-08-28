@@ -1,5 +1,5 @@
 
-/**
+/*
  * TypeCheck
  * @namespace caro
  * @author Caro.Huang
@@ -8,7 +8,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * check if arg is boolean | string | number
    * @param {...} arg
    * @returns {boolean}
@@ -19,7 +19,7 @@
     });
   };
 
-  /**
+  /*
    * check if value is empty ( {} | [] | null | '' | undefined )
    * @param {...} arg
    * @returns {boolean}
@@ -33,7 +33,7 @@
     });
   };
 
-  /**
+  /*
    * check if value is true | 'true' | 1
    * @param {...} arg
    * @returns {boolean}
@@ -45,7 +45,7 @@
     return arg === true || arg === 'true' || arg === 1;
   };
 
-  /**
+  /*
    * check if value is false | 'false' | 0
    * @param arg
    * @returns {boolean}
@@ -57,7 +57,7 @@
     return arg === false || arg === 'false' || arg === 0;
   };
 
-  /**
+  /*
    * check if integer
    * @param {*} arg
    * @returns {boolean}
@@ -71,7 +71,7 @@
     return int === arg;
   };
 
-  /**
+  /*
    * check if JSON, return false is one of them not match
    * @param {*} arg
    * @returns {boolean}
@@ -87,7 +87,7 @@
     return true;
   };
 
-  /**
+  /*
    * check if argument is object-like JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
@@ -103,7 +103,7 @@
     return false;
   };
 
-  /**
+  /*
    * check if string is uppercase
    * @param {...string} str
    * @returns {boolean}
@@ -117,7 +117,7 @@
     return true;
   };
 
-  /**
+  /*
    * check if string is lowercase
    * @param {string} str
    * @returns {boolean}

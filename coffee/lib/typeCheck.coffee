@@ -1,11 +1,11 @@
-###*
+###
 # TypeCheck
 # @namespace caro
 # @author Caro.Huang
 ###
 do ->
   self = caro
-  ###*
+  ###
   # check if arg is boolean | string | number
   # @param {...} arg
   # @returns {boolean}
@@ -14,7 +14,7 @@ do ->
     caro.checkIfPass arguments, (arg) ->
       !(!caro.isBoolean(arg) and !caro.isString(arg) and !caro.isNumber(arg))
 
-  ###*
+  ###
   # check if value is empty ( {} | [] | null | '' | undefined )
   # @param {...} arg
   # @returns {boolean}
@@ -24,7 +24,7 @@ do ->
       return false if caro.isNumber(arg) or caro.isBoolean(arg)
       return caro.size(arg) < 1
 
-  ###*
+  ###
   # check if value is true | 'true' | 1
   # @param {...} arg
   # @returns {boolean}
@@ -33,7 +33,7 @@ do ->
     arg = arg.toLowerCase() if caro.isString(arg)
     arg == true or arg == 'true' or arg == 1
 
-  ###*
+  ###
   # check if value is false | 'false' | 0
   # @param arg
   # @returns {boolean}
@@ -42,7 +42,7 @@ do ->
     arg = arg.toLowerCase() if caro.isString(arg)
     arg == false or arg == 'false' or arg == 0
 
-  ###*
+  ###
   # check if integer
   # @param {*} arg
   # @returns {boolean}
@@ -52,7 +52,7 @@ do ->
     int = parseInt(arg)
     int == arg
 
-  ###*
+  ###
   # check if JSON, return false is one of them not match
   # @param {*} arg
   # @returns {boolean}
@@ -64,7 +64,7 @@ do ->
       return false
     true
 
-  ###*
+  ###
   # check if argument is object-like JSON, return false is one of them not match
   # @param {...} arg
   # @returns {boolean}
@@ -76,7 +76,7 @@ do ->
     catch e
     false
 
-  ###*
+  ###
   # check if string is uppercase
   # @param {...string} str
   # @returns {boolean}
@@ -86,7 +86,7 @@ do ->
     return false if upp != str
     true
 
-  ###*
+  ###
   # check if string is lowercase
   # @param {string} str
   # @returns {boolean}

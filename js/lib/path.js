@@ -1,5 +1,5 @@
 
-/**
+/*
  * Path
  * @author Caro.Huang
  */
@@ -7,7 +7,7 @@
   var self;
   self = caro;
 
-  /**
+  /*
    * get dir-path
    * @param {string} path
    * @return {string}
@@ -18,7 +18,7 @@
     return path = caro.replaceLast(path, filename, '');
   };
 
-  /**
+  /*
    * get file name in path
    * @param {string} path
    * @param {boolean} [getFull] if return file-name by full (with extend-name)
@@ -38,7 +38,7 @@
     return path.replace(extendName, '');
   };
 
-  /**
+  /*
    * get extend name of file
    * @param {string} path
    * @param {boolean} [withDot] if return extend-name with '.'

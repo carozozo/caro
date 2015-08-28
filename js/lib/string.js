@@ -1,5 +1,5 @@
 
-/**
+/*
  * String
  * @author Caro.Huang
  */
@@ -25,7 +25,7 @@
     return r.join('');
   };
 
-  /**
+  /*
    * create random string
    * @param {number} len the length of random
    * @param {object} [opt]
@@ -67,7 +67,7 @@
     return text;
   };
 
-  /**
+  /*
    * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
    * @param {string} str
    * @returns {boolean}
@@ -77,7 +77,7 @@
     return str !== '' && str !== 'false';
   };
 
-  /**
+  /*
    * add the head to string if not exist
    * @param {string} str
    * @param {string} addStr
@@ -90,7 +90,7 @@
     return str;
   };
 
-  /**
+  /*
    * add the tail to string if not exist
    * @param {string} str
    * @param {string} addStr
@@ -106,7 +106,7 @@
     return str;
   };
 
-  /**
+  /*
    * replace \r\n | \r | \n to <br/>
    * @param {string} str
    * @returns {string}
@@ -121,7 +121,7 @@
     return str;
   };
 
-  /**
+  /*
    * replace the <br /> to \n
    * @param {string} str
    * @returns {string}
@@ -132,7 +132,7 @@
     return str.replace(regex, '\n');
   };
 
-  /**
+  /*
    * split to array by '\r\n' | '\n' | '\r'
    * @param {string} str
    * @returns {*}
@@ -143,7 +143,7 @@
     return caro.splitStr(str, aWrap);
   };
 
-  /**
+  /*
    * replace all find in string
    * @param {string} str
    * @param {string} find
@@ -157,7 +157,7 @@
     return str.replace(regex, replace);
   };
 
-  /**
+  /*
    * replace last find in string
    * @param {string} str
    * @param {string} find
@@ -172,7 +172,7 @@
     return str1 + str2.replace(find, replace);
   };
 
-  /**
+  /*
    * uppercase string
    * @param {string} str
    * @param {number} [start] the start-index you want to uppercase
@@ -183,7 +183,7 @@
     return changeCase(str, 'toUpperCase', start, end);
   };
 
-  /**
+  /*
    * lowercase string
    * @param {string} str
    * @param {object} [opt]
@@ -196,7 +196,7 @@
     return changeCase(str, 'toLowerCase', start, end);
   };
 
-  /**
+  /*
    * split string
    * @param {string} str
    * @param {string|string[]} splitter it should be string-array or string
@@ -228,6 +228,11 @@
     if (!caro.isString(mainSplit)) {
       return [];
     }
+
+    /* replace all splitter to mainSplitter
+     * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
+     * => string='caro,huang, is handsome'
+     */
     caro.forEach(splitter, function(eachSplit) {
       if (!caro.isString(eachSplit)) {
         return;
