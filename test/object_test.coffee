@@ -50,7 +50,7 @@ describe 'Object', ->
       a: 1
       b: 'd'
       c: {cc: 1}
-      d:  ->
+      d: ->
       e: ['caro']
       f: 'FF'
     })
@@ -75,3 +75,20 @@ describe 'Object', ->
     r.name.should.eq 'Caro'
     r2.name.should.eq 'Caro'
     r2.city.should.eq 'Kaohsiung'
+
+  it 'differentKeys', ->
+    obj = {name: 'Caro', age: 18}
+    obj2 = {name: 'Snoopy', country: 'Taiwan', city: 'Kaohsiung'}
+    r = caro.differentKeys(obj, obj2)
+    r2 = caro.differentKeys(obj, obj2, true)
+    r.should.eql ['age']
+    r2.should.eql ['country', 'city']
+
+#  it 'isEqualKeys', ->
+#    obj = {name: 'Caro', age: 18}
+#    obj2 = {name: 'Caro2', age: 20}
+#    obj3 = {name: 'Caro3', country: 'Taiwan'}
+#    r = caro.isEqualKeys(obj, obj2)
+#    r2 = caro.isEqualKeys(obj, obj3)
+#    console.log r
+#    console.log r2

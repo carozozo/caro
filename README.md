@@ -185,8 +185,16 @@ var obj = {name: 'Caro', age: 18};
 var obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
 var r = {name: ''};
 var r2 = {name: '', city: ''};
-caro.catching(r, obj); // { name: 'Caro' }
-caro.catching(r2, obj, obj2); // { name: 'Caro', city: 'Kaohsiung' }
+caro.catching(r, obj); // {name: 'Caro'}
+caro.catching(r2, obj, obj2); // {name: 'Caro', city: 'Kaohsiung'}
+```
+
+- **differentKeys(obj, obj2, bool) - get keys that object1 has but object2 not**
+```javascript
+var obj = {name: 'Caro', age: 18};
+var obj2 = {name: 'Snoopy', country: 'Taiwan', city: 'Kaohsiung'};
+var r = caro.differentKeys(obj, obj2); // ['age']
+var r2 = caro.differentKeys(obj, obj2, true); // ['country', 'city']
 ```
 
 ### Path
@@ -382,6 +390,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Object -> differentKeys] - v0.14.0
 - Add [Helper -> getFnBody] - v0.13.0
 - Remove [TypeCover -> toArray] - v0.12.0 - for not conflict with lodash.toArray
 - Update [Helper -> getStackList] - v0.11.1
