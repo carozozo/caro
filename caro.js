@@ -1,4 +1,4 @@
-/*! caro - v0.15.0 - 2015-09-05 */
+/*! caro - v0.15.1 - 2015-09-05 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -486,7 +486,7 @@
    * @param {object} obj2
    * @return {boolean}
    */
-  self.equalKeys = function(obj1, obj2) {
+  self.hasEqualKeys = function(obj1, obj2) {
     var size1, size2;
     size1 = caro.size(caro.differentKeys(obj1, obj2));
     size2 = caro.size(caro.differentKeys(obj1, obj2, true));
