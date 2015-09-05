@@ -481,6 +481,24 @@
   };
 
   /*
+   * get keys that is same between object1 and object2
+   * @param {object} obj1
+   * @param {object} obj2
+   * @return {array}
+   */
+  self.sameKeys = function(obj1, obj2) {
+    var diffKeys, keys;
+    keys = caro.keys(obj1);
+    diffKeys = caro.differentKeys(obj1, obj2);
+    return caro.reduce(keys, function(result, val) {
+      if (caro.indexOf(diffKeys, val) < 0) {
+        result.push(val);
+      }
+      return result;
+    }, []);
+  };
+
+  /*
    * check if all keys are equal between objects
    * @param {object} obj1
    * @param {object} obj2

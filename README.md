@@ -189,12 +189,19 @@ caro.catching(r, obj); // {name: 'Caro'}
 caro.catching(r2, obj, obj2); // {name: 'Caro', city: 'Kaohsiung'}
 ```
 
-- **differentKeys(obj, obj2 [reverse=false]) - get keys that object1 has but object2 not**
+- **differentKeys(obj, obj2 [reverse=false]) - get keys that object has but object2 not**
 ```javascript
 var obj = {name: 'Caro', age: 18};
 var obj2 = {name: 'Snoopy', country: 'Taiwan', city: 'Kaohsiung'};
 var r = caro.differentKeys(obj, obj2); // ['age']
 var r2 = caro.differentKeys(obj, obj2, true); // ['country', 'city']
+```
+
+- **sameKeys(obj, obj2) - get keys that is same between objects**
+```javascript
+var obj = {a: 1, b: 2, c: 3, e: 4};
+var obj2 = {a: 3, c: 4, d: 5, e: 6};
+var r = caro.sameKeys(obj, obj2); // ['a', 'c', 'e']
 ```
 
 - **hasEqualKeys(obj, obj2) - check if all keys are equal between objects**
@@ -399,6 +406,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Object -> sameKeys] - v0.16.0
 - Rename [Object -> equalKeys to hasEqualKeys] - v0.15.1
 - Add [Object -> equalKeys] - v0.15.0
 - Add [Object -> differentKeys] - v0.14.0
