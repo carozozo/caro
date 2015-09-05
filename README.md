@@ -189,12 +189,21 @@ caro.catching(r, obj); // {name: 'Caro'}
 caro.catching(r2, obj, obj2); // {name: 'Caro', city: 'Kaohsiung'}
 ```
 
-- **differentKeys(obj, obj2, bool) - get keys that object1 has but object2 not**
+- **differentKeys(obj, obj2 [reverse=false]) - get keys that object1 has but object2 not**
 ```javascript
 var obj = {name: 'Caro', age: 18};
 var obj2 = {name: 'Snoopy', country: 'Taiwan', city: 'Kaohsiung'};
 var r = caro.differentKeys(obj, obj2); // ['age']
 var r2 = caro.differentKeys(obj, obj2, true); // ['country', 'city']
+```
+
+- **equalKeys(obj, obj2) - check if all keys are equal between objects**
+```javascript
+var obj = {name: 'Caro', age: 18};
+var obj2 = {name: 'Snoopy', age: 3};
+var obj3 = {name: 'Kitty', country: 'Japan'};
+var r = caro.equalKeys(obj, obj2); // true
+var r2 = caro.equalKeys(obj, obj3); // false
 ```
 
 ### Path
@@ -390,6 +399,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Object -> equalKeys] - v0.15.0
 - Add [Object -> differentKeys] - v0.14.0
 - Add [Helper -> getFnBody] - v0.13.0
 - Remove [TypeCover -> toArray] - v0.12.0 - for not conflict with lodash.toArray

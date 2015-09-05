@@ -101,9 +101,15 @@ do ->
     return caro.difference(keys1, keys2) unless reverse
     caro.difference(keys2, keys1)
 
-#  self.isEqualKeys = (obj1, obj2) ->
-#    size1 = caro.size(caro.differentKeys(obj1, obj2))
-#    size2 = caro.size(caro.differentKeys(obj1, obj2, true))
-#    size1 is 0 and size2 is 0
+  ###
+  # check if all keys are equal between objects
+  # @param {object} obj1
+  # @param {object} obj2
+  # @return {boolean}
+  ###
+  self.equalKeys = (obj1, obj2) ->
+    size1 = caro.size(caro.differentKeys(obj1, obj2))
+    size2 = caro.size(caro.differentKeys(obj1, obj2, true))
+    size1 is 0 and size2 is 0
 
   return
