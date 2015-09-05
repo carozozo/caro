@@ -132,7 +132,7 @@
    * @param {object} obj2
    * @return {boolean}
    */
-  self.equalKeys = function(obj1, obj2) {
+  self.hasEqualKeys = function(obj1, obj2) {
     var size1, size2;
     size1 = caro.size(caro.differentKeys(obj1, obj2));
     size2 = caro.size(caro.differentKeys(obj1, obj2, true));

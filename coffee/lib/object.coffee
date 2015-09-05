@@ -107,7 +107,7 @@ do ->
   # @param {object} obj2
   # @return {boolean}
   ###
-  self.equalKeys = (obj1, obj2) ->
+  self.hasEqualKeys = (obj1, obj2) ->
     size1 = caro.size(caro.differentKeys(obj1, obj2))
     size2 = caro.size(caro.differentKeys(obj1, obj2, true))
     size1 is 0 and size2 is 0

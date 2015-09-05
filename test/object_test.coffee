@@ -84,11 +84,11 @@ describe 'Object', ->
     r.should.eql ['age']
     r2.should.eql ['country', 'city']
 
-  it 'equalKeys', ->
+  it 'hasEqualKeys', ->
     obj = {name: 'Caro', age: 18}
     obj2 = {name: 'Snoopy', age: 3}
     obj3 = {name: 'Kitty', country: 'Japan'}
-    r = caro.equalKeys(obj, obj2)
-    r2 = caro.equalKeys(obj, obj3)
+    r = caro.hasEqualKeys(obj, obj2)
+    r2 = caro.hasEqualKeys(obj, obj3)
     r.should.be.true
     r2.should.be.false

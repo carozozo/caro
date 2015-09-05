@@ -197,13 +197,13 @@ var r = caro.differentKeys(obj, obj2); // ['age']
 var r2 = caro.differentKeys(obj, obj2, true); // ['country', 'city']
 ```
 
-- **equalKeys(obj, obj2) - check if all keys are equal between objects**
+- **hasEqualKeys(obj, obj2) - check if all keys are equal between objects**
 ```javascript
 var obj = {name: 'Caro', age: 18};
 var obj2 = {name: 'Snoopy', age: 3};
 var obj3 = {name: 'Kitty', country: 'Japan'};
-var r = caro.equalKeys(obj, obj2); // true
-var r2 = caro.equalKeys(obj, obj3); // false
+var r = caro.hasEqualKeys(obj, obj2); // true
+var r2 = caro.hasEqualKeys(obj, obj3); // false
 ```
 
 ### Path
@@ -399,6 +399,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Rename [Object -> equalKeys to hasEqualKeys] - v0.15.1
 - Add [Object -> equalKeys] - v0.15.0
 - Add [Object -> differentKeys] - v0.14.0
 - Add [Helper -> getFnBody] - v0.13.0
