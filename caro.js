@@ -1,4 +1,4 @@
-/*! caro - v0.15.1 - 2015-09-05 */
+/*! caro - v0.16.1 - 2015-09-05 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -481,7 +481,7 @@
   };
 
   /*
-   * get keys that is same between object1 and object2
+   * get keys that is same between objects
    * @param {object} obj1
    * @param {object} obj2
    * @return {array}

@@ -127,7 +127,7 @@
   };
 
   /*
-   * get keys that is same between object1 and object2
+   * get keys that is same between objects
    * @param {object} obj1
    * @param {object} obj2
    * @return {array}

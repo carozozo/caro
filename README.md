@@ -406,6 +406,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Fix version - v0.16.1
 - Add [Object -> sameKeys] - v0.16.0
 - Rename [Object -> equalKeys to hasEqualKeys] - v0.15.1
 - Add [Object -> equalKeys] - v0.15.0
