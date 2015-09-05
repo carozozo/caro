@@ -33,7 +33,7 @@
         ret = ret.replace(/\\r/g, '\r' + space);
         ret = ret.replace(/\\n/g, '\n' + space);
         ret = ret.replace(/"/g, '');
-      } catch (_error) {}
+      } catch (undefined) {}
       if (ret) {
         return ret;
       }
@@ -48,7 +48,7 @@
           ret = ret.replace(reg, '\n');
           ret = ret.replace(/"/g, '');
         }
-      } catch (_error) {}
+      } catch (undefined) {}
       return ret;
     };
     return toWord(arg, spaceLength);
@@ -108,5 +108,21 @@
       });
     });
     return obj;
+  };
+
+  /*
+   * get keys that object1 has but object2 not
+   * @param {object} obj1
+   * @param {object} obj2
+   * @return {array}
+   */
+  self.differentKeys = function(obj1, obj2, reverse) {
+    var keys1, keys2;
+    keys1 = caro.keys(obj1);
+    keys2 = caro.keys(obj2);
+    if (!reverse) {
+      return caro.difference(keys1, keys2);
+    }
+    return caro.difference(keys2, keys1);
   };
 })();

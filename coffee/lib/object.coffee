@@ -89,4 +89,21 @@ do ->
     )
     obj
 
+  ###
+  # get keys that object1 has but object2 not
+  # @param {object} obj1
+  # @param {object} obj2
+  # @return {array}
+  ###
+  self.differentKeys = (obj1, obj2, reverse) ->
+    keys1 = caro.keys(obj1)
+    keys2 = caro.keys(obj2)
+    return caro.difference(keys1, keys2) unless reverse
+    caro.difference(keys2, keys1)
+
+#  self.isEqualKeys = (obj1, obj2) ->
+#    size1 = caro.size(caro.differentKeys(obj1, obj2))
+#    size2 = caro.size(caro.differentKeys(obj1, obj2, true))
+#    size1 is 0 and size2 is 0
+
   return
