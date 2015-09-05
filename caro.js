@@ -1,4 +1,4 @@
-/*! caro - v0.14.0 - 2015-09-05 */
+/*! caro - v0.15.0 - 2015-09-05 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -478,6 +478,19 @@
       return caro.difference(keys1, keys2);
     }
     return caro.difference(keys2, keys1);
+  };
+
+  /*
+   * check if all keys are equal between objects
+   * @param {object} obj1
+   * @param {object} obj2
+   * @return {boolean}
+   */
+  self.equalKeys = function(obj1, obj2) {
+    var size1, size2;
+    size1 = caro.size(caro.differentKeys(obj1, obj2));
+    size2 = caro.size(caro.differentKeys(obj1, obj2, true));
+    return size1 === 0 && size2 === 0;
   };
 })();
 

@@ -125,4 +125,17 @@
     }
     return caro.difference(keys2, keys1);
   };
+
+  /*
+   * check if all keys are equal between objects
+   * @param {object} obj1
+   * @param {object} obj2
+   * @return {boolean}
+   */
+  self.equalKeys = function(obj1, obj2) {
+    var size1, size2;
+    size1 = caro.size(caro.differentKeys(obj1, obj2));
+    size2 = caro.size(caro.differentKeys(obj1, obj2, true));
+    return size1 === 0 && size2 === 0;
+  };
 })();
