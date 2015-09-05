@@ -84,6 +84,12 @@ describe 'Object', ->
     r.should.eql ['age']
     r2.should.eql ['country', 'city']
 
+    it 'sameKeys', ->
+      obj = {a: 1, b: 2, c: 3, e: 4}
+      obj2 = {a: 3, c: 4, d: 5, e: 6}
+      r = caro.sameKeys(obj, obj2)
+      r.should.eql ['a', 'c', 'e']
+
   it 'hasEqualKeys', ->
     obj = {name: 'Caro', age: 18}
     obj2 = {name: 'Snoopy', age: 3}

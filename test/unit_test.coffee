@@ -1,17 +1,7 @@
 #do ->
 #describe.only 'Unit', ->
 #  it 'test', ->
-#    a = {
-#      a: false, b: null, c: 0, d: 'caro', e: undefined, f: [3, 4, 5, 6],
-#      g: () ->
-#        return 1
-#      h: {
-#        i: 3
-#        j: () -> return 2
-#        k: {
-#          l: () -> return 3
-#        }
-#      }
-#    }
-#    r = caro.toWord(a, 6)
+#    obj1 = {a: 1, b: 2, c: 3, e: 4}
+#    obj2 = {a: 3, c: 4, d: 5, e: 6}
+#    r = caro.sameKeys(obj1, obj2)
 #    console.log r

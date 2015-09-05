@@ -102,6 +102,20 @@ do ->
     caro.difference(keys2, keys1)
 
   ###
+  # get keys that is same between objects
+  # @param {object} obj1
+  # @param {object} obj2
+  # @return {array}
+  ###
+  self.sameKeys = (obj1, obj2) ->
+    keys = caro.keys(obj1)
+    diffKeys = caro.differentKeys(obj1, obj2)
+    caro.reduce(keys, (result, val) ->
+      result.push(val) if caro.indexOf(diffKeys, val) < 0
+      return result
+    , [])
+
+  ###
   # check if all keys are equal between objects
   # @param {object} obj1
   # @param {object} obj2
