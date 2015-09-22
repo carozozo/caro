@@ -153,10 +153,25 @@ caro.loop(function (i){
 
 ### Object
 [Back to Index](#index)
-- **toWord(obj [space=2]) - get string for easy-reading with object/array**
+- **assignByKeys(obj, obj2, keys [replace=true]) - assign elements to from obj2 to obj1 by keys**
 ```javascript
-r = caro.toWord(['caro', undefined], true);
-r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: function(){}});
+var obj = {a: 1, b: 2, c: 3, d: 4}
+var obj2 = {d: 1, e: 2, f: 3}
+caro.assignByKeys(obj, obj2, ['d', 'f'])
+// obj = {a: 1, b: 2, c: 3, d: 1, f: 3}
+
+obj = {a: 1, b: 2, c: 3, d: 4}
+caro.assignByKeys(obj, obj2, ['d', 'f'], false)
+// obj = {a: 1, b: 2, c: 3, d: 4, f: 3}
+```
+- **catching(obj, obj2...) - catch other object-values to target-object when it has key matched**
+```javascript
+var obj = {name: 'Caro', age: 18};
+var obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
+var r = {name: ''};
+var r2 = {name: '', city: ''};
+caro.catching(r, obj); // {name: 'Caro'}
+caro.catching(r2, obj, obj2); // {name: 'Caro', city: 'Kaohsiung'}
 ```
 - **classify(obj) - group by argument type**
 ```javascript
@@ -179,31 +194,13 @@ var r = caro.classify({
 }
 */
 ```
-- **catching(obj, obj2...) - catch other object-values to target-object when it has key matched**
-```javascript
-var obj = {name: 'Caro', age: 18};
-var obj2 = {country: 'Taiwan', city: 'Kaohsiung'};
-var r = {name: ''};
-var r2 = {name: '', city: ''};
-caro.catching(r, obj); // {name: 'Caro'}
-caro.catching(r2, obj, obj2); // {name: 'Caro', city: 'Kaohsiung'}
-```
-
-- **differentKeys(obj, obj2 [reverse=false]) - get keys that object has but object2 not**
+- **differentKeys(obj, obj2 [reverse=false]) - get keys that obj has but obj2 not**
 ```javascript
 var obj = {name: 'Caro', age: 18};
 var obj2 = {name: 'Snoopy', country: 'Taiwan', city: 'Kaohsiung'};
 var r = caro.differentKeys(obj, obj2); // ['age']
 var r2 = caro.differentKeys(obj, obj2, true); // ['country', 'city']
 ```
-
-- **sameKeys(obj, obj2) - get keys that is same between objects**
-```javascript
-var obj = {a: 1, b: 2, c: 3, e: 4};
-var obj2 = {a: 3, c: 4, d: 5, e: 6};
-var r = caro.sameKeys(obj, obj2); // ['a', 'c', 'e']
-```
-
 - **hasEqualKeys(obj, obj2) - check if all keys are equal between objects**
 ```javascript
 var obj = {name: 'Caro', age: 18};
@@ -211,6 +208,17 @@ var obj2 = {name: 'Snoopy', age: 3};
 var obj3 = {name: 'Kitty', country: 'Japan'};
 var r = caro.hasEqualKeys(obj, obj2); // true
 var r2 = caro.hasEqualKeys(obj, obj3); // false
+```
+- **sameKeys(obj, obj2) - get keys that is same between objects**
+```javascript
+var obj = {a: 1, b: 2, c: 3, e: 4};
+var obj2 = {a: 3, c: 4, d: 5, e: 6};
+var r = caro.sameKeys(obj, obj2); // ['a', 'c', 'e']
+```
+- **toWord(obj [space=2]) - get string for easy-reading with object/array**
+```javascript
+r = caro.toWord(['caro', undefined], true);
+r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: function(){}});
 ```
 
 ### Path
@@ -406,6 +414,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Object -> assignByKeys] - v0.17.0
 - Fix version - v0.16.1
 - Add [Object -> sameKeys] - v0.16.0
 - Rename [Object -> equalKeys to hasEqualKeys] - v0.15.1
