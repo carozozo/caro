@@ -14,9 +14,9 @@ do ->
   # @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
   ###
   self.assignByKeys = (obj1, obj2, keys, replace = true) ->
-    caro.reduce(obj2, (obj, val, key) ->
-      if caro.indexOf(keys, key) > -1 and (replace or caro.isUndefined(obj[key]))
-        obj[key] = val
+    caro.reduce(keys, (obj, key) ->
+      if caro.has(obj2, key) and (replace or not caro.has(obj, key))
+        obj[key] = obj2[key]
       return obj
     , obj1)
 

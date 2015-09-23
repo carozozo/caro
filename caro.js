@@ -373,9 +373,9 @@
     if (replace == null) {
       replace = true;
     }
-    return caro.reduce(obj2, function(obj, val, key) {
-      if (caro.indexOf(keys, key) > -1 && (replace || caro.isUndefined(obj[key]))) {
-        obj[key] = val;
+    return caro.reduce(keys, function(obj, key) {
+      if (caro.has(obj2, key) && (replace || !caro.has(obj, key))) {
+        obj[key] = obj2[key];
       }
       return obj;
     }, obj1);
