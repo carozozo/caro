@@ -155,13 +155,13 @@ caro.loop(function (i){
 [Back to Index](#index)
 - **assignByKeys(obj, obj2, keys [replace=true]) - assign elements to from obj2 to obj1 by keys**
 ```javascript
-var obj = {a: 1, b: 2, c: 3, d: 4}
-var obj2 = {d: 1, e: 2, f: 3}
-caro.assignByKeys(obj, obj2, ['d', 'f'])
+var obj = {a: 1, b: 2, c: 3, d: 4};
+var obj2 = {d: 1, e: 2, f: 3};
+caro.assignByKeys(obj, obj2, ['d', 'f']);
 // obj = {a: 1, b: 2, c: 3, d: 1, f: 3}
 
-obj = {a: 1, b: 2, c: 3, d: 4}
-caro.assignByKeys(obj, obj2, ['d', 'f'], false)
+obj = {a: 1, b: 2, c: 3, d: 4};
+caro.assignByKeys(obj, obj2, ['d', 'f'], false);
 // obj = {a: 1, b: 2, c: 3, d: 4, f: 3}
 ```
 - **catching(obj, obj2...) - catch other object-values to target-object when it has key matched**
