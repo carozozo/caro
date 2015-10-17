@@ -16,6 +16,17 @@ describe 'String', ->
     r = caro.brToWrap('this is<br />wrap content.')
     r.should.eq 'this is\nwrap content.'
 
+  it 'insertStr', ->
+    str1 = "Lift is good"
+    str2 = " so"
+    r = caro.insertStr(str1, str2, 7)
+    r.should.eq 'Lift is so good'
+
+    str1 = "I love my"
+    str2 = " dog"
+    r = caro.insertStr(str1, str2)
+    r.should.eq 'I love my dog'
+
   it 'lowerStr', ->
     r = caro.lowerStr('I AM CARO')
     r2 = caro.lowerStr('I AM CARO', 5)

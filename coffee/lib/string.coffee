@@ -45,6 +45,16 @@ do ->
     str.replace regex, '\n'
 
   ###
+  # insert string to another
+  # @param {string} str1
+  # @param {string} str2 the string want to insert
+  # postion {integer} [position]
+  ###
+  self.insertStr = (str1, str2, position) ->
+    position = position or str1.length
+    [str1.slice(0, position), str2, str1.slice(position)].join('');
+
+  ###
   # lowercase string
   # @param {string} str
   # @param {object} [opt]

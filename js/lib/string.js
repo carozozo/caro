@@ -66,6 +66,17 @@
   };
 
   /*
+   * insert string to another
+   * @param {string} str1
+   * @param {string} str2 the string want to insert
+   * postion {integer} [position]
+   */
+  self.insertStr = function(str1, str2, position) {
+    position = position || str1.length;
+    return [str1.slice(0, position), str2, str1.slice(position)].join('');
+  };
+
+  /*
    * lowercase string
    * @param {string} str
    * @param {object} [opt]

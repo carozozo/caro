@@ -1,4 +1,4 @@
-/*! caro - v0.17.1 - 2015-10-17 */
+/*! caro - v0.18.0 - 2015-10-17 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -659,6 +659,17 @@
     var regex;
     regex = /<br\s*[\/]?>/gi;
     return str.replace(regex, '\n');
+  };
+
+  /*
+   * insert string to another
+   * @param {string} str1
+   * @param {string} str2 the string want to insert
+   * postion {integer} [position]
+   */
+  self.insertStr = function(str1, str2, position) {
+    position = position || str1.length;
+    return [str1.slice(0, position), str2, str1.slice(position)].join('');
   };
 
   /*
