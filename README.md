@@ -258,6 +258,7 @@ var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
 var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
 ```
 - **insertStr(str1, str2, [position]) - insert string to another
+```
 var str1 = 'Lift is good';
 var str2 = ' so';
 var r = caro.insertStr(str1, str2, 7); // 'Lift is so good'
