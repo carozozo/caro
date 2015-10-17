@@ -156,7 +156,7 @@
         ret = ret.replace(/\\r/g, '\r' + space);
         ret = ret.replace(/\\n/g, '\n' + space);
         ret = ret.replace(/"/g, '');
-      } catch (undefined) {}
+      } catch (_error) {}
       if (ret) {
         return ret;
       }
@@ -171,7 +171,7 @@
           ret = ret.replace(reg, '\n');
           ret = ret.replace(/"/g, '');
         }
-      } catch (undefined) {}
+      } catch (_error) {}
       return ret;
     };
     return toWord(arg, spaceLength);

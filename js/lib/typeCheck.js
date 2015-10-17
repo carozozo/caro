@@ -77,11 +77,11 @@
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e, error;
+    var e;
     try {
       JSON.parse(arg);
-    } catch (error) {
-      e = error;
+    } catch (_error) {
+      e = _error;
       return false;
     }
     return true;
@@ -93,12 +93,12 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, error, r;
+    var e, r;
     try {
       r = JSON.parse(arg);
       return caro.isObject(r);
-    } catch (error) {
-      e = error;
+    } catch (_error) {
+      e = _error;
     }
     return false;
   };
