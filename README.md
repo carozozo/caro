@@ -243,6 +243,35 @@ var r3 = caro.getExtendName('a/b/a'); // ''
 
 ### String
 [Back to Index](#index)
+- **addHead(str, addStr) - add prefix-string if not exists**
+```javascript
+var r = caro.addHead('moon', 'mo'); // 'moon'
+var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
+```
+- **addTail(str, addStr) - add suffix-string if not exists**
+```javascript
+var r = caro.addTail('moon', 'on'); // 'moon'
+var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
+```
+- **brToWrap(str, addStr) - cover '\<br /\>'to wrap**
+```javascript
+var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
+```
+- **insertStr(str1, str2, [position]) - insert string to another
+var str1 = 'Lift is good';
+var str2 = ' so';
+var r = caro.insertStr(str1, str2, 7); // 'Lift is so good'
+
+var str1 = 'I love my';
+var str2 = ' dog';
+r = caro.insertStr(str1, str2); // 'I love my dog' 
+```
+- **lowerStr(str [start] [end]) - cover string to lowercase**
+```javascript
+var r = caro.lowerStr('I AM CARO'); // 'i am caro'
+var r2 = caro.lowerStr('I AM CARO', 5); // 'I AM caro'
+var r3 = caro.lowerStr('I AM CARO', 5, 6); // 'I AM cARO'
+```
 - **random(len [opt]) - create random string**
 ```javascript
 var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
@@ -259,42 +288,6 @@ var r3 = caro.random(15, {
   exclude: 'A,B,C'
 }); // - will create uppercase-only, and without A/B/C
 ```
-- **strToBool(str) - return false if string like'false', otherwise return true**
-```javascript
-var r = caro.strToBool('false'); // false
-var r2 = caro.strToBool('fAlse'); // false
-var r3 = caro.strToBool('123'); // true
-var r4 = caro.strToBool(''); // false
-```
-- **addHead(str, addStr) - add prefix-string if not exists**
-```javascript
-var r = caro.addHead('moon', 'mo'); // 'moon'
-var r2 = caro.addHead('Moon', 'is'); // 'isMoon'
-```
-- **addTail(str, addStr) - add suffix-string if not exists**
-```javascript
-var r = caro.addTail('moon', 'on'); // 'moon'
-var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
-```
-- **wrapToBr(str, addStr) - cover wrap to '\<br /\>'**
-```javascript
-var r = caro.wrapToBr('''this is
-    wrap content.
-'''); // 'this is<br />wrap content.'
-```
-- **brToWrap(str, addStr) - cover '\<br /\>'to wrap**
-```javascript
-var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
-```
-- **splitByWrap(str) - split string by wrap**
-```javascript
-var r = caro.splitByWrap('''
-    I love
-    my mother
-    and
-    my father
-'''); // [ 'I love', 'my mother', 'and', 'my father' ]
-```
 - **replaceAll(str, find, replace) - replace string that matched**
 ```javascript
 var r = caro.replaceAll('I*am*{Caro}.', '*', '-'); // 'I-am-{Caro}.'
@@ -305,22 +298,38 @@ var r2 = caro.replaceAll('I-am-Caro.', '-', '@'); // 'I@am@Caro.'
 var r = caro.replaceLast('I-am-Caro.', '-', ' '); // 'I-am Caro.'
 var r2 = caro.replaceLast('I am Caro not Colo.', 'C', 'T'); // 'I am Caro not Tolo.'
 ```
+- **splitByWrap(str) - split string by wrap**
+```javascript
+var r = caro.splitByWrap('''
+    I love
+    my mother
+    and
+    my father
+'''); // [ 'I love', 'my mother', 'and', 'my father' ]
+```
+- **splitStr(str [splitter]) - split string**
+```javascript
+var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
+var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
+```
+- **strToBool(str) - return false if string like'false', otherwise return true**
+```javascript
+var r = caro.strToBool('false'); // false
+var r2 = caro.strToBool('fAlse'); // false
+var r3 = caro.strToBool('123'); // true
+var r4 = caro.strToBool(''); // false
+```
 - **upperStr(str [start] [end]) - cover string to uppercase**
 ```javascript
 var r = caro.upperStr('i am caro'); // 'I AM CARO'
 var r2 = caro.upperStr('i am caro', 5); // 'i am CARO'
 var r3 = caro.upperStr('i am caro', 5, 6); // 'i am Caro'
 ```
-- **lowerStr(str [start] [end]) - cover string to lowercase**
+- **wrapToBr(str, addStr) - cover wrap to '\<br /\>'**
 ```javascript
-var r = caro.lowerStr('I AM CARO'); // 'i am caro'
-var r2 = caro.lowerStr('I AM CARO', 5); // 'I AM caro'
-var r3 = caro.lowerStr('I AM CARO', 5, 6); // 'I AM cARO'
-```
-- **splitStr(str [splitter]) - split string**
-```javascript
-var r = caro.splitStr('i am caro', ' '); // ['i', 'am', 'caro']
-var r2 = caro.splitStr('I ~love Snoopy !~!', ['~', ' ']); // ['I', '', 'love', 'Snoopy', '!', '!']
+var r = caro.wrapToBr('''this is
+    wrap content.
+'''); // 'this is<br />wrap content.'
 ```
 
 ### TypeCheck
@@ -414,6 +423,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [String -> insertStr] - v0.18.0
 - Add [Object -> assignByKeys] - v0.17.0
 - Fix version - v0.16.1
 - Add [Object -> sameKeys] - v0.16.0
