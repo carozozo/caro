@@ -1,4 +1,4 @@
-/*! caro - v0.17.1 - 2015-09-23 */
+/*! caro - v0.17.1 - 2015-10-17 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -510,7 +510,7 @@
         ret = ret.replace(/\\r/g, '\r' + space);
         ret = ret.replace(/\\n/g, '\n' + space);
         ret = ret.replace(/"/g, '');
-      } catch (undefined) {}
+      } catch (_error) {}
       if (ret) {
         return ret;
       }
@@ -525,7 +525,7 @@
           ret = ret.replace(reg, '\n');
           ret = ret.replace(/"/g, '');
         }
-      } catch (undefined) {}
+      } catch (_error) {}
       return ret;
     };
     return toWord(arg, spaceLength);
@@ -622,6 +622,59 @@
   };
 
   /*
+   * add the head to string if not exist
+   * @param {string} str
+   * @param {string} addStr
+   * @returns {*}
+   */
+  self.addHead = function(str, addStr) {
+    if (!caro.startsWith(str, addStr)) {
+      str = addStr + str;
+    }
+    return str;
+  };
+
+  /*
+   * add the tail to string if not exist
+   * @param {string} str
+   * @param {string} addStr
+   * @returns {*}
+   */
+  self.addTail = function(str, addStr) {
+    if (!caro.isString(str)) {
+      return str;
+    }
+    if (!caro.endsWith(str, addStr)) {
+      str += addStr;
+    }
+    return str;
+  };
+
+  /*
+   * replace the <br /> to \n
+   * @param {string} str
+   * @returns {string}
+   */
+  self.brToWrap = function(str) {
+    var regex;
+    regex = /<br\s*[\/]?>/gi;
+    return str.replace(regex, '\n');
+  };
+
+  /*
+   * lowercase string
+   * @param {string} str
+   * @param {object} [opt]
+   * @param {number} [opt.start] the start-index you want to lowercase
+   * @param {number} [opt.end] the end-index you want to lowercase
+   * @param {boolean} [opt.force] if force cover to string
+   * @returns {*}
+   */
+  self.lowerStr = function(str, start, end) {
+    return changeCase(str, 'toLowerCase', start, end);
+  };
+
+  /*
    * create random string
    * @param {number} len the length of random
    * @param {object} [opt]
@@ -664,82 +717,6 @@
   };
 
   /*
-   * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
-   * @param {string} str
-   * @returns {boolean}
-   */
-  self.strToBool = function(str) {
-    str = str.toLowerCase();
-    return str !== '' && str !== 'false';
-  };
-
-  /*
-   * add the head to string if not exist
-   * @param {string} str
-   * @param {string} addStr
-   * @returns {*}
-   */
-  self.addHead = function(str, addStr) {
-    if (!caro.startsWith(str, addStr)) {
-      str = addStr + str;
-    }
-    return str;
-  };
-
-  /*
-   * add the tail to string if not exist
-   * @param {string} str
-   * @param {string} addStr
-   * @returns {*}
-   */
-  self.addTail = function(str, addStr) {
-    if (!caro.isString(str)) {
-      return str;
-    }
-    if (!caro.endsWith(str, addStr)) {
-      str += addStr;
-    }
-    return str;
-  };
-
-  /*
-   * replace \r\n | \r | \n to <br/>
-   * @param {string} str
-   * @returns {string}
-   */
-  self.wrapToBr = function(str) {
-    if (!caro.isString(str)) {
-      return str;
-    }
-    str = str.replace(/\r\n/g, '<br />');
-    str = str.replace(/\n/g, '<br />');
-    str = str.replace(/\r/g, '<br />');
-    return str;
-  };
-
-  /*
-   * replace the <br /> to \n
-   * @param {string} str
-   * @returns {string}
-   */
-  self.brToWrap = function(str) {
-    var regex;
-    regex = /<br\s*[\/]?>/gi;
-    return str.replace(regex, '\n');
-  };
-
-  /*
-   * split to array by '\r\n' | '\n' | '\r'
-   * @param {string} str
-   * @returns {*}
-   */
-  self.splitByWrap = function(str) {
-    var aWrap;
-    aWrap = ['\r\n', '\r', '\n'];
-    return caro.splitStr(str, aWrap);
-  };
-
-  /*
    * replace all find in string
    * @param {string} str
    * @param {string} find
@@ -769,34 +746,21 @@
   };
 
   /*
-   * uppercase string
-   * @param {string} str
-   * @param {number} [start] the start-index you want to uppercase
-   * @param {number} [end] the end-index you want to uppercase
-   * @returns {*}
+     * split to array by '\r\n' | '\n' | '\r'
+     * @param {string} str
+     * @returns {*}
    */
-  self.upperStr = function(str, start, end) {
-    return changeCase(str, 'toUpperCase', start, end);
+  self.splitByWrap = function(str) {
+    var aWrap;
+    aWrap = ['\r\n', '\r', '\n'];
+    return caro.splitStr(str, aWrap);
   };
 
   /*
-   * lowercase string
-   * @param {string} str
-   * @param {object} [opt]
-   * @param {number} [opt.start] the start-index you want to lowercase
-   * @param {number} [opt.end] the end-index you want to lowercase
-   * @param {boolean} [opt.force] if force cover to string
-   * @returns {*}
-   */
-  self.lowerStr = function(str, start, end) {
-    return changeCase(str, 'toLowerCase', start, end);
-  };
-
-  /*
-   * split string
-   * @param {string} str
-   * @param {string|string[]} splitter it should be string-array or string
-   * @returns {*}
+     * split string
+     * @param {string} str
+     * @param {string|string[]} splitter it should be string-array or string
+     * @returns {*}
    */
   self.splitStr = function(str, splitter) {
     var mainSplit;
@@ -836,6 +800,42 @@
       str = caro.replaceAll(str, eachSplit, mainSplit);
     });
     return str.split(mainSplit);
+  };
+
+  /*
+   * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
+   * @param {string} str
+   * @returns {boolean}
+   */
+  self.strToBool = function(str) {
+    str = str.toLowerCase();
+    return str !== '' && str !== 'false';
+  };
+
+  /*
+   * uppercase string
+   * @param {string} str
+   * @param {number} [start] the start-index you want to uppercase
+   * @param {number} [end] the end-index you want to uppercase
+   * @returns {*}
+   */
+  self.upperStr = function(str, start, end) {
+    return changeCase(str, 'toUpperCase', start, end);
+  };
+
+  /*
+   * replace \r\n | \r | \n to <br/>
+   * @param {string} str
+   * @returns {string}
+   */
+  self.wrapToBr = function(str) {
+    if (!caro.isString(str)) {
+      return str;
+    }
+    str = str.replace(/\r\n/g, '<br />');
+    str = str.replace(/\n/g, '<br />');
+    str = str.replace(/\r/g, '<br />');
+    return str;
   };
 })();
 
@@ -918,11 +918,11 @@
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e, error;
+    var e;
     try {
       JSON.parse(arg);
-    } catch (error) {
-      e = error;
+    } catch (_error) {
+      e = _error;
       return false;
     }
     return true;
@@ -934,12 +934,12 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, error, r;
+    var e, r;
     try {
       r = JSON.parse(arg);
       return caro.isObject(r);
-    } catch (error) {
-      e = error;
+    } catch (_error) {
+      e = _error;
     }
     return false;
   };

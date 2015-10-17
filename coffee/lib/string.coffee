@@ -15,6 +15,48 @@ do ->
     r.join ''
 
   ###
+  # add the head to string if not exist
+  # @param {string} str
+  # @param {string} addStr
+  # @returns {*}
+  ###
+  self.addHead = (str, addStr) ->
+    str = addStr + str if !caro.startsWith(str, addStr)
+    str
+
+  ###
+  # add the tail to string if not exist
+  # @param {string} str
+  # @param {string} addStr
+  # @returns {*}
+  ###
+  self.addTail = (str, addStr) ->
+    return str if !caro.isString(str)
+    str += addStr if !caro.endsWith(str, addStr)
+    str
+
+  ###
+  # replace the <br /> to \n
+  # @param {string} str
+  # @returns {string}
+  ###
+  self.brToWrap = (str) ->
+    regex = /<br\s*[\/]?>/gi
+    str.replace regex, '\n'
+
+  ###
+  # lowercase string
+  # @param {string} str
+  # @param {object} [opt]
+  # @param {number} [opt.start] the start-index you want to lowercase
+  # @param {number} [opt.end] the end-index you want to lowercase
+  # @param {boolean} [opt.force] if force cover to string
+  # @returns {*}
+  ###
+  self.lowerStr = (str, start, end) ->
+    changeCase str, 'toLowerCase', start, end
+
+  ###
   # create random string
   # @param {number} len the length of random
   # @param {object} [opt]
@@ -52,71 +94,6 @@ do ->
     text
 
   ###
-  # check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
-  # @param {string} str
-  # @returns {boolean}
-  ###
-  self.strToBool = (str) ->
-    str = str.toLowerCase()
-    # return false when string='false' or '', otherwise return true
-    str != '' and str != 'false'
-
-  ###
-  # add the head to string if not exist
-  # @param {string} str
-  # @param {string} addStr
-  # @returns {*}
-  ###
-  self.addHead = (str, addStr) ->
-    str = addStr + str if !caro.startsWith(str, addStr)
-    str
-
-  ###
-  # add the tail to string if not exist
-  # @param {string} str
-  # @param {string} addStr
-  # @returns {*}
-  ###
-  self.addTail = (str, addStr) ->
-    return str if !caro.isString(str)
-    str += addStr if !caro.endsWith(str, addStr)
-    str
-
-  ###
-  # replace \r\n | \r | \n to <br/>
-  # @param {string} str
-  # @returns {string}
-  ###
-  self.wrapToBr = (str) ->
-    return str if !caro.isString(str)
-    str = str.replace(/\r\n/g, '<br />')
-    str = str.replace(/\n/g, '<br />')
-    str = str.replace(/\r/g, '<br />')
-    str
-
-  ###
-  # replace the <br /> to \n
-  # @param {string} str
-  # @returns {string}
-  ###
-  self.brToWrap = (str) ->
-    regex = /<br\s*[\/]?>/gi
-    str.replace regex, '\n'
-
-  ###
-  # split to array by '\r\n' | '\n' | '\r'
-  # @param {string} str
-  # @returns {*}
-  ###
-  self.splitByWrap = (str) ->
-    aWrap = [
-      '\r\n'
-      '\r'
-      '\n'
-    ]
-    caro.splitStr str, aWrap
-
-  ###
   # replace all find in string
   # @param {string} str
   # @param {string} find
@@ -142,33 +119,24 @@ do ->
     str1 + str2.replace(find, replace)
 
   ###
-  # uppercase string
-  # @param {string} str
-  # @param {number} [start] the start-index you want to uppercase
-  # @param {number} [end] the end-index you want to uppercase
-  # @returns {*}
-  ###
-  self.upperStr = (str, start, end) ->
-    changeCase str, 'toUpperCase', start, end
+    # split to array by '\r\n' | '\n' | '\r'
+    # @param {string} str
+    # @returns {*}
+    ###
+  self.splitByWrap = (str) ->
+    aWrap = [
+      '\r\n'
+      '\r'
+      '\n'
+    ]
+    caro.splitStr str, aWrap
 
   ###
-  # lowercase string
-  # @param {string} str
-  # @param {object} [opt]
-  # @param {number} [opt.start] the start-index you want to lowercase
-  # @param {number} [opt.end] the end-index you want to lowercase
-  # @param {boolean} [opt.force] if force cover to string
-  # @returns {*}
-  ###
-  self.lowerStr = (str, start, end) ->
-    changeCase str, 'toLowerCase', start, end
-
-  ###
-  # split string
-  # @param {string} str
-  # @param {string|string[]} splitter it should be string-array or string
-  # @returns {*}
-  ###
+    # split string
+    # @param {string} str
+    # @param {string|string[]} splitter it should be string-array or string
+    # @returns {*}
+    ###
   self.splitStr = (str, splitter) ->
     return str if caro.isArray(str)
     return [] if !splitter
@@ -191,5 +159,37 @@ do ->
       str = caro.replaceAll(str, eachSplit, mainSplit)
       return
     str.split mainSplit
+
+  ###
+  # check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
+  # @param {string} str
+  # @returns {boolean}
+  ###
+  self.strToBool = (str) ->
+    str = str.toLowerCase()
+    # return false when string='false' or '', otherwise return true
+    str != '' and str != 'false'
+
+  ###
+  # uppercase string
+  # @param {string} str
+  # @param {number} [start] the start-index you want to uppercase
+  # @param {number} [end] the end-index you want to uppercase
+  # @returns {*}
+  ###
+  self.upperStr = (str, start, end) ->
+    changeCase str, 'toUpperCase', start, end
+
+  ###
+  # replace \r\n | \r | \n to <br/>
+  # @param {string} str
+  # @returns {string}
+  ###
+  self.wrapToBr = (str) ->
+    return str if !caro.isString(str)
+    str = str.replace(/\r\n/g, '<br />')
+    str = str.replace(/\n/g, '<br />')
+    str = str.replace(/\r/g, '<br />')
+    str
 
   return
