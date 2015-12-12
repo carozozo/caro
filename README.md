@@ -30,6 +30,11 @@ caro.isArray(['caro']); // true
 
 ### Array
 [Back to Index](#index)
+- **cleanArr(arr) - remove all items in array**
+```javascript
+var arr = [1, 2];
+caro.cleanArr(arr); // []
+```
 - **sumOfArr(arr [force=false]) - get sum-value in array**
 ```javascript
 var arr = [1, 2, '5'];
@@ -37,54 +42,6 @@ var r = caro.sumOfArr(arr); // 3
 var r2 = caro.sumOfArr(arr, true); // 8
 ```
 - **pushNoDuplicate(arr, val...) - push value to array exclude duplicate**
-```javascript
-var arr = [1, 2, 3];
-var r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3); // [ 1, 2, 3, {}, {} ]
-```
-- **pushNoEmptyVal(arr, val...) - push non-empty value to array**
-```javascript
-var arr = [1, 2, 3];
-var r = caro.pushNoEmptyVal(arr, 1, 'caro', {}, undefined, null, 0, '', []); // [ 1, 2, 3, 1, 'caro', 0 ]
-```
-- **pullEmptyVal(arr) - pull empty-value from array**
-```javascript
-var arr = [1, '', null, 'caro'];
-var r = caro.pullEmptyVal(arr);
-console.log(arr); // [1, 'caro']
-console.log(r); // ['', null]
-```
-- **pullUnBasicVal(arr) - pull un-basic-value(exclude boolean/string/number) from array**
-```javascript
-var arr = [1, {a: 1}, 'caro'];
-var r = caro.pullUnBasicVal(arr);
-console.log(arr); // [1, 'caro']
-console.log(r); // [{a: 1}]
-```
-
-### Helper
-[Back to Index](#index)
-- **checkIfPass((arr, checkFn [needAllPass=true]) - validate all values in array by check-function**
-```javascript
-var arg = [1, 2, 3];
-// (1===1 && 2===1 && 3===1)
-var r = caro.checkIfPass(arg, function (val) {
-    return val === 1;
-}); // false
-// (1 > 2 || 2 > 2 || 3 > 2)
-var r2 = caro.checkIfPass(arg, function (val) {
-    return val > 2;
-}, false); // true
-```
-- **executeIfFn(fn [arg...]) - execute it if argument is function**
-```javascript
-var arg = function (i) {
-    return ++i;
-};
-var arg2 = null;
-var r = caro.executeIfFn(arg, 12); // 13
-var r2 = caro.executeIfFn(arg2); // undefined
-```
-- **getFnName(fn) - get function name**
 ```javascript
 var arg = function (i) {
     return ++i;

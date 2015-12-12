@@ -9,6 +9,16 @@
   self = caro;
 
   /*
+   * remove all items in array
+   * @param {[]} arr
+   * @returns {array}
+   */
+  self.cleanArr = function(arr) {
+    arr.splice(0, arr.length);
+    return arr;
+  };
+
+  /*
    * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false] if cover to number when argument is not number

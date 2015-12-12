@@ -1,5 +1,11 @@
 do ->
 describe 'Array', ->
+  it 'cleanArr', ->
+    arr = [1, 2]
+    r = caro.cleanArr(arr)
+    r.should.eql []
+    arr.should.eql []
+
   it 'sumOfArr', ->
     arr = [1, 2, '5']
     r = caro.sumOfArr arr
