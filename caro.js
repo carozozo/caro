@@ -1,4 +1,4 @@
-/*! caro - v0.18.0 - 2015-10-17 */
+/*! caro - v0.19.0 - 2015-12-13 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -23,6 +23,16 @@
 (function() {
   var self;
   self = caro;
+
+  /*
+   * remove all items in array
+   * @param {[]} arr
+   * @returns {array}
+   */
+  self.cleanArr = function(arr) {
+    arr.splice(0, arr.length);
+    return arr;
+  };
 
   /*
    * get sum of value in array

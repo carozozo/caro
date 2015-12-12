@@ -89,6 +89,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
 
     // 套裝任務
-    grunt.registerTask('default', ['coffee', 'concat', 'uglify', 'test']);
-    grunt.registerTask('test', ['mochaTest']);
+    grunt.registerTask('default', ['coffee', 'concat', 'uglify', 'mochaTest']);
+    grunt.registerTask('test', ['coffee', 'concat', 'mochaTest']);
 };
