@@ -135,12 +135,16 @@
    * @param {object|array} obj
    * @param {number} [spaceLength=2] the space before each line
    */
-  self.toWord = function(arg, spaceLength) {
+  self.toWord = function(obj, spaceLength) {
     var toWord;
+    if (spaceLength == null) {
+      spaceLength = 2;
+    }
     toWord = function(arg, spaceLength, layer) {
       var fnSpace, fnSpaceLength, reg, ret, space;
-      spaceLength = spaceLength || 2;
-      layer = layer || 0;
+      if (layer == null) {
+        layer = 0;
+      }
       fnSpaceLength = layer * 2 + 6;
       space = caro.repeat(' ', spaceLength);
       fnSpace = caro.repeat(' ', fnSpaceLength);
@@ -149,6 +153,12 @@
         ret = JSON.stringify(arg, function(key, val) {
           if (!key) {
             return val;
+          }
+          if (typeof val === 'string') {
+            return "'" + val + "'";
+          }
+          if (caro.isUndefined(val)) {
+            return 'undefined';
           }
           return toWord(val, spaceLength, layer);
         }, spaceLength);
@@ -174,6 +184,6 @@
       } catch (_error) {}
       return ret;
     };
-    return toWord(arg, spaceLength);
+    return toWord(obj, spaceLength);
   };
 })();

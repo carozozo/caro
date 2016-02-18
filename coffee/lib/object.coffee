@@ -110,10 +110,8 @@ do ->
   # @param {object|array} obj
   # @param {number} [spaceLength=2] the space before each line
   ###
-  self.toWord = (arg, spaceLength) ->
-    toWord = (arg, spaceLength, layer) ->
-      spaceLength = spaceLength or 2
-      layer = layer or 0
+  self.toWord = (obj, spaceLength = 2) ->
+    toWord = (arg, spaceLength, layer = 0) ->
       fnSpaceLength = layer * 2 + 6
       space = caro.repeat(' ', spaceLength)
       fnSpace = caro.repeat(' ', fnSpaceLength)
@@ -121,6 +119,8 @@ do ->
       try
         ret = JSON.stringify(arg, (key, val) ->
           return val if !key
+          return "'" + val + "'" if typeof val is 'string'
+          return 'undefined' if caro.isUndefined(val)
           return toWord(val, spaceLength, layer)
         , spaceLength)
         ret = ret.replace(/\\r\\n/g, '\r\n' + space)
@@ -139,6 +139,6 @@ do ->
           ret = ret.replace(reg, '\n')
           ret = ret.replace(/"/g, '')
       return ret
-    return toWord(arg, spaceLength)
+    return toWord(obj, spaceLength)
 
   return
