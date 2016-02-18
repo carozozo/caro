@@ -71,7 +71,7 @@ describe 'Object', ->
         return 1
       h: {
         i: 3
-        j: -> return 2
+        j: -> return 'caro'
         k: {
           l: -> return 3
         }
@@ -81,8 +81,8 @@ describe 'Object', ->
     r2 = caro.toWord(a)
     r.should.eq('''
     [
-        caro,
-        null
+        'caro',
+        undefined
     ]
     ''')
     r2.should.eq('''
@@ -90,7 +90,8 @@ describe 'Object', ->
       a: false,
       b: null,
       c: 0,
-      d: caro,
+      d: 'caro',
+      e: undefined,
       f: [],
       g: function () {
         return 1;
@@ -98,7 +99,7 @@ describe 'Object', ->
       h: {
         i: 3,
         j: function () {
-          return 2;
+          return 'caro';
         },
         k: {
           l: function () {
