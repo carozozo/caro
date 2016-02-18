@@ -381,6 +381,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Update Package - v0.19.1
 - Add [Array -> cleanArr] - v0.19.0
 - Add [String -> insertStr] - v0.18.0
 - Add [Object -> assignByKeys] - v0.17.0
