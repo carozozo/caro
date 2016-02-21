@@ -65,6 +65,13 @@ var r = caro.pullUnBasicVal(arr);
 console.log(arr); // [1, 'caro']
 console.log(r); // [{a: 1}]
 ```
+- **randomPick(arr [removeFromArr=false]) - select item from array by random**
+```javascript
+var arr = [1, 2, 3];
+var arr2 = [1, 2, 3];
+var r = caro.randomPick(arr); // r should be an item of arr, and arr is not changed
+var r2 = caro.randomPick(arr2, true); // r2 should be an item of arr2, and arr2 should has not it
+```
 
 ### Helper
 [Back to Index](#index)
@@ -436,6 +443,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Array -> randomPick] - v0.21.2
 - Add [Helper -> randomInt] - v0.20.2
 - Update [Object -> toWord] - v0.19.2
 - Update Package - v0.19.1
