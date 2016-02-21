@@ -93,4 +93,21 @@
       return !caro.isBasicVal(n);
     });
   };
+
+  /*
+   * pick up item from array by random
+   * @param {[]} arr
+   * @returns {boolean} [removeFromArr=false]
+   */
+  self.randomPick = function(arr, removeFromArr) {
+    var randIndex;
+    if (removeFromArr == null) {
+      removeFromArr = false;
+    }
+    randIndex = caro.randomInt(arr.length - 1);
+    if (!removeFromArr) {
+      return arr[randIndex];
+    }
+    return arr.splice(randIndex, 1)[0];
+  };
 })();

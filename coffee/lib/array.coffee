@@ -75,4 +75,14 @@ do ->
       return !caro.isBasicVal(n)
     )
 
+  ###
+  # pick up item from array by random
+  # @param {[]} arr
+  # @returns {boolean} [removeFromArr=false]
+  ###
+  self.randomPick = (arr, removeFromArr = false) ->
+    randIndex = caro.randomInt(arr.length - 1)
+    return arr[randIndex] unless removeFromArr
+    arr.splice(randIndex, 1)[0]
+
   return
