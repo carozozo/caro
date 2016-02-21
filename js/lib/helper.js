@@ -74,6 +74,50 @@
   };
 
   /*
+   * get stack-information list
+   * @param {number} [start=0] the start-index of list
+   * @param {number} [length=null] the list length you want get
+   * @returns {array}
+   */
+  self.getStackList = function(start, length) {
+    var aStack, end, err, r, stack;
+    r = [];
+    err = new Error();
+    stack = err.stack;
+    aStack = caro.splitByWrap(stack).slice(2);
+    start = start || 0;
+    length = length || null;
+    if (length) {
+      end = start + length - 1;
+    } else {
+      end = aStack.length - 1;
+    }
+    caro.forEach(aStack, function(sStack, i) {
+      var data, info, reg, reg2;
+      if (i < start || i > end) {
+        return;
+      }
+      data = {};
+      reg = /^\s*at\s*/i;
+      sStack = sStack.replace(reg, '');
+      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi;
+      reg2 = /()(.*):(\d*):(\d*)/gi;
+      info = reg.exec(sStack) || reg2.exec(sStack);
+      if (!info || info.length !== 5) {
+        return;
+      }
+      data.stack = info[0];
+      data.method = info[1];
+      data.path = info[2];
+      data.line = info[3];
+      data.position = info[4];
+      data.file = self.getFileName(data.path);
+      return r.push(data);
+    });
+    return r;
+  };
+
+  /*
    * format to money type like 1,000.00
    * @param {string|number} arg
    * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
@@ -132,6 +176,23 @@
   };
 
   /*
+   * random an integer
+   * @param {number} max
+   * @param {number} [min=0]
+   * @returns {number}
+   */
+  self.randomInt = function(max, min) {
+    var rand;
+    max = parseInt(max) || 0;
+    min = parseInt(min) || 0;
+    if (min > max) {
+      min = 0;
+    }
+    rand = Math.random() * (max - min + 1);
+    return Math.floor(rand + min);
+  };
+
+  /*
    * serialize object-arguments to url
    * @param {string} url
    * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
@@ -161,49 +222,5 @@
       count++;
     });
     return url += aArgs.join('');
-  };
-
-  /*
-   * get stack-information list
-   * @param {number} [start=0] the start-index of list
-   * @param {number} [length=null] the list length you want get
-   * @returns {array}
-   */
-  self.getStackList = function(start, length) {
-    var aStack, end, err, r, stack;
-    r = [];
-    err = new Error();
-    stack = err.stack;
-    aStack = caro.splitByWrap(stack).slice(2);
-    start = start || 0;
-    length = length || null;
-    if (length) {
-      end = start + length - 1;
-    } else {
-      end = aStack.length - 1;
-    }
-    caro.forEach(aStack, function(sStack, i) {
-      var data, info, reg, reg2;
-      if (i < start || i > end) {
-        return;
-      }
-      data = {};
-      reg = /^\s*at\s*/i;
-      sStack = sStack.replace(reg, '');
-      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi;
-      reg2 = /()(.*):(\d*):(\d*)/gi;
-      info = reg.exec(sStack) || reg2.exec(sStack);
-      if (!info || info.length !== 5) {
-        return;
-      }
-      data.stack = info[0];
-      data.method = info[1];
-      data.path = info[2];
-      data.line = info[3];
-      data.position = info[4];
-      data.file = self.getFileName(data.path);
-      return r.push(data);
-    });
-    return r;
   };
 })();

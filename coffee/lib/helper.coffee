@@ -56,6 +56,42 @@ do ->
     return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'))
 
   ###
+  # get stack-information list
+  # @param {number} [start=0] the start-index of list
+  # @param {number} [length=null] the list length you want get
+  # @returns {array}
+  ###
+  self.getStackList = (start, length) ->
+    r = []
+    err = new Error()
+    stack = err.stack
+    aStack = caro.splitByWrap(stack).slice(2)
+    start = start or 0
+    length = length or null
+    if length
+      end = start + length - 1
+    else
+      end = aStack.length - 1
+    caro.forEach(aStack, (sStack, i) ->
+      return if i < start or i > end
+      data = {}
+      reg = /^\s*at\s*/i
+      sStack = sStack.replace(reg, '')
+      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
+      reg2 = /()(.*):(\d*):(\d*)/gi
+      info = reg.exec(sStack) or reg2.exec(sStack)
+      return if (!info or info.length != 5)
+      data.stack = info[0]
+      data.method = info[1]
+      data.path = info[2]
+      data.line = info[3]
+      data.position = info[4]
+      data.file = self.getFileName(data.path)
+      r.push(data)
+    )
+    r
+
+  ###
   # format to money type like 1,000.00
   # @param {string|number} arg
   # @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
@@ -102,6 +138,19 @@ do ->
     r.join ''
 
   ###
+  # random an integer
+  # @param {number} max
+  # @param {number} [min=0]
+  # @returns {number}
+  ###
+  self.randomInt = (max, min) ->
+    max = parseInt(max) or 0
+    min = parseInt(min) or 0
+    min = 0 if min > max
+    rand = Math.random() * (max - min + 1)
+    Math.floor(rand + min)
+
+  ###
   # serialize object-arguments to url
   # @param {string} url
   # @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})
@@ -122,41 +171,5 @@ do ->
       count++
       return
     url += aArgs.join('')
-
-  ###
-  # get stack-information list
-  # @param {number} [start=0] the start-index of list
-  # @param {number} [length=null] the list length you want get
-  # @returns {array}
-  ###
-  self.getStackList = (start, length) ->
-    r = []
-    err = new Error()
-    stack = err.stack
-    aStack = caro.splitByWrap(stack).slice(2)
-    start = start or 0
-    length = length or null
-    if length
-      end = start + length - 1
-    else
-      end = aStack.length - 1
-    caro.forEach(aStack, (sStack, i) ->
-      return if i < start or i > end
-      data = {}
-      reg = /^\s*at\s*/i
-      sStack = sStack.replace(reg, '')
-      reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
-      reg2 = /()(.*):(\d*):(\d*)/gi
-      info = reg.exec(sStack) or reg2.exec(sStack)
-      return if (!info or info.length != 5)
-      data.stack = info[0]
-      data.method = info[1]
-      data.path = info[2]
-      data.line = info[3]
-      data.position = info[4]
-      data.file = self.getFileName(data.path)
-      r.push(data)
-    )
-    r
 
   return
