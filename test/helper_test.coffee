@@ -29,6 +29,14 @@ describe 'Helper', ->
     r = caro.getFnBody(arg)
     r.should.be.a('string')
 
+  it 'getStackList', ->
+    r = caro.getStackList()
+    r2 = caro.getStackList(0, 2)
+    r = r[0].file
+    r2 = r2[0].file
+    r.should.be.eql 'helper_test.coffee'
+    r2.should.be.eql 'helper_test.coffee'
+
   it 'formatMoney', ->
     arg = null
     arg2 = '12003000.923'
@@ -50,6 +58,14 @@ describe 'Helper', ->
     r4.should.eq '12,003,000'
     r5.should.eq '12,003,000.92300'
 
+  it 'randomInt', ->
+    r = caro.randomInt(3)
+    r2 = caro.randomInt(3, -3)
+    r3 = caro.randomInt()
+    (r >= 0 and r <= 3).should.be.true
+    (r2 >= -3 and r2 <= 3).should.be.true
+    r3.should.be.eq(0)
+
   it 'serializeUrl', ->
     arg = 'http://localhost'
     obj = {a: 1, b: 2, c: null}
@@ -57,11 +73,3 @@ describe 'Helper', ->
     r2 = caro.serializeUrl(arg, obj, true)
     r.should.eq 'http://localhost?a=1&b=2'
     r2.should.eq 'http://localhost?a=1&b=2&c='
-
-  it 'getStackList', ->
-    r = caro.getStackList()
-    r2 = caro.getStackList(0, 2)
-    r = r[0].file
-    r2 = r2[0].file
-    r.should.be.eql 'helper_test.coffee'
-    r2.should.be.eql 'helper_test.coffee'
