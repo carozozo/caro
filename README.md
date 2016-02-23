@@ -443,6 +443,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Update CLI setting - v0.21.3
 - Add [Array -> randomPick] - v0.21.2
 - Add [Helper -> randomInt] - v0.20.2
 - Update [Object -> toWord] - v0.19.2
