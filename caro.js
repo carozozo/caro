@@ -1,4 +1,4 @@
-/*! caro - v0.22.4 - 2016-03-07 */
+/*! caro - v0.22.5 - 2016-03-07 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -685,7 +685,7 @@
    * @param {string} str
    * @param {object} [opt]
    * @param {number|function} [opt.startOrCb] the start-index you want to lowercase
-   * or callback-function, will lower-case when callback return true
+   * or callback-function, will lowercase when callback return true
    * @param {number} [opt.end] the end-index you want to lowercase
    * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
@@ -835,12 +835,13 @@
   /*
    * uppercase string
    * @param {string} str
-   * @param {number} [start] the start-index you want to uppercase
+   * @param {number|function} [startOrCb] the start-index you want to uppercase
+   * or callback-function, will uppercase when callback return true
    * @param {number} [end] the end-index you want to uppercase
    * @returns {*}
    */
-  self.upperStr = function(str, start, end) {
-    return changeCase(str, 'toUpperCase', start, end);
+  self.upperStr = function(str, startOrCb, end) {
+    return changeCase(str, 'toUpperCase', startOrCb, end);
   };
 
   /*

@@ -95,9 +95,17 @@ describe 'String', ->
     r = caro.upperStr('I am Caro')
     r2 = caro.upperStr('i am caro', 5)
     r3 = caro.upperStr('i am caro', 5, 6)
+    r4 = caro.upperStr('i am caro', (letter) ->
+      return true if letter is 'i' or letter is 'c'
+    )
+    r5 = caro.upperStr('i am caro', (letter, i) ->
+      return true if i < 1
+    )
     r.should.eq 'I AM CARO'
     r2.should.eq 'i am CARO'
     r3.should.eq 'i am Caro'
+    r4.should.eq 'I am Caro'
+    r5.should.eq 'I am caro'
 
   it 'wrapToBr', ->
     r = caro.wrapToBr('''this is
