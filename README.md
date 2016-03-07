@@ -344,11 +344,21 @@ var r2 = caro.strToBool('fAlse'); // false
 var r3 = caro.strToBool('123'); // true
 var r4 = caro.strToBool(''); // false
 ```
-- **upperStr(str [start] [end]) - cover string to uppercase**
+- **upperStr(str [start = 0 or callback] [end]) - cover string to uppercase**
 ```javascript
 var r = caro.upperStr('i am caro'); // 'I AM CARO'
 var r2 = caro.upperStr('i am caro', 5); // 'i am CARO'
 var r3 = caro.upperStr('i am caro', 5, 6); // 'i am Caro'
+var r4 = caro.upperStr('i am caro', function(letter){
+  if(letter === 'i' or letter === 'c'){
+    return true;
+  }
+}); // 'I am Caro'
+var r5 = caro.upperStr('i am caro', function(letter, i){
+  if(i < 1){
+    return true;
+  }
+}); // 'I am caro'
 ```
 - **wrapToBr(str, addStr) - cover wrap to '\<br /\>'**
 ```javascript
@@ -448,6 +458,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Update [String -> upperStr] - v0.22.5
 - Update [String -> lowerStr] - v0.22.4
 - Remove [Object -> toWord] - v0.22.3
 - Update CLI setting - v0.21.3
