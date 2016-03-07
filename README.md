@@ -281,11 +281,21 @@ var str1 = 'I love my';
 var str2 = ' dog';
 r = caro.insertStr(str1, str2); // 'I love my dog' 
 ```
-- **lowerStr(str [start] [end]) - cover string to lowercase**
+- **lowerStr(str [start = 0 or callback] [end]) - cover string to lowercase**
 ```javascript
 var r = caro.lowerStr('I AM CARO'); // 'i am caro'
 var r2 = caro.lowerStr('I AM CARO', 5); // 'I AM caro'
 var r3 = caro.lowerStr('I AM CARO', 5, 6); // 'I AM cARO'
+var r4 = caro.lowerStr('I AM CARO', function(letter){
+  if(letter !== 'C'){
+    return true;
+  }
+}); // 'i am Caro'
+var r5 = caro.lowerStr('I AM CARO', function(letter, i){
+  if(i > 1){
+    return true;
+  }
+}); // 'I am caro'
 ```
 - **random(len [opt]) - create random string**
 ```javascript
@@ -385,7 +395,7 @@ var r4 = caro.isJson('{"a":1, "b": function(){}}') // false
 ```javascript
 var r = caro.isObjJson('{"a": 1}'); // true
 var r2 = caro.isObjJson('{"a": function(){}}'); // false
-var r3 = caro.isObjJson({b: 2}) // false
+var r3 = caro.isObjJson({b: 2}); // false
 ```
 - **isUpper(str) - check string if all uppercase**
 ```javascript
@@ -438,6 +448,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Update [String -> lowerStr] - v0.22.4
 - Remove [Object -> toWord] - v0.22.3
 - Update CLI setting - v0.21.3
 - Add [Array -> randomPick] - v0.21.2

@@ -4,15 +4,20 @@
 ###
 do ->
   self = caro
-  changeCase = (str, type, start = 0, end = null) ->
-    r = []
-    r.push str.slice(0, start)
-    if end
-      r.push str.slice(start, end)[type]()
-      r.push str.slice(end)
+  changeCase = (str, type, startOrCb = 0, end = null) ->
+    cb = null
+    end = str.length unless end
+    strArr = str.split('')
+    if caro.isFunction(startOrCb)
+      cb = startOrCb
+      caro.forEach(strArr , (letter, i) ->
+        strArr[i] = letter[type]() if cb(letter, i) is true
+      )
     else
-      r.push str.slice(start)[type]()
-    r.join ''
+      caro.forEach(strArr , (letter, i) ->
+        strArr[i] = letter[type]() if i >= startOrCb and i < end
+      )
+    return strArr.join('')
 
   ###
   # add the head to string if not exist
@@ -58,13 +63,14 @@ do ->
   # lowercase string
   # @param {string} str
   # @param {object} [opt]
-  # @param {number} [opt.start] the start-index you want to lowercase
+  # @param {number|function} [opt.startOrCb] the start-index you want to lowercase
+  # or callback-function, will lower-case when callback return true
   # @param {number} [opt.end] the end-index you want to lowercase
   # @param {boolean} [opt.force] if force cover to string
   # @returns {*}
   ###
-  self.lowerStr = (str, start, end) ->
-    changeCase str, 'toLowerCase', start, end
+  self.lowerStr = (str, startOrCb, end) ->
+    changeCase str, 'toLowerCase', startOrCb, end
 
   ###
   # create random string
