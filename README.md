@@ -234,11 +234,6 @@ var obj = {a: 1, b: 2, c: 3, e: 4};
 var obj2 = {a: 3, c: 4, d: 5, e: 6};
 var r = caro.sameKeys(obj, obj2); // ['a', 'c', 'e']
 ```
-- **toWord(obj [space=2]) - get string for easy-reading with object/array**
-```javascript
-r = caro.toWord(['caro', undefined], true);
-r2 = caro.toWord({a: false, b: null, c: 0, d: 'caro', e: undefined, f: [], g: function(){}});
-```
 
 ### Path
 [Back to Index](#index)
@@ -443,6 +438,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Remove [Object -> toWord] - v0.22.3
 - Update CLI setting - v0.21.3
 - Add [Array -> randomPick] - v0.21.2
 - Add [Helper -> randomInt] - v0.20.2
