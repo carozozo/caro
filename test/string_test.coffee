@@ -31,9 +31,17 @@ describe 'String', ->
     r = caro.lowerStr('I AM CARO')
     r2 = caro.lowerStr('I AM CARO', 5)
     r3 = caro.lowerStr('I AM CARO', 5, 6)
+    r4 = caro.lowerStr('I AM CARO', (letter) ->
+      return true if letter isnt 'C'
+    )
+    r5 = caro.lowerStr('I AM CARO', (letter, i) ->
+      return true if i > 1
+    )
     r.should.eq 'i am caro'
     r2.should.eq 'I AM caro'
     r3.should.eq 'I AM cARO'
+    r4.should.eq 'i am Caro'
+    r5.should.eq 'I am caro'
 
   it 'random', ->
     r = caro.random(15)

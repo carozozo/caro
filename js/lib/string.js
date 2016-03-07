@@ -6,23 +6,34 @@
 (function() {
   var changeCase, self;
   self = caro;
-  changeCase = function(str, type, start, end) {
-    var r;
-    if (start == null) {
-      start = 0;
+  changeCase = function(str, type, startOrCb, end) {
+    var cb, strArr;
+    if (startOrCb == null) {
+      startOrCb = 0;
     }
     if (end == null) {
       end = null;
     }
-    r = [];
-    r.push(str.slice(0, start));
-    if (end) {
-      r.push(str.slice(start, end)[type]());
-      r.push(str.slice(end));
-    } else {
-      r.push(str.slice(start)[type]());
+    cb = null;
+    if (!end) {
+      end = str.length;
     }
-    return r.join('');
+    strArr = str.split('');
+    if (caro.isFunction(startOrCb)) {
+      cb = startOrCb;
+      caro.forEach(strArr, function(letter, i) {
+        if (cb(letter, i) === true) {
+          return strArr[i] = letter[type]();
+        }
+      });
+    } else {
+      caro.forEach(strArr, function(letter, i) {
+        if (i >= startOrCb && i < end) {
+          return strArr[i] = letter[type]();
+        }
+      });
+    }
+    return strArr.join('');
   };
 
   /*
@@ -80,13 +91,14 @@
    * lowercase string
    * @param {string} str
    * @param {object} [opt]
-   * @param {number} [opt.start] the start-index you want to lowercase
+   * @param {number|function} [opt.startOrCb] the start-index you want to lowercase
+   * or callback-function, will lower-case when callback return true
    * @param {number} [opt.end] the end-index you want to lowercase
    * @param {boolean} [opt.force] if force cover to string
    * @returns {*}
    */
-  self.lowerStr = function(str, start, end) {
-    return changeCase(str, 'toLowerCase', start, end);
+  self.lowerStr = function(str, startOrCb, end) {
+    return changeCase(str, 'toLowerCase', startOrCb, end);
   };
 
   /*
