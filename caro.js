@@ -1,4 +1,4 @@
-/*! caro - v0.22.5 - 2016-03-07 */
+/*! caro - v0.22.6 - 2016-03-10 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -303,6 +303,48 @@
     r.push(iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated));
     r.push(fStr ? decimal + fStr : '');
     return r.join('');
+  };
+
+  /*
+     * create random string
+     * @param {number} len the length of random
+     * @param {object} [opt]
+     * @param {boolean} [opt.lower=true] if include lowercase
+     * @param {boolean} [opt.upper=true] if include uppercase
+     * @param {boolean} [opt.num=true]
+     * @param {string} [opt.exclude=[]] the charts that excluded
+     * @returns {string}
+   */
+  self.random = function(len, opt) {
+    var chars, exclude, i, lower, num, text, upper;
+    text = '';
+    chars = [];
+    len = parseInt(len) ? parseInt(len) : 1;
+    opt = opt || {};
+    lower = opt.lower !== false;
+    upper = opt.upper !== false;
+    num = opt.num !== false;
+    exclude = opt.exclude || [];
+    exclude = caro.splitStr(exclude, ',');
+    if (lower) {
+      chars.push('abcdefghijklmnopqrstuvwxyz');
+    }
+    if (upper) {
+      chars.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    }
+    if (num) {
+      chars.push('0123456789');
+    }
+    chars = chars.join('');
+    caro.forEach(exclude, function(excludeStr) {
+      chars = caro.replaceAll(chars, excludeStr, '');
+    });
+    i = 0;
+    while (i < len) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+      i++;
+    }
+    return text;
   };
 
   /*
@@ -692,48 +734,6 @@
    */
   self.lowerStr = function(str, startOrCb, end) {
     return changeCase(str, 'toLowerCase', startOrCb, end);
-  };
-
-  /*
-   * create random string
-   * @param {number} len the length of random
-   * @param {object} [opt]
-   * @param {boolean} [opt.lower=true] if include lowercase
-   * @param {boolean} [opt.upper=true] if include uppercase
-   * @param {boolean} [opt.num=true]
-   * @param {string} [opt.exclude=[]] the charts that excluded
-   * @returns {string}
-   */
-  self.random = function(len, opt) {
-    var chars, exclude, i, lower, num, text, upper;
-    text = '';
-    chars = [];
-    len = parseInt(len) ? parseInt(len) : 1;
-    opt = opt || {};
-    lower = opt.lower !== false;
-    upper = opt.upper !== false;
-    num = opt.num !== false;
-    exclude = opt.exclude || [];
-    exclude = caro.splitStr(exclude, ',');
-    if (lower) {
-      chars.push('abcdefghijklmnopqrstuvwxyz');
-    }
-    if (upper) {
-      chars.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    }
-    if (num) {
-      chars.push('0123456789');
-    }
-    chars = chars.join('');
-    caro.forEach(exclude, function(excludeStr) {
-      chars = caro.replaceAll(chars, excludeStr, '');
-    });
-    i = 0;
-    while (i < len) {
-      text += chars.charAt(Math.floor(Math.random() * chars.length));
-      i++;
-    }
-    return text;
   };
 
   /*

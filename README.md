@@ -178,7 +178,6 @@ var obj = {a: 1, b: 2, c: 3, d: 4};
 var obj2 = {d: 1, e: 2, f: 3};
 caro.assignByKeys(obj, obj2, ['d', 'f']);
 // obj = {a: 1, b: 2, c: 3, d: 1, f: 3}
-
 obj = {a: 1, b: 2, c: 3, d: 4};
 caro.assignByKeys(obj, obj2, ['d', 'f'], false);
 // obj = {a: 1, b: 2, c: 3, d: 4, f: 3}
@@ -271,15 +270,10 @@ var r2 = caro.addTail('moon', 'Day'); // 'moonDay'
 ```javascript
 var r = caro.brToWrap('this is<br />wrap content.'); // 'this is\nwrap content.'
 ```
-- **insertStr(str1, str2, [position]) - insert string to another
-```
-var str1 = 'Lift is good';
-var str2 = ' so';
-var r = caro.insertStr(str1, str2, 7); // 'Lift is so good'
-
-var str1 = 'I love my';
-var str2 = ' dog';
-r = caro.insertStr(str1, str2); // 'I love my dog' 
+- **insertStr(str1, str2, [position]) - insert string to another**
+```javascript
+var r = caro.insertStr('Lift is good', ' so', 7); // 'Lift is so good'
+var r2 = caro.insertStr('I love my', ' dog'); // 'I love my dog' 
 ```
 - **lowerStr(str [start = 0 or callback] [end]) - cover string to lowercase**
 ```javascript
@@ -458,6 +452,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Move [String -> random to Helper -> random] - v0.22.6
 - Update [String -> upperStr] - v0.22.5
 - Update [String -> lowerStr] - v0.22.4
 - Remove [Object -> toWord] - v0.22.3
@@ -472,14 +467,3 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 - Fix version - v0.16.1
 - Add [Object -> sameKeys] - v0.16.0
 - Rename [Object -> equalKeys to hasEqualKeys] - v0.15.1
-- Add [Object -> equalKeys] - v0.15.0
-- Add [Object -> differentKeys] - v0.14.0
-- Add [Helper -> getFnBody] - v0.13.0
-- Remove [TypeCover -> toArray] - v0.12.0 - for not conflict with lodash.toArray
-- Update [Helper -> getStackList] - v0.11.1
-- Add [Helper -> getStackList] - v0.11.0
-- Add [Path -> getDirPath] - v0.10.0
-- Add [Path -> getFileName] - v0.10.0   
-- Add [Path -> getExtendName] - v0.10.0
-- Add [String -> replaceLast] - v0.9.0  
-- Add [Object -> catching] - v0.8.0
