@@ -17,14 +17,9 @@ describe 'String', ->
     r.should.eq 'this is\nwrap content.'
 
   it 'insertStr', ->
-    str1 = "Lift is good"
-    str2 = " so"
-    r = caro.insertStr(str1, str2, 7)
+    r = caro.insertStr('Lift is good', ' so', 7)
     r.should.eq 'Lift is so good'
-
-    str1 = "I love my"
-    str2 = " dog"
-    r = caro.insertStr(str1, str2)
+    r = caro.insertStr('I love my', ' dog')
     r.should.eq 'I love my dog'
 
   it 'lowerStr', ->
@@ -42,17 +37,6 @@ describe 'String', ->
     r3.should.eq 'I AM cARO'
     r4.should.eq 'i am Caro'
     r5.should.eq 'I am caro'
-
-  it 'random', ->
-    r = caro.random(15)
-    r2 = caro.random(15, {
-      lower: true
-      upper: false
-      num: false
-      exclude: 'a,b,c,d,e,f,g,1,2,3,4'
-    })
-    r.should.be.a('string')
-    r2.should.be.a('string')
 
   it 'replaceAll', ->
     r = caro.replaceAll('I*am*{Caro}.', '*', '-')

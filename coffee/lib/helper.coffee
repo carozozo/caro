@@ -138,6 +138,43 @@ do ->
     r.join ''
 
   ###
+    # create random string
+    # @param {number} len the length of random
+    # @param {object} [opt]
+    # @param {boolean} [opt.lower=true] if include lowercase
+    # @param {boolean} [opt.upper=true] if include uppercase
+    # @param {boolean} [opt.num=true]
+    # @param {string} [opt.exclude=[]] the charts that excluded
+    # @returns {string}
+    ###
+  self.random = (len, opt) ->
+    text = ''
+    chars = []
+    len = if parseInt(len) then parseInt(len) else 1
+    opt = opt or {}
+    lower = opt.lower != false
+    upper = opt.upper != false
+    num = opt.num != false
+    # cover to array if string
+    exclude = opt.exclude || []
+    exclude = caro.splitStr(exclude, ',')
+    if lower
+      chars.push 'abcdefghijklmnopqrstuvwxyz'
+    if upper
+      chars.push 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    if num
+      chars.push '0123456789'
+    chars = chars.join('')
+    caro.forEach exclude, (excludeStr) ->
+      chars = caro.replaceAll(chars, excludeStr, '')
+      return
+    i = 0
+    while i < len
+      text += chars.charAt(Math.floor(Math.random() * chars.length))
+      i++
+    text
+
+  ###
   # random an integer
   # @param {number} max
   # @param {number} [min=0]
