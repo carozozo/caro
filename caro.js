@@ -1,4 +1,4 @@
-/*! caro - v0.22.6 - 2016-03-10 */
+/*! caro - v0.22.6 - 2016-03-14 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -32,24 +32,6 @@
   self.cleanArr = function(arr) {
     arr.splice(0, arr.length);
     return arr;
-  };
-
-  /*
-   * get sum of value in array
-   * @param {[]} arr
-   * @param {boolean} [force=false] if cover to number when argument is not number
-   * @returns {number}
-   */
-  self.sumOfArr = function(arr, force) {
-    if (force == null) {
-      force = false;
-    }
-    return caro.reduce(arr, function(total, n) {
-      if (!caro.isNumber(n) && !force) {
-        return total;
-      }
-      return total + Number(n);
-    });
   };
 
   /*
@@ -125,6 +107,24 @@
       return arr[randIndex];
     }
     return arr.splice(randIndex, 1)[0];
+  };
+
+  /*
+   * get sum of value in array
+   * @param {[]} arr
+   * @param {boolean} [force=false] if cover to number when argument is not number
+   * @returns {number}
+   */
+  self.sumOfArr = function(arr, force) {
+    if (force == null) {
+      force = false;
+    }
+    return caro.reduce(arr, function(total, n) {
+      if (!caro.isNumber(n) && !force) {
+        return total;
+      }
+      return total + Number(n);
+    });
   };
 })();
 

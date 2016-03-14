@@ -6,13 +6,6 @@ describe 'Array', ->
     r.should.eql([])
     arr.should.eql([])
 
-  it 'sumOfArr', ->
-    arr = [1, 2, '5']
-    r = caro.sumOfArr(arr);
-    r2 = caro.sumOfArr(arr, true);
-    r.should.eq(3)
-    r2.should.eq(8)
-
   it 'pushNoDuplicate', ->
     arr = [1, 2, 3];
     r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3);
@@ -50,3 +43,9 @@ describe 'Array', ->
       val.should.be.not.eq(r2)
     )
 
+  it 'sumOfArr', ->
+    arr = [1, 2, '5']
+    r = caro.sumOfArr(arr);
+    r2 = caro.sumOfArr(arr, true);
+    r.should.eq(3)
+    r2.should.eq(8)
