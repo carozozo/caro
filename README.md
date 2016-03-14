@@ -96,6 +96,20 @@ var arg2 = null;
 var r = caro.executeIfFn(arg, 12); // 13
 var r2 = caro.executeIfFn(arg2); // undefined
 ```
+- **formatMoney(str [type | opt]) - format string/number to money type**
+```javascript
+var r = caro.formatMoney(null); // '0' 
+var r2 = caro.formatMoney('12003000.923', 'int'); // '12,003,000'
+var r3 = caro.formatMoney(12003000.923, 'sInt'); // '$12,003,000'
+var r4 = caro.formatMoney(12003000.923, {
+  float: 0, separated: ',',
+  decimal: '.', prefix: '',
+  forceFloat: false
+}); // '12,003,000' - here is default options
+var r5 = caro.formatMoney(12003000.923, {
+  float: 5, forceFloat: true
+}); // '12,003,000.92300'
+```
 - **getFnName(fn) - get function name**
 ```javascript
 var arg = function (i) {
@@ -128,20 +142,6 @@ var r = caro.getStackList();
     ...
 ]
 */
-```
-- **formatMoney(str [type | opt]) - format string/number to money type**
-```javascript
-var r = caro.formatMoney(null); // '0' 
-var r2 = caro.formatMoney('12003000.923', 'int'); // '12,003,000'
-var r3 = caro.formatMoney(12003000.923, 'sInt'); // '$12,003,000'
-var r4 = caro.formatMoney(12003000.923, {
-  float: 0, separated: ',',
-  decimal: '.', prefix: '',
-  forceFloat: false
-}); // '12,003,000' - here is default options
-var r5 = caro.formatMoney(12003000.923, {
-  float: 5, forceFloat: true
-}); // '12,003,000.92300'
 ```
 - **randomInt(max [min = 0]) - random an integer**
 ```javascript
