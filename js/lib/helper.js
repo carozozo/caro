@@ -176,14 +176,39 @@
   };
 
   /*
-     * create random string
-     * @param {number} len the length of random
-     * @param {object} [opt]
-     * @param {boolean} [opt.lower=true] if include lowercase
-     * @param {boolean} [opt.upper=true] if include uppercase
-     * @param {boolean} [opt.num=true]
-     * @param {string} [opt.exclude=[]] the charts that excluded
-     * @returns {string}
+   * simple-setInterval
+   * @param {function} fn the function you want to exclude
+   * @param {integer} ms million-seconds
+   * @param {integer} [times=0] the times that function exclude, will never stop when 0
+   * @returns {string}
+   */
+  self.setInterval = function(fn, ms, times) {
+    var count, interval;
+    if (times == null) {
+      times = 0;
+    }
+    count = 0;
+    return interval = setInterval(function() {
+      if (times && count === times) {
+        clearInterval(interval);
+        return;
+      }
+      if (fn() === false && !times) {
+        clearInterval(interval);
+      }
+      return count++;
+    }, ms);
+  };
+
+  /*
+   * create random string
+   * @param {number} len the length of random
+   * @param {object} [opt]
+   * @param {boolean} [opt.lower=true] if include lowercase
+   * @param {boolean} [opt.upper=true] if include uppercase
+   * @param {boolean} [opt.num=true]
+   * @param {string} [opt.exclude=[]] the charts that excluded
+   * @returns {string}
    */
   self.random = function(len, opt) {
     var chars, exclude, i, lower, num, text, upper;
