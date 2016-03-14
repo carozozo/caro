@@ -17,26 +17,6 @@ describe 'Helper', ->
     r.should.eq 13
     should.equal r2, undefined
 
-  it 'getFnName', ->
-    arg = (i) ->
-      ++i
-    r = caro.getFnName(arg)
-    r.should.be.a('string')
-
-  it 'getFnBody', ->
-    arg = (i) ->
-      ++i
-    r = caro.getFnBody(arg)
-    r.should.be.a('string')
-
-  it 'getStackList', ->
-    r = caro.getStackList()
-    r2 = caro.getStackList(0, 2)
-    r = r[0].file
-    r2 = r2[0].file
-    r.should.be.eql 'helper_test.coffee'
-    r2.should.be.eql 'helper_test.coffee'
-
   it 'formatMoney', ->
     arg = null
     arg2 = '12003000.923'
@@ -57,6 +37,26 @@ describe 'Helper', ->
     r3.should.eq '$12,003,000'
     r4.should.eq '12,003,000'
     r5.should.eq '12,003,000.92300'
+
+  it 'getFnName', ->
+    arg = (i) ->
+      ++i
+    r = caro.getFnName(arg)
+    r.should.be.a('string')
+
+  it 'getFnBody', ->
+    arg = (i) ->
+      ++i
+    r = caro.getFnBody(arg)
+    r.should.be.a('string')
+
+  it 'getStackList', ->
+    r = caro.getStackList()
+    r2 = caro.getStackList(0, 2)
+    r = r[0].file
+    r2 = r2[0].file
+    r.should.be.eql 'helper_test.coffee'
+    r2.should.be.eql 'helper_test.coffee'
 
   it 'random', ->
     r = caro.random(15)
