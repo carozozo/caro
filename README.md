@@ -35,12 +35,6 @@ caro.isArray(['caro']); // true
 var arr = [1, 2];
 caro.cleanArr(arr); // []
 ```
-- **sumOfArr(arr [force=false]) - get sum-value in array**
-```javascript
-var arr = [1, 2, '5'];
-var r = caro.sumOfArr(arr); // 3
-var r2 = caro.sumOfArr(arr, true); // 8
-```
 - **pushNoDuplicate(arr, val...) - push value to array exclude duplicate**
 ```javascript
 var arr = [1, 2, 3];
@@ -71,6 +65,12 @@ var arr = [1, 2, 3];
 var arr2 = [1, 2, 3];
 var r = caro.randomPick(arr); // r should be an item of arr, and arr is not changed
 var r2 = caro.randomPick(arr2, true); // r2 should be an item of arr2, and arr2 should has not it
+```
+- **sumOfArr(arr [force=false]) - get sum-value in array**
+```javascript
+var arr = [1, 2, '5'];
+var r = caro.sumOfArr(arr); // 3
+var r2 = caro.sumOfArr(arr, true); // 8
 ```
 
 ### Helper

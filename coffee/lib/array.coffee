@@ -13,19 +13,7 @@ do ->
   ###
   self.cleanArr = (arr) ->
     arr.splice(0, arr.length)
-    return arr
-
-  ###
-  # get sum of value in array
-  # @param {[]} arr
-  # @param {boolean} [force=false] if cover to number when argument is not number
-  # @returns {number}
-  ###
-  self.sumOfArr = (arr, force = false) ->
-    caro.reduce(arr, (total, n) ->
-      return total if !caro.isNumber(n) and !force
-      return (total + Number(n))
-    )
+    arr
 
   ###
   # push value into array if not exists
@@ -85,4 +73,15 @@ do ->
     return arr[randIndex] unless removeFromArr
     arr.splice(randIndex, 1)[0]
 
+  ###
+  # get sum of value in array
+  # @param {[]} arr
+  # @param {boolean} [force=false] if cover to number when argument is not number
+  # @returns {number}
+  ###
+  self.sumOfArr = (arr, force = false) ->
+    caro.reduce(arr, (total, n) ->
+      return total if !caro.isNumber(n) and !force
+      return (total + Number(n))
+    )
   return
