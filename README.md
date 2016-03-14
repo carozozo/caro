@@ -143,6 +143,38 @@ var r = caro.getStackList();
 ]
 */
 ```
+- **setInterval(fn, ms [excludeTimes = 0]) - easy-use for setInterval**
+```javascript
+var countA = 0
+var countB = 0
+caro.setInterval(function() {
+  ++countA
+  console.log('A Run ' + countA + ' times');
+}, 300, 3); // exclude function 3 times, each 300 milliseconds
+caro.setInterval(function() {
+  if(countB === 4){
+    return false;
+  }
+  ++countB
+  console.log('A Run ' + countB + ' times');
+}, 300); // exclude function each 300 milliseconds, and stop when countB === 4
+```
+- **random(len [opt]) - create random string**
+```javascript
+var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
+var r2 = caro.random(15, {
+  lower: true,
+  upper: true,
+  num: true,
+  exclude: ''
+}); // here is default options
+var r3 = caro.random(15, {
+  lower: false,
+  upper: true,
+  num: false,
+  exclude: 'A,B,C'
+}); // - will create uppercase-only, and without A/B/C
+```
 - **randomInt(max [min = 0]) - random an integer**
 ```javascript
 var r = caro.randomInt(3); // integer from 0 to 3
@@ -291,22 +323,6 @@ var r5 = caro.lowerStr('I AM CARO', function(letter, i){
   }
 }); // 'I am caro'
 ```
-- **random(len [opt]) - create random string**
-```javascript
-var r = caro.random(15); // e.g. '6EJDRlBy6Z25s2O'
-var r2 = caro.random(15, {
-  lower: true,
-  upper: true,
-  num: true,
-  exclude: ''
-}); // here is default options
-var r3 = caro.random(15, {
-  lower: false,
-  upper: true,
-  num: false,
-  exclude: 'A,B,C'
-}); // - will create uppercase-only, and without A/B/C
-```
 - **replaceAll(str, find, replace) - replace string that matched**
 ```javascript
 var r = caro.replaceAll('I*am*{Caro}.', '*', '-'); // 'I-am-{Caro}.'
@@ -452,6 +468,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Helper -> setInterval] - v0.23.6
 - Move [String -> random to Helper -> random] - v0.22.6
 - Update [String -> upperStr] - v0.22.5
 - Update [String -> lowerStr] - v0.22.4

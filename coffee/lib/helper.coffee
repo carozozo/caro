@@ -137,15 +137,32 @@ do ->
     r
 
   ###
-    # create random string
-    # @param {number} len the length of random
-    # @param {object} [opt]
-    # @param {boolean} [opt.lower=true] if include lowercase
-    # @param {boolean} [opt.upper=true] if include uppercase
-    # @param {boolean} [opt.num=true]
-    # @param {string} [opt.exclude=[]] the charts that excluded
-    # @returns {string}
-    ###
+  # easy-use for setInterval
+  # @param {function} fn the function you want to exclude
+  # @param {integer} ms milliseconds
+  # @param {integer} [times=0] the times that function exclude, will never stop when 0
+  # @returns {string}
+  ###
+  self.setInterval = (fn, ms, times = 0) ->
+    count = 0
+    interval = setInterval(->
+      if(times and count is times)
+        clearInterval(interval)
+        return
+      clearInterval(interval) if fn() is false and not times
+      count++
+    , ms)
+
+  ###
+  # create random string
+  # @param {number} len the length of random
+  # @param {object} [opt]
+  # @param {boolean} [opt.lower=true] if include lowercase
+  # @param {boolean} [opt.upper=true] if include uppercase
+  # @param {boolean} [opt.num=true]
+  # @param {string} [opt.exclude=[]] the charts that excluded
+  # @returns {string}
+  ###
   self.random = (len, opt) ->
     text = ''
     chars = []

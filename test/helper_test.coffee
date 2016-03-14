@@ -58,6 +58,20 @@ describe 'Helper', ->
     r.should.be.eql 'helper_test.coffee'
     r2.should.be.eql 'helper_test.coffee'
 
+  it 'setInterval', (done) ->
+    @timeout(1000);
+    countA = 0
+    countB = 0
+    caro.setInterval(->
+      ++countA
+    , 1, 3)
+    caro.setInterval(->
+      if countB is 5
+        done()
+        return false
+      ++countB
+    , 1)
+
   it 'random', ->
     r = caro.random(15)
     r2 = caro.random(15, {
