@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/carozozo/caro.svg?branch=master)](https://travis-ci.org/carozozo/caro)  
 
 General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
-It also support [lodash-libraries](https://lodash.com/docs)   
+It also support [lodash-libraries4.6.1](https://lodash.com/docs)   
 
 ## Install
 
@@ -156,7 +156,7 @@ caro.setInterval(function() {
     return false;
   }
   ++countB
-  console.log('A Run ' + countB + ' times');
+  console.log('B Run ' + countB + ' times');
 }, 300); // exclude function each 300 milliseconds, and stop when countB === 4
 ```
 - **random(len [opt]) - create random string**
