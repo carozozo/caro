@@ -1,4 +1,4 @@
-/*! caro - v0.23.6 - 2016-03-14 */
+/*! caro - v0.23.7- 2016-3-22 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -306,9 +306,9 @@
   };
 
   /*
-   * simple-setInterval
+   * easy-use for setInterval
    * @param {function} fn the function you want to exclude
-   * @param {integer} ms million-seconds
+   * @param {integer} ms milliseconds
    * @param {integer} [times=0] the times that function exclude, will never stop when 0
    * @returns {string}
    */
@@ -964,11 +964,11 @@
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e;
+    var e, error;
     try {
       JSON.parse(arg);
-    } catch (_error) {
-      e = _error;
+    } catch (error) {
+      e = error;
       return false;
     }
     return true;
@@ -980,12 +980,12 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, r;
+    var e, error, r;
     try {
       r = JSON.parse(arg);
       return caro.isObject(r);
-    } catch (_error) {
-      e = _error;
+    } catch (error) {
+      e = error;
     }
     return false;
   };

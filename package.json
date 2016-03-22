@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.23.7",
+  "version": "0.23.8",
   "description": "The general libraries base on lodash",
   "author": {
     "name": "Caro.Huang",
@@ -8,8 +8,8 @@
   },
   "main": "caro.js",
   "files": [
-    "caro.js",
-    "caro.min.js"
+    "dist/caro.js",
+    "dist/caro.min.js"
   ],
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "license": "MIT",
   "keywords": [
+    "caro",
+    "lodash",
     "array",
     "helper",
     "loop",
@@ -37,11 +39,14 @@
     "chai": "latest",
     "coffee-script": "latest",
     "coffeelint": "latest",
-    "grunt": "latest",
-    "grunt-contrib-coffee": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-mocha-test": "latest",
+    "del": "latest",
+    "gulp": "latest",
+    "gulp-coffee": "latest",
+    "gulp-concat": "latest",
+    "gulp-header": "latest",
+    "gulp-mocha": "latest",
+    "gulp-rename": "latest",
+    "gulp-uglify": "latest",
     "mocha": "latest"
   }
 }

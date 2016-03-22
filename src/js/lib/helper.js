@@ -176,9 +176,9 @@
   };
 
   /*
-   * simple-setInterval
+   * easy-use for setInterval
    * @param {function} fn the function you want to exclude
-   * @param {integer} ms million-seconds
+   * @param {integer} ms milliseconds
    * @param {integer} [times=0] the times that function exclude, will never stop when 0
    * @returns {string}
    */
