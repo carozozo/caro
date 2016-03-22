@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.23.8",
+  "version": "0.23.9",
   "description": "The general libraries base on lodash",
   "main": ["dist/caro.js"],
   "homepage": "https://github.com/carozozo/caro",
@@ -24,6 +24,7 @@
   "dependencies": {},
   "ignore": [
     "**/.*",
+    "bower_components",
     "node_modules",
     "test",
     "tests"
