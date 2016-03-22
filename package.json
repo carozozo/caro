@@ -1,11 +1,8 @@
 {
   "name": "caro",
-  "version": "0.23.8",
+  "version": "0.23.9",
   "description": "The general libraries base on lodash",
-  "author": {
-    "name": "Caro.Huang",
-    "email": "carozozo@yahoo.com.tw"
-  },
+  "author": "Caro.Huang <carozozo@yahoo.com.tw>",
   "main": "caro.js",
   "files": [
     "dist/caro.js",
@@ -38,7 +35,6 @@
   "devDependencies": {
     "chai": "latest",
     "coffee-script": "latest",
-    "coffeelint": "latest",
     "del": "latest",
     "gulp": "latest",
     "gulp-coffee": "latest",
