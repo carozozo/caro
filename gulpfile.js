@@ -66,7 +66,7 @@
       .pipe(gulp.dest(distDir));
   });
 
-  gulp.task('mocha', ['concat'], function () {
+  gulp.task('test', ['concat'], function () {
     // 讓 mocha 支援 coffee-script
     require('coffee-script/register');
     // 設定 global 給 test 檔使用
@@ -76,5 +76,5 @@
       .pipe(gMocha({globals: ['should', 'caro']}));
   });
 
-  gulp.task('default', ['compress', 'mocha']);
+  gulp.task('default', ['compress', 'test']);
 })();
