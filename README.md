@@ -181,6 +181,12 @@ var r = caro.randomInt(3); // integer from 0 to 3
 var r2 = caro.randomInt(3, -3); // integer from -3 to 3
 var r3 = caro.randomInt(); // 0
 ```
+- **randomNum(max [min = 0]) - random a number**
+```javascript
+var r = caro.randomNum(3); // number from 0 to 3
+var r2 = caro.randomNum(3, -3); // number from -3 to 3
+var r3 = caro.randomNum(); // 0
+```
 - **serializeUrl(str [oArgs] [coverEmpty=false]) - format object to URL params**
 ```javascript
 var arg = 'http://localhost';
@@ -468,6 +474,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Add [Helper -> randomNum] - v0.24.9
 - Add [Helper -> setInterval] - v0.23.6
 - Move [String -> random to Helper -> random] - v0.22.6
 - Update [String -> upperStr] - v0.22.5

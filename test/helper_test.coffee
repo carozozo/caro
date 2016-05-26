@@ -88,6 +88,16 @@ describe 'Helper', ->
     r2 = caro.randomInt(3, -3)
     r3 = caro.randomInt()
     (r >= 0 and r <= 3).should.be.true
+    caro.isInteger(r).should.be.true
+    (r2 >= -3 and r2 <= 3).should.be.true
+    caro.isInteger(r2).should.be.true
+    r3.should.be.eq(0)
+
+  it 'randomNum', ->
+    r = caro.randomNum(3)
+    r2 = caro.randomNum(3, -3)
+    r3 = caro.randomNum()
+    (r >= 0 and r <= 3).should.be.true
     (r2 >= -3 and r2 <= 3).should.be.true
     r3.should.be.eq(0)
 
