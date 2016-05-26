@@ -1,4 +1,4 @@
-/*! caro - v0.23.9- 2016-3-22 */
+/*! caro - v0.24.9- 2016-5-26 */
 (function(g) {
   var caro, isNode;
   caro = typeof _ !== "undefined" && _ !== null ? _ : {};
@@ -387,6 +387,25 @@
     }
     rand = Math.random() * (max - min + 1);
     return Math.floor(rand + min);
+  };
+
+  /*
+   * random an number
+   * @param {number} max
+   * @param {number} [min=0]
+   * @returns {number}
+   */
+  self.randomNum = function(max, min) {
+    if (max == null) {
+      max = 0;
+    }
+    if (min == null) {
+      min = 0;
+    }
+    if (min > max) {
+      min = 0;
+    }
+    return Math.random() * (max - min) + min;
   };
 
   /*

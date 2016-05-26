@@ -260,6 +260,25 @@
   };
 
   /*
+   * random an number
+   * @param {number} max
+   * @param {number} [min=0]
+   * @returns {number}
+   */
+  self.randomNum = function(max, min) {
+    if (max == null) {
+      max = 0;
+    }
+    if (min == null) {
+      min = 0;
+    }
+    if (min > max) {
+      min = 0;
+    }
+    return Math.random() * (max - min) + min;
+  };
+
+  /*
    * serialize object-arguments to url
    * @param {string} url
    * @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})

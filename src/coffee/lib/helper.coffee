@@ -204,6 +204,16 @@ do ->
     Math.floor(rand + min)
 
   ###
+  # random an number
+  # @param {number} max
+  # @param {number} [min=0]
+  # @returns {number}
+  ###
+  self.randomNum = (max = 0, min = 0) ->
+    min = 0 if min > max
+    Math.random() * (max - min) + min
+
+  ###
   # serialize object-arguments to url
   # @param {string} url
   # @param {object} oArgs the argument you want to cover (e.g. {a:1, b:2})

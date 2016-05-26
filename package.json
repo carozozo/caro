@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.23.9",
+  "version": "0.24.9",
   "description": "The general libraries base on lodash",
   "author": "Caro.Huang <carozozo@yahoo.com.tw>",
   "main": "caro.js",
