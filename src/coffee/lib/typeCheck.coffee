@@ -12,17 +12,19 @@ do ->
   ###
   self.isBasicVal = (arg) ->
     caro.checkIfPass arguments, (arg) ->
-      !(!caro.isBoolean(arg) and !caro.isString(arg) and !caro.isNumber(arg))
+      typeof arg is 'boolean' or typeof arg is 'string' or typeof arg is 'number'
 
   ###
   # check if value is empty ( {} | [] | null | '' | undefined )
   # @param {...} arg
   # @returns {boolean}
   ###
-  self.isEmptyVal = (arg) ->
+  self.isEmptyVal = ->
     caro.checkIfPass arguments, (arg) ->
-      return false if caro.isNumber(arg) or caro.isBoolean(arg)
-      return caro.size(arg) < 1
+      return true if arg is null or arg is undefined
+      return false if typeof arg is 'number' or typeof arg is 'boolean'
+      return Object.keys(arg).length < 1 if typeof arg is 'object'
+      return arg.length < 1
 
   ###
   # check if value is true | 'true' | 1
@@ -30,7 +32,7 @@ do ->
   # @returns {boolean}
   ###
   self.isEasingTrue = (arg) ->
-    arg = arg.toLowerCase() if caro.isString(arg)
+    arg = arg.toLowerCase() if typeof arg is 'string'
     arg == true or arg == 'true' or arg == 1
 
   ###
@@ -39,7 +41,7 @@ do ->
   # @returns {boolean}
   ###
   self.isEasingFalse = (arg) ->
-    arg = arg.toLowerCase() if caro.isString(arg)
+    arg = arg.toLowerCase() if typeof arg is 'string'
     arg == false or arg == 'false' or arg == 0
 
   ###
@@ -48,7 +50,7 @@ do ->
   # @returns {boolean}
   ###
   self.isInteger = (arg) ->
-    return false if !caro.isNumber arg
+    return false if typeof arg isnt 'number'
     int = parseInt(arg)
     int == arg
 
@@ -71,8 +73,8 @@ do ->
   ###
   self.isObjJson = (arg) ->
     try
-      r = JSON.parse(arg);
-      return caro.isObject(r)
+      r = JSON.parse(arg)
+      return typeof r is 'object'
     catch e
     false
 

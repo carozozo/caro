@@ -21,12 +21,10 @@ do ->
   # @param {...*} value
   # @returns {array}
   ###
-  self.pushNoDuplicate = (arr, val) ->
-    args = caro.drop(arguments)
-    caro.forEach args, (val) ->
-      return if arr.indexOf(val) > -1
+  self.pushNoDuplicate = (arr) ->
+    for val, i in arguments
+      continue if i is 0 or arr.indexOf(val) > -1
       arr.push val
-      return
     arr
 
   ###
@@ -35,12 +33,10 @@ do ->
   # @param {...*} value
   # @returns {array}
   ###
-  self.pushNoEmptyVal = (arr, val) ->
-    args = caro.drop(arguments)
-    caro.forEach args, (arg) ->
-      return if caro.isEmptyVal(arg)
-      arr.push arg
-      return
+  self.pushNoEmptyVal = (arr) ->
+    for val, i in arguments
+      continue if i is 0 or caro.isEmptyVal(val)
+      arr.push val
     arr
 
   ###
@@ -49,9 +45,16 @@ do ->
   # @returns {array}
   ###
   self.pullEmptyVal = (arr) ->
-    caro.remove(arr, (n) ->
-      return caro.isEmptyVal(n)
-    )
+    emptyArr = []
+    count = 0
+    for i in [0 .. arr.length - 1]
+      val = arr[count]
+      if caro.isEmptyVal(val)
+        emptyArr.push(val)
+        arr.splice(count, 1)
+      else
+        count++
+    emptyArr
 
   ###
   # only keep basic-value in array
@@ -59,13 +62,20 @@ do ->
   # @returns {array}
   ###
   self.pullUnBasicVal = (arr) ->
-    caro.remove(arr, (n) ->
-      return !caro.isBasicVal(n)
-    )
+    emptyArr = []
+    count = 0
+    for i in [0 .. arr.length - 1]
+      val = arr[count]
+      unless caro.isBasicVal(val)
+        emptyArr.push(val)
+        arr.splice(count, 1)
+      else
+        count++
+    emptyArr
 
   ###
   # pick up item from array by random
-  # @param {[]} arr
+  # @param {[]} arrf
   # @returns {boolean} [removeFromArr=false]
   ###
   self.randomPick = (arr, removeFromArr = false) ->
@@ -80,8 +90,11 @@ do ->
   # @returns {number}
   ###
   self.sumOfArr = (arr, force = false) ->
-    caro.reduce(arr, (total, n) ->
-      return total if !caro.isNumber(n) and !force
-      return (total + Number(n))
-    )
+    total = 0
+    for val, i in arr
+      if typeof val is 'number'
+        total += val
+      else if force
+        total += Number(val)
+    total
   return

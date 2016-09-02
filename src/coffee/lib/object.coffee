@@ -14,11 +14,22 @@ do ->
   # @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
   ###
   self.assignByKeys = (obj1, obj2, keys, replace = true) ->
-    caro.reduce(keys, (obj, key) ->
-      if caro.has(obj2, key) and (replace or not caro.has(obj, key))
-        obj[key] = obj2[key]
-      return obj
-    , obj1)
+    for key in keys
+      if obj2.hasOwnProperty(key) and (replace or not obj1.hasOwnProperty(key))
+        obj1[key] = obj2[key]
+
+#    for key of obj1
+#      if key in obj2
+#
+#      if (key in obj2) and (replace or not key in obj1)
+#        obj1[key] = obj2[key]
+
+#    caro.reduce(keys, (obj, key) ->
+#      if caro.has(obj2, key) and (replace or not caro.has(obj, key))
+#        obj[key] = obj2[key]
+#      return obj
+#    , obj1)
+    obj1
 
   ###
   # catch other object-values to target-object
@@ -26,12 +37,10 @@ do ->
   # @return {object}
   ###
   self.catching = (obj) ->
-    args = caro.drop(arguments)
-    caro.forEach(args, (eachObj) ->
-      caro.forEach(eachObj, (eachVal, eachKey) ->
+    for eachObj, i in arguments
+      continue if i is 0
+      for eachKey, eachVal of eachObj
         obj[eachKey] = eachVal if obj.hasOwnProperty(eachKey)
-      )
-    )
     obj
 
   ###
@@ -46,21 +55,20 @@ do ->
     aNum = []
     aObj = []
     aFn = []
-    caro.forEach(arg, (a) ->
-      if caro.isBoolean(a)
-        aBool.push a
-      else if caro.isString(a)
-        aStr.push a
-        return
-      else if caro.isNumber(a)
-        aNum.push a
-      else if caro.isArray(a)
-        aArr.push a
-      else if caro.isPlainObject(a)
-        aObj.push(a)
-      else if caro.isFunction(a)
-        aFn.push a
-    )
+    for key, val in arg
+      if typeof val is 'boolean'
+        aBool.push val
+      else if typeof val is 'string'
+        aStr.push val
+      else if typeof val is 'number'
+        aNum.push val
+      else if Array.isArray(val)
+        aArr.push val
+      else if typeof val is 'function'
+        aFn.push val
+      else if typeof val is 'object'
+        aObj.push(val)
+
     bool: aBool
     str: aStr
     num: aNum
@@ -75,10 +83,18 @@ do ->
   # @return {array}
   ###
   self.differentKeys = (obj1, obj2, reverse) ->
-    keys1 = caro.keys(obj1)
-    keys2 = caro.keys(obj2)
-    return caro.difference(keys1, keys2) unless reverse
-    caro.difference(keys2, keys1)
+    keys1 = Object.keys(obj1)
+    keys2 = Object.keys(obj2)
+    unless reverse
+      keysA = keys1
+      keysB = keys2
+    else
+      keysA = keys2
+      keysB = keys1
+    difArr = []
+    for val in keysA
+      difArr.push(val) if keysB.indexOf(val) < 0
+    difArr
 
   ###
   # check if all keys are equal between objects
@@ -87,8 +103,8 @@ do ->
   # @return {boolean}
   ###
   self.hasEqualKeys = (obj1, obj2) ->
-    size1 = caro.size(caro.differentKeys(obj1, obj2))
-    size2 = caro.size(caro.differentKeys(obj1, obj2, true))
+    size1 = caro.differentKeys(obj1, obj2).length
+    size2 = caro.differentKeys(obj1, obj2, true).length
     size1 is 0 and size2 is 0
 
   ###
@@ -98,11 +114,11 @@ do ->
   # @return {array}
   ###
   self.sameKeys = (obj1, obj2) ->
-    keys = caro.keys(obj1)
+    keys = Object.keys(obj1)
     diffKeys = caro.differentKeys(obj1, obj2)
-    caro.reduce(keys, (result, val) ->
-      result.push(val) if caro.indexOf(diffKeys, val) < 0
-      return result
-    , [])
+    ret = []
+    for val in keys
+      ret.push(val) if diffKeys.indexOf(val) < 0
+    ret
 
   return

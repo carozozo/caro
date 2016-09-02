@@ -1,10 +1,13 @@
 ((g) ->
-  caro = if _? then _ else {}
-  g.caro = caro
-  isNode = do ->
-    return global? and module? and exports?
+  isNode = global? and module? and exports?
   if isNode
-    caro = require('lodash').runInContext()
+    caro = {}
+    try
+      caro = require('lodash').runInContext()
+    catch e
     module.exports = caro
     global.caro = caro
-  caro.isNode = isNode) this
+  else
+    caro = if _? then _ else {}
+    g.caro = caro
+  return) this

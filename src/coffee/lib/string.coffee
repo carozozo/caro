@@ -8,16 +8,14 @@ do ->
     cb = null
     end = str.length unless end
     strArr = str.split('')
-    if caro.isFunction(startOrCb)
+    if typeof startOrCb is 'function'
       cb = startOrCb
-      caro.forEach(strArr , (letter, i) ->
+      for letter, i in strArr
         strArr[i] = letter[type]() if cb(letter, i) is true
-      )
     else
-      caro.forEach(strArr , (letter, i) ->
+      for letter, i in strArr
         strArr[i] = letter[type]() if i >= startOrCb and i < end
-      )
-    return strArr.join('')
+    strArr.join('')
 
   ###
   # add the head to string if not exist
@@ -26,7 +24,7 @@ do ->
   # @returns {*}
   ###
   self.addHead = (str, addStr) ->
-    str = addStr + str if !caro.startsWith(str, addStr)
+    str = addStr + str if str.indexOf(addStr) < 0
     str
 
   ###
@@ -36,8 +34,8 @@ do ->
   # @returns {*}
   ###
   self.addTail = (str, addStr) ->
-    return str if !caro.isString(str)
-    str += addStr if !caro.endsWith(str, addStr)
+    length = addStr.length
+    str += addStr if str.lastIndexOf(addStr) isnt str.length - length
     str
 
   ###
@@ -80,7 +78,7 @@ do ->
   # @returns {*|string}
   ###
   self.replaceAll = (str, find, replace) ->
-    find = caro.escapeRegExp(find)
+    find = find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     regex = new RegExp(find, 'g')
     str.replace regex, replace
 
@@ -117,26 +115,24 @@ do ->
     # @returns {*}
     ###
   self.splitStr = (str, splitter) ->
-    return str if caro.isArray(str)
+    return str if Array.isArray(str)
     return [] if !splitter
-    splitter = [splitter] if !caro.isArray(splitter)
+    splitter = [splitter] unless Array.isArray(splitter)
     # e.g. splitter=['aa', 'ab', 'c', 'd']; => mainSplit='c'
     mainSplit = splitter[0]
-    caro.forEach splitter, (eachSplit) ->
-      return if !caro.isString(eachSplit)
-      return false if mainSplit.length < 2
+    for eachSplit in splitter
+      continue if typeof eachSplit isnt 'string'
+      break if mainSplit.length < 2
       mainSplit = eachSplit if mainSplit.length > eachSplit.length
-      return
-    return [] if !caro.isString(mainSplit)
+    return [] if typeof mainSplit isnt 'string'
 
     ### replace all splitter to mainSplitter
     # e.g. string='caro.huang, is handsome'; splitter=['.', ','];
     # => string='caro,huang, is handsome'
     ###
-    caro.forEach splitter, (eachSplit) ->
-      return if !caro.isString(eachSplit)
+    for eachSplit in splitter
+      continue if typeof eachSplit isnt 'string'
       str = caro.replaceAll(str, eachSplit, mainSplit)
-      return
     str.split mainSplit
 
   ###
@@ -166,7 +162,6 @@ do ->
   # @returns {string}
   ###
   self.wrapToBr = (str) ->
-    return str if !caro.isString(str)
     str = str.replace(/\r\n/g, '<br />')
     str = str.replace(/\n/g, '<br />')
     str = str.replace(/\r/g, '<br />')

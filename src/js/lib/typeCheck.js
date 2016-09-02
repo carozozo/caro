@@ -15,7 +15,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPass(arguments, function(arg) {
-      return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNumber(arg));
+      return typeof arg === 'boolean' || typeof arg === 'string' || typeof arg === 'number';
     });
   };
 
@@ -24,12 +24,18 @@
    * @param {...} arg
    * @returns {boolean}
    */
-  self.isEmptyVal = function(arg) {
+  self.isEmptyVal = function() {
     return caro.checkIfPass(arguments, function(arg) {
-      if (caro.isNumber(arg) || caro.isBoolean(arg)) {
+      if (arg === null || arg === void 0) {
+        return true;
+      }
+      if (typeof arg === 'number' || typeof arg === 'boolean') {
         return false;
       }
-      return caro.size(arg) < 1;
+      if (typeof arg === 'object') {
+        return Object.keys(arg).length < 1;
+      }
+      return arg.length < 1;
     });
   };
 
@@ -39,7 +45,7 @@
    * @returns {boolean}
    */
   self.isEasingTrue = function(arg) {
-    if (caro.isString(arg)) {
+    if (typeof arg === 'string') {
       arg = arg.toLowerCase();
     }
     return arg === true || arg === 'true' || arg === 1;
@@ -51,7 +57,7 @@
    * @returns {boolean}
    */
   self.isEasingFalse = function(arg) {
-    if (caro.isString(arg)) {
+    if (typeof arg === 'string') {
       arg = arg.toLowerCase();
     }
     return arg === false || arg === 'false' || arg === 0;
@@ -64,7 +70,7 @@
    */
   self.isInteger = function(arg) {
     var int;
-    if (!caro.isNumber(arg)) {
+    if (typeof arg !== 'number') {
       return false;
     }
     int = parseInt(arg);
@@ -96,7 +102,7 @@
     var e, error, r;
     try {
       r = JSON.parse(arg);
-      return caro.isObject(r);
+      return typeof r === 'object';
     } catch (error) {
       e = error;
     }

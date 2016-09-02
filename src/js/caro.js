@@ -1,14 +1,17 @@
 (function(g) {
-  var caro, isNode;
-  caro = typeof _ !== "undefined" && _ !== null ? _ : {};
-  g.caro = caro;
-  isNode = (function() {
-    return (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
-  })();
+  var caro, e, error, isNode;
+  isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   if (isNode) {
-    caro = require('lodash').runInContext();
+    caro = {};
+    try {
+      caro = require('lodash').runInContext();
+    } catch (error) {
+      e = error;
+    }
     module.exports = caro;
     global.caro = caro;
+  } else {
+    caro = typeof _ !== "undefined" && _ !== null ? _ : {};
+    g.caro = caro;
   }
-  return caro.isNode = isNode;
 })(this);

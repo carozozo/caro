@@ -77,8 +77,8 @@ describe 'Helper', ->
     r2 = caro.random(15, {
       lower: true
       upper: false
-      num: false
-      exclude: 'a,b,c,d,e,f,g,1,2,3,4'
+      num: true
+      exclude: 'a,b,c,d,e,f,g,1,2,3,4,5'
     })
     r.should.be.a('string')
     r2.should.be.a('string')

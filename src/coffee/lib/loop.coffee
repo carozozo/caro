@@ -13,11 +13,11 @@ do ->
   # @param {number} step add the step in each function-called
   ###
   self.loop = (fn, start = 0, end = 0, step = 1) ->
-    compareFn = caro.lte
+    compareFn = (a,b) -> a <= b
     if start > end
-      compareFn = caro.gte
+      compareFn = (a,b) -> a >= b
       step = -step
-    while compareFn start, end
+    while compareFn(start, end)
       break if fn(start) == false
       start += step
     return

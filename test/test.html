@@ -1,13 +1,26 @@
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="../node_modules/lodash/index.js"></script>
-    <script src="../caro.js"></script>
-    <script>
-        r=caro.getStackList()
-        console.log('r=',r)
-    </script>
-</head>
-<body>
-</body>
-</html>
+<script src="../dist/caro.js"></script>
+<script>
+  var arr = [1, 2];
+  caro.cleanArr(arr);
+  caro.pushNoDuplicate([], 1, 3, {}, {}, 3);
+  caro.pushNoEmptyVal([], 1, 'caro', {}, undefined, null, 0, '', [])
+  caro.pullEmptyVal([1, '', null, 'caro', undefined]);
+  caro.pullUnBasicVal(1, {a: 1}, 'caro');
+  caro.randomPick([1, 2, 3]);
+  caro.sumOfArr([1, 2, '3']);
+  caro.checkIfPass([1, 2, 3], function (val) {
+    return val == 1
+  });
+  caro.executeIfFn(function (a) {
+    return a;
+  }, 12);
+  caro.formatMoney(null);
+  caro.getFnName(function abc() {
+  });
+  caro.getFnBody(function abc() {
+  });
+  caro.getStackList();
+  caro.setInterval(function () {
+  }, 1, 3);
+  caro.random(15);
+</script>

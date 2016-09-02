@@ -14,13 +14,12 @@ do ->
   # @returns {boolean}
   ###
   self.checkIfPass = (arr, checkFn, needAllPass = true) ->
-    caro.forEach arr, (arg) ->
+    for i,arg of arr
       result = checkFn(arg)
       # need all pass, but result is false || no-need all pass, and result is true
-      if needAllPass and result == false or !needAllPass and result == true
+      if needAllPass and result is false or !needAllPass and result is true
         needAllPass = !needAllPass
-        return false
-      return
+        break
     needAllPass
 
   ###
@@ -29,9 +28,13 @@ do ->
   # @param {...*} args function-arguments
   # @returns {*}
   ###
-  self.executeIfFn = (fn, args) ->
-    args = caro.drop(arguments)
-    fn.apply(fn, args) if caro.isFunction(fn)
+  self.executeIfFn = (fn) ->
+    args = []
+    for val, i in arguments
+      continue if i is 0
+      args.push(val)
+    fn.apply(fn, args) if typeof fn is 'function'
+
   ###
     # format to money type like 1,000.00
     # @param {string|number} arg
@@ -45,16 +48,15 @@ do ->
     ###
   self.formatMoney = (arg, type, opt) ->
     r = []
-    caro.forEach arguments, (arg, i) ->
-      return if i == 0
-      return opt = arg if caro.isObject(arg)
-      return type = arg if caro.isString(arg)
-      return
+    for val, i in arguments
+      continue if i == 0
+      opt = val if typeof val is 'object'
+      type = val if typeof val is 'string'
     opt = opt or {}
     float = Math.abs(caro.toInteger(opt.float))
-    decimal = if caro.isString(opt.decimal) then opt.decimal else '.'
-    separated = if caro.isString(opt.separated) then opt.separated else ','
-    prefix = if caro.isString(opt.prefix) then opt.prefix else ''
+    decimal = if typeof opt.decimal is 'string' then opt.decimal else '.'
+    separated = if typeof opt.decimal is 'separated' then opt.separated else ','
+    prefix = if typeof opt.prefix is 'string' then opt.prefix else ''
     forceFloat = opt.forceFloat == true
     s = if arg < 0 then '-' else ''
     switch type
@@ -65,7 +67,7 @@ do ->
         float = 0
     arg = caro.toNumber(arg)
     arg = caro.toString(arg)
-    aStr = caro.splitStr(arg, '.')
+    aStr = arg.split('.')
     iStr = aStr[0]
     fStr = if aStr[1] then aStr[1].slice(0, float) else ''
     if forceFloat
@@ -84,7 +86,7 @@ do ->
   # @returns {string|*|String}
   ###
   self.getFnName = (fn) ->
-    return null if !caro.isFunction(fn)
+    return null if typeof fn isnt 'function'
     r = fn.toString()
     r = r.substr('function '.length)
     r = r.substr(0, r.indexOf('('))
@@ -96,7 +98,7 @@ do ->
   # @returns {string|*|String}
   ###
   self.getFnBody = (fn) ->
-    return null if !caro.isFunction(fn)
+    return null if typeof fn isnt 'function'
     entire = fn.toString()
     return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'))
 
@@ -117,15 +119,15 @@ do ->
       end = start + length - 1
     else
       end = aStack.length - 1
-    caro.forEach(aStack, (sStack, i) ->
-      return if i < start or i > end
+    for sStack, i in aStack
+      continue if i < start or i > end
       data = {}
       reg = /^\s*at\s*/i
       sStack = sStack.replace(reg, '')
       reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi
       reg2 = /()(.*):(\d*):(\d*)/gi
       info = reg.exec(sStack) or reg2.exec(sStack)
-      return if (!info or info.length != 5)
+      continue if (!info or info.length != 5)
       data.stack = info[0]
       data.method = info[1]
       data.path = info[2]
@@ -133,7 +135,6 @@ do ->
       data.position = info[4]
       data.file = self.getFileName(data.path)
       r.push(data)
-    )
     r
 
   ###
@@ -173,7 +174,7 @@ do ->
     num = opt.num != false
     # cover to array if string
     exclude = opt.exclude || []
-    exclude = caro.splitStr(exclude, ',')
+    exclude = if typeof exclude is 'string' then exclude.split(',') else exclude
     if lower
       chars.push 'abcdefghijklmnopqrstuvwxyz'
     if upper
@@ -181,9 +182,9 @@ do ->
     if num
       chars.push '0123456789'
     chars = chars.join('')
-    caro.forEach exclude, (excludeStr) ->
+    for excludeStr in exclude
+      excludeStr = excludeStr.trim()
       chars = caro.replaceAll(chars, excludeStr, '')
-      return
     i = 0
     while i < len
       text += chars.charAt(Math.floor(Math.random() * chars.length))
@@ -223,16 +224,15 @@ do ->
   self.serializeUrl = (url, oArgs, coverEmpty = false) ->
     count = 0
     aArgs = ['?']
-    caro.forEach oArgs, (val, key) ->
+    for key, val of oArgs
       if caro.isEmptyVal(val)
-        return if !coverEmpty
+        continue unless coverEmpty
         val = ''
       aArgs.push '&' if count > 0
       aArgs.push key
       aArgs.push '='
       aArgs.push val
       count++
-      return
     url += aArgs.join('')
 
   return

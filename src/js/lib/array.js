@@ -24,15 +24,15 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoDuplicate = function(arr, val) {
-    var args;
-    args = caro.drop(arguments);
-    caro.forEach(args, function(val) {
-      if (arr.indexOf(val) > -1) {
-        return;
+  self.pushNoDuplicate = function(arr) {
+    var i, j, len, val;
+    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      val = arguments[i];
+      if (i === 0 || arr.indexOf(val) > -1) {
+        continue;
       }
       arr.push(val);
-    });
+    }
     return arr;
   };
 
@@ -42,15 +42,15 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoEmptyVal = function(arr, val) {
-    var args;
-    args = caro.drop(arguments);
-    caro.forEach(args, function(arg) {
-      if (caro.isEmptyVal(arg)) {
-        return;
+  self.pushNoEmptyVal = function(arr) {
+    var i, j, len, val;
+    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      val = arguments[i];
+      if (i === 0 || caro.isEmptyVal(val)) {
+        continue;
       }
-      arr.push(arg);
-    });
+      arr.push(val);
+    }
     return arr;
   };
 
@@ -60,9 +60,19 @@
    * @returns {array}
    */
   self.pullEmptyVal = function(arr) {
-    return caro.remove(arr, function(n) {
-      return caro.isEmptyVal(n);
-    });
+    var count, emptyArr, i, j, ref, val;
+    emptyArr = [];
+    count = 0;
+    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+      val = arr[count];
+      if (caro.isEmptyVal(val)) {
+        emptyArr.push(val);
+        arr.splice(count, 1);
+      } else {
+        count++;
+      }
+    }
+    return emptyArr;
   };
 
   /*
@@ -71,14 +81,24 @@
    * @returns {array}
    */
   self.pullUnBasicVal = function(arr) {
-    return caro.remove(arr, function(n) {
-      return !caro.isBasicVal(n);
-    });
+    var count, emptyArr, i, j, ref, val;
+    emptyArr = [];
+    count = 0;
+    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+      val = arr[count];
+      if (!caro.isBasicVal(val)) {
+        emptyArr.push(val);
+        arr.splice(count, 1);
+      } else {
+        count++;
+      }
+    }
+    return emptyArr;
   };
 
   /*
    * pick up item from array by random
-   * @param {[]} arr
+   * @param {[]} arrf
    * @returns {boolean} [removeFromArr=false]
    */
   self.randomPick = function(arr, removeFromArr) {
@@ -100,14 +120,19 @@
    * @returns {number}
    */
   self.sumOfArr = function(arr, force) {
+    var i, j, len, total, val;
     if (force == null) {
       force = false;
     }
-    return caro.reduce(arr, function(total, n) {
-      if (!caro.isNumber(n) && !force) {
-        return total;
+    total = 0;
+    for (i = j = 0, len = arr.length; j < len; i = ++j) {
+      val = arr[i];
+      if (typeof val === 'number') {
+        total += val;
+      } else if (force) {
+        total += Number(val);
       }
-      return total + Number(n);
-    });
+    }
+    return total;
   };
 })();

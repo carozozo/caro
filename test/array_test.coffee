@@ -17,10 +17,10 @@ describe 'Array', ->
     r.should.eql([1, 2, 3, 1, 'caro', 0])
 
   it 'pullEmptyVal', ->
-    arr = [1, '', null, 'caro'];
+    arr = [1, '', null, 'caro', undefined];
     r = caro.pullEmptyVal(arr);
     arr.should.be.eql([1, 'caro'])
-    r.should.be.eql(['', null])
+    r.should.be.eql(['', null, undefined])
 
   it 'pullUnBasicVal', ->
     arr = [1, {a: 1}, 'caro'];
@@ -39,9 +39,8 @@ describe 'Array', ->
     arr.indexOf(r).should.be.above(-1)
     arr.indexOf(r).should.be.below(arrLength)
     arr2.length.should.be.eq(arrLength2 - 1)
-    caro.forEach(arr2, (val) ->
+    for i,val of arr2
       val.should.be.not.eq(r2)
-    )
 
   it 'sumOfArr', ->
     arr = [1, 2, '5']
