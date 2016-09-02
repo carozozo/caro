@@ -1,8 +1,8 @@
 # Caro.js
 [![Build Status](https://travis-ci.org/carozozo/caro.svg?branch=master)](https://travis-ci.org/carozozo/caro)  
 
-General libraries for JavaScript / Node.js     
-And also can extend with [lodash](https://lodash.com)   
+General libraries for JavaScript / Node.js   
+And also can extend from [lodash](https://lodash.com)   
 
 ## Install
 
@@ -19,7 +19,7 @@ caro.cleanArr(arr); // []
 <script src="/js/lodash.js"></script>
 <script src="/js/caro.js"></script>
 <script>
-// You can use caro as lodash also
+// You can use caro as lodash
 var arr = [1, 2, 3];
 caro.cleanArr(arr); // []
 caro.isArray(arr); // true
@@ -39,7 +39,7 @@ $ npm install lodash
 $ npm install caro
 ```
 ```javascript
-// You can use caro as lodash also
+// You can use caro as lodash
 var arr = [1, 2, 3];
 caro.cleanArr(arr); // []
 caro.isArray(arr); // true
@@ -497,6 +497,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Update [Loop -> loop] - v1.0.1
 - Be independent from lodash - v1.0.0
 - Add [Helper -> randomNum] - v0.24.9
 - Add [Helper -> setInterval] - v0.23.6
