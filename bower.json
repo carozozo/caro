@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.24.11",
+  "version": "1.0.0",
   "description": "The general libraries base on lodash",
   "main": ["dist/caro.js"],
   "homepage": "https://github.com/carozozo/caro",
