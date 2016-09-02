@@ -25,9 +25,13 @@
     if (step == null) {
       step = 1;
     }
-    compareFn = caro.lte;
+    compareFn = function(a, b) {
+      return a <= b;
+    };
     if (start > end) {
-      compareFn = caro.gte;
+      compareFn = function(a, b) {
+        return a >= b;
+      };
       step = -step;
     }
     while (compareFn(start, end)) {

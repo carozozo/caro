@@ -16,15 +16,17 @@
    * @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
    */
   self.assignByKeys = function(obj1, obj2, keys, replace) {
+    var j, key, len;
     if (replace == null) {
       replace = true;
     }
-    return caro.reduce(keys, function(obj, key) {
-      if (caro.has(obj2, key) && (replace || !caro.has(obj, key))) {
-        obj[key] = obj2[key];
+    for (j = 0, len = keys.length; j < len; j++) {
+      key = keys[j];
+      if (obj2.hasOwnProperty(key) && (replace || !obj1.hasOwnProperty(key))) {
+        obj1[key] = obj2[key];
       }
-      return obj;
-    }, obj1);
+    }
+    return obj1;
   };
 
   /*
@@ -33,15 +35,19 @@
    * @return {object}
    */
   self.catching = function(obj) {
-    var args;
-    args = caro.drop(arguments);
-    caro.forEach(args, function(eachObj) {
-      return caro.forEach(eachObj, function(eachVal, eachKey) {
+    var eachKey, eachObj, eachVal, i, j, len;
+    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      eachObj = arguments[i];
+      if (i === 0) {
+        continue;
+      }
+      for (eachKey in eachObj) {
+        eachVal = eachObj[eachKey];
         if (obj.hasOwnProperty(eachKey)) {
-          return obj[eachKey] = eachVal;
+          obj[eachKey] = eachVal;
         }
-      });
-    });
+      }
+    }
     return obj;
   };
 
@@ -51,28 +57,29 @@
    * @return {object}
    */
   self.classify = function(arg) {
-    var aArr, aBool, aFn, aNum, aObj, aStr;
+    var aArr, aBool, aFn, aNum, aObj, aStr, j, key, len, val;
     aStr = [];
     aBool = [];
     aArr = [];
     aNum = [];
     aObj = [];
     aFn = [];
-    caro.forEach(arg, function(a) {
-      if (caro.isBoolean(a)) {
-        return aBool.push(a);
-      } else if (caro.isString(a)) {
-        aStr.push(a);
-      } else if (caro.isNumber(a)) {
-        return aNum.push(a);
-      } else if (caro.isArray(a)) {
-        return aArr.push(a);
-      } else if (caro.isPlainObject(a)) {
-        return aObj.push(a);
-      } else if (caro.isFunction(a)) {
-        return aFn.push(a);
+    for (val = j = 0, len = arg.length; j < len; val = ++j) {
+      key = arg[val];
+      if (typeof val === 'boolean') {
+        aBool.push(val);
+      } else if (typeof val === 'string') {
+        aStr.push(val);
+      } else if (typeof val === 'number') {
+        aNum.push(val);
+      } else if (Array.isArray(val)) {
+        aArr.push(val);
+      } else if (typeof val === 'function') {
+        aFn.push(val);
+      } else if (typeof val === 'object') {
+        aObj.push(val);
       }
-    });
+    }
     return {
       bool: aBool,
       str: aStr,
@@ -90,13 +97,24 @@
    * @return {array}
    */
   self.differentKeys = function(obj1, obj2, reverse) {
-    var keys1, keys2;
-    keys1 = caro.keys(obj1);
-    keys2 = caro.keys(obj2);
+    var difArr, j, keys1, keys2, keysA, keysB, len, val;
+    keys1 = Object.keys(obj1);
+    keys2 = Object.keys(obj2);
     if (!reverse) {
-      return caro.difference(keys1, keys2);
+      keysA = keys1;
+      keysB = keys2;
+    } else {
+      keysA = keys2;
+      keysB = keys1;
     }
-    return caro.difference(keys2, keys1);
+    difArr = [];
+    for (j = 0, len = keysA.length; j < len; j++) {
+      val = keysA[j];
+      if (keysB.indexOf(val) < 0) {
+        difArr.push(val);
+      }
+    }
+    return difArr;
   };
 
   /*
@@ -107,8 +125,8 @@
    */
   self.hasEqualKeys = function(obj1, obj2) {
     var size1, size2;
-    size1 = caro.size(caro.differentKeys(obj1, obj2));
-    size2 = caro.size(caro.differentKeys(obj1, obj2, true));
+    size1 = caro.differentKeys(obj1, obj2).length;
+    size2 = caro.differentKeys(obj1, obj2, true).length;
     return size1 === 0 && size2 === 0;
   };
 
@@ -119,14 +137,16 @@
    * @return {array}
    */
   self.sameKeys = function(obj1, obj2) {
-    var diffKeys, keys;
-    keys = caro.keys(obj1);
+    var diffKeys, j, keys, len, ret, val;
+    keys = Object.keys(obj1);
     diffKeys = caro.differentKeys(obj1, obj2);
-    return caro.reduce(keys, function(result, val) {
-      if (caro.indexOf(diffKeys, val) < 0) {
-        result.push(val);
+    ret = [];
+    for (j = 0, len = keys.length; j < len; j++) {
+      val = keys[j];
+      if (diffKeys.indexOf(val) < 0) {
+        ret.push(val);
       }
-      return result;
-    }, []);
+    }
+    return ret;
   };
 })();

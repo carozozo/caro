@@ -16,17 +16,18 @@
    * @returns {boolean}
    */
   self.checkIfPass = function(arr, checkFn, needAllPass) {
+    var arg, i, result;
     if (needAllPass == null) {
       needAllPass = true;
     }
-    caro.forEach(arr, function(arg) {
-      var result;
+    for (i in arr) {
+      arg = arr[i];
       result = checkFn(arg);
       if (needAllPass && result === false || !needAllPass && result === true) {
         needAllPass = !needAllPass;
-        return false;
+        break;
       }
-    });
+    }
     return needAllPass;
   };
 
@@ -36,9 +37,17 @@
    * @param {...*} args function-arguments
    * @returns {*}
    */
-  self.executeIfFn = function(fn, args) {
-    args = caro.drop(arguments);
-    if (caro.isFunction(fn)) {
+  self.executeIfFn = function(fn) {
+    var args, i, j, len1, val;
+    args = [];
+    for (i = j = 0, len1 = arguments.length; j < len1; i = ++j) {
+      val = arguments[i];
+      if (i === 0) {
+        continue;
+      }
+      args.push(val);
+    }
+    if (typeof fn === 'function') {
       return fn.apply(fn, args);
     }
   };
@@ -55,24 +64,25 @@
      * @returns {string}
    */
   self.formatMoney = function(arg, type, opt) {
-    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, prefix, r, ref, s, sepLength, separated;
+    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, k, len1, prefix, r, ref, s, sepLength, separated, val;
     r = [];
-    caro.forEach(arguments, function(arg, i) {
+    for (i = j = 0, len1 = arguments.length; j < len1; i = ++j) {
+      val = arguments[i];
       if (i === 0) {
-        return;
+        continue;
       }
-      if (caro.isObject(arg)) {
-        return opt = arg;
+      if (typeof val === 'object') {
+        opt = val;
       }
-      if (caro.isString(arg)) {
-        return type = arg;
+      if (typeof val === 'string') {
+        type = val;
       }
-    });
+    }
     opt = opt || {};
     float = Math.abs(caro.toInteger(opt.float));
-    decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
-    separated = caro.isString(opt.separated) ? opt.separated : ',';
-    prefix = caro.isString(opt.prefix) ? opt.prefix : '';
+    decimal = typeof opt.decimal === 'string' ? opt.decimal : '.';
+    separated = typeof opt.decimal === 'separated' ? opt.separated : ',';
+    prefix = typeof opt.prefix === 'string' ? opt.prefix : '';
     forceFloat = opt.forceFloat === true;
     s = arg < 0 ? '-' : '';
     switch (type) {
@@ -85,11 +95,11 @@
     }
     arg = caro.toNumber(arg);
     arg = caro.toString(arg);
-    aStr = caro.splitStr(arg, '.');
+    aStr = arg.split('.');
     iStr = aStr[0];
     fStr = aStr[1] ? aStr[1].slice(0, float) : '';
     if (forceFloat) {
-      for (i = j = 1, ref = float - fStr.length; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+      for (i = k = 1, ref = float - fStr.length; 1 <= ref ? k <= ref : k >= ref; i = 1 <= ref ? ++k : --k) {
         fStr += '0';
       }
     }
@@ -108,7 +118,7 @@
    */
   self.getFnName = function(fn) {
     var r;
-    if (!caro.isFunction(fn)) {
+    if (typeof fn !== 'function') {
       return null;
     }
     r = fn.toString();
@@ -124,7 +134,7 @@
    */
   self.getFnBody = function(fn) {
     var entire;
-    if (!caro.isFunction(fn)) {
+    if (typeof fn !== 'function') {
       return null;
     }
     entire = fn.toString();
@@ -138,7 +148,7 @@
    * @returns {array}
    */
   self.getStackList = function(start, length) {
-    var aStack, end, err, r, stack;
+    var aStack, data, end, err, i, info, j, len1, r, reg, reg2, sStack, stack;
     r = [];
     err = new Error();
     stack = err.stack;
@@ -150,10 +160,10 @@
     } else {
       end = aStack.length - 1;
     }
-    caro.forEach(aStack, function(sStack, i) {
-      var data, info, reg, reg2;
+    for (i = j = 0, len1 = aStack.length; j < len1; i = ++j) {
+      sStack = aStack[i];
       if (i < start || i > end) {
-        return;
+        continue;
       }
       data = {};
       reg = /^\s*at\s*/i;
@@ -162,7 +172,7 @@
       reg2 = /()(.*):(\d*):(\d*)/gi;
       info = reg.exec(sStack) || reg2.exec(sStack);
       if (!info || info.length !== 5) {
-        return;
+        continue;
       }
       data.stack = info[0];
       data.method = info[1];
@@ -170,8 +180,8 @@
       data.line = info[3];
       data.position = info[4];
       data.file = self.getFileName(data.path);
-      return r.push(data);
-    });
+      r.push(data);
+    }
     return r;
   };
 
@@ -211,7 +221,7 @@
    * @returns {string}
    */
   self.random = function(len, opt) {
-    var chars, exclude, i, lower, num, text, upper;
+    var chars, exclude, excludeStr, i, j, len1, lower, num, text, upper;
     text = '';
     chars = [];
     len = parseInt(len) ? parseInt(len) : 1;
@@ -220,7 +230,7 @@
     upper = opt.upper !== false;
     num = opt.num !== false;
     exclude = opt.exclude || [];
-    exclude = caro.splitStr(exclude, ',');
+    exclude = typeof exclude === 'string' ? exclude.split(',') : exclude;
     if (lower) {
       chars.push('abcdefghijklmnopqrstuvwxyz');
     }
@@ -231,9 +241,11 @@
       chars.push('0123456789');
     }
     chars = chars.join('');
-    caro.forEach(exclude, function(excludeStr) {
+    for (j = 0, len1 = exclude.length; j < len1; j++) {
+      excludeStr = exclude[j];
+      excludeStr = excludeStr.trim();
       chars = caro.replaceAll(chars, excludeStr, '');
-    });
+    }
     i = 0;
     while (i < len) {
       text += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -286,16 +298,17 @@
    * @returns {*}
    */
   self.serializeUrl = function(url, oArgs, coverEmpty) {
-    var aArgs, count;
+    var aArgs, count, key, val;
     if (coverEmpty == null) {
       coverEmpty = false;
     }
     count = 0;
     aArgs = ['?'];
-    caro.forEach(oArgs, function(val, key) {
+    for (key in oArgs) {
+      val = oArgs[key];
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {
-          return;
+          continue;
         }
         val = '';
       }
@@ -306,7 +319,7 @@
       aArgs.push('=');
       aArgs.push(val);
       count++;
-    });
+    }
     return url += aArgs.join('');
   };
 })();

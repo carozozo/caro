@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "0.24.11",
+  "version": "1.0.0",
   "description": "The general libraries base on lodash",
   "author": "Caro.Huang <carozozo@yahoo.com.tw>",
   "main": "dist/caro.js",
@@ -28,9 +28,6 @@
   "scripts": {
     "gulp": "gulp",
     "test": "gulp test"
-  },
-  "dependencies": {
-    "lodash": "latest"
   },
   "devDependencies": {
     "chai": "latest",

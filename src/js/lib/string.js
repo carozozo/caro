@@ -7,7 +7,7 @@
   var changeCase, self;
   self = caro;
   changeCase = function(str, type, startOrCb, end) {
-    var cb, strArr;
+    var cb, i, j, k, len, len1, letter, strArr;
     if (startOrCb == null) {
       startOrCb = 0;
     }
@@ -19,19 +19,21 @@
       end = str.length;
     }
     strArr = str.split('');
-    if (caro.isFunction(startOrCb)) {
+    if (typeof startOrCb === 'function') {
       cb = startOrCb;
-      caro.forEach(strArr, function(letter, i) {
+      for (i = j = 0, len = strArr.length; j < len; i = ++j) {
+        letter = strArr[i];
         if (cb(letter, i) === true) {
-          return strArr[i] = letter[type]();
+          strArr[i] = letter[type]();
         }
-      });
+      }
     } else {
-      caro.forEach(strArr, function(letter, i) {
+      for (i = k = 0, len1 = strArr.length; k < len1; i = ++k) {
+        letter = strArr[i];
         if (i >= startOrCb && i < end) {
-          return strArr[i] = letter[type]();
+          strArr[i] = letter[type]();
         }
-      });
+      }
     }
     return strArr.join('');
   };
@@ -43,7 +45,7 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (!caro.startsWith(str, addStr)) {
+    if (str.indexOf(addStr) < 0) {
       str = addStr + str;
     }
     return str;
@@ -56,10 +58,9 @@
    * @returns {*}
    */
   self.addTail = function(str, addStr) {
-    if (!caro.isString(str)) {
-      return str;
-    }
-    if (!caro.endsWith(str, addStr)) {
+    var length;
+    length = addStr.length;
+    if (str.lastIndexOf(addStr) !== str.length - length) {
       str += addStr;
     }
     return str;
@@ -110,7 +111,7 @@
    */
   self.replaceAll = function(str, find, replace) {
     var regex;
-    find = caro.escapeRegExp(find);
+    find = find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     regex = new RegExp(find, 'g');
     return str.replace(regex, replace);
   };
@@ -148,29 +149,30 @@
      * @returns {*}
    */
   self.splitStr = function(str, splitter) {
-    var mainSplit;
-    if (caro.isArray(str)) {
+    var eachSplit, j, k, len, len1, mainSplit;
+    if (Array.isArray(str)) {
       return str;
     }
     if (!splitter) {
       return [];
     }
-    if (!caro.isArray(splitter)) {
+    if (!Array.isArray(splitter)) {
       splitter = [splitter];
     }
     mainSplit = splitter[0];
-    caro.forEach(splitter, function(eachSplit) {
-      if (!caro.isString(eachSplit)) {
-        return;
+    for (j = 0, len = splitter.length; j < len; j++) {
+      eachSplit = splitter[j];
+      if (typeof eachSplit !== 'string') {
+        continue;
       }
       if (mainSplit.length < 2) {
-        return false;
+        break;
       }
       if (mainSplit.length > eachSplit.length) {
         mainSplit = eachSplit;
       }
-    });
-    if (!caro.isString(mainSplit)) {
+    }
+    if (typeof mainSplit !== 'string') {
       return [];
     }
 
@@ -178,12 +180,13 @@
      * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
      * => string='caro,huang, is handsome'
      */
-    caro.forEach(splitter, function(eachSplit) {
-      if (!caro.isString(eachSplit)) {
-        return;
+    for (k = 0, len1 = splitter.length; k < len1; k++) {
+      eachSplit = splitter[k];
+      if (typeof eachSplit !== 'string') {
+        continue;
       }
       str = caro.replaceAll(str, eachSplit, mainSplit);
-    });
+    }
     return str.split(mainSplit);
   };
 
@@ -215,9 +218,6 @@
    * @returns {string}
    */
   self.wrapToBr = function(str) {
-    if (!caro.isString(str)) {
-      return str;
-    }
     str = str.replace(/\r\n/g, '<br />');
     str = str.replace(/\n/g, '<br />');
     str = str.replace(/\r/g, '<br />');

@@ -1,17 +1,20 @@
-/*! caro - v0.24.10- 2016-5-26 */
+/*! caro - v1.0.0- 2016-9-3 */
 (function(g) {
-  var caro, isNode;
-  caro = typeof _ !== "undefined" && _ !== null ? _ : {};
-  g.caro = caro;
-  isNode = (function() {
-    return (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
-  })();
+  var caro, e, error, isNode;
+  isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   if (isNode) {
-    caro = require('lodash').runInContext();
+    caro = {};
+    try {
+      caro = require('lodash').runInContext();
+    } catch (error) {
+      e = error;
+    }
     module.exports = caro;
     global.caro = caro;
+  } else {
+    caro = typeof _ !== "undefined" && _ !== null ? _ : {};
+    g.caro = caro;
   }
-  return caro.isNode = isNode;
 })(this);
 
 
@@ -40,15 +43,15 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoDuplicate = function(arr, val) {
-    var args;
-    args = caro.drop(arguments);
-    caro.forEach(args, function(val) {
-      if (arr.indexOf(val) > -1) {
-        return;
+  self.pushNoDuplicate = function(arr) {
+    var i, j, len, val;
+    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      val = arguments[i];
+      if (i === 0 || arr.indexOf(val) > -1) {
+        continue;
       }
       arr.push(val);
-    });
+    }
     return arr;
   };
 
@@ -58,15 +61,15 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoEmptyVal = function(arr, val) {
-    var args;
-    args = caro.drop(arguments);
-    caro.forEach(args, function(arg) {
-      if (caro.isEmptyVal(arg)) {
-        return;
+  self.pushNoEmptyVal = function(arr) {
+    var i, j, len, val;
+    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      val = arguments[i];
+      if (i === 0 || caro.isEmptyVal(val)) {
+        continue;
       }
-      arr.push(arg);
-    });
+      arr.push(val);
+    }
     return arr;
   };
 
@@ -76,9 +79,19 @@
    * @returns {array}
    */
   self.pullEmptyVal = function(arr) {
-    return caro.remove(arr, function(n) {
-      return caro.isEmptyVal(n);
-    });
+    var count, emptyArr, i, j, ref, val;
+    emptyArr = [];
+    count = 0;
+    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+      val = arr[count];
+      if (caro.isEmptyVal(val)) {
+        emptyArr.push(val);
+        arr.splice(count, 1);
+      } else {
+        count++;
+      }
+    }
+    return emptyArr;
   };
 
   /*
@@ -87,14 +100,24 @@
    * @returns {array}
    */
   self.pullUnBasicVal = function(arr) {
-    return caro.remove(arr, function(n) {
-      return !caro.isBasicVal(n);
-    });
+    var count, emptyArr, i, j, ref, val;
+    emptyArr = [];
+    count = 0;
+    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+      val = arr[count];
+      if (!caro.isBasicVal(val)) {
+        emptyArr.push(val);
+        arr.splice(count, 1);
+      } else {
+        count++;
+      }
+    }
+    return emptyArr;
   };
 
   /*
    * pick up item from array by random
-   * @param {[]} arr
+   * @param {[]} arrf
    * @returns {boolean} [removeFromArr=false]
    */
   self.randomPick = function(arr, removeFromArr) {
@@ -116,15 +139,20 @@
    * @returns {number}
    */
   self.sumOfArr = function(arr, force) {
+    var i, j, len, total, val;
     if (force == null) {
       force = false;
     }
-    return caro.reduce(arr, function(total, n) {
-      if (!caro.isNumber(n) && !force) {
-        return total;
+    total = 0;
+    for (i = j = 0, len = arr.length; j < len; i = ++j) {
+      val = arr[i];
+      if (typeof val === 'number') {
+        total += val;
+      } else if (force) {
+        total += Number(val);
       }
-      return total + Number(n);
-    });
+    }
+    return total;
   };
 })();
 
@@ -146,17 +174,18 @@
    * @returns {boolean}
    */
   self.checkIfPass = function(arr, checkFn, needAllPass) {
+    var arg, i, result;
     if (needAllPass == null) {
       needAllPass = true;
     }
-    caro.forEach(arr, function(arg) {
-      var result;
+    for (i in arr) {
+      arg = arr[i];
       result = checkFn(arg);
       if (needAllPass && result === false || !needAllPass && result === true) {
         needAllPass = !needAllPass;
-        return false;
+        break;
       }
-    });
+    }
     return needAllPass;
   };
 
@@ -166,9 +195,17 @@
    * @param {...*} args function-arguments
    * @returns {*}
    */
-  self.executeIfFn = function(fn, args) {
-    args = caro.drop(arguments);
-    if (caro.isFunction(fn)) {
+  self.executeIfFn = function(fn) {
+    var args, i, j, len1, val;
+    args = [];
+    for (i = j = 0, len1 = arguments.length; j < len1; i = ++j) {
+      val = arguments[i];
+      if (i === 0) {
+        continue;
+      }
+      args.push(val);
+    }
+    if (typeof fn === 'function') {
       return fn.apply(fn, args);
     }
   };
@@ -185,24 +222,25 @@
      * @returns {string}
    */
   self.formatMoney = function(arg, type, opt) {
-    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, prefix, r, ref, s, sepLength, separated;
+    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, k, len1, prefix, r, ref, s, sepLength, separated, val;
     r = [];
-    caro.forEach(arguments, function(arg, i) {
+    for (i = j = 0, len1 = arguments.length; j < len1; i = ++j) {
+      val = arguments[i];
       if (i === 0) {
-        return;
+        continue;
       }
-      if (caro.isObject(arg)) {
-        return opt = arg;
+      if (typeof val === 'object') {
+        opt = val;
       }
-      if (caro.isString(arg)) {
-        return type = arg;
+      if (typeof val === 'string') {
+        type = val;
       }
-    });
+    }
     opt = opt || {};
     float = Math.abs(caro.toInteger(opt.float));
-    decimal = caro.isString(opt.decimal) ? opt.decimal : '.';
-    separated = caro.isString(opt.separated) ? opt.separated : ',';
-    prefix = caro.isString(opt.prefix) ? opt.prefix : '';
+    decimal = typeof opt.decimal === 'string' ? opt.decimal : '.';
+    separated = typeof opt.decimal === 'separated' ? opt.separated : ',';
+    prefix = typeof opt.prefix === 'string' ? opt.prefix : '';
     forceFloat = opt.forceFloat === true;
     s = arg < 0 ? '-' : '';
     switch (type) {
@@ -215,11 +253,11 @@
     }
     arg = caro.toNumber(arg);
     arg = caro.toString(arg);
-    aStr = caro.splitStr(arg, '.');
+    aStr = arg.split('.');
     iStr = aStr[0];
     fStr = aStr[1] ? aStr[1].slice(0, float) : '';
     if (forceFloat) {
-      for (i = j = 1, ref = float - fStr.length; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+      for (i = k = 1, ref = float - fStr.length; 1 <= ref ? k <= ref : k >= ref; i = 1 <= ref ? ++k : --k) {
         fStr += '0';
       }
     }
@@ -238,7 +276,7 @@
    */
   self.getFnName = function(fn) {
     var r;
-    if (!caro.isFunction(fn)) {
+    if (typeof fn !== 'function') {
       return null;
     }
     r = fn.toString();
@@ -254,7 +292,7 @@
    */
   self.getFnBody = function(fn) {
     var entire;
-    if (!caro.isFunction(fn)) {
+    if (typeof fn !== 'function') {
       return null;
     }
     entire = fn.toString();
@@ -268,7 +306,7 @@
    * @returns {array}
    */
   self.getStackList = function(start, length) {
-    var aStack, end, err, r, stack;
+    var aStack, data, end, err, i, info, j, len1, r, reg, reg2, sStack, stack;
     r = [];
     err = new Error();
     stack = err.stack;
@@ -280,10 +318,10 @@
     } else {
       end = aStack.length - 1;
     }
-    caro.forEach(aStack, function(sStack, i) {
-      var data, info, reg, reg2;
+    for (i = j = 0, len1 = aStack.length; j < len1; i = ++j) {
+      sStack = aStack[i];
       if (i < start || i > end) {
-        return;
+        continue;
       }
       data = {};
       reg = /^\s*at\s*/i;
@@ -292,7 +330,7 @@
       reg2 = /()(.*):(\d*):(\d*)/gi;
       info = reg.exec(sStack) || reg2.exec(sStack);
       if (!info || info.length !== 5) {
-        return;
+        continue;
       }
       data.stack = info[0];
       data.method = info[1];
@@ -300,8 +338,8 @@
       data.line = info[3];
       data.position = info[4];
       data.file = self.getFileName(data.path);
-      return r.push(data);
-    });
+      r.push(data);
+    }
     return r;
   };
 
@@ -341,7 +379,7 @@
    * @returns {string}
    */
   self.random = function(len, opt) {
-    var chars, exclude, i, lower, num, text, upper;
+    var chars, exclude, excludeStr, i, j, len1, lower, num, text, upper;
     text = '';
     chars = [];
     len = parseInt(len) ? parseInt(len) : 1;
@@ -350,7 +388,7 @@
     upper = opt.upper !== false;
     num = opt.num !== false;
     exclude = opt.exclude || [];
-    exclude = caro.splitStr(exclude, ',');
+    exclude = typeof exclude === 'string' ? exclude.split(',') : exclude;
     if (lower) {
       chars.push('abcdefghijklmnopqrstuvwxyz');
     }
@@ -361,9 +399,11 @@
       chars.push('0123456789');
     }
     chars = chars.join('');
-    caro.forEach(exclude, function(excludeStr) {
+    for (j = 0, len1 = exclude.length; j < len1; j++) {
+      excludeStr = exclude[j];
+      excludeStr = excludeStr.trim();
       chars = caro.replaceAll(chars, excludeStr, '');
-    });
+    }
     i = 0;
     while (i < len) {
       text += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -416,16 +456,17 @@
    * @returns {*}
    */
   self.serializeUrl = function(url, oArgs, coverEmpty) {
-    var aArgs, count;
+    var aArgs, count, key, val;
     if (coverEmpty == null) {
       coverEmpty = false;
     }
     count = 0;
     aArgs = ['?'];
-    caro.forEach(oArgs, function(val, key) {
+    for (key in oArgs) {
+      val = oArgs[key];
       if (caro.isEmptyVal(val)) {
         if (!coverEmpty) {
-          return;
+          continue;
         }
         val = '';
       }
@@ -436,7 +477,7 @@
       aArgs.push('=');
       aArgs.push(val);
       count++;
-    });
+    }
     return url += aArgs.join('');
   };
 })();
@@ -468,9 +509,13 @@
     if (step == null) {
       step = 1;
     }
-    compareFn = caro.lte;
+    compareFn = function(a, b) {
+      return a <= b;
+    };
     if (start > end) {
-      compareFn = caro.gte;
+      compareFn = function(a, b) {
+        return a >= b;
+      };
       step = -step;
     }
     while (compareFn(start, end)) {
@@ -500,15 +545,17 @@
    * @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
    */
   self.assignByKeys = function(obj1, obj2, keys, replace) {
+    var j, key, len;
     if (replace == null) {
       replace = true;
     }
-    return caro.reduce(keys, function(obj, key) {
-      if (caro.has(obj2, key) && (replace || !caro.has(obj, key))) {
-        obj[key] = obj2[key];
+    for (j = 0, len = keys.length; j < len; j++) {
+      key = keys[j];
+      if (obj2.hasOwnProperty(key) && (replace || !obj1.hasOwnProperty(key))) {
+        obj1[key] = obj2[key];
       }
-      return obj;
-    }, obj1);
+    }
+    return obj1;
   };
 
   /*
@@ -517,15 +564,19 @@
    * @return {object}
    */
   self.catching = function(obj) {
-    var args;
-    args = caro.drop(arguments);
-    caro.forEach(args, function(eachObj) {
-      return caro.forEach(eachObj, function(eachVal, eachKey) {
+    var eachKey, eachObj, eachVal, i, j, len;
+    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      eachObj = arguments[i];
+      if (i === 0) {
+        continue;
+      }
+      for (eachKey in eachObj) {
+        eachVal = eachObj[eachKey];
         if (obj.hasOwnProperty(eachKey)) {
-          return obj[eachKey] = eachVal;
+          obj[eachKey] = eachVal;
         }
-      });
-    });
+      }
+    }
     return obj;
   };
 
@@ -535,28 +586,29 @@
    * @return {object}
    */
   self.classify = function(arg) {
-    var aArr, aBool, aFn, aNum, aObj, aStr;
+    var aArr, aBool, aFn, aNum, aObj, aStr, j, key, len, val;
     aStr = [];
     aBool = [];
     aArr = [];
     aNum = [];
     aObj = [];
     aFn = [];
-    caro.forEach(arg, function(a) {
-      if (caro.isBoolean(a)) {
-        return aBool.push(a);
-      } else if (caro.isString(a)) {
-        aStr.push(a);
-      } else if (caro.isNumber(a)) {
-        return aNum.push(a);
-      } else if (caro.isArray(a)) {
-        return aArr.push(a);
-      } else if (caro.isPlainObject(a)) {
-        return aObj.push(a);
-      } else if (caro.isFunction(a)) {
-        return aFn.push(a);
+    for (val = j = 0, len = arg.length; j < len; val = ++j) {
+      key = arg[val];
+      if (typeof val === 'boolean') {
+        aBool.push(val);
+      } else if (typeof val === 'string') {
+        aStr.push(val);
+      } else if (typeof val === 'number') {
+        aNum.push(val);
+      } else if (Array.isArray(val)) {
+        aArr.push(val);
+      } else if (typeof val === 'function') {
+        aFn.push(val);
+      } else if (typeof val === 'object') {
+        aObj.push(val);
       }
-    });
+    }
     return {
       bool: aBool,
       str: aStr,
@@ -574,13 +626,24 @@
    * @return {array}
    */
   self.differentKeys = function(obj1, obj2, reverse) {
-    var keys1, keys2;
-    keys1 = caro.keys(obj1);
-    keys2 = caro.keys(obj2);
+    var difArr, j, keys1, keys2, keysA, keysB, len, val;
+    keys1 = Object.keys(obj1);
+    keys2 = Object.keys(obj2);
     if (!reverse) {
-      return caro.difference(keys1, keys2);
+      keysA = keys1;
+      keysB = keys2;
+    } else {
+      keysA = keys2;
+      keysB = keys1;
     }
-    return caro.difference(keys2, keys1);
+    difArr = [];
+    for (j = 0, len = keysA.length; j < len; j++) {
+      val = keysA[j];
+      if (keysB.indexOf(val) < 0) {
+        difArr.push(val);
+      }
+    }
+    return difArr;
   };
 
   /*
@@ -591,8 +654,8 @@
    */
   self.hasEqualKeys = function(obj1, obj2) {
     var size1, size2;
-    size1 = caro.size(caro.differentKeys(obj1, obj2));
-    size2 = caro.size(caro.differentKeys(obj1, obj2, true));
+    size1 = caro.differentKeys(obj1, obj2).length;
+    size2 = caro.differentKeys(obj1, obj2, true).length;
     return size1 === 0 && size2 === 0;
   };
 
@@ -603,15 +666,17 @@
    * @return {array}
    */
   self.sameKeys = function(obj1, obj2) {
-    var diffKeys, keys;
-    keys = caro.keys(obj1);
+    var diffKeys, j, keys, len, ret, val;
+    keys = Object.keys(obj1);
     diffKeys = caro.differentKeys(obj1, obj2);
-    return caro.reduce(keys, function(result, val) {
-      if (caro.indexOf(diffKeys, val) < 0) {
-        result.push(val);
+    ret = [];
+    for (j = 0, len = keys.length; j < len; j++) {
+      val = keys[j];
+      if (diffKeys.indexOf(val) < 0) {
+        ret.push(val);
       }
-      return result;
-    }, []);
+    }
+    return ret;
   };
 })();
 
@@ -686,7 +751,7 @@
   var changeCase, self;
   self = caro;
   changeCase = function(str, type, startOrCb, end) {
-    var cb, strArr;
+    var cb, i, j, k, len, len1, letter, strArr;
     if (startOrCb == null) {
       startOrCb = 0;
     }
@@ -698,19 +763,21 @@
       end = str.length;
     }
     strArr = str.split('');
-    if (caro.isFunction(startOrCb)) {
+    if (typeof startOrCb === 'function') {
       cb = startOrCb;
-      caro.forEach(strArr, function(letter, i) {
+      for (i = j = 0, len = strArr.length; j < len; i = ++j) {
+        letter = strArr[i];
         if (cb(letter, i) === true) {
-          return strArr[i] = letter[type]();
+          strArr[i] = letter[type]();
         }
-      });
+      }
     } else {
-      caro.forEach(strArr, function(letter, i) {
+      for (i = k = 0, len1 = strArr.length; k < len1; i = ++k) {
+        letter = strArr[i];
         if (i >= startOrCb && i < end) {
-          return strArr[i] = letter[type]();
+          strArr[i] = letter[type]();
         }
-      });
+      }
     }
     return strArr.join('');
   };
@@ -722,7 +789,7 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (!caro.startsWith(str, addStr)) {
+    if (str.indexOf(addStr) < 0) {
       str = addStr + str;
     }
     return str;
@@ -735,10 +802,9 @@
    * @returns {*}
    */
   self.addTail = function(str, addStr) {
-    if (!caro.isString(str)) {
-      return str;
-    }
-    if (!caro.endsWith(str, addStr)) {
+    var length;
+    length = addStr.length;
+    if (str.lastIndexOf(addStr) !== str.length - length) {
       str += addStr;
     }
     return str;
@@ -789,7 +855,7 @@
    */
   self.replaceAll = function(str, find, replace) {
     var regex;
-    find = caro.escapeRegExp(find);
+    find = find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     regex = new RegExp(find, 'g');
     return str.replace(regex, replace);
   };
@@ -827,29 +893,30 @@
      * @returns {*}
    */
   self.splitStr = function(str, splitter) {
-    var mainSplit;
-    if (caro.isArray(str)) {
+    var eachSplit, j, k, len, len1, mainSplit;
+    if (Array.isArray(str)) {
       return str;
     }
     if (!splitter) {
       return [];
     }
-    if (!caro.isArray(splitter)) {
+    if (!Array.isArray(splitter)) {
       splitter = [splitter];
     }
     mainSplit = splitter[0];
-    caro.forEach(splitter, function(eachSplit) {
-      if (!caro.isString(eachSplit)) {
-        return;
+    for (j = 0, len = splitter.length; j < len; j++) {
+      eachSplit = splitter[j];
+      if (typeof eachSplit !== 'string') {
+        continue;
       }
       if (mainSplit.length < 2) {
-        return false;
+        break;
       }
       if (mainSplit.length > eachSplit.length) {
         mainSplit = eachSplit;
       }
-    });
-    if (!caro.isString(mainSplit)) {
+    }
+    if (typeof mainSplit !== 'string') {
       return [];
     }
 
@@ -857,12 +924,13 @@
      * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
      * => string='caro,huang, is handsome'
      */
-    caro.forEach(splitter, function(eachSplit) {
-      if (!caro.isString(eachSplit)) {
-        return;
+    for (k = 0, len1 = splitter.length; k < len1; k++) {
+      eachSplit = splitter[k];
+      if (typeof eachSplit !== 'string') {
+        continue;
       }
       str = caro.replaceAll(str, eachSplit, mainSplit);
-    });
+    }
     return str.split(mainSplit);
   };
 
@@ -894,9 +962,6 @@
    * @returns {string}
    */
   self.wrapToBr = function(str) {
-    if (!caro.isString(str)) {
-      return str;
-    }
     str = str.replace(/\r\n/g, '<br />');
     str = str.replace(/\n/g, '<br />');
     str = str.replace(/\r/g, '<br />');
@@ -921,7 +986,7 @@
    */
   self.isBasicVal = function(arg) {
     return caro.checkIfPass(arguments, function(arg) {
-      return !(!caro.isBoolean(arg) && !caro.isString(arg) && !caro.isNumber(arg));
+      return typeof arg === 'boolean' || typeof arg === 'string' || typeof arg === 'number';
     });
   };
 
@@ -930,12 +995,18 @@
    * @param {...} arg
    * @returns {boolean}
    */
-  self.isEmptyVal = function(arg) {
+  self.isEmptyVal = function() {
     return caro.checkIfPass(arguments, function(arg) {
-      if (caro.isNumber(arg) || caro.isBoolean(arg)) {
+      if (arg === null || arg === void 0) {
+        return true;
+      }
+      if (typeof arg === 'number' || typeof arg === 'boolean') {
         return false;
       }
-      return caro.size(arg) < 1;
+      if (typeof arg === 'object') {
+        return Object.keys(arg).length < 1;
+      }
+      return arg.length < 1;
     });
   };
 
@@ -945,7 +1016,7 @@
    * @returns {boolean}
    */
   self.isEasingTrue = function(arg) {
-    if (caro.isString(arg)) {
+    if (typeof arg === 'string') {
       arg = arg.toLowerCase();
     }
     return arg === true || arg === 'true' || arg === 1;
@@ -957,7 +1028,7 @@
    * @returns {boolean}
    */
   self.isEasingFalse = function(arg) {
-    if (caro.isString(arg)) {
+    if (typeof arg === 'string') {
       arg = arg.toLowerCase();
     }
     return arg === false || arg === 'false' || arg === 0;
@@ -970,7 +1041,7 @@
    */
   self.isInteger = function(arg) {
     var int;
-    if (!caro.isNumber(arg)) {
+    if (typeof arg !== 'number') {
       return false;
     }
     int = parseInt(arg);
@@ -1002,7 +1073,7 @@
     var e, error, r;
     try {
       r = JSON.parse(arg);
-      return caro.isObject(r);
+      return typeof r === 'object';
     } catch (error) {
       e = error;
     }

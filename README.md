@@ -1,26 +1,48 @@
 # Caro.js
 [![Build Status](https://travis-ci.org/carozozo/caro.svg?branch=master)](https://travis-ci.org/carozozo/caro)  
 
-General libraries for JavaScript / Node.js base on [lodash](https://www.npmjs.com/package/lodash)     
-It also support [lodash-libraries4.6.1](https://lodash.com/docs)   
+General libraries for JavaScript / Node.js     
+And also can extend with [lodash](https://lodash.com)   
 
 ## Install
 
 **In Html**
 ```html
-<!-- https://lodash.com/ -->
-<script src="/js/lodash.js"></script> 
 <script src="/js/caro.js"></script>
+<script>
+var arr = [1, 2, 3];
+caro.cleanArr(arr); // []
+</script>
+```
+**In Html with lodash**
+```html
+<script src="/js/lodash.js"></script>
+<script src="/js/caro.js"></script>
+<script>
+// You can use caro as lodash also
+var arr = [1, 2, 3];
+caro.cleanArr(arr); // []
+caro.isArray(arr); // true
+</script>
 ```
 **In Node.js**
 ```bash
 $ npm install caro
 ```
-
-## Usage
 ```javascript
-var caro = require('caro');
-caro.isArray(['caro']); // true
+var arr = [1, 2, 3];
+caro.cleanArr(arr); // []
+```
+**In Node.js with lodash**
+```bash
+$ npm install lodash
+$ npm install caro
+```
+```javascript
+// You can use caro as lodash also
+var arr = [1, 2, 3];
+caro.cleanArr(arr); // []
+caro.isArray(arr); // true
 ```
 
 ## Index
@@ -378,8 +400,9 @@ var r5 = caro.upperStr('i am caro', function(letter, i){
 ```
 - **wrapToBr(str, addStr) - cover wrap to '\<br /\>'**
 ```javascript
-var r = caro.wrapToBr('''this is
-    wrap content.
+var r = caro.wrapToBr(''''
+  this is
+  wrap content.
 '''); // 'this is<br />wrap content.'
 ```
 
@@ -474,6 +497,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- Be independent from lodash - v1.0.0
 - Add [Helper -> randomNum] - v0.24.9
 - Add [Helper -> setInterval] - v0.23.6
 - Move [String -> random to Helper -> random] - v0.22.6
