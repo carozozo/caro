@@ -13,13 +13,11 @@ do ->
   # @param {number} step add the step in each function-called
   ###
   self.loop = (fn, start = 0, end = 0, step = 1) ->
-    compareFn = (a,b) -> a <= b
-    if start > end
-      compareFn = (a,b) -> a >= b
-      step = -step
-    while compareFn(start, end)
-      break if fn(start) == false
-      start += step
+    step = -step if start > end
+    for i in [start .. end] by step
+      res = fn(i)
+      break if res is false
+      continue if res is true
     return
 
   return

@@ -5,7 +5,7 @@ describe 'Loop', ->
     caro.loop((i) ->
       i.should.be.an.Number
       count++
-    , 10, 0, 1)
+    , 10, 0)
     count.should.be.eq 11
 
     count = 0

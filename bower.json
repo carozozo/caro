@@ -1,7 +1,7 @@
 {
   "name": "caro",
-  "version": "1.0.0",
-  "description": "The general libraries base on lodash",
+  "version": "1.0.1",
+  "description": "General libraries for JavaScript / Node.js",
   "main": ["dist/caro.js"],
   "homepage": "https://github.com/carozozo/caro",
   "authors": [
@@ -21,9 +21,6 @@
     "type cover"
   ],
   "license": "MIT",
-  "dependencies": {
-    "lodash": "latest"
-  },
   "ignore": [
     "**/.*",
     "bower_components",

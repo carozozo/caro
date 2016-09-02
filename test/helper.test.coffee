@@ -55,8 +55,8 @@ describe 'Helper', ->
     r2 = caro.getStackList(0, 2)
     r = r[0].file
     r2 = r2[0].file
-    r.should.be.eql 'helper_test.coffee'
-    r2.should.be.eql 'helper_test.coffee'
+    r.should.be.eql 'helper.test.coffee'
+    r2.should.be.eql 'helper.test.coffee'
 
   it 'setInterval', (done) ->
     @timeout(1000);

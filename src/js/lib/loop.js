@@ -15,7 +15,7 @@
    * @param {number} step add the step in each function-called
    */
   self.loop = function(fn, start, end, step) {
-    var compareFn;
+    var i, j, ref, ref1, ref2, res;
     if (start == null) {
       start = 0;
     }
@@ -25,20 +25,17 @@
     if (step == null) {
       step = 1;
     }
-    compareFn = function(a, b) {
-      return a <= b;
-    };
     if (start > end) {
-      compareFn = function(a, b) {
-        return a >= b;
-      };
       step = -step;
     }
-    while (compareFn(start, end)) {
-      if (fn(start) === false) {
+    for (i = j = ref = start, ref1 = end, ref2 = step; ref2 > 0 ? j <= ref1 : j >= ref1; i = j += ref2) {
+      res = fn(i);
+      if (res === false) {
         break;
       }
-      start += step;
+      if (res === true) {
+        continue;
+      }
     }
   };
 })();
