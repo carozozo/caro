@@ -1,6 +1,6 @@
-/*! caro - v1.0.1- 2016-9-3 */
+/*! caro - v2.0.0- 2018-5-1 */
 (function(g) {
-  var caro, e, error, isNode;
+  var caro, e, isNode;
   isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   if (isNode) {
     caro = {};
@@ -17,7 +17,6 @@
   }
 })(this);
 
-
 /*
  * Array
  * @namespace caro
@@ -26,7 +25,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * remove all items in array
    * @param {[]} arr
@@ -36,7 +34,6 @@
     arr.splice(0, arr.length);
     return arr;
   };
-
   /*
    * push value into array if not exists
    * @param {[]} arr
@@ -54,7 +51,6 @@
     }
     return arr;
   };
-
   /*
    * will not push to array if value is empty
    * @param {[]} arr
@@ -72,7 +68,6 @@
     }
     return arr;
   };
-
   /*
    * remove empty-value in array
    * @param {[]} arr
@@ -82,7 +77,7 @@
     var count, emptyArr, i, j, ref, val;
     emptyArr = [];
     count = 0;
-    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+    for (i = j = 0, ref = arr.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
       val = arr[count];
       if (caro.isEmptyVal(val)) {
         emptyArr.push(val);
@@ -93,7 +88,6 @@
     }
     return emptyArr;
   };
-
   /*
    * only keep basic-value in array
    * @param {[]} arr
@@ -103,7 +97,7 @@
     var count, emptyArr, i, j, ref, val;
     emptyArr = [];
     count = 0;
-    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+    for (i = j = 0, ref = arr.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
       val = arr[count];
       if (!caro.isBasicVal(val)) {
         emptyArr.push(val);
@@ -114,35 +108,27 @@
     }
     return emptyArr;
   };
-
   /*
    * pick up item from array by random
    * @param {[]} arrf
    * @returns {boolean} [removeFromArr=false]
    */
-  self.randomPick = function(arr, removeFromArr) {
+  self.randomPick = function(arr, removeFromArr = false) {
     var randIndex;
-    if (removeFromArr == null) {
-      removeFromArr = false;
-    }
     randIndex = caro.randomInt(arr.length - 1);
     if (!removeFromArr) {
       return arr[randIndex];
     }
     return arr.splice(randIndex, 1)[0];
   };
-
   /*
    * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false] if cover to number when argument is not number
    * @returns {number}
    */
-  self.sumOfArr = function(arr, force) {
+  self.sumOfArr = function(arr, force = false) {
     var i, j, len, total, val;
-    if (force == null) {
-      force = false;
-    }
     total = 0;
     for (i = j = 0, len = arr.length; j < len; i = ++j) {
       val = arr[i];
@@ -156,7 +142,6 @@
   };
 })();
 
-
 /*
  * Helper
  * @author Caro.Huang
@@ -164,7 +149,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * check all argument in array by check-function,
    * get false if check-function return false
@@ -173,14 +157,12 @@
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
    * @returns {boolean}
    */
-  self.checkIfPass = function(arr, checkFn, needAllPass) {
+  self.checkIfPass = function(arr, checkFn, needAllPass = true) {
     var arg, i, result;
-    if (needAllPass == null) {
-      needAllPass = true;
-    }
     for (i in arr) {
       arg = arr[i];
       result = checkFn(arg);
+      // need all pass, but result is false || no-need all pass, and result is true
       if (needAllPass && result === false || !needAllPass && result === true) {
         needAllPass = !needAllPass;
         break;
@@ -188,7 +170,6 @@
     }
     return needAllPass;
   };
-
   /*
    * execute if first-argument is function
    * @param {function} fn
@@ -209,17 +190,16 @@
       return fn.apply(fn, args);
     }
   };
-
   /*
-     * format to money type like 1,000.00
-     * @param {string|number} arg
-     * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
-     * @param {object} [opt]
-     * @param {number} [opt.float=0]
-     * @param [opt.decimal=.]
-     * @param [opt.separated=,]
-     * @param [opt.prefix]
-     * @returns {string}
+   * format to money type like 1,000.00
+   * @param {string|number} arg
+   * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+   * @param {object} [opt]
+   * @param {number} [opt.float=0]
+   * @param [opt.decimal=.]
+   * @param [opt.separated=,]
+   * @param [opt.prefix]
+   * @returns {string}
    */
   self.formatMoney = function(arg, type, opt) {
     var aStr, decimal, fStr, float, forceFloat, i, iStr, j, k, len1, prefix, r, ref, s, sepLength, separated, val;
@@ -257,7 +237,7 @@
     iStr = aStr[0];
     fStr = aStr[1] ? aStr[1].slice(0, float) : '';
     if (forceFloat) {
-      for (i = k = 1, ref = float - fStr.length; 1 <= ref ? k <= ref : k >= ref; i = 1 <= ref ? ++k : --k) {
+      for (i = k = 1, ref = float - fStr.length; (1 <= ref ? k <= ref : k >= ref); i = 1 <= ref ? ++k : --k) {
         fStr += '0';
       }
     }
@@ -268,7 +248,6 @@
     r.push(fStr ? decimal + fStr : '');
     return r.join('');
   };
-
   /*
    * get function name
    * @param {*} fn
@@ -284,7 +263,6 @@
     r = r.substr(0, r.indexOf('('));
     return r;
   };
-
   /*
    * get function content
    * @param {*} fn
@@ -298,7 +276,6 @@
     entire = fn.toString();
     return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'));
   };
-
   /*
    * get stack-information list
    * @param {number} [start=0] the start-index of list
@@ -342,7 +319,6 @@
     }
     return r;
   };
-
   /*
    * easy-use for setInterval
    * @param {function} fn the function you want to exclude
@@ -350,11 +326,8 @@
    * @param {integer} [times=0] the times that function exclude, will never stop when 0
    * @returns {string}
    */
-  self.setInterval = function(fn, ms, times) {
+  self.setInterval = function(fn, ms, times = 0) {
     var count, interval;
-    if (times == null) {
-      times = 0;
-    }
     count = 0;
     return interval = setInterval(function() {
       if (times && count === times) {
@@ -367,7 +340,6 @@
       return count++;
     }, ms);
   };
-
   /*
    * create random string
    * @param {number} len the length of random
@@ -387,6 +359,7 @@
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;
+    // cover to array if string
     exclude = opt.exclude || [];
     exclude = typeof exclude === 'string' ? exclude.split(',') : exclude;
     if (lower) {
@@ -411,7 +384,6 @@
     }
     return text;
   };
-
   /*
    * random an integer
    * @param {number} max
@@ -428,26 +400,18 @@
     rand = Math.random() * (max - min + 1);
     return Math.floor(rand + min);
   };
-
   /*
    * random an number
    * @param {number} max
    * @param {number} [min=0]
    * @returns {number}
    */
-  self.randomNum = function(max, min) {
-    if (max == null) {
-      max = 0;
-    }
-    if (min == null) {
-      min = 0;
-    }
+  self.randomNum = function(max = 0, min = 0) {
     if (min > max) {
       min = 0;
     }
     return Math.random() * (max - min) + min;
   };
-
   /*
    * serialize object-arguments to url
    * @param {string} url
@@ -455,11 +419,8 @@
    * @param {boolean} [coverEmpty=false] if cover when value is empty
    * @returns {*}
    */
-  self.serializeUrl = function(url, oArgs, coverEmpty) {
+  self.serializeUrl = function(url, oArgs, coverEmpty = false) {
     var aArgs, count, key, val;
-    if (coverEmpty == null) {
-      coverEmpty = false;
-    }
     count = 0;
     aArgs = ['?'];
     for (key in oArgs) {
@@ -482,7 +443,6 @@
   };
 })();
 
-
 /*
  * Loop
  * @author Caro.Huang
@@ -490,7 +450,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * for-loop function
    * @param {function} fn for-loop function, will break-loop when return false
@@ -498,21 +457,12 @@
    * @param {number} end
    * @param {number} step add the step in each function-called
    */
-  self.loop = function(fn, start, end, step) {
+  self.loop = function(fn, start = 0, end = 0, step = 1) {
     var i, j, ref, ref1, ref2, res;
-    if (start == null) {
-      start = 0;
-    }
-    if (end == null) {
-      end = 0;
-    }
-    if (step == null) {
-      step = 1;
-    }
     if (start > end) {
       step = -step;
     }
-    for (i = j = ref = start, ref1 = end, ref2 = step; ref2 > 0 ? j <= ref1 : j >= ref1; i = j += ref2) {
+    for (i = j = ref = start, ref1 = end, ref2 = step; ref2 !== 0 && (ref2 > 0 ? j <= ref1 : j >= ref1); i = j += ref2) {
       res = fn(i);
       if (res === false) {
         break;
@@ -524,7 +474,6 @@
   };
 })();
 
-
 /*
  * Object
  * @author Caro.Huang
@@ -532,7 +481,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * assign elements to from obj2 to obj1 by keys
    * won't replace obj1 value if exists when argument-replace is false
@@ -541,20 +489,27 @@
    * @param {array} keys the keys in obj2 that you want sand to obj1
    * @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
    */
-  self.assignByKeys = function(obj1, obj2, keys, replace) {
+  self.assignByKeys = function(obj1, obj2, keys, replace = true) {
     var j, key, len;
-    if (replace == null) {
-      replace = true;
-    }
     for (j = 0, len = keys.length; j < len; j++) {
       key = keys[j];
       if (obj2.hasOwnProperty(key) && (replace || !obj1.hasOwnProperty(key))) {
         obj1[key] = obj2[key];
       }
     }
+    //    for key of obj1
+    //      if key in obj2
+
+    //      if (key in obj2) and (replace or not key in obj1)
+    //        obj1[key] = obj2[key]
+
+    //    caro.reduce(keys, (obj, key) ->
+    //      if caro.has(obj2, key) and (replace or not caro.has(obj, key))
+    //        obj[key] = obj2[key]
+    //      return obj
+    //    , obj1)
     return obj1;
   };
-
   /*
    * catch other object-values to target-object
    * @param {object} obj
@@ -576,7 +531,6 @@
     }
     return obj;
   };
-
   /*
    * group by argument type
    * @param {object|array} arg
@@ -615,7 +569,6 @@
       fn: aFn
     };
   };
-
   /*
    * get keys that object1 has but object2 not
    * @param {object} obj1
@@ -642,7 +595,6 @@
     }
     return difArr;
   };
-
   /*
    * check if all keys are equal between objects
    * @param {object} obj1
@@ -655,7 +607,6 @@
     size2 = caro.differentKeys(obj1, obj2, true).length;
     return size1 === 0 && size2 === 0;
   };
-
   /*
    * get keys that is same between objects
    * @param {object} obj1
@@ -677,7 +628,6 @@
   };
 })();
 
-
 /*
  * Path
  * @author Caro.Huang
@@ -685,7 +635,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * get dir-path
    * @param {string} path
@@ -696,7 +645,6 @@
     filename = caro.getFileName(path);
     return path = caro.replaceLast(path, filename, '');
   };
-
   /*
    * get file name in path
    * @param {string} path
@@ -716,7 +664,6 @@
     extendName = caro.getExtendName(path);
     return path.replace(extendName, '');
   };
-
   /*
    * get extend name of file
    * @param {string} path
@@ -739,7 +686,6 @@
   };
 })();
 
-
 /*
  * String
  * @author Caro.Huang
@@ -747,14 +693,8 @@
 (function() {
   var changeCase, self;
   self = caro;
-  changeCase = function(str, type, startOrCb, end) {
+  changeCase = function(str, type, startOrCb = 0, end = null) {
     var cb, i, j, k, len, len1, letter, strArr;
-    if (startOrCb == null) {
-      startOrCb = 0;
-    }
-    if (end == null) {
-      end = null;
-    }
     cb = null;
     if (!end) {
       end = str.length;
@@ -778,7 +718,6 @@
     }
     return strArr.join('');
   };
-
   /*
    * add the head to string if not exist
    * @param {string} str
@@ -786,12 +725,11 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (str.indexOf(addStr) < 0) {
+    if (str.indexOf(addStr) !== 0) {
       str = addStr + str;
     }
     return str;
   };
-
   /*
    * add the tail to string if not exist
    * @param {string} str
@@ -806,7 +744,6 @@
     }
     return str;
   };
-
   /*
    * replace the <br /> to \n
    * @param {string} str
@@ -817,7 +754,6 @@
     regex = /<br\s*[\/]?>/gi;
     return str.replace(regex, '\n');
   };
-
   /*
    * insert string to another
    * @param {string} str1
@@ -828,21 +764,9 @@
     position = position || str1.length;
     return [str1.slice(0, position), str2, str1.slice(position)].join('');
   };
-
-  /*
-   * lowercase string
-   * @param {string} str
-   * @param {object} [opt]
-   * @param {number|function} [opt.startOrCb] the start-index you want to lowercase
-   * or callback-function, will lowercase when callback return true
-   * @param {number} [opt.end] the end-index you want to lowercase
-   * @param {boolean} [opt.force] if force cover to string
-   * @returns {*}
-   */
   self.lowerStr = function(str, startOrCb, end) {
     return changeCase(str, 'toLowerCase', startOrCb, end);
   };
-
   /*
    * replace all find in string
    * @param {string} str
@@ -856,7 +780,6 @@
     regex = new RegExp(find, 'g');
     return str.replace(regex, replace);
   };
-
   /*
    * replace last find in string
    * @param {string} str
@@ -871,23 +794,21 @@
     str2 = str.slice(lastIndex);
     return str1 + str2.replace(find, replace);
   };
-
   /*
-     * split to array by '\r\n' | '\n' | '\r'
-     * @param {string} str
-     * @returns {*}
+   * split to array by '\r\n' | '\n' | '\r'
+   * @param {string} str
+   * @returns {*}
    */
   self.splitByWrap = function(str) {
     var aWrap;
     aWrap = ['\r\n', '\r', '\n'];
     return caro.splitStr(str, aWrap);
   };
-
   /*
-     * split string
-     * @param {string} str
-     * @param {string|string[]} splitter it should be string-array or string
-     * @returns {*}
+   * split string
+   * @param {string} str
+   * @param {string|string[]} splitter it should be string-array or string
+   * @returns {*}
    */
   self.splitStr = function(str, splitter) {
     var eachSplit, j, k, len, len1, mainSplit;
@@ -900,6 +821,7 @@
     if (!Array.isArray(splitter)) {
       splitter = [splitter];
     }
+    // e.g. splitter=['aa', 'ab', 'c', 'd']; => mainSplit='c'
     mainSplit = splitter[0];
     for (j = 0, len = splitter.length; j < len; j++) {
       eachSplit = splitter[j];
@@ -916,11 +838,10 @@
     if (typeof mainSplit !== 'string') {
       return [];
     }
-
-    /* replace all splitter to mainSplitter
-     * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
-     * => string='caro,huang, is handsome'
-     */
+/* replace all splitter to mainSplitter
+ * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
+ * => string='caro,huang, is handsome'
+ */
     for (k = 0, len1 = splitter.length; k < len1; k++) {
       eachSplit = splitter[k];
       if (typeof eachSplit !== 'string') {
@@ -930,7 +851,6 @@
     }
     return str.split(mainSplit);
   };
-
   /*
    * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
    * @param {string} str
@@ -938,9 +858,9 @@
    */
   self.strToBool = function(str) {
     str = str.toLowerCase();
+    // return false when string='false' or '', otherwise return true
     return str !== '' && str !== 'false';
   };
-
   /*
    * uppercase string
    * @param {string} str
@@ -952,7 +872,6 @@
   self.upperStr = function(str, startOrCb, end) {
     return changeCase(str, 'toUpperCase', startOrCb, end);
   };
-
   /*
    * replace \r\n | \r | \n to <br/>
    * @param {string} str
@@ -966,7 +885,6 @@
   };
 })();
 
-
 /*
  * TypeCheck
  * @namespace caro
@@ -975,7 +893,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * check if arg is boolean | string | number
    * @param {...} arg
@@ -986,7 +903,6 @@
       return typeof arg === 'boolean' || typeof arg === 'string' || typeof arg === 'number';
     });
   };
-
   /*
    * check if value is empty ( {} | [] | null | '' | undefined )
    * @param {...} arg
@@ -1006,7 +922,6 @@
       return arg.length < 1;
     });
   };
-
   /*
    * check if value is true | 'true' | 1
    * @param {...} arg
@@ -1018,7 +933,6 @@
     }
     return arg === true || arg === 'true' || arg === 1;
   };
-
   /*
    * check if value is false | 'false' | 0
    * @param arg
@@ -1030,7 +944,6 @@
     }
     return arg === false || arg === 'false' || arg === 0;
   };
-
   /*
    * check if integer
    * @param {*} arg
@@ -1044,14 +957,13 @@
     int = parseInt(arg);
     return int === arg;
   };
-
   /*
    * check if JSON, return false is one of them not match
    * @param {*} arg
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e, error;
+    var e;
     try {
       JSON.parse(arg);
     } catch (error) {
@@ -1060,14 +972,13 @@
     }
     return true;
   };
-
   /*
    * check if argument is object-like JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, error, r;
+    var e, r;
     try {
       r = JSON.parse(arg);
       return typeof r === 'object';
@@ -1076,7 +987,6 @@
     }
     return false;
   };
-
   /*
    * check if string is uppercase
    * @param {...string} str
@@ -1090,7 +1000,6 @@
     }
     return true;
   };
-
   /*
    * check if string is lowercase
    * @param {string} str
@@ -1106,7 +1015,6 @@
   };
 })();
 
-
 /*
  * Helper
  * @namespace caro
@@ -1115,7 +1023,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * cover to string
    * @param arg
@@ -1124,7 +1031,6 @@
   self.toString = function(arg) {
     return String(arg);
   };
-
   /*
    * cover to integer
    * @param arg
@@ -1133,7 +1039,6 @@
   self.toInteger = function(arg) {
     return parseInt(arg);
   };
-
   /*
    * cover to number
    * @param arg
@@ -1142,25 +1047,20 @@
   self.toNumber = function(arg) {
     return Number(arg);
   };
-
   /*
    * cover to fixed-number
    * @param arg
    * @param {boolean} [dec=2] decimal-number
    * @returns {*}
    */
-  self.toFixedNumber = function(arg, dec) {
+  self.toFixedNumber = function(arg, dec = 2) {
     var r;
-    if (dec == null) {
-      dec = 2;
-    }
     r = caro.toString(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }
     return Number((+r).toFixed(dec));
   };
-
   /*
    * @param arg
    * @param {*} [replacer=null] the replace in each element

@@ -1,5 +1,7 @@
 do ->
 describe 'Helper', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   it 'checkIfPass', ->
     r = caro.checkIfPass [1, 2, 3], (val) ->
       return val == 1

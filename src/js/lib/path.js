@@ -1,4 +1,3 @@
-
 /*
  * Path
  * @author Caro.Huang
@@ -6,7 +5,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * get dir-path
    * @param {string} path
@@ -17,7 +15,6 @@
     filename = caro.getFileName(path);
     return path = caro.replaceLast(path, filename, '');
   };
-
   /*
    * get file name in path
    * @param {string} path
@@ -37,7 +34,6 @@
     extendName = caro.getExtendName(path);
     return path.replace(extendName, '');
   };
-
   /*
    * get extend name of file
    * @param {string} path

@@ -12,7 +12,7 @@
   // 檔案重新命名
   var gRename = require('gulp-rename');
   // 檔案最小化
-  var gUglify = require('gulp-uglify');
+  var gUglify = require('gulp-uglify-es').default;
   // Unit Test
   var gMocha = require('gulp-mocha');
 
@@ -67,13 +67,10 @@
   });
 
   gulp.task('test', ['concat'], function () {
-    // 讓 mocha 支援 coffee-script
-    require('coffee-script/register');
-    // 設定 global 給 test 檔使用
-    global.should = require('chai').should();
-    global.caro = require(mainFilePath);
     return gulp.src(testDir + '*.coffee', {read: false})
-      .pipe(gMocha({globals: ['should', 'caro']}));
+      .pipe(gMocha({
+        compilers: 'coffee:coffee-script/register'
+      }));
   });
 
   gulp.task('default', ['compress', 'test']);

@@ -1,5 +1,7 @@
 do ->
 describe 'Array', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   it 'cleanArr', ->
     arr = [1, 2]
     r = caro.cleanArr(arr);

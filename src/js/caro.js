@@ -1,5 +1,5 @@
 (function(g) {
-  var caro, e, error, isNode;
+  var caro, e, isNode;
   isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
   if (isNode) {
     caro = {};

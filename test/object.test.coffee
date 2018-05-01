@@ -1,5 +1,7 @@
 do ->
 describe 'Object', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   it 'assignByKeys', ->
     obj = {a: 1, b: 2, c: 3, d: 4}
     obj2 = {d: 1, e: 2, f: 3}

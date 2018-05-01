@@ -1,5 +1,7 @@
 do ->
 describe 'TypeCheck', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   it 'isBasicVal', ->
     r = caro.isBasicVal('');
     r2 = caro.isBasicVal({});

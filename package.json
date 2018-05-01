@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "General libraries for JavaScript / Node.js",
   "author": "Caro.Huang <carozozo@yahoo.com.tw>",
   "main": "dist/caro.js",
@@ -11,6 +11,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/carozozo/caro"
+  },
+  "engines": {
+    "node": ">=8.9.0 <=8.11.1"
   },
   "license": "MIT",
   "keywords": [
@@ -30,16 +33,16 @@
     "test": "gulp test"
   },
   "devDependencies": {
-    "chai": "latest",
-    "coffee-script": "latest",
-    "del": "latest",
+    "chai": "^4.1.2",
+    "coffee-script": "^1.12.7",
+    "del": "^3.0.0",
     "gulp": "latest",
-    "gulp-coffee": "latest",
-    "gulp-concat": "latest",
-    "gulp-header": "latest",
-    "gulp-mocha": "latest",
+    "gulp-coffee": "^3.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.5",
+    "gulp-mocha": "^5.0.0",
     "gulp-rename": "latest",
-    "gulp-uglify": "latest",
-    "mocha": "latest"
+    "gulp-uglify-es": "^1.0.1",
+    "mocha": "^5.1.1"
   }
 }

@@ -1,5 +1,7 @@
 do ->
 describe 'String', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   it 'addHead', ->
     r = caro.addHead('false', 'fa')
     r2 = caro.addHead('False', 'is')

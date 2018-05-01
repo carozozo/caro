@@ -1,4 +1,3 @@
-
 /*
  * Helper
  * @namespace caro
@@ -7,7 +6,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * cover to string
    * @param arg
@@ -16,7 +14,6 @@
   self.toString = function(arg) {
     return String(arg);
   };
-
   /*
    * cover to integer
    * @param arg
@@ -25,7 +22,6 @@
   self.toInteger = function(arg) {
     return parseInt(arg);
   };
-
   /*
    * cover to number
    * @param arg
@@ -34,25 +30,20 @@
   self.toNumber = function(arg) {
     return Number(arg);
   };
-
   /*
    * cover to fixed-number
    * @param arg
    * @param {boolean} [dec=2] decimal-number
    * @returns {*}
    */
-  self.toFixedNumber = function(arg, dec) {
+  self.toFixedNumber = function(arg, dec = 2) {
     var r;
-    if (dec == null) {
-      dec = 2;
-    }
     r = caro.toString(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }
     return Number((+r).toFixed(dec));
   };
-
   /*
    * @param arg
    * @param {*} [replacer=null] the replace in each element
