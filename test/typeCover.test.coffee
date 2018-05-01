@@ -1,5 +1,7 @@
 do ->
 describe 'TypeCover', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   it 'toString', ->
     r = caro.toString('3')
     r2 = caro.toString(['caro', undefined])

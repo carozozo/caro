@@ -1,4 +1,3 @@
-
 /*
  * Object
  * @author Caro.Huang
@@ -6,7 +5,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * assign elements to from obj2 to obj1 by keys
    * won't replace obj1 value if exists when argument-replace is false
@@ -15,20 +13,27 @@
    * @param {array} keys the keys in obj2 that you want sand to obj1
    * @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
    */
-  self.assignByKeys = function(obj1, obj2, keys, replace) {
+  self.assignByKeys = function(obj1, obj2, keys, replace = true) {
     var j, key, len;
-    if (replace == null) {
-      replace = true;
-    }
     for (j = 0, len = keys.length; j < len; j++) {
       key = keys[j];
       if (obj2.hasOwnProperty(key) && (replace || !obj1.hasOwnProperty(key))) {
         obj1[key] = obj2[key];
       }
     }
+    //    for key of obj1
+    //      if key in obj2
+
+    //      if (key in obj2) and (replace or not key in obj1)
+    //        obj1[key] = obj2[key]
+
+    //    caro.reduce(keys, (obj, key) ->
+    //      if caro.has(obj2, key) and (replace or not caro.has(obj, key))
+    //        obj[key] = obj2[key]
+    //      return obj
+    //    , obj1)
     return obj1;
   };
-
   /*
    * catch other object-values to target-object
    * @param {object} obj
@@ -50,7 +55,6 @@
     }
     return obj;
   };
-
   /*
    * group by argument type
    * @param {object|array} arg
@@ -89,7 +93,6 @@
       fn: aFn
     };
   };
-
   /*
    * get keys that object1 has but object2 not
    * @param {object} obj1
@@ -116,7 +119,6 @@
     }
     return difArr;
   };
-
   /*
    * check if all keys are equal between objects
    * @param {object} obj1
@@ -129,7 +131,6 @@
     size2 = caro.differentKeys(obj1, obj2, true).length;
     return size1 === 0 && size2 === 0;
   };
-
   /*
    * get keys that is same between objects
    * @param {object} obj1

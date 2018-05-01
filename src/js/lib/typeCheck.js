@@ -1,4 +1,3 @@
-
 /*
  * TypeCheck
  * @namespace caro
@@ -7,7 +6,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * check if arg is boolean | string | number
    * @param {...} arg
@@ -18,7 +16,6 @@
       return typeof arg === 'boolean' || typeof arg === 'string' || typeof arg === 'number';
     });
   };
-
   /*
    * check if value is empty ( {} | [] | null | '' | undefined )
    * @param {...} arg
@@ -38,7 +35,6 @@
       return arg.length < 1;
     });
   };
-
   /*
    * check if value is true | 'true' | 1
    * @param {...} arg
@@ -50,7 +46,6 @@
     }
     return arg === true || arg === 'true' || arg === 1;
   };
-
   /*
    * check if value is false | 'false' | 0
    * @param arg
@@ -62,7 +57,6 @@
     }
     return arg === false || arg === 'false' || arg === 0;
   };
-
   /*
    * check if integer
    * @param {*} arg
@@ -76,14 +70,13 @@
     int = parseInt(arg);
     return int === arg;
   };
-
   /*
    * check if JSON, return false is one of them not match
    * @param {*} arg
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e, error;
+    var e;
     try {
       JSON.parse(arg);
     } catch (error) {
@@ -92,14 +85,13 @@
     }
     return true;
   };
-
   /*
    * check if argument is object-like JSON, return false is one of them not match
    * @param {...} arg
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, error, r;
+    var e, r;
     try {
       r = JSON.parse(arg);
       return typeof r === 'object';
@@ -108,7 +100,6 @@
     }
     return false;
   };
-
   /*
    * check if string is uppercase
    * @param {...string} str
@@ -122,7 +113,6 @@
     }
     return true;
   };
-
   /*
    * check if string is lowercase
    * @param {string} str

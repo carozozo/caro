@@ -1,4 +1,3 @@
-
 /*
  * String
  * @author Caro.Huang
@@ -6,14 +5,8 @@
 (function() {
   var changeCase, self;
   self = caro;
-  changeCase = function(str, type, startOrCb, end) {
+  changeCase = function(str, type, startOrCb = 0, end = null) {
     var cb, i, j, k, len, len1, letter, strArr;
-    if (startOrCb == null) {
-      startOrCb = 0;
-    }
-    if (end == null) {
-      end = null;
-    }
     cb = null;
     if (!end) {
       end = str.length;
@@ -37,7 +30,6 @@
     }
     return strArr.join('');
   };
-
   /*
    * add the head to string if not exist
    * @param {string} str
@@ -45,12 +37,11 @@
    * @returns {*}
    */
   self.addHead = function(str, addStr) {
-    if (str.indexOf(addStr) < 0) {
+    if (str.indexOf(addStr) !== 0) {
       str = addStr + str;
     }
     return str;
   };
-
   /*
    * add the tail to string if not exist
    * @param {string} str
@@ -65,7 +56,6 @@
     }
     return str;
   };
-
   /*
    * replace the <br /> to \n
    * @param {string} str
@@ -76,7 +66,6 @@
     regex = /<br\s*[\/]?>/gi;
     return str.replace(regex, '\n');
   };
-
   /*
    * insert string to another
    * @param {string} str1
@@ -87,21 +76,9 @@
     position = position || str1.length;
     return [str1.slice(0, position), str2, str1.slice(position)].join('');
   };
-
-  /*
-   * lowercase string
-   * @param {string} str
-   * @param {object} [opt]
-   * @param {number|function} [opt.startOrCb] the start-index you want to lowercase
-   * or callback-function, will lowercase when callback return true
-   * @param {number} [opt.end] the end-index you want to lowercase
-   * @param {boolean} [opt.force] if force cover to string
-   * @returns {*}
-   */
   self.lowerStr = function(str, startOrCb, end) {
     return changeCase(str, 'toLowerCase', startOrCb, end);
   };
-
   /*
    * replace all find in string
    * @param {string} str
@@ -115,7 +92,6 @@
     regex = new RegExp(find, 'g');
     return str.replace(regex, replace);
   };
-
   /*
    * replace last find in string
    * @param {string} str
@@ -130,23 +106,21 @@
     str2 = str.slice(lastIndex);
     return str1 + str2.replace(find, replace);
   };
-
   /*
-     * split to array by '\r\n' | '\n' | '\r'
-     * @param {string} str
-     * @returns {*}
+   * split to array by '\r\n' | '\n' | '\r'
+   * @param {string} str
+   * @returns {*}
    */
   self.splitByWrap = function(str) {
     var aWrap;
     aWrap = ['\r\n', '\r', '\n'];
     return caro.splitStr(str, aWrap);
   };
-
   /*
-     * split string
-     * @param {string} str
-     * @param {string|string[]} splitter it should be string-array or string
-     * @returns {*}
+   * split string
+   * @param {string} str
+   * @param {string|string[]} splitter it should be string-array or string
+   * @returns {*}
    */
   self.splitStr = function(str, splitter) {
     var eachSplit, j, k, len, len1, mainSplit;
@@ -159,6 +133,7 @@
     if (!Array.isArray(splitter)) {
       splitter = [splitter];
     }
+    // e.g. splitter=['aa', 'ab', 'c', 'd']; => mainSplit='c'
     mainSplit = splitter[0];
     for (j = 0, len = splitter.length; j < len; j++) {
       eachSplit = splitter[j];
@@ -175,11 +150,10 @@
     if (typeof mainSplit !== 'string') {
       return [];
     }
-
-    /* replace all splitter to mainSplitter
-     * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
-     * => string='caro,huang, is handsome'
-     */
+/* replace all splitter to mainSplitter
+ * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
+ * => string='caro,huang, is handsome'
+ */
     for (k = 0, len1 = splitter.length; k < len1; k++) {
       eachSplit = splitter[k];
       if (typeof eachSplit !== 'string') {
@@ -189,7 +163,6 @@
     }
     return str.split(mainSplit);
   };
-
   /*
    * check string if ("true" | not-empty) / ("false" | empty) and covert to boolean
    * @param {string} str
@@ -197,9 +170,9 @@
    */
   self.strToBool = function(str) {
     str = str.toLowerCase();
+    // return false when string='false' or '', otherwise return true
     return str !== '' && str !== 'false';
   };
-
   /*
    * uppercase string
    * @param {string} str
@@ -211,7 +184,6 @@
   self.upperStr = function(str, startOrCb, end) {
     return changeCase(str, 'toUpperCase', startOrCb, end);
   };
-
   /*
    * replace \r\n | \r | \n to <br/>
    * @param {string} str

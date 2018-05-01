@@ -1,4 +1,3 @@
-
 /*
  * Array
  * @namespace caro
@@ -7,7 +6,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * remove all items in array
    * @param {[]} arr
@@ -17,7 +15,6 @@
     arr.splice(0, arr.length);
     return arr;
   };
-
   /*
    * push value into array if not exists
    * @param {[]} arr
@@ -35,7 +32,6 @@
     }
     return arr;
   };
-
   /*
    * will not push to array if value is empty
    * @param {[]} arr
@@ -53,7 +49,6 @@
     }
     return arr;
   };
-
   /*
    * remove empty-value in array
    * @param {[]} arr
@@ -63,7 +58,7 @@
     var count, emptyArr, i, j, ref, val;
     emptyArr = [];
     count = 0;
-    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+    for (i = j = 0, ref = arr.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
       val = arr[count];
       if (caro.isEmptyVal(val)) {
         emptyArr.push(val);
@@ -74,7 +69,6 @@
     }
     return emptyArr;
   };
-
   /*
    * only keep basic-value in array
    * @param {[]} arr
@@ -84,7 +78,7 @@
     var count, emptyArr, i, j, ref, val;
     emptyArr = [];
     count = 0;
-    for (i = j = 0, ref = arr.length - 1; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+    for (i = j = 0, ref = arr.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
       val = arr[count];
       if (!caro.isBasicVal(val)) {
         emptyArr.push(val);
@@ -95,35 +89,27 @@
     }
     return emptyArr;
   };
-
   /*
    * pick up item from array by random
    * @param {[]} arrf
    * @returns {boolean} [removeFromArr=false]
    */
-  self.randomPick = function(arr, removeFromArr) {
+  self.randomPick = function(arr, removeFromArr = false) {
     var randIndex;
-    if (removeFromArr == null) {
-      removeFromArr = false;
-    }
     randIndex = caro.randomInt(arr.length - 1);
     if (!removeFromArr) {
       return arr[randIndex];
     }
     return arr.splice(randIndex, 1)[0];
   };
-
   /*
    * get sum of value in array
    * @param {[]} arr
    * @param {boolean} [force=false] if cover to number when argument is not number
    * @returns {number}
    */
-  self.sumOfArr = function(arr, force) {
+  self.sumOfArr = function(arr, force = false) {
     var i, j, len, total, val;
-    if (force == null) {
-      force = false;
-    }
     total = 0;
     for (i = j = 0, len = arr.length; j < len; i = ++j) {
       val = arr[i];

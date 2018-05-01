@@ -1,5 +1,7 @@
 do ->
 describe 'Path', ->
+  should = require('chai').should()
+  caro = require('../dist/caro.js')
   path = 'a/b/c/d.js'
   path2 = 'caro/caro.js'
   path3 = 'a/b/a'

@@ -1,4 +1,3 @@
-
 /*
  * Helper
  * @author Caro.Huang
@@ -6,7 +5,6 @@
 (function() {
   var self;
   self = caro;
-
   /*
    * check all argument in array by check-function,
    * get false if check-function return false
@@ -15,14 +13,12 @@
    * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
    * @returns {boolean}
    */
-  self.checkIfPass = function(arr, checkFn, needAllPass) {
+  self.checkIfPass = function(arr, checkFn, needAllPass = true) {
     var arg, i, result;
-    if (needAllPass == null) {
-      needAllPass = true;
-    }
     for (i in arr) {
       arg = arr[i];
       result = checkFn(arg);
+      // need all pass, but result is false || no-need all pass, and result is true
       if (needAllPass && result === false || !needAllPass && result === true) {
         needAllPass = !needAllPass;
         break;
@@ -30,7 +26,6 @@
     }
     return needAllPass;
   };
-
   /*
    * execute if first-argument is function
    * @param {function} fn
@@ -51,17 +46,16 @@
       return fn.apply(fn, args);
     }
   };
-
   /*
-     * format to money type like 1,000.00
-     * @param {string|number} arg
-     * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
-     * @param {object} [opt]
-     * @param {number} [opt.float=0]
-     * @param [opt.decimal=.]
-     * @param [opt.separated=,]
-     * @param [opt.prefix]
-     * @returns {string}
+   * format to money type like 1,000.00
+   * @param {string|number} arg
+   * @param {string} [type=int|sInt] format-type, if type is set, the opt will not work
+   * @param {object} [opt]
+   * @param {number} [opt.float=0]
+   * @param [opt.decimal=.]
+   * @param [opt.separated=,]
+   * @param [opt.prefix]
+   * @returns {string}
    */
   self.formatMoney = function(arg, type, opt) {
     var aStr, decimal, fStr, float, forceFloat, i, iStr, j, k, len1, prefix, r, ref, s, sepLength, separated, val;
@@ -99,7 +93,7 @@
     iStr = aStr[0];
     fStr = aStr[1] ? aStr[1].slice(0, float) : '';
     if (forceFloat) {
-      for (i = k = 1, ref = float - fStr.length; 1 <= ref ? k <= ref : k >= ref; i = 1 <= ref ? ++k : --k) {
+      for (i = k = 1, ref = float - fStr.length; (1 <= ref ? k <= ref : k >= ref); i = 1 <= ref ? ++k : --k) {
         fStr += '0';
       }
     }
@@ -110,7 +104,6 @@
     r.push(fStr ? decimal + fStr : '');
     return r.join('');
   };
-
   /*
    * get function name
    * @param {*} fn
@@ -126,7 +119,6 @@
     r = r.substr(0, r.indexOf('('));
     return r;
   };
-
   /*
    * get function content
    * @param {*} fn
@@ -140,7 +132,6 @@
     entire = fn.toString();
     return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'));
   };
-
   /*
    * get stack-information list
    * @param {number} [start=0] the start-index of list
@@ -184,7 +175,6 @@
     }
     return r;
   };
-
   /*
    * easy-use for setInterval
    * @param {function} fn the function you want to exclude
@@ -192,11 +182,8 @@
    * @param {integer} [times=0] the times that function exclude, will never stop when 0
    * @returns {string}
    */
-  self.setInterval = function(fn, ms, times) {
+  self.setInterval = function(fn, ms, times = 0) {
     var count, interval;
-    if (times == null) {
-      times = 0;
-    }
     count = 0;
     return interval = setInterval(function() {
       if (times && count === times) {
@@ -209,7 +196,6 @@
       return count++;
     }, ms);
   };
-
   /*
    * create random string
    * @param {number} len the length of random
@@ -229,6 +215,7 @@
     lower = opt.lower !== false;
     upper = opt.upper !== false;
     num = opt.num !== false;
+    // cover to array if string
     exclude = opt.exclude || [];
     exclude = typeof exclude === 'string' ? exclude.split(',') : exclude;
     if (lower) {
@@ -253,7 +240,6 @@
     }
     return text;
   };
-
   /*
    * random an integer
    * @param {number} max
@@ -270,26 +256,18 @@
     rand = Math.random() * (max - min + 1);
     return Math.floor(rand + min);
   };
-
   /*
    * random an number
    * @param {number} max
    * @param {number} [min=0]
    * @returns {number}
    */
-  self.randomNum = function(max, min) {
-    if (max == null) {
-      max = 0;
-    }
-    if (min == null) {
-      min = 0;
-    }
+  self.randomNum = function(max = 0, min = 0) {
     if (min > max) {
       min = 0;
     }
     return Math.random() * (max - min) + min;
   };
-
   /*
    * serialize object-arguments to url
    * @param {string} url
@@ -297,11 +275,8 @@
    * @param {boolean} [coverEmpty=false] if cover when value is empty
    * @returns {*}
    */
-  self.serializeUrl = function(url, oArgs, coverEmpty) {
+  self.serializeUrl = function(url, oArgs, coverEmpty = false) {
     var aArgs, count, key, val;
-    if (coverEmpty == null) {
-      coverEmpty = false;
-    }
     count = 0;
     aArgs = ['?'];
     for (key in oArgs) {

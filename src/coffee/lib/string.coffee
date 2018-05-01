@@ -24,7 +24,7 @@ do ->
   # @returns {*}
   ###
   self.addHead = (str, addStr) ->
-    str = addStr + str if str.indexOf(addStr) < 0
+    str = addStr + str if str.indexOf(addStr) != 0
     str
 
   ###
