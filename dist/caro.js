@@ -23,7 +23,6 @@
  * @author Caro.Huang
  */
 (function() {
-  console.log(123)
   var self;
   self = caro;
   /*
