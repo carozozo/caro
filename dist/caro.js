@@ -645,29 +645,29 @@
  * String
  * @author Caro.Huang
  */
-(function() {
-  var changeCase, self;
-  self = caro;
-  changeCase = function(str, type, startOrCb = 0, end = null) {
-    var cb, i, j, k, len, len1, letter, strArr;
-    cb = null;
+(function () {
+  var self = caro;
+  var changeCase = function (str, type, startOrCb, end) {
+    startOrCb = startOrCb || 0;
+
+    var cb = null;
     if (!end) {
       end = str.length;
     }
-    strArr = str.split('');
+    var strArr = str.split('');
     if (typeof startOrCb === 'function') {
       cb = startOrCb;
-      for (i = j = 0, len = strArr.length; j < len; i = ++j) {
-        letter = strArr[i];
+      for (var i = 0; i < strArr.length; i++) {
+        var letter = strArr[i];
         if (cb(letter, i) === true) {
           strArr[i] = letter[type]();
         }
       }
     } else {
-      for (i = k = 0, len1 = strArr.length; k < len1; i = ++k) {
-        letter = strArr[i];
-        if (i >= startOrCb && i < end) {
-          strArr[i] = letter[type]();
+      for (var j = 0; j < strArr.length; j++) {
+        letter = strArr[j];
+        if (j >= startOrCb && j < end) {
+          strArr[j] = letter[type]();
         }
       }
     }
@@ -679,7 +679,7 @@
    * @param {string} addStr
    * @returns {*}
    */
-  self.addHead = function(str, addStr) {
+  self.addHead = function (str, addStr) {
     if (str.indexOf(addStr) !== 0) {
       str = addStr + str;
     }
@@ -691,9 +691,8 @@
    * @param {string} addStr
    * @returns {*}
    */
-  self.addTail = function(str, addStr) {
-    var length;
-    length = addStr.length;
+  self.addTail = function (str, addStr) {
+    var length = addStr.length;
     if (str.lastIndexOf(addStr) !== str.length - length) {
       str += addStr;
     }
@@ -704,9 +703,8 @@
    * @param {string} str
    * @returns {string}
    */
-  self.brToWrap = function(str) {
-    var regex;
-    regex = /<br\s*[\/]?>/gi;
+  self.brToWrap = function (str) {
+    var regex = /<br\s*[\/]?>/gi;
     return str.replace(regex, '\n');
   };
   /*
@@ -715,11 +713,11 @@
    * @param {string} str2 the string want to insert
    * postion {integer} [position]
    */
-  self.insertStr = function(str1, str2, position) {
+  self.insertStr = function (str1, str2, position) {
     position = position || str1.length;
     return [str1.slice(0, position), str2, str1.slice(position)].join('');
   };
-  self.lowerStr = function(str, startOrCb, end) {
+  self.lowerStr = function (str, startOrCb, end) {
     return changeCase(str, 'toLowerCase', startOrCb, end);
   };
   /*
@@ -729,10 +727,9 @@
    * @param {string} replace
    * @returns {*|string}
    */
-  self.replaceAll = function(str, find, replace) {
-    var regex;
-    find = find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-    regex = new RegExp(find, 'g');
+  self.replaceAll = function (str, find, replace) {
+    find = find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+    var regex = new RegExp(find, 'g');
     return str.replace(regex, replace);
   };
   /*
@@ -742,11 +739,10 @@
    * @param {string} replace
    * @returns {*|string}
    */
-  self.replaceLast = function(str, find, replace) {
-    var lastIndex, str1, str2;
-    lastIndex = str.lastIndexOf(find);
-    str1 = str.slice(0, lastIndex);
-    str2 = str.slice(lastIndex);
+  self.replaceLast = function (str, find, replace) {
+    var lastIndex = str.lastIndexOf(find);
+    var str1 = str.slice(0, lastIndex);
+    var str2 = str.slice(lastIndex);
     return str1 + str2.replace(find, replace);
   };
   /*
@@ -754,9 +750,8 @@
    * @param {string} str
    * @returns {*}
    */
-  self.splitByWrap = function(str) {
-    var aWrap;
-    aWrap = ['\r\n', '\r', '\n'];
+  self.splitByWrap = function (str) {
+    var aWrap = ['\r\n', '\r', '\n'];
     return caro.splitStr(str, aWrap);
   };
   /*
@@ -765,8 +760,7 @@
    * @param {string|string[]} splitter it should be string-array or string
    * @returns {*}
    */
-  self.splitStr = function(str, splitter) {
-    var eachSplit, j, k, len, len1, mainSplit;
+  self.splitStr = function (str, splitter) {
     if (Array.isArray(str)) {
       return str;
     }
@@ -777,9 +771,9 @@
       splitter = [splitter];
     }
     // e.g. splitter=['aa', 'ab', 'c', 'd']; => mainSplit='c'
-    mainSplit = splitter[0];
-    for (j = 0, len = splitter.length; j < len; j++) {
-      eachSplit = splitter[j];
+    var mainSplit = splitter[0];
+    for (var i = 0; i < splitter.length; i++) {
+      var eachSplit = splitter[i];
       if (typeof eachSplit !== 'string') {
         continue;
       }
@@ -793,12 +787,12 @@
     if (typeof mainSplit !== 'string') {
       return [];
     }
-/* replace all splitter to mainSplitter
- * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
- * => string='caro,huang, is handsome'
- */
-    for (k = 0, len1 = splitter.length; k < len1; k++) {
-      eachSplit = splitter[k];
+    /* replace all splitter to mainSplitter
+     * e.g. string='caro.huang, is handsome'; splitter=['.', ','];
+     * => string='caro,huang, is handsome'
+     */
+    for (var j = 0; j < splitter.length; j++) {
+      eachSplit = splitter[j];
       if (typeof eachSplit !== 'string') {
         continue;
       }
@@ -811,7 +805,7 @@
    * @param {string} str
    * @returns {boolean}
    */
-  self.strToBool = function(str) {
+  self.strToBool = function (str) {
     str = str.toLowerCase();
     // return false when string='false' or '', otherwise return true
     return str !== '' && str !== 'false';
@@ -824,7 +818,7 @@
    * @param {number} [end] the end-index you want to uppercase
    * @returns {*}
    */
-  self.upperStr = function(str, startOrCb, end) {
+  self.upperStr = function (str, startOrCb, end) {
     return changeCase(str, 'toUpperCase', startOrCb, end);
   };
   /*
@@ -832,7 +826,7 @@
    * @param {string} str
    * @returns {string}
    */
-  self.wrapToBr = function(str) {
+  self.wrapToBr = function (str) {
     str = str.replace(/\r\n/g, '<br />');
     str = str.replace(/\n/g, '<br />');
     str = str.replace(/\r/g, '<br />');
