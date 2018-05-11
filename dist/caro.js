@@ -135,44 +135,18 @@
  * Helper
  * @author Caro.Huang
  */
-(function() {
-  var self;
-  self = caro;
-  /*
-   * check all argument in array by check-function,
-   * get false if check-function return false
-   * @param {[]} array
-   * @param {function} checkFn
-   * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
-   * @returns {boolean}
-   */
-  self.checkIfPass = function(arr, checkFn, needAllPass = true) {
-    var arg, i, result;
-    for (i in arr) {
-      arg = arr[i];
-      result = checkFn(arg);
-      // need all pass, but result is false || no-need all pass, and result is true
-      if (needAllPass && result === false || !needAllPass && result === true) {
-        needAllPass = !needAllPass;
-        break;
-      }
-    }
-    return needAllPass;
-  };
+(function () {
+  var self = caro;
   /*
    * execute if first-argument is function
    * @param {function} fn
    * @param {...*} args function-arguments
    * @returns {*}
    */
-  self.executeIfFn = function(fn) {
-    var args, i, j, len1, val;
-    args = [];
-    for (i = j = 0, len1 = arguments.length; j < len1; i = ++j) {
-      val = arguments[i];
-      if (i === 0) {
-        continue;
-      }
+  self.executeIfFn = function (fn) {
+    var args = [];
+    for (var i = 1; i < arguments.length; i++) {
+      var val = arguments[i];
       args.push(val);
     }
     if (typeof fn === 'function') {
@@ -190,14 +164,10 @@
    * @param [opt.prefix]
    * @returns {string}
    */
-  self.formatMoney = function(arg, type, opt) {
-    var aStr, decimal, fStr, float, forceFloat, i, iStr, j, k, len1, prefix, r, ref, s, sepLength, separated, val;
-    r = [];
-    for (i = j = 0, len1 = arguments.length; j < len1; i = ++j) {
-      val = arguments[i];
-      if (i === 0) {
-        continue;
-      }
+  self.formatMoney = function (arg, type, opt) {
+    var r = [];
+    for (var i = 1; i < arguments.length; i++) {
+      var val = arguments[i];
       if (typeof val === 'object') {
         opt = val;
       }
@@ -206,12 +176,12 @@
       }
     }
     opt = opt || {};
-    float = Math.abs(caro.toInteger(opt.float));
-    decimal = typeof opt.decimal === 'string' ? opt.decimal : '.';
-    separated = typeof opt.decimal === 'separated' ? opt.separated : ',';
-    prefix = typeof opt.prefix === 'string' ? opt.prefix : '';
-    forceFloat = opt.forceFloat === true;
-    s = arg < 0 ? '-' : '';
+    var float = Math.abs(caro.toInteger(opt.float));
+    var decimal = typeof opt.decimal === 'string' ? opt.decimal : '.';
+    var separated = typeof opt.decimal === 'separated' ? opt.separated : ',';
+    var prefix = typeof opt.prefix === 'string' ? opt.prefix : '';
+    var forceFloat = opt.forceFloat === true;
+    var s = arg < 0 ? '-' : '';
     switch (type) {
       case 'sInt':
         float = 0;
@@ -222,15 +192,15 @@
     }
     arg = caro.toNumber(arg);
     arg = caro.toString(arg);
-    aStr = arg.split('.');
-    iStr = aStr[0];
-    fStr = aStr[1] ? aStr[1].slice(0, float) : '';
+    var aStr = arg.split('.');
+    var iStr = aStr[0];
+    var fStr = aStr[1] ? aStr[1].slice(0, float) : '';
     if (forceFloat) {
-      for (i = k = 1, ref = float - fStr.length; (1 <= ref ? k <= ref : k >= ref); i = 1 <= ref ? ++k : --k) {
+      for (var j = 0; j <= float - fStr.length; j++) {
         fStr += '0';
       }
     }
-    sepLength = iStr.length > 3 ? iStr.length % 3 : 0;
+    var sepLength = iStr.length > 3 ? iStr.length % 3 : 0;
     r.push(prefix);
     r.push(s + (sepLength ? iStr.substr(0, sepLength) + separated : ''));
     r.push(iStr.substr(sepLength).replace(/(\d{3})(?=\d)/g, '$1' + separated));
@@ -242,12 +212,11 @@
    * @param {*} fn
    * @returns {string|*|String}
    */
-  self.getFnName = function(fn) {
-    var r;
+  self.getFnName = function (fn) {
     if (typeof fn !== 'function') {
       return null;
     }
-    r = fn.toString();
+    var r = fn.toString();
     r = r.substr('function '.length);
     r = r.substr(0, r.indexOf('('));
     return r;
@@ -257,12 +226,11 @@
    * @param {*} fn
    * @returns {string|*|String}
    */
-  self.getFnBody = function(fn) {
-    var entire;
+  self.getFnBody = function (fn) {
     if (typeof fn !== 'function') {
       return null;
     }
-    entire = fn.toString();
+    var entire = fn.toString();
     return entire.slice(entire.indexOf('{') + 1, entire.lastIndexOf('}'));
   };
   /*
@@ -271,30 +239,32 @@
    * @param {number} [length=null] the list length you want get
    * @returns {array}
    */
-  self.getStackList = function(start, length) {
-    var aStack, data, end, err, i, info, j, len1, r, reg, reg2, sStack, stack;
-    r = [];
-    err = new Error();
-    stack = err.stack;
-    aStack = caro.splitByWrap(stack).slice(2);
+  self.getStackList = function (start, length) {
+    var r = [];
+    var err = new Error();
+    var stack = err.stack;
+    var aStack = caro.splitByWrap(stack).slice(2);
+    var end = 0;
+
     start = start || 0;
     length = length || null;
+
     if (length) {
       end = start + length - 1;
     } else {
       end = aStack.length - 1;
     }
-    for (i = j = 0, len1 = aStack.length; j < len1; i = ++j) {
-      sStack = aStack[i];
+    for (var i = 0; i < aStack.length; i++) {
+      var sStack = aStack[i];
       if (i < start || i > end) {
         continue;
       }
-      data = {};
-      reg = /^\s*at\s*/i;
+      var data = {};
+      var reg = /^\s*at\s*/i;
       sStack = sStack.replace(reg, '');
       reg = /(.*)\s+\((.*):(\d*):(\d*)\)/gi;
-      reg2 = /()(.*):(\d*):(\d*)/gi;
-      info = reg.exec(sStack) || reg2.exec(sStack);
+      var reg2 = /()(.*):(\d*):(\d*)/gi;
+      var info = reg.exec(sStack) || reg2.exec(sStack);
       if (!info || info.length !== 5) {
         continue;
       }
@@ -315,18 +285,20 @@
    * @param {integer} [times=0] the times that function exclude, will never stop when 0
    * @returns {string}
    */
-  self.setInterval = function(fn, ms, times = 0) {
-    var count, interval;
-    count = 0;
-    return interval = setInterval(function() {
+  self.setInterval = function (fn, ms, times) {
+    var interval;
+    var count = 0;
+
+    times = times ? parseInt(times, 10) : 0;
+
+    return interval = setInterval(function () {
       if (times && count === times) {
         clearInterval(interval);
         return;
       }
-      if (fn() === false && !times) {
+      if (fn(++count) === false && !times) {
         clearInterval(interval);
       }
-      return count++;
     }, ms);
   };
   /*
@@ -339,18 +311,20 @@
    * @param {string} [opt.exclude=[]] the charts that excluded
    * @returns {string}
    */
-  self.random = function(len, opt) {
-    var chars, exclude, excludeStr, i, j, len1, lower, num, text, upper;
-    text = '';
-    chars = [];
+  self.random = function (len, opt) {
+    var text = '';
+    var chars = [];
+
     len = parseInt(len) ? parseInt(len) : 1;
     opt = opt || {};
-    lower = opt.lower !== false;
-    upper = opt.upper !== false;
-    num = opt.num !== false;
+
+    var lower = opt.lower !== false;
+    var upper = opt.upper !== false;
+    var num = opt.num !== false;
     // cover to array if string
-    exclude = opt.exclude || [];
+    var exclude = opt.exclude || [];
     exclude = typeof exclude === 'string' ? exclude.split(',') : exclude;
+
     if (lower) {
       chars.push('abcdefghijklmnopqrstuvwxyz');
     }
@@ -360,13 +334,14 @@
     if (num) {
       chars.push('0123456789');
     }
+
     chars = chars.join('');
-    for (j = 0, len1 = exclude.length; j < len1; j++) {
-      excludeStr = exclude[j];
+    for (var j = 0; j < exclude.length; j++) {
+      var excludeStr = exclude[j];
       excludeStr = excludeStr.trim();
       chars = caro.replaceAll(chars, excludeStr, '');
     }
-    i = 0;
+    var i = 0;
     while (i < len) {
       text += chars.charAt(Math.floor(Math.random() * chars.length));
       i++;
@@ -379,14 +354,13 @@
    * @param {number} [min=0]
    * @returns {number}
    */
-  self.randomInt = function(max, min) {
-    var rand;
-    max = parseInt(max) || 0;
-    min = parseInt(min) || 0;
+  self.randomInt = function (max, min) {
+    max = max ? parseInt(max, 10) : 0;
+    min = min ? parseInt(min, 10) : 0;
     if (min > max) {
       min = 0;
     }
-    rand = Math.random() * (max - min + 1);
+    var rand = Math.random() * (max - min + 1);
     return Math.floor(rand + min);
   };
   /*
@@ -395,7 +369,9 @@
    * @param {number} [min=0]
    * @returns {number}
    */
-  self.randomNum = function(max = 0, min = 0) {
+  self.randomNum = function (max, min) {
+    max = max ? parseInt(max, 10) : 0;
+    min = min ? parseInt(min, 10) : 0;
     if (min > max) {
       min = 0;
     }
@@ -408,16 +384,13 @@
    * @param {boolean} [coverEmpty=false] if cover when value is empty
    * @returns {*}
    */
-  self.serializeUrl = function(url, oArgs, coverEmpty = false) {
-    var aArgs, count, key, val;
-    count = 0;
-    aArgs = ['?'];
-    for (key in oArgs) {
-      val = oArgs[key];
+  self.serializeUrl = function (url, oArgs, coverEmpty) {
+    var count = 0;
+    var aArgs = ['?'];
+    for (var key in oArgs) {
+      var val = oArgs[key];
       if (caro.isEmptyVal(val)) {
-        if (!coverEmpty) {
-          continue;
-        }
+        if (!coverEmpty) continue;
         val = '';
       }
       if (count > 0) {
@@ -428,7 +401,7 @@
       aArgs.push(val);
       count++;
     }
-    return url += aArgs.join('');
+    return url + aArgs.join('');
   };
 })();
 
