@@ -2,18 +2,16 @@
  * Path
  * @author Caro.Huang
  */
-(function() {
-  var self;
-  self = caro;
+(function () {
+  var self = caro;
   /*
    * get dir-path
    * @param {string} path
    * @return {string}
    */
-  self.getDirPath = function(path) {
-    var filename;
-    filename = caro.getFileName(path);
-    return path = caro.replaceLast(path, filename, '');
+  self.getDirPath = function (path) {
+    var filename = caro.getFileName(path);
+    return caro.replaceLast(path, filename, '');
   };
   /*
    * get file name in path
@@ -21,17 +19,19 @@
    * @param {boolean} [getFull] if return file-name by full (with extend-name)
    * @return {string}
    */
-  self.getFileName = function(path, getFull) {
-    var extendName, lastIndex, lastIndex2;
+  self.getFileName = function (path, getFull) {
     getFull = getFull !== false;
-    lastIndex = path.lastIndexOf('\\');
-    lastIndex2 = path.lastIndexOf('/');
+
+    var lastIndex = path.lastIndexOf('\\');
+    var lastIndex2 = path.lastIndexOf('/');
+
     path = path.slice(lastIndex + 1);
     path = path.slice(lastIndex2 + 1);
     if (getFull) {
       return path;
     }
-    extendName = caro.getExtendName(path);
+
+    var extendName = caro.getExtendName(path);
     return path.replace(extendName, '');
   };
   /*
@@ -40,15 +40,16 @@
    * @param {boolean} [withDot] if return extend-name with '.'
    * @return {string}
    */
-  self.getExtendName = function(path, withDot) {
-    var aFileName, extendName, fileName;
+  self.getExtendName = function (path, withDot) {
     withDot = withDot !== false;
-    fileName = caro.getFileName(path);
-    aFileName = caro.splitStr(fileName, '.');
+
+    var fileName = caro.getFileName(path);
+    var aFileName = caro.splitStr(fileName, '.');
     if (aFileName.length === 1) {
       return '';
     }
-    extendName = aFileName[aFileName.length - 1];
+
+    var extendName = aFileName[aFileName.length - 1];
     if (withDot) {
       extendName = '.' + extendName;
     }
