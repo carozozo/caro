@@ -99,9 +99,9 @@ describe('Helper', function () {
     var r3 = caro.randomInt();
 
     (r >= 0 && r <= 3).should.be.true;
-    caro.isInteger(r).should.be.true;
+    r.should.be.eq(Math.round(r));
     (r2 >= -3 && r2 <= 3).should.be.true;
-    caro.isInteger(r2).should.be.true;
+    r2.should.be.eq(Math.round(r2));
     r3.should.be.eq(0);
   });
   it('randomNum', function () {

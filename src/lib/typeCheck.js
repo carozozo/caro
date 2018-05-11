@@ -58,19 +58,6 @@
     return arg === false || arg === 'false' || arg === 0;
   };
   /*
-   * check if integer
-   * @param {*} arg
-   * @returns {boolean}
-   */
-  self.isInteger = function(arg) {
-    var int;
-    if (typeof arg !== 'number') {
-      return false;
-    }
-    int = parseInt(arg);
-    return int === arg;
-  };
-  /*
    * check if JSON, return false is one of them not match
    * @param {*} arg
    * @returns {boolean}
