@@ -1,72 +1,75 @@
-describe('Array', function() {
-  var caro, should;
-  should = require('chai').should();
-  caro = require('../dist/caro.js');
-  it('cleanArr', function() {
-    var arr, r;
-    arr = [1, 2];
-    r = caro.cleanArr(arr);
+describe('Array', function () {
+  var should = require('chai').should();
+  var caro = require('../dist/caro.js');
+
+  it('cleanArr', function () {
+    var arr = [1, 2];
+    var r = caro.cleanArr(arr);
+
     r.should.eql([]);
-    return arr.should.eql([]);
+    arr.should.eql([]);
   });
-  it('pushNoDuplicate', function() {
-    var arr, r;
-    arr = [1, 2, 3];
-    r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3);
-    return r.should.eql([1, 2, 3, {}, {}]);
+  it('pushNoDuplicate', function () {
+    var arr = [1, 2, 3];
+    var r = caro.pushNoDuplicate(arr, 1, 3, {}, {}, 3);
+
+    r.should.eql([1, 2, 3, {}, {}]);
   });
-  it('pushNoEmptyVal', function() {
-    var arr, r;
-    arr = [1, 2, 3];
-    r = caro.pushNoEmptyVal(arr, 1, 'caro', {}, void 0, null, 0, '', []);
-    return r.should.eql([1, 2, 3, 1, 'caro', 0]);
+  it('pushNoEmptyVal', function () {
+    var arr = [1, 2, 3];
+    var r = caro.pushNoEmptyVal(arr, 1, 'caro', {}, undefined, null, 0, '', []);
+
+    r.should.eql([1, 2, 3, 1, 'caro', 0]);
   });
-  it('pullEmptyVal', function() {
-    var arr, r;
-    arr = [1, '', null, 'caro', void 0];
-    r = caro.pullEmptyVal(arr);
+  it('pullEmptyVal', function () {
+    var arr = [1, '', null, 'caro', undefined];
+    var r = caro.pullEmptyVal(arr);
+
     arr.should.be.eql([1, 'caro']);
-    return r.should.be.eql(['', null, void 0]);
+    r.should.be.eql(['', null, undefined]);
   });
-  it('pullUnBasicVal', function() {
-    var arr, r;
-    arr = [
-      1, {
+  it('pullUnBasicVal', function () {
+    var arr = [
+      1,
+      {
         a: 1
-      }, 'caro'
+      },
+      'caro'
     ];
-    r = caro.pullUnBasicVal(arr);
+    var r = caro.pullUnBasicVal(arr);
+
     arr.should.be.eql([1, 'caro']);
-    return r.should.be.eql([
+    r.should.be.eql([
       {
         a: 1
       }
     ]);
   });
-  it('randomPick', function() {
-    var arr, arr2, arrLength, arrLength2, i, r, r2, results, val;
-    arr = [1, 2, 3];
-    arr2 = [1, 2, 3];
-    arrLength = arr.length;
-    arrLength2 = arr2.length;
-    r = caro.randomPick(arr);
-    r2 = caro.randomPick(arr2, true);
+  it('randomPick', function () {
+    var arr = [1, 2, 3];
+    var arr2 = [1, 2, 3];
+    var arrLength = arr.length;
+    var arrLength2 = arr2.length;
+    var r = caro.randomPick(arr);
+    var r2 = caro.randomPick(arr2, true);
+
     arr.length.should.be.equal(arrLength);
     arr.indexOf(r).should.be.above(-1);
     arr.indexOf(r).should.be.below(arrLength);
     arr2.length.should.be.eq(arrLength2 - 1);
-    results = [];
-    for (i in arr2) {
-      val = arr2[i];
+
+    var results = [];
+    for (var i in arr2) {
+      var val = arr2[i];
       results.push(val.should.be.not.eq(r2));
     }
     return results;
   });
-  return it('sumOfArr', function() {
-    var arr, r, r2;
-    arr = [1, 2, '5'];
-    r = caro.sumOfArr(arr);
-    r2 = caro.sumOfArr(arr, true);
+  it('sumOfArr', function () {
+    var arr = [1, 2, '5'];
+    var r = caro.sumOfArr(arr);
+    var r2 = caro.sumOfArr(arr, true);
+
     r.should.eq(3);
     return r2.should.eq(8);
   });

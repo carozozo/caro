@@ -1,4 +1,4 @@
-/*! caro - v2.0.0- 2018-5-11 */
+/*! caro - v2.0.1- 2018-5-11 */
 (function(g) {
   var caro, e, isNode;
   isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
@@ -22,15 +22,14 @@
  * @namespace caro
  * @author Caro.Huang
  */
-(function() {
-  var self;
-  self = caro;
+(function () {
+  var self = caro;
   /*
    * remove all items in array
    * @param {[]} arr
    * @returns {array}
    */
-  self.cleanArr = function(arr) {
+  self.cleanArr = function (arr) {
     arr.splice(0, arr.length);
     return arr;
   };
@@ -40,13 +39,10 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoDuplicate = function(arr) {
-    var i, j, len, val;
-    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
-      val = arguments[i];
-      if (i === 0 || arr.indexOf(val) > -1) {
-        continue;
-      }
+  self.pushNoDuplicate = function (arr) {
+    for (var i = 1; i < arguments.length; i++) {
+      var val = arguments[i];
+      if (arr.indexOf(val) > -1) continue;
       arr.push(val);
     }
     return arr;
@@ -57,13 +53,10 @@
    * @param {...*} value
    * @returns {array}
    */
-  self.pushNoEmptyVal = function(arr) {
-    var i, j, len, val;
-    for (i = j = 0, len = arguments.length; j < len; i = ++j) {
-      val = arguments[i];
-      if (i === 0 || caro.isEmptyVal(val)) {
-        continue;
-      }
+  self.pushNoEmptyVal = function (arr) {
+    for (var i = 1; i < arguments.length; i++) {
+      var val = arguments[i];
+      if (caro.isEmptyVal(val)) continue;
       arr.push(val);
     }
     return arr;
@@ -73,17 +66,16 @@
    * @param {[]} arr
    * @returns {array}
    */
-  self.pullEmptyVal = function(arr) {
-    var count, emptyArr, i, j, ref, val;
-    emptyArr = [];
-    count = 0;
-    for (i = j = 0, ref = arr.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
-      val = arr[count];
+  self.pullEmptyVal = function (arr) {
+    var emptyArr = [];
+    var i = 0;
+    while (i < arr.length && i >= 0) {
+      var val = arr[i];
       if (caro.isEmptyVal(val)) {
         emptyArr.push(val);
-        arr.splice(count, 1);
+        arr.splice(i, 1);
       } else {
-        count++;
+        i++;
       }
     }
     return emptyArr;
@@ -93,29 +85,27 @@
    * @param {[]} arr
    * @returns {array}
    */
-  self.pullUnBasicVal = function(arr) {
-    var count, emptyArr, i, j, ref, val;
-    emptyArr = [];
-    count = 0;
-    for (i = j = 0, ref = arr.length - 1; (0 <= ref ? j <= ref : j >= ref); i = 0 <= ref ? ++j : --j) {
-      val = arr[count];
+  self.pullUnBasicVal = function (arr) {
+    var basicArr = [];
+    var i = 0;
+    while (i < arr.length && i >= 0) {
+      var val = arr[i];
       if (!caro.isBasicVal(val)) {
-        emptyArr.push(val);
-        arr.splice(count, 1);
+        basicArr.push(val);
+        arr.splice(i, 1);
       } else {
-        count++;
+        i++;
       }
     }
-    return emptyArr;
+    return basicArr;
   };
   /*
    * pick up item from array by random
-   * @param {[]} arrf
+   * @param {[]} arr
    * @returns {boolean} [removeFromArr=false]
    */
-  self.randomPick = function(arr, removeFromArr = false) {
-    var randIndex;
-    randIndex = caro.randomInt(arr.length - 1);
+  self.randomPick = function (arr, removeFromArr) {
+    var randIndex = caro.randomInt(arr.length - 1);
     if (!removeFromArr) {
       return arr[randIndex];
     }
@@ -127,11 +117,10 @@
    * @param {boolean} [force=false] if cover to number when argument is not number
    * @returns {number}
    */
-  self.sumOfArr = function(arr, force = false) {
-    var i, j, len, total, val;
-    total = 0;
-    for (i = j = 0, len = arr.length; j < len; i = ++j) {
-      val = arr[i];
+  self.sumOfArr = function (arr, force) {
+    var total = 0;
+    for (var i in arr) {
+      var val = arr[i];
       if (typeof val === 'number') {
         total += val;
       } else if (force) {
