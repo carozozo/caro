@@ -97,18 +97,6 @@ var r2 = caro.sumOfArr(arr, true); // 8
 
 ### Helper
 [Back to Index](#index)
-- **checkIfPass((arr, checkFn [needAllPass=true]) - validate all values in array by check-function**
-```javascript
-var arg = [1, 2, 3];
-// (1===1 && 2===1 && 3===1)
-var r = caro.checkIfPass(arg, function (val) {
-    return val === 1;
-}); // false
-// (1 > 2 || 2 > 2 || 3 > 2)
-var r2 = caro.checkIfPass(arg, function (val) {
-    return val > 2;
-}, false); // true
-```
 - **executeIfFn(fn [arg...]) - execute it if argument is function**
 ```javascript
 var arg = function (i) {

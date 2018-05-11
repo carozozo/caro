@@ -6,27 +6,6 @@
   var self;
   self = caro;
   /*
-   * check all argument in array by check-function,
-   * get false if check-function return false
-   * @param {[]} array
-   * @param {function} checkFn
-   * @param {boolean} [needAllPass=true] when returnIfAllPass=true, return true when all check-result are true
-   * @returns {boolean}
-   */
-  self.checkIfPass = function(arr, checkFn, needAllPass = true) {
-    var arg, i, result;
-    for (i in arr) {
-      arg = arr[i];
-      result = checkFn(arg);
-      // need all pass, but result is false || no-need all pass, and result is true
-      if (needAllPass && result === false || !needAllPass && result === true) {
-        needAllPass = !needAllPass;
-        break;
-      }
-    }
-    return needAllPass;
-  };
-  /*
    * execute if first-argument is function
    * @param {function} fn
    * @param {...*} args function-arguments

@@ -12,7 +12,7 @@
    * @returns {boolean}
    */
   self.isBasicVal = function(arg) {
-    return caro.checkIfPass(arguments, function(arg) {
+    return Array.from(arguments).every(function(arg) {
       return typeof arg === 'boolean' || typeof arg === 'string' || typeof arg === 'number';
     });
   };
@@ -22,7 +22,7 @@
    * @returns {boolean}
    */
   self.isEmptyVal = function() {
-    return caro.checkIfPass(arguments, function(arg) {
+    return Array.from(arguments).every(function(arg) {
       if (arg === null || arg === void 0) {
         return true;
       }

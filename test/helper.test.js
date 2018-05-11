@@ -2,17 +2,6 @@ describe('Helper', function() {
   var caro, should;
   should = require('chai').should();
   caro = require('../dist/caro.js');
-  it('checkIfPass', function() {
-    var r, r2;
-    r = caro.checkIfPass([1, 2, 3], function(val) {
-      return val === 1;
-    });
-    r2 = caro.checkIfPass([1, 2, 3], function(val) {
-      return val > 2;
-    }, false);
-    r.should.be.false;
-    return r2.should.be.true;
-  });
   it('executeIfFn', function() {
     var arg, r, r2;
     arg = function(i) {
