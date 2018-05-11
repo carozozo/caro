@@ -1,4 +1,4 @@
-/*! caro - v2.0.0- 2018-5-1 */
+/*! caro - v2.0.0- 2018-5-11 */
 (function(g) {
   var caro, e, isNode;
   isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
@@ -23,6 +23,7 @@
  * @author Caro.Huang
  */
 (function() {
+  console.log(123)
   var self;
   self = caro;
   /*

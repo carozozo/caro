@@ -37,7 +37,6 @@
     "coffee-script": "^1.12.7",
     "del": "^3.0.0",
     "gulp": "latest",
-    "gulp-coffee": "^3.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.5",
     "gulp-mocha": "^5.0.0",
