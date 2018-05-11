@@ -445,7 +445,7 @@
  * Object
  * @author Caro.Huang
  */
-(function() {
+(function () {
   var self = caro;
   /*
    * assign elements to from obj2 to obj1 by keys
@@ -455,7 +455,7 @@
    * @param {array} keys the keys in obj2 that you want sand to obj1
    * @param {boolean} [replace=true] won't replace obj1 elements if obj1 has same key when false
    */
-  self.assignByKeys = function(obj1, obj2, keys, replace) {
+  self.assignByKeys = function (obj1, obj2, keys, replace) {
     replace = replace !== undefined ? replace : true;
 
     for (var i = 0; i < keys.length; i++) {
@@ -471,7 +471,7 @@
    * @param {object} obj
    * @return {object}
    */
-  self.catching = function(obj) {
+  self.catching = function (obj) {
     for (var i = 0; i < arguments.length; i++) {
       var eachObj = arguments[i];
       if (i === 0) {
@@ -491,7 +491,7 @@
    * @param {object|array} arg
    * @return {object}
    */
-  self.classify = function(arg) {
+  self.classify = function (arg) {
     var aStr = [];
     var aBool = [];
     var aArr = [];
@@ -529,7 +529,7 @@
    * @param {object} obj2
    * @return {array}
    */
-  self.differentKeys = function(obj1, obj2, reverse) {
+  self.differentKeys = function (obj1, obj2, reverse) {
     var keysA, keysB;
     var keys1 = Object.keys(obj1);
     var keys2 = Object.keys(obj2);
@@ -543,7 +543,7 @@
     }
 
     var difArr = [];
-    for (var i = 0;  i < keysA.length; i++) {
+    for (var i = 0; i < keysA.length; i++) {
       var val = keysA[i];
       if (keysB.indexOf(val) < 0) {
         difArr.push(val);
@@ -557,7 +557,7 @@
    * @param {object} obj2
    * @return {boolean}
    */
-  self.hasEqualKeys = function(obj1, obj2) {
+  self.hasEqualKeys = function (obj1, obj2) {
     var size1 = caro.differentKeys(obj1, obj2).length;
     var size2 = caro.differentKeys(obj1, obj2, true).length;
     return size1 === 0 && size2 === 0;
@@ -568,11 +568,11 @@
    * @param {object} obj2
    * @return {array}
    */
-  self.sameKeys = function(obj1, obj2) {
+  self.sameKeys = function (obj1, obj2) {
     var keys = Object.keys(obj1);
     var diffKeys = caro.differentKeys(obj1, obj2);
     var ret = [];
-    for (var i = 0;  i < keys.length; i++) {
+    for (var i = 0; i < keys.length; i++) {
       var val = keys[i];
       if (diffKeys.indexOf(val) < 0) {
         ret.push(val);
@@ -586,18 +586,16 @@
  * Path
  * @author Caro.Huang
  */
-(function() {
-  var self;
-  self = caro;
+(function () {
+  var self = caro;
   /*
    * get dir-path
    * @param {string} path
    * @return {string}
    */
-  self.getDirPath = function(path) {
-    var filename;
-    filename = caro.getFileName(path);
-    return path = caro.replaceLast(path, filename, '');
+  self.getDirPath = function (path) {
+    var filename = caro.getFileName(path);
+    return caro.replaceLast(path, filename, '');
   };
   /*
    * get file name in path
@@ -605,17 +603,19 @@
    * @param {boolean} [getFull] if return file-name by full (with extend-name)
    * @return {string}
    */
-  self.getFileName = function(path, getFull) {
-    var extendName, lastIndex, lastIndex2;
+  self.getFileName = function (path, getFull) {
     getFull = getFull !== false;
-    lastIndex = path.lastIndexOf('\\');
-    lastIndex2 = path.lastIndexOf('/');
+
+    var lastIndex = path.lastIndexOf('\\');
+    var lastIndex2 = path.lastIndexOf('/');
+
     path = path.slice(lastIndex + 1);
     path = path.slice(lastIndex2 + 1);
     if (getFull) {
       return path;
     }
-    extendName = caro.getExtendName(path);
+
+    var extendName = caro.getExtendName(path);
     return path.replace(extendName, '');
   };
   /*
@@ -624,15 +624,16 @@
    * @param {boolean} [withDot] if return extend-name with '.'
    * @return {string}
    */
-  self.getExtendName = function(path, withDot) {
-    var aFileName, extendName, fileName;
+  self.getExtendName = function (path, withDot) {
     withDot = withDot !== false;
-    fileName = caro.getFileName(path);
-    aFileName = caro.splitStr(fileName, '.');
+
+    var fileName = caro.getFileName(path);
+    var aFileName = caro.splitStr(fileName, '.');
     if (aFileName.length === 1) {
       return '';
     }
-    extendName = aFileName[aFileName.length - 1];
+
+    var extendName = aFileName[aFileName.length - 1];
     if (withDot) {
       extendName = '.' + extendName;
     }
