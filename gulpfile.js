@@ -53,10 +53,8 @@
   });
 
   gulp.task('test', ['concat'], function () {
-    return gulp.src(testDir + '*.coffee', {read: false})
-      .pipe(gMocha({
-        compilers: 'coffee:coffee-script/register'
-      }));
+    return gulp.src(testDir + '*.js', {read: false})
+      .pipe(gMocha());
   });
 
   gulp.task('default', ['compress', 'test']);
