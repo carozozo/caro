@@ -30,13 +30,6 @@ describe('TypeCheck', function() {
     r.should.be.true;
     return r2.should.be.true;
   });
-  it('isInteger', function() {
-    var r, r2;
-    r = caro.isInteger(123);
-    r2 = caro.isInteger(333.456);
-    r.should.be.true;
-    return r2.should.be.false;
-  });
   it('isJson', function() {
     var r, r2, r3, r4;
     r = caro.isJson(null);
