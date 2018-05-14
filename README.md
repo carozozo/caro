@@ -442,38 +442,57 @@ var r2 = caro.isLower('Caro'); // false
 
 ### TypeCover
 [Back to Index](#index)
-- **toString(arg) - cover to string**
+- **toStr(arg) - cover to string**
 ```javascript
-var r = caro.toString(function () {}); // 'function () {}'
-var r2 = caro.toString(null); // 'null'
-var r3 = caro.toString(['caro', undefined]); // 'caro,'
+var r = caro.toStr('3'); // '3'
+var r2 = caro.toStr(['caro', undefined]); // 'caro,'
+var r3 = caro.toStr({
+  a: false,
+  b: null,
+  c: 0,
+  d: NaN,
+  e: undefined,
+  f: [],
+  g: function() {}
+}); // '[object Object]'
+var r4 = caro.toStr(null); // 'null'
+var r5 = caro.toStr(undefined); // 'undefined'
+var r6 = caro.toStr(function () { }); // 'function () { }'
 ```
-- **toInteger(arg) - cover to integer**
+- **toInt(arg) - cover to integer**
 ```javascript
-var r = caro.toInteger('123.6'); // 123
-var r2 = caro.toInteger('a'); // NaN
-var r3 = caro.toInteger(null); // NaN
+var r = caro.toInt('3'); // 3
+var r2 = caro.toInt('3.2'); // 3
+var r3 = caro.toInt('caro'); // NaN
+var r4 = caro.toNum({}); // NaN
+var r5 = caro.toInt(null); // NaN
+var r6 = caro.toInt(undefined); // NaN
+var r7 = caro.toInt(function () { }); // NaN
 ```
-- **toNumber(arg) - cover to number**
+- **toNum(arg) - cover to number**
 ```javascript
-var r = caro.toNumber('123.45'); // 123.45
-var r2 = caro.toNumber({}); // NaN
-var r3 = caro.toNumber(undefined); // NaN
+var r = caro.toNum('3'); // 3
+var r2 = caro.toNum('3.2'); // 3.2
+var r3 = caro.toNum('caro'); // NaN
+var r4 = caro.toNum({}); // NaN
+var r5 = caro.toNum(null); // 0
+var r6 = caro.toNum(undefined); // NaN
+var r7 = caro.toNum(function () { }); // NaN
 ```
-- **toFixedNumber(arg [dec=2]) - cover to fixed-number**
+- **toFixedNum(arg [dec=2]) - cover to fixed-number**
 ```javascript
-var r = caro.toFixedNumber('3.4355'); // 3.44
-var r2 = caro.toFixedNumber(2.12345, 3); // 2.123
-var r3 = caro.toFixedNumber('caro', 3) // NaN
+var r = caro.toFixedNum('3.4355'); // 3.44
+var r2 = caro.toFixedNum(2.12345, 3); // 2.123
+var r3 = caro.toFixedNum('caro', 3) // NaN
 ```
 - **toJson(arg [replacer=null] [space=0]) - cover to JSON**
 ```javascript
 var arg = {a: 3, b: 5};
 var replacer = function (key, val) {
-    if (key === '') {
-        return val; // the arg itself
-    }
-    return val + 1;
+  if (key === '') {
+    return val; // the arg itself
+  }
+  return val + 1;
 };
 var r = caro.toJson(3.4); // '3.4'
 var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'

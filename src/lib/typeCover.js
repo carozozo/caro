@@ -4,14 +4,13 @@
  * @author Caro.Huang
  */
 (function() {
-  var self;
-  self = caro;
+  var self = caro;
   /*
    * cover to string
    * @param arg
    * @returns {*}
    */
-  self.toString = function(arg) {
+  self.toStr = function(arg) {
     return String(arg);
   };
   /*
@@ -19,7 +18,7 @@
    * @param arg
    * @returns {*}
    */
-  self.toInteger = function(arg) {
+  self.toInt = function(arg) {
     return parseInt(arg);
   };
   /*
@@ -27,7 +26,7 @@
    * @param arg
    * @returns {*}
    */
-  self.toNumber = function(arg) {
+  self.toNum = function(arg) {
     return Number(arg);
   };
   /*
@@ -36,9 +35,9 @@
    * @param {boolean} [dec=2] decimal-number
    * @returns {*}
    */
-  self.toFixedNumber = function(arg, dec = 2) {
-    var r;
-    r = caro.toString(arg);
+  self.toFixedNum = function(arg, dec) {
+    dec = (dec !== undefined) ? dec : 2;
+    var r = caro.toStr(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }

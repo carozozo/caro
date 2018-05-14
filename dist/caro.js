@@ -176,7 +176,7 @@
       }
     }
     opt = opt || {};
-    var float = Math.abs(caro.toInteger(opt.float));
+    var float = Math.abs(caro.toInt(opt.float));
     var decimal = typeof opt.decimal === 'string' ? opt.decimal : '.';
     var separated = typeof opt.decimal === 'separated' ? opt.separated : ',';
     var prefix = typeof opt.prefix === 'string' ? opt.prefix : '';
@@ -190,8 +190,8 @@
       case 'int':
         float = 0;
     }
-    arg = caro.toNumber(arg);
-    arg = caro.toString(arg);
+    arg = caro.toNum(arg);
+    arg = caro.toStr(arg);
     var aStr = arg.split('.');
     var iStr = aStr[0];
     var fStr = aStr[1] ? aStr[1].slice(0, float) : '';
@@ -925,8 +925,7 @@
    * @returns {boolean}
    */
   self.isUpper = function(str) {
-    var upp;
-    upp = str.toUpperCase();
+    var upp = str.toUpperCase();
     return upp === str;
   };
   /*
@@ -935,8 +934,7 @@
    * @returns {boolean}
    */
   self.isLower = function(str) {
-    var low;
-    low = str.toLowerCase();
+    var low = str.toLowerCase();
     return low === str;
   };
 })();
@@ -947,14 +945,13 @@
  * @author Caro.Huang
  */
 (function() {
-  var self;
-  self = caro;
+  var self = caro;
   /*
    * cover to string
    * @param arg
    * @returns {*}
    */
-  self.toString = function(arg) {
+  self.toStr = function(arg) {
     return String(arg);
   };
   /*
@@ -962,7 +959,7 @@
    * @param arg
    * @returns {*}
    */
-  self.toInteger = function(arg) {
+  self.toInt = function(arg) {
     return parseInt(arg);
   };
   /*
@@ -970,7 +967,7 @@
    * @param arg
    * @returns {*}
    */
-  self.toNumber = function(arg) {
+  self.toNum = function(arg) {
     return Number(arg);
   };
   /*
@@ -979,9 +976,9 @@
    * @param {boolean} [dec=2] decimal-number
    * @returns {*}
    */
-  self.toFixedNumber = function(arg, dec = 2) {
-    var r;
-    r = caro.toString(arg);
+  self.toFixedNum = function(arg, dec) {
+    dec = (dec !== undefined) ? dec : 2;
+    var r = caro.toStr(arg);
     if (arg % 1) {
       r = r.replace(/5$/, '6');
     }

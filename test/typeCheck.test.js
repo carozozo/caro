@@ -10,7 +10,7 @@ describe('TypeCheck', function() {
     r2.should.be.false;
   });
   it('isEmptyVal', function() {
-    var r = caro.isEmptyVal({}, [], null, '', void 0);
+    var r = caro.isEmptyVal({}, [], null, '', undefined);
     var r2 = caro.isEmptyVal('null');
 
     r.should.be.true;

@@ -43,7 +43,7 @@
       }
     }
     opt = opt || {};
-    var float = Math.abs(caro.toInteger(opt.float));
+    var float = Math.abs(caro.toInt(opt.float));
     var decimal = typeof opt.decimal === 'string' ? opt.decimal : '.';
     var separated = typeof opt.decimal === 'separated' ? opt.separated : ',';
     var prefix = typeof opt.prefix === 'string' ? opt.prefix : '';
@@ -57,8 +57,8 @@
       case 'int':
         float = 0;
     }
-    arg = caro.toNumber(arg);
-    arg = caro.toString(arg);
+    arg = caro.toNum(arg);
+    arg = caro.toStr(arg);
     var aStr = arg.split('.');
     var iStr = aStr[0];
     var fStr = aStr[1] ? aStr[1].slice(0, float) : '';
