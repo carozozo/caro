@@ -1,4 +1,4 @@
-/*! caro - v2.0.1- 2018-5-11 */
+/*! caro - v2.0.1- 2018-5-14 */
 (function(g) {
   var caro, e, isNode;
   isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
@@ -859,7 +859,7 @@
    */
   self.isEmptyVal = function() {
     return Array.from(arguments).every(function(arg) {
-      if (arg === null || arg === void 0) {
+      if (arg === null || arg === undefined) {
         return true;
       }
       if (typeof arg === 'number' || typeof arg === 'boolean') {
@@ -899,14 +899,12 @@
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e;
     try {
       JSON.parse(arg);
+      return true;
     } catch (error) {
-      e = error;
       return false;
     }
-    return true;
   };
   /*
    * check if argument is object-like JSON, return false is one of them not match
@@ -914,14 +912,12 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, r;
     try {
-      r = JSON.parse(arg);
+      var r = JSON.parse(arg);
       return typeof r === 'object';
     } catch (error) {
-      e = error;
+      return false;
     }
-    return false;
   };
   /*
    * check if string is uppercase
@@ -931,10 +927,7 @@
   self.isUpper = function(str) {
     var upp;
     upp = str.toUpperCase();
-    if (upp !== str) {
-      return false;
-    }
-    return true;
+    return upp === str;
   };
   /*
    * check if string is lowercase
@@ -944,10 +937,7 @@
   self.isLower = function(str) {
     var low;
     low = str.toLowerCase();
-    if (low !== str) {
-      return false;
-    }
-    return true;
+    return low === str;
   };
 })();
 

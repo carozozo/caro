@@ -416,11 +416,6 @@ var r2 = caro.isEasingTrue(1); // true
 var r = caro.isEasingFalse('false'); // true
 var r2 = caro.isEasingFalse(0); // true
 ```
-- **isInteger(arg) - check if integer**
-```javascript
-var r = caro.isInteger(1); // true
-var r2 = caro.isInteger(1.3); // false
-```
 - **isJson(arg...) - check if JSON**
 ```javascript
 var r = caro.isJson(null); // true
