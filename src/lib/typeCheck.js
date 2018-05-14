@@ -23,7 +23,7 @@
    */
   self.isEmptyVal = function() {
     return Array.from(arguments).every(function(arg) {
-      if (arg === null || arg === void 0) {
+      if (arg === null || arg === undefined) {
         return true;
       }
       if (typeof arg === 'number' || typeof arg === 'boolean') {
@@ -63,14 +63,12 @@
    * @returns {boolean}
    */
   self.isJson = function(arg) {
-    var e;
     try {
       JSON.parse(arg);
+      return true;
     } catch (error) {
-      e = error;
       return false;
     }
-    return true;
   };
   /*
    * check if argument is object-like JSON, return false is one of them not match
@@ -78,14 +76,12 @@
    * @returns {boolean}
    */
   self.isObjJson = function(arg) {
-    var e, r;
     try {
-      r = JSON.parse(arg);
+      var r = JSON.parse(arg);
       return typeof r === 'object';
     } catch (error) {
-      e = error;
+      return false;
     }
-    return false;
   };
   /*
    * check if string is uppercase
@@ -93,12 +89,8 @@
    * @returns {boolean}
    */
   self.isUpper = function(str) {
-    var upp;
-    upp = str.toUpperCase();
-    if (upp !== str) {
-      return false;
-    }
-    return true;
+    var upp = str.toUpperCase();
+    return upp === str;
   };
   /*
    * check if string is lowercase
@@ -106,11 +98,7 @@
    * @returns {boolean}
    */
   self.isLower = function(str) {
-    var low;
-    low = str.toLowerCase();
-    if (low !== str) {
-      return false;
-    }
-    return true;
+    var low = str.toLowerCase();
+    return low === str;
   };
 })();
