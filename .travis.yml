@@ -1,9 +1,10 @@
 language: node_js
 node_js:
-  - "8.11.0"
+  - "8.11.1"
   - "6.2.0"
 branches:
     only:
         - master
+        - dev
 before_install:
   - npm install -g gulp
