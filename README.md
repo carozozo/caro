@@ -499,6 +499,7 @@ var r2 = caro.toJson(arg, replacer); // '{"a":4,"b":6}'
 ```
 
 ## History
+- refine some functions replaced by lodash - v2.1.0
 - No more support if less than node.js v6 - v2.0.0
 - Update [Loop -> loop] - v1.0.1
 - Be independent from lodash - v1.0.0
