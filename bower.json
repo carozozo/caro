@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "1.0.1",
+  "version": "2.1.2",
   "description": "General libraries for JavaScript / Node.js",
   "main": ["dist/caro.js"],
   "homepage": "https://github.com/carozozo/caro",
