@@ -1,6 +1,6 @@
 {
   "name": "caro",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "General libraries for JavaScript / Node.js",
   "author": "Caro.Huang <carozozo@yahoo.com.tw>",
   "main": "dist/caro.js",
