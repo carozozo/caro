@@ -1,4 +1,4 @@
-/*! caro - v2.0.1- 2018-5-14 */
+/*! caro - v2.1.0- 2019-5-5 */
 (function(g) {
   var caro, e, isNode;
   isNode = (typeof global !== "undefined" && global !== null) && (typeof module !== "undefined" && module !== null) && (typeof exports !== "undefined" && exports !== null);
